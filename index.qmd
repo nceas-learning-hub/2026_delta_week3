@@ -111,13 +111,13 @@ By participating in this activity you agree to abide by the [NCEAS Code of Condu
 
 These written materials are the result of a continuous and collaborative effort at NCEAS to help researchers make their work more transparent and reproducible. This work began in the early 2000's, and reflects the expertise and diligence of many, many individuals. The primary authors are listed in the citation below, with additional contributors recognized for their role in developing previous iterations of these or similar materials.
 
-This work is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/){.external target="_blank"}.
+This work is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
 
-**Citation:** COURSE INSTRUCTORS (COURSE DATE), NCEAS Synthesis Skills Training for the Delta Science Program, COURSE DATE, NCEAS Learning Hub. [https://nceas-learning-hub.github.io/COURSE SITE](https://nceas-learning-hub.github.io/COURSE SITE/){.external target="_blank"}.
+**Citation:** Casey O'Hara, Nick J. Lyon & Jim Regetz (2026), NCEAS Synthesis Skills Training for the Delta Science Program, April 2026, NCEAS Learning Hub. [https://nceas-learning-hub.github.io/2026_delta_week3](https://nceas-learning-hub.github.io/2026_delta_week3/).
 
 **Content contributors:** Ben Bolker, Amber E. Budden, Julien Brun, Angel Chen, Samantha Csik, Halina Do-Linh, Natasha Haycock-Chavez, S. Jeanette Clark, Julie Lowndes, Stephanie Hampton, Matt Jones, Samantha Katz, Nick J. Lyon, Erin McLean, Bryce Mecum, Casey O'Hara, Deanna Pennington, Karthik Ram, Jim Regetz, Tracy Teal, Camila Vargas Poulsen, Daphne Virlar-Knight, Leah Wasser.
 
-This is a Quarto-built website. To learn more about Quarto sites visit [https://quarto.org/docs/websites/](https://quarto.org/docs/websites){.external target="_blank"}.
+This is a Quarto-built website. To learn more about Quarto sites visit [https://quarto.org/docs/websites/](https://quarto.org/docs/websites).
 
 
 
