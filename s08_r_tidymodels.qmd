@@ -1,0 +1,21 @@
+---
+title: Synthesis Stats with `tidymodels`
+---
+
+<!--
+Prerequisite lessons or suggestions here
+-->
+
+:::{.callout-learning}
+After completing this session, you will be able to:
+
+- Create learning objectives using verbs based on [Bloom's Taxonomy](https://en.wikipedia.org/wiki/Bloom%27s_taxonomy#/media/File:Bloom%E2%80%99s_Taxonomy_Verbs.png)
+:::
+
+## Overview
+
+Brief overview of lesson
+## Use level 2 headers for sections
+
+Visit https://nceas-learning-hub.github.io/lh_packages/ for information on contributing new lessons, content guidelines, and style guide.
+

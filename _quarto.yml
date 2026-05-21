@@ -16,6 +16,8 @@ execute:
 format:
   theme-html:
     code-annotations: hover ### tool tip style footnotes for code
+    link-external-newwindow: true
+    link-external-icon: true
 
 website:
   title: "2026 Delta Synthesis Working Groups week 3 (April 2026)"
@@ -23,15 +25,27 @@ website:
   repo-url: https://github.com/nceas-learning-hub/2026_delta_week3
 
   ### learning hub logo on browser tab
-  favicon: _extensions/nceas-learning-hub/theme/banner/logo_lh_hex.png
+  favicon: _extensions/nceas-learning-hub/theme/banner/logo_favicon.png
 
   bread-crumbs: false
   navbar:
     right:
+      - text: "Training Series"
+        menu:
+          - text: "Week 1"
+            href: https://nceas-learning-hub.github.io/2026_delta_week1/
+          - text: "Week 2"
+            href: https://nceas-learning-hub.github.io/2026_delta_week2/
+          - text: "Week 3"
+            href: https://nceas-learning-hub.github.io/2026_delta_week3/
       - text: "Instructors"
         menu:
+          - text: "Nick Lyon"
+            href: https://njlyon0.github.io/
           - text: "Casey O'Hara"
             href: https://www.oharascience.com/
+          - text: "Jim Regetz"
+            href: https://github.com/regetz/
       - icon: github
         href: https://github.com/nceas-learning-hub/2026_delta_week3
         aria-label: GitHub
@@ -49,8 +63,25 @@ website:
         href: https://github.com/nceas-learning-hub/2026_delta_week3
     contents:
       - index.qmd # preface
+      - s00_benchmarks.qmd
       # START SESSIONS
-      # SESSION_LINKS
+      - section: "Day 1"
+        contents:
+        - s01_lecture_publishing_data.qmd
+        - s02_r_programmatic_data_access.qmd
+      - section: "Day 2"
+        contents:
+        - s03_git_advanced_git_github.qmd
+        - s04_lecture_science_communication.qmd
+      - section: "Day 3"
+        contents:
+        - s05_shiny_introduction.qmd
+        - s06_quarto_dashboards_reports.qmd
+        - s07_quarto_websites.qmd
+      - section: "Day 4"
+        contents:
+        - s08_r_tidymodels.qmd
+        - s09_r_geospatial_raster_analysis.qmd
       # END SESSIONS
 
   page-footer:
