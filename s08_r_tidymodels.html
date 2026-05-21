@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Delta Workshop Materials – 2026 Delta Synthesis Working Groups week 3 (April 2026)</title>
+<title>Synthesis Stats with tidymodels – 2026 Delta Synthesis Working Groups week 3 (April 2026)</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -48,11 +48,6 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/bootstrap/bootstrap-b737c221e665b41121cf1e05e67a7a02.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark-9bab2db7dbbac7d6072764403fda4b28.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="site_libs/bootstrap/bootstrap-b737c221e665b41121cf1e05e67a7a02.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/quarto-contrib/fontawesome6-6.7.2/all.min.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/fontawesome6-6.7.2/latex-fontsize.css" rel="stylesheet">
-<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -91,7 +86,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="site_libs/quarto-contrib/quarto-project/nceas-learning-hub/theme/banner/banner.css">
 </head>
 
-<body class="nav-sidebar floating nav-fixed slimcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -326,7 +321,7 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title">Delta Workshop Materials</h1>
+          <h1 class="quarto-secondary-nav-title">Synthesis Stats with <code>tidymodels</code></h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -338,7 +333,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title d-none d-lg-block">Delta Workshop Materials</h1>
+      <h1 class="title d-none d-lg-block">Synthesis Stats with <code>tidymodels</code></h1>
                       </div>
   </div>
     
@@ -368,7 +363,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Delta Workshop Materials</span></a>
   </div>
 </li>
@@ -464,7 +459,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./s08_r_tidymodels.html" class="sidebar-item-text sidebar-link">
+  <a href="./s08_r_tidymodels.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Synthesis Stats with <code>tidymodels</code></span></a>
   </div>
 </li>
@@ -481,22 +476,26 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
 
-
-<div class="no-row-height column-margin column-container"><div class="">
-
-</div></div><section id="overview" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p>The <a href="https://deltacouncil.ca.gov/delta-science-program/" class="external" target="_blank">Delta Science Program</a> is once again partnering with the <a href="https://www.nceas.ucsb.edu/" class="external" target="_blank">National Center for Ecological Analysis and Synthesis</a> (NCEAS) to convene a collaborative data synthesis working group. Delta Synthesis Working Groups receive advanced data science and statistics training with immediate opportunities to use those newly acquired skills to analyze available data and produce relevant research and data products.</p>
+<!--
+Prerequisite lessons or suggestions here
+-->
 <div class="callout callout-style-default callout-learning no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -510,356 +509,18 @@ ul.task-list li input[type="checkbox"] {
 <div id="callout-1" class="callout-1-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <div class="callout-learning">
-<p>After completing this workshop, you will be able to:</p>
+<p>After completing this session, you will be able to:</p>
 <ul>
-<li>Use tidy data practices to effectively manage data</li>
-<li>Identify best practices and tools for optimizing collaboration (like Git &amp; GitHub)</li>
-<li>Implement reproducible scientific workflows throughout all aspects of a project</li>
-<li>Summarize scientific analyses and results clearly and effectively by using computational notebook files, GitHub * webpages, and R packages like ggplot2 and shiny</li>
+<li>Create learning objectives using verbs based on <a href="https://en.wikipedia.org/wiki/Bloom%27s_taxonomy#/media/File:Bloom%E2%80%99s_Taxonomy_Verbs.png">Bloom’s Taxonomy</a></li>
 </ul>
 </div>
 </div>
 </div>
 </div>
-</section>
-<section id="course-schedule" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="course-schedule"><span class="header-section-number">2</span> Course Schedule</h2>
-<p><em>Table Color Legend:</em> <span style="color:#6a994e"><i class="fa-solid fa-screwdriver-wrench" aria-label="screwdriver-wrench"></i> Technical Topic</span>; <span style="color:#118ab2"><i class="fa-solid fa-people-group" aria-label="people-group"></i> Non-Technical Topic</span>; <span style="color:#ef476f"><i class="fa-solid fa-rocket" aria-label="rocket"></i> Synthesis Work</span></p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Week Visual</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Day 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Day 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Day 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false" href="">Day 4</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-6" role="tab" aria-controls="tabset-1-6" aria-selected="false" href="">Day 5</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p><a href="images/2026_delta_week1_schedule.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/2026_delta_week1_schedule.png" class="img-fluid" alt="Screenshot of visual version of schedule. All information is also included in the table version of the schedule"></a></p>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<!-- Color codes and FontAwesome icons:
-Non-tech: <span style="color:#118ab2"> **Lesson Description**</span>
-Technical: <span style="color:#6a994e"> **Lesson Description**</span>
-Synthesis: <span style="color:#ef476f"> **Free Synthesis Work**</span>
--->
-<table class="caption-top table">
-<colgroup>
-<col style="width: 8%">
-<col style="width: 19%">
-<col style="width: 43%">
-<col style="width: 28%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Day</th>
-<th style="text-align: center;">Time</th>
-<th style="text-align: left;">Module Name</th>
-<th style="text-align: left;">Primary Instructor</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">8:30 - 9a</td>
-<td style="text-align: left;"><strong>Welcome &amp; Intro to Week</strong></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">9 - 10a</td>
-<td style="text-align: left;"><span style="color:#118ab2"><i class="fa-solid fa-people-group" aria-label="people-group"></i> <strong>Publishing Synthesis Data</strong></span></td>
-<td style="text-align: left;">Jim Regetz</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">10 - 10:30a</td>
-<td style="text-align: left;"><em>Break</em></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">10:30 - 12p</td>
-<td style="text-align: left;"><span style="color:#6a994e"><i class="fa-solid fa-screwdriver-wrench" aria-label="screwdriver-wrench"></i> <strong>Programmatic Data Access</strong></span></td>
-<td style="text-align: left;">Jim Regetz</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">12 - 1p</td>
-<td style="text-align: left;"><em>Lunch</em></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">1 - 2:30p</td>
-<td style="text-align: left;"><span style="color:#ef476f"><i class="fa-solid fa-rocket" aria-label="rocket"></i> <strong>Free Synthesis Work</strong></span></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">2:30 - 3p</td>
-<td style="text-align: left;"><em>Break</em></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">3 - 4:30p</td>
-<td style="text-align: left;"><span style="color:#ef476f"><i class="fa-solid fa-rocket" aria-label="rocket"></i> <strong>Free Synthesis Work</strong></span></td>
-<td style="text-align: left;">-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 8%">
-<col style="width: 19%">
-<col style="width: 43%">
-<col style="width: 28%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Day</th>
-<th style="text-align: center;">Time</th>
-<th style="text-align: left;">Module Name</th>
-<th style="text-align: left;">Primary Instructor</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">8:30 - 10a</td>
-<td style="text-align: left;"><span style="color:#6a994e"><i class="fa-solid fa-screwdriver-wrench" aria-label="screwdriver-wrench"></i> <strong>Advanced Git/GitHub</strong></span></td>
-<td style="text-align: left;">Nick Lyon</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">10 - 10:30a</td>
-<td style="text-align: left;"><em>Break</em></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">10:30 - 12p</td>
-<td style="text-align: left;"><span style="color:#118ab2"><i class="fa-solid fa-people-group" aria-label="people-group"></i> <strong>Science Communication</strong></span></td>
-<td style="text-align: left;">Nick Lyon</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">12 - 1p</td>
-<td style="text-align: left;"><em>Lunch</em></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">1 - 2:30p</td>
-<td style="text-align: left;"><span style="color:#ef476f"><i class="fa-solid fa-rocket" aria-label="rocket"></i> <strong>Free Synthesis Work</strong></span></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">2:30 - 3p</td>
-<td style="text-align: left;"><em>Break</em></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">3 - 4:30p</td>
-<td style="text-align: left;"><span style="color:#ef476f"><i class="fa-solid fa-rocket" aria-label="rocket"></i> <strong>Free Synthesis Work</strong></span></td>
-<td style="text-align: left;">-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 8%">
-<col style="width: 19%">
-<col style="width: 43%">
-<col style="width: 28%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Day</th>
-<th style="text-align: center;">Time</th>
-<th style="text-align: left;">Module Name</th>
-<th style="text-align: left;">Primary Instructor</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">8:30 - 10a</td>
-<td style="text-align: left;"><span style="color:#6a994e"><i class="fa-solid fa-screwdriver-wrench" aria-label="screwdriver-wrench"></i> <strong>Interactivity Part 1 (Shiny)</strong></span></td>
-<td style="text-align: left;">Jim Regetz; Casey O’Hara</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">10 - 10:30a</td>
-<td style="text-align: left;"><em>Break</em></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">10:30 - 12p</td>
-<td style="text-align: left;"><span style="color:#6a994e"><i class="fa-solid fa-screwdriver-wrench" aria-label="screwdriver-wrench"></i> <strong>Interactivity Part 2 (Dashboards &amp; Reports)</strong></span></td>
-<td style="text-align: left;">Jim Regetz</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">12 - 1p</td>
-<td style="text-align: left;"><em>Lunch</em></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">1 - 2:30p</td>
-<td style="text-align: left;"><span style="color:#6a994e"><i class="fa-solid fa-screwdriver-wrench" aria-label="screwdriver-wrench"></i> <strong>Make a Website with Quarto</strong></span></td>
-<td style="text-align: left;">Nick Lyon</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">2:30 - 3p</td>
-<td style="text-align: left;"><em>Break</em></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">3 - 4:30p</td>
-<td style="text-align: left;"><span style="color:#ef476f"><i class="fa-solid fa-rocket" aria-label="rocket"></i> <strong>Free Synthesis Work</strong></span></td>
-<td style="text-align: left;">-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 8%">
-<col style="width: 19%">
-<col style="width: 43%">
-<col style="width: 28%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Day</th>
-<th style="text-align: center;">Time</th>
-<th style="text-align: left;">Module Name</th>
-<th style="text-align: left;">Primary Instructor</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">8:30 - 10a</td>
-<td style="text-align: left;"><span style="color:#6a994e"><i class="fa-solid fa-screwdriver-wrench" aria-label="screwdriver-wrench"></i> <strong>Synthesis Stats (tidymodels)</strong></span></td>
-<td style="text-align: left;">Casey O’Hara</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">10 - 10:30a</td>
-<td style="text-align: left;"><em>Break</em></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">10:30 - 12p</td>
-<td style="text-align: left;"><span style="color:#6a994e"><i class="fa-solid fa-screwdriver-wrench" aria-label="screwdriver-wrench"></i> <strong>Raster Spatial Data</strong></span></td>
-<td style="text-align: left;">Casey O’Hara</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">12 - 1p</td>
-<td style="text-align: left;"><em>Lunch</em></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">1 - 2:30p</td>
-<td style="text-align: left;"><span style="color:#ef476f"><i class="fa-solid fa-rocket" aria-label="rocket"></i> <strong>Free Synthesis Work</strong></span></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">2:30 - 3p</td>
-<td style="text-align: left;"><em>Break</em></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">3 - 4:30p</td>
-<td style="text-align: left;"><span style="color:#ef476f"><i class="fa-solid fa-rocket" aria-label="rocket"></i> <strong>Free Synthesis Work</strong></span></td>
-<td style="text-align: left;">-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="tabset-1-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-6-tab">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 9%">
-<col style="width: 15%">
-<col style="width: 52%">
-<col style="width: 22%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Day</th>
-<th style="text-align: center;">Time</th>
-<th style="text-align: left;">Module Name</th>
-<th style="text-align: left;">Primary Instructor</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">8:30 - 10a</td>
-<td style="text-align: left;"><span style="color:#ef476f"><i class="fa-solid fa-rocket" aria-label="rocket"></i> <strong>Free Synthesis Work</strong></span></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">10 - 10:30a</td>
-<td style="text-align: left;"><em>Break</em></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">10:30 - 12p</td>
-<td style="text-align: left;"><span style="color:#ef476f"><i class="fa-solid fa-rocket" aria-label="rocket"></i> <strong>Free Synthesis Work</strong></span></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">12 - 1p</td>
-<td style="text-align: left;"><em>Lunch</em></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">1 - 2:30p</td>
-<td style="text-align: left;"><span style="color:#ef476f"><i class="fa-solid fa-rocket" aria-label="rocket"></i> <strong>Synthesis Work: Presentations and Wrap Up</strong></span></td>
-<td style="text-align: left;">-</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">2:30 - 3p</td>
-<td style="text-align: left;"><em>Adjourn</em></td>
-<td style="text-align: left;">-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</section>
-<section id="code-of-conduct" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="code-of-conduct"><span class="header-section-number">3</span> Code of Conduct</h2>
-<p>By participating in this activity you agree to abide by the <a href="https://www.nceas.ucsb.edu/sites/default/files/2021-11/NCEAS_Code-of-Conduct_Nov2021_0.pdf" class="external" target="_blank">NCEAS Code of Conduct</a>.</p>
-</section>
-<section id="about-this-book" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="about-this-book"><span class="header-section-number">4</span> About this book</h2>
-<p>These written materials are the result of a continuous and collaborative effort at NCEAS to help researchers make their work more transparent and reproducible. This work began in the early 2000’s, and reflects the expertise and diligence of many, many individuals. The primary authors are listed in the citation below, with additional contributors recognized for their role in developing previous iterations of these or similar materials.</p>
-<p>This work is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/" class="external" target="_blank">Creative Commons Attribution 4.0 International License</a>.</p>
-<p><strong>Citation:</strong> COURSE INSTRUCTORS (COURSE DATE), NCEAS Synthesis Skills Training for the Delta Science Program, COURSE DATE, NCEAS Learning Hub. <a href="https://nceas-learning-hub.github.io/COURSE%20SITE/" class="external" target="_blank">https://nceas-learning-hub.github.io/COURSE SITE</a>.</p>
-<p><strong>Content contributors:</strong> Ben Bolker, Amber E. Budden, Julien Brun, Angel Chen, Samantha Csik, Halina Do-Linh, Natasha Haycock-Chavez, S. Jeanette Clark, Julie Lowndes, Stephanie Hampton, Matt Jones, Samantha Katz, Nick J. Lyon, Erin McLean, Bryce Mecum, Casey O’Hara, Deanna Pennington, Karthik Ram, Jim Regetz, Tracy Teal, Camila Vargas Poulsen, Daphne Virlar-Knight, Leah Wasser.</p>
-<p>This is a Quarto-built website. To learn more about Quarto sites visit <a href="https://quarto.org/docs/websites" class="external" target="_blank">https://quarto.org/docs/websites/</a>.</p>
+<section id="overview" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
+<p>Brief overview of lesson ## Use level 2 headers for sections</p>
+<p>Visit https://nceas-learning-hub.github.io/lh_packages/ for information on contributing new lessons, content guidelines, and style guide.</p>
 
 
 </section>
@@ -1338,38 +999,6 @@ Synthesis: <span style="color:#ef476f"> **Free Synthesis Work**</span>
     </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
-(function() {
-  let previousOnload = window.onload;
-  window.onload = () => {
-    if (previousOnload) {
-      previousOnload();
-    }
-    lightboxQuarto.on('slide_before_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      const href = trigger.getAttribute('href');
-      if (href !== null) {
-        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-        if (imgEl !== null) {
-          const srcAttr = imgEl.getAttribute("src");
-          if (srcAttr && srcAttr.startsWith("data:")) {
-            slideConfig.href = srcAttr;
-          }
-        }
-      } 
-    });
-  
-    lightboxQuarto.on('slide_after_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(slideNode);
-      }
-    });
-  
-  };
-  
-})();
-          </script>
 
 
 
