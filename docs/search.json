@@ -4,7 +4,7 @@
     "href": "s09_r_geospatial_raster_analysis.html",
     "title": "Geospatial Raster Analysis in R",
     "section": "",
-    "text": "Learning Objectives\n\n\n\n\n\n\nAfter completing this session, you will be able to:\n\nCreate learning objectives using verbs based on Bloom’s Taxonomy",
+    "text": "LearningLearning Objectives\n\n\n\n\n\n\nAfter completing this session, you will be able to:\n\nCreate learning objectives using verbs based on Bloom’s Taxonomy",
     "crumbs": [
       "Day 4",
       "Geospatial Raster Analysis in R"
@@ -26,7 +26,7 @@
     "href": "s07_quarto_websites.html",
     "title": "Building a Website with Quarto",
     "section": "",
-    "text": "Learning Objectives\n\n\n\n\n\n\nAfter completing this session, you will be able to:\n\nCreate learning objectives using verbs based on Bloom’s Taxonomy",
+    "text": "LearningLearning Objectives\n\n\n\n\n\n\nAfter completing this session, you will be able to:\n\nCreate learning objectives using verbs based on Bloom’s Taxonomy",
     "crumbs": [
       "Day 3",
       "Building a Website with Quarto"
@@ -48,7 +48,7 @@
     "href": "s05_shiny_introduction.html",
     "title": "Interactivity with Shiny Apps",
     "section": "",
-    "text": "Learning Objectives\n\n\n\n\n\n\nAfter completing this session, you will be able to:\n\nCreate learning objectives using verbs based on Bloom’s Taxonomy",
+    "text": "LearningLearning Objectives\n\n\n\n\n\n\nAfter completing this session, you will be able to:\n\nCreate learning objectives using verbs based on Bloom’s Taxonomy",
     "crumbs": [
       "Day 3",
       "Interactivity with Shiny Apps"
@@ -70,7 +70,7 @@
     "href": "s03_git_advanced_git_github.html",
     "title": "Advanced Git and GitHub",
     "section": "",
-    "text": "Learning Objectives\n\n\n\n\n\n\nAfter completing this session, you will be able to:\n\nCreate learning objectives using verbs based on Bloom’s Taxonomy",
+    "text": "LearningLearning Objectives\n\n\n\n\n\n\nAfter completing this session, you will be able to:\n\nCreate learning objectives using verbs based on Bloom’s Taxonomy",
     "crumbs": [
       "Day 2",
       "Advanced Git and GitHub"
@@ -92,7 +92,7 @@
     "href": "s01_lecture_publishing_data.html",
     "title": "Publishing Synthesis Data",
     "section": "",
-    "text": "Learning Objectives\n\n\n\n\n\n\nAfter completing this session, you will be able to:\n\nCreate learning objectives using verbs based on Bloom’s Taxonomy",
+    "text": "LearningLearning Objectives\n\n\n\n\n\n\nAfter completing this session, you will be able to:\n\nCreate learning objectives using verbs based on Bloom’s Taxonomy",
     "crumbs": [
       "Day 1",
       "Publishing Synthesis Data"
@@ -125,7 +125,7 @@
     "href": "index.html#overview",
     "title": "Delta Workshop Materials",
     "section": "1 Overview",
-    "text": "1 Overview\nThe Delta Science Program is once again partnering with the National Center for Ecological Analysis and Synthesis (NCEAS) to convene a collaborative data synthesis working group. Delta Synthesis Working Groups receive advanced data science and statistics training with immediate opportunities to use those newly acquired skills to analyze available data and produce relevant research and data products.\n\n\n\n\n\n\nLearning Objectives\n\n\n\n\n\n\nAfter completing this workshop, you will be able to:\n\nUse tidy data practices to effectively manage data\nIdentify best practices and tools for optimizing collaboration (like Git & GitHub)\nImplement reproducible scientific workflows throughout all aspects of a project\nSummarize scientific analyses and results clearly and effectively by using computational notebook files, GitHub * webpages, and R packages like ggplot2 and shiny",
+    "text": "1 Overview\nThe Delta Science Program is once again partnering with the National Center for Ecological Analysis and Synthesis (NCEAS) to convene a collaborative data synthesis working group. Delta Synthesis Working Groups receive advanced data science and statistics training with immediate opportunities to use those newly acquired skills to analyze available data and produce relevant research and data products.\n\n\n\n\n\n\nLearningLearning Objectives\n\n\n\n\n\n\nAfter completing this workshop, you will be able to:\n\nUse tidy data practices to effectively manage data\nIdentify best practices and tools for optimizing collaboration (like Git & GitHub)\nImplement reproducible scientific workflows throughout all aspects of a project\nSummarize scientific analyses and results clearly and effectively by using computational notebook files, GitHub * webpages, and R packages like ggplot2 and shiny",
     "crumbs": [
       "Delta Workshop Materials"
     ]
@@ -135,7 +135,7 @@
     "href": "index.html#course-schedule",
     "title": "Delta Workshop Materials",
     "section": "2 Course Schedule",
-    "text": "2 Course Schedule\nTable Color Legend:  Technical Topic;  Non-Technical Topic;  Synthesis Work\n\nWeek VisualDay 1Day 2Day 3Day 4Day 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDay\nTime\nModule Name\nPrimary Instructor\n\n\n\n\n1\n8:30 - 9a\nWelcome & Intro to Week\n-\n\n\n1\n9 - 10a\n Publishing Synthesis Data\nJim Regetz\n\n\n1\n10 - 10:30a\nBreak\n-\n\n\n1\n10:30 - 12p\n Programmatic Data Access\nJim Regetz\n\n\n1\n12 - 1p\nLunch\n-\n\n\n1\n1 - 2:30p\n Free Synthesis Work\n-\n\n\n1\n2:30 - 3p\nBreak\n-\n\n\n1\n3 - 4:30p\n Free Synthesis Work\n-\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDay\nTime\nModule Name\nPrimary Instructor\n\n\n\n\n2\n8:30 - 10a\n Advanced Git/GitHub\nNick Lyon\n\n\n2\n10 - 10:30a\nBreak\n-\n\n\n2\n10:30 - 12p\n Science Communication\nNick Lyon\n\n\n2\n12 - 1p\nLunch\n-\n\n\n2\n1 - 2:30p\n Free Synthesis Work\n-\n\n\n2\n2:30 - 3p\nBreak\n-\n\n\n2\n3 - 4:30p\n Free Synthesis Work\n-\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDay\nTime\nModule Name\nPrimary Instructor\n\n\n\n\n3\n8:30 - 10a\n Interactivity Part 1 (Shiny)\nJim Regetz; Casey O’Hara\n\n\n3\n10 - 10:30a\nBreak\n-\n\n\n3\n10:30 - 12p\n Interactivity Part 2 (Dashboards & Reports)\nJim Regetz\n\n\n3\n12 - 1p\nLunch\n-\n\n\n3\n1 - 2:30p\n Make a Website with Quarto\nNick Lyon\n\n\n3\n2:30 - 3p\nBreak\n-\n\n\n3\n3 - 4:30p\n Free Synthesis Work\n-\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDay\nTime\nModule Name\nPrimary Instructor\n\n\n\n\n4\n8:30 - 10a\n Synthesis Stats (tidymodels)\nCasey O’Hara\n\n\n4\n10 - 10:30a\nBreak\n-\n\n\n4\n10:30 - 12p\n Raster Spatial Data\nCasey O’Hara\n\n\n4\n12 - 1p\nLunch\n-\n\n\n4\n1 - 2:30p\n Free Synthesis Work\n-\n\n\n4\n2:30 - 3p\nBreak\n-\n\n\n4\n3 - 4:30p\n Free Synthesis Work\n-\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDay\nTime\nModule Name\nPrimary Instructor\n\n\n\n\n5\n8:30 - 10a\n Free Synthesis Work\n-\n\n\n5\n10 - 10:30a\nBreak\n-\n\n\n5\n10:30 - 12p\n Free Synthesis Work\n-\n\n\n5\n12 - 1p\nLunch\n-\n\n\n5\n1 - 2:30p\n Synthesis Work: Presentations and Wrap Up\n-\n\n\n5\n2:30 - 3p\nAdjourn\n-",
+    "text": "2 Course Schedule\nTable Color Legend:  Technical Topic;  Non-Technical Topic;  Synthesis Work\n\nWeek VisualDay 1Day 2Day 3Day 4Day 5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDay\nTime\nModule Name\nPrimary Instructor\n\n\n\n\n1\n8:30 - 9a\nWelcome & Intro to Week\n-\n\n\n1\n9 - 10a\n Publishing Synthesis Data\nJim Regetz\n\n\n1\n10 - 10:30a\nBreak\n-\n\n\n1\n10:30 - 12p\n Programmatic Data Access\nJim Regetz\n\n\n1\n12 - 1p\nLunch\n-\n\n\n1\n1 - 2:30p\n Free Synthesis Work\n-\n\n\n1\n2:30 - 3p\nBreak\n-\n\n\n1\n3 - 4:30p\n Free Synthesis Work\n-\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDay\nTime\nModule Name\nPrimary Instructor\n\n\n\n\n2\n8:30 - 10a\n Advanced Git/GitHub\nNick Lyon\n\n\n2\n10 - 10:30a\nBreak\n-\n\n\n2\n10:30 - 12p\n Science Communication\nNick Lyon\n\n\n2\n12 - 1p\nLunch\n-\n\n\n2\n1 - 2:30p\n Free Synthesis Work\n-\n\n\n2\n2:30 - 3p\nBreak\n-\n\n\n2\n3 - 4:30p\n Free Synthesis Work\n-\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDay\nTime\nModule Name\nPrimary Instructor\n\n\n\n\n3\n8:30 - 10a\n Interactivity Part 1 (Shiny)\nCasey O’Hara\n\n\n3\n10 - 10:30a\nBreak\n-\n\n\n3\n10:30 - 12p\n Interactivity Part 2 (Dashboards & Reports)\nJim Regetz\n\n\n3\n12 - 1p\nLunch\n-\n\n\n3\n1 - 2:30p\n Make a Website with Quarto\nNick Lyon\n\n\n3\n2:30 - 3p\nBreak\n-\n\n\n3\n3 - 4:30p\n Free Synthesis Work\n-\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDay\nTime\nModule Name\nPrimary Instructor\n\n\n\n\n4\n8:30 - 10a\n Synthesis Stats (tidymodels)\nCasey O’Hara\n\n\n4\n10 - 10:30a\nBreak\n-\n\n\n4\n10:30 - 12p\n Raster Spatial Data\nCasey O’Hara\n\n\n4\n12 - 1p\nLunch\n-\n\n\n4\n1 - 2:30p\n Free Synthesis Work\n-\n\n\n4\n2:30 - 3p\nBreak\n-\n\n\n4\n3 - 4:30p\n Free Synthesis Work\n-\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDay\nTime\nModule Name\nPrimary Instructor\n\n\n\n\n5\n8:30 - 10a\n Free Synthesis Work\n-\n\n\n5\n10 - 10:30a\nBreak\n-\n\n\n5\n10:30 - 12p\n Free Synthesis Work\n-\n\n\n5\n12 - 1p\nLunch\n-\n\n\n5\n1 - 1:15p\n Survey\n-\n\n\n5\n1:15 - 2:30p\n Synthesis Work: Presentations and Wrap Up\n-\n\n\n5\n2:30 - 3p\nAdjourn\n-",
     "crumbs": [
       "Delta Workshop Materials"
     ]
@@ -155,7 +155,7 @@
     "href": "index.html#about-this-book",
     "title": "Delta Workshop Materials",
     "section": "4 About this book",
-    "text": "4 About this book\nThese written materials are the result of a continuous and collaborative effort at NCEAS to help researchers make their work more transparent and reproducible. This work began in the early 2000’s, and reflects the expertise and diligence of many, many individuals. The primary authors are listed in the citation below, with additional contributors recognized for their role in developing previous iterations of these or similar materials.\nThis work is licensed under a Creative Commons Attribution 4.0 International License.\nCitation: COURSE INSTRUCTORS (COURSE DATE), NCEAS Synthesis Skills Training for the Delta Science Program, COURSE DATE, NCEAS Learning Hub. https://nceas-learning-hub.github.io/COURSE SITE.\nContent contributors: Ben Bolker, Amber E. Budden, Julien Brun, Angel Chen, Samantha Csik, Halina Do-Linh, Natasha Haycock-Chavez, S. Jeanette Clark, Julie Lowndes, Stephanie Hampton, Matt Jones, Samantha Katz, Nick J. Lyon, Erin McLean, Bryce Mecum, Casey O’Hara, Deanna Pennington, Karthik Ram, Jim Regetz, Tracy Teal, Camila Vargas Poulsen, Daphne Virlar-Knight, Leah Wasser.\nThis is a Quarto-built website. To learn more about Quarto sites visit https://quarto.org/docs/websites/.",
+    "text": "4 About this book\nThese written materials are the result of a continuous and collaborative effort at NCEAS to help researchers make their work more transparent and reproducible. This work began in the early 2000’s, and reflects the expertise and diligence of many, many individuals. The primary authors are listed in the citation below, with additional contributors recognized for their role in developing previous iterations of these or similar materials.\nThis work is licensed under a Creative Commons Attribution 4.0 International License.\nCitation: Casey O’Hara, Nick J. Lyon & Jim Regetz (2026), NCEAS Synthesis Skills Training for the Delta Science Program, April 2026, NCEAS Learning Hub. https://nceas-learning-hub.github.io/2026_delta_week3.\nContent contributors: Ben Bolker, Amber E. Budden, Julien Brun, Angel Chen, Samantha Csik, Halina Do-Linh, Natasha Haycock-Chavez, S. Jeanette Clark, Julie Lowndes, Stephanie Hampton, Matt Jones, Samantha Katz, Nick J. Lyon, Erin McLean, Bryce Mecum, Casey O’Hara, Deanna Pennington, Karthik Ram, Jim Regetz, Tracy Teal, Camila Vargas Poulsen, Daphne Virlar-Knight, Leah Wasser.\nThis is a Quarto-built website. To learn more about Quarto sites visit https://quarto.org/docs/websites/.",
     "crumbs": [
       "Delta Workshop Materials"
     ]
@@ -195,7 +195,7 @@
     "href": "s02_r_programmatic_data_access.html",
     "title": "Programmatic Data Access",
     "section": "",
-    "text": "Learning Objectives\n\n\n\n\n\n\nAfter completing this session, you will be able to:\n\nCreate learning objectives using verbs based on Bloom’s Taxonomy",
+    "text": "LearningLearning Objectives\n\n\n\n\n\n\nAfter completing this session, you will be able to:\n\nCreate learning objectives using verbs based on Bloom’s Taxonomy",
     "crumbs": [
       "Day 1",
       "Programmatic Data Access"
@@ -228,7 +228,7 @@
     "href": "s04_lecture_science_communication.html",
     "title": "SciComm: The Message Box",
     "section": "",
-    "text": "Learning Objectives\n\n\n\n\n\n\nAfter completing this session, you will be able to:\n\nCreate learning objectives using verbs based on Bloom’s Taxonomy",
+    "text": "LearningLearning Objectives\n\n\n\n\n\n\nAfter completing this session, you will be able to:\n\nCreate learning objectives using verbs based on Bloom’s Taxonomy",
     "crumbs": [
       "Day 2",
       "SciComm: The Message Box"
@@ -250,7 +250,7 @@
     "href": "s06_quarto_dashboards_reports.html",
     "title": "Interactive Dashboards and Reports",
     "section": "",
-    "text": "Learning Objectives\n\n\n\n\n\n\nAfter completing this session, you will be able to:\n\nCreate learning objectives using verbs based on Bloom’s Taxonomy",
+    "text": "LearningLearning Objectives\n\n\n\n\n\n\nAfter completing this session, you will be able to:\n\nCreate learning objectives using verbs based on Bloom’s Taxonomy",
     "crumbs": [
       "Day 3",
       "Interactive Dashboards and Reports"
@@ -272,7 +272,7 @@
     "href": "s08_r_tidymodels.html",
     "title": "Synthesis Stats with tidymodels",
     "section": "",
-    "text": "Learning Objectives\n\n\n\n\n\n\nAfter completing this session, you will be able to:\n\nCreate learning objectives using verbs based on Bloom’s Taxonomy",
+    "text": "LearningLearning Objectives\n\n\n\n\n\n\nAfter completing this session, you will be able to:\n\nCreate learning objectives using verbs based on Bloom’s Taxonomy",
     "crumbs": [
       "Day 4",
       "Synthesis Stats with `tidymodels`"
