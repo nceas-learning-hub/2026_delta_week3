@@ -31,7 +31,7 @@ _Table Color Legend:_ <span style="color:#6a994e">{{<fa screwdriver-wrench >}} T
 :::{.panel-tabset}
 ### Week Visual
 
-![](images/2026_delta_week1_schedule.png){fig-alt="Screenshot of visual version of schedule. All information is also included in the table version of the schedule" .lightbox}
+![](images/2026_delta_week3_schedule.png){fig-alt="Screenshot of visual version of schedule. All information is also included in the table version of the schedule" .lightbox}
 
 ### Day 1
 
@@ -97,7 +97,8 @@ Synthesis: <span style="color:#ef476f">{{< fa rocket >}} **Free Synthesis Work**
 | 5 | 10 - 10:30a | _Break_ | - |
 | 5 | 10:30 - 12p | <span style="color:#ef476f">{{< fa rocket >}} **Free Synthesis Work**</span> | - |
 | 5 | 12 - 1p | _Lunch_ | - |
-| 5 | 1 - 2:30p | <span style="color:#ef476f">{{< fa rocket >}} **Synthesis Work: Presentations and Wrap Up**</span> | - |
+| 5 | 1 - 1:15p | <span style="color:#118ab2">{{<fa people-group >}} **Survey**</span> | - |
+| 5 | 1:15 - 2:30p | <span style="color:#ef476f">{{< fa rocket >}} **Synthesis Work: Presentations and Wrap Up**</span> | - |
 | 5 | 2:30 - 3p | _Adjourn_ | - |
 
 :::
