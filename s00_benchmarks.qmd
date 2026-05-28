@@ -35,6 +35,12 @@ After this week, <u>your group</u> should have done (at least some of) the follo
 - Considered whether to create an interactive Shiny app, Dashboard, etc.
 - Built a team website with Quarto and GitHub Pages
 
+And, most importantly, **your group should discuss how you want to move forward after the workshop series is complete!**
+
 ### After <u>Week 3</u>
+
+After the third week of this workshop series, **we hope that your group uses the relevant skills from these workshops to pursue goals that feel meaningful to you.** Keep in mind that specific, actionable tasks are better than vague or open-ended goals but ultimately where you go from here is up to you!
+
+Good luck!
 
 :::
