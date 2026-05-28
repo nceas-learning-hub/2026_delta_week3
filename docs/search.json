@@ -185,7 +185,7 @@
     "href": "s00_benchmarks.html#week-2-benchmarks",
     "title": "Working Group Project Milestones",
     "section": "2 Week 2 Benchmarks",
-    "text": "2 Week 2 Benchmarks\n\nBefore Week 3At the End of Week 3\n\n\nBetween week 2 workshop and this workshop, your group should have done (at least some of) the following:\n\nWritten code (version-controlled and stored in GitHub) to:\n\nHarmonize/standardize your chosen datasets (can be a draft workflow at this point but should be pretty solid)\nPerform preliminary analysis\nMake publication-quality figures\n\nFinalized your group’s authorship/intellectual credit policy\nMade a reasonably complete set of documentation explaining your project organization schema\nConsidered whether custom R functions (or an R package) might make sense for your group’s goals and interests\nDecided whether to make a group website (published via GitHub)\n\n\n\nAfter this week, your group should have done (at least some of) the following:",
+    "text": "2 Week 2 Benchmarks\n\nBefore Week 3At the End of Week 3After Week 3\n\n\nBetween the week 2 workshop and this workshop, your group should have done (at least some of) the following:\n\nWritten code (version-controlled and stored in GitHub) to:\n\nHarmonize/standardize your chosen datasets (can be a draft workflow at this point but should be pretty solid)\nPerform preliminary analysis\nMake publication-quality figures\n\nFinalized your group’s authorship/intellectual credit policy\nMade a reasonably complete set of documentation explaining your project organization schema\nConsidered whether custom R functions (or an R package) might make sense for your group’s goals and interests\nDecided whether to make a group website (published via GitHub)\n\n\n\nAfter this week, your group should have done (at least some of) the following:",
     "crumbs": [
       "Working Group Project Milestones"
     ]
@@ -485,6 +485,16 @@
     "crumbs": [
       "Day 2",
       "Science Communication Fundamentals"
+    ]
+  },
+  {
+    "objectID": "s00_benchmarks.html#week-3-benchmarks",
+    "href": "s00_benchmarks.html#week-3-benchmarks",
+    "title": "Working Group Project Milestones",
+    "section": "2 Week 3 Benchmarks",
+    "text": "2 Week 3 Benchmarks\n\nBefore Week 3At the End of Week 3After Week 3\n\n\nBetween the week 2 workshop and this workshop, your group should have done (at least some of) the following:\n\nWritten code (version-controlled and stored in GitHub) to:\n\nHarmonize/standardize your chosen datasets (can be a draft workflow at this point but should be pretty solid)\nPerform preliminary analysis\nMake publication-quality figures\n\nFinalized your group’s authorship/intellectual credit policy\nMade a reasonably complete set of documentation explaining your project organization schema\nConsidered whether custom R functions (or an R package) might make sense for your group’s goals and interests\nDecided whether to make a group website (published via GitHub)\n\n\n\nAfter this week, your group should have done (at least some of) the following:\n\nBegin planning for where your synthesized data should be archived for others to benefit from\nWritten code (version-controlled and stored in GitHub) to:\n\nProgrammatically download data from online repositories (where applicable)\nPerform more polished analysis\n\nDiscussed possible avenues and strategies for communication about your project\nConsidered whether to create an interactive Shiny app, Dashboard, etc.\nBuilt a team website with Quarto and GitHub Pages",
+    "crumbs": [
+      "Working Group Project Milestones"
     ]
   }
 ]
