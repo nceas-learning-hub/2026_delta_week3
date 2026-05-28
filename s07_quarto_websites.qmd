@@ -23,6 +23,12 @@ After completing this session, you will be able to:
 
 :::
 
+::: {.callout-note}
+## Acknowledgments
+
+Much of this page was adapted from the Long Term Ecological Research (LTER) Network's workshop "Creating Websites with Quarto". Those materials can be found at [lter.github.io/workshop-quarto](https://lter.github.io/workshop-quarto/)
+:::
+
 ## Overview
 
 Quarto is a popular tool for making easily customizable websites and these sites can be hosted through GitHub without much additional effort. These websites are free and can be a (relatively) easy way of making a central home for a given project to share core information with external partners.
