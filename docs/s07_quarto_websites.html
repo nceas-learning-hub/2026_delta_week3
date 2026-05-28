@@ -578,6 +578,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!--
 Prerequisite lessons or suggestions here
 - Quarto Background
+- Git/GitHub Introduction
 -->
 <div class="callout callout-style-default callout-learning no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
@@ -594,10 +595,8 @@ Prerequisite lessons or suggestions here
 <div class="callout-learning">
 <p>After completing this session, you will be able to:</p>
 <ul>
-<li><u>Use</u> GitHub to make a new repository</li>
-<li><u>Create</u> a Quarto website</li>
 <li><u>Make</u> a new branch on a GitHub repository</li>
-<li><u>Edit</u> files hosted on GitHub with an IDE</li>
+<li><u>Create</u> a Quarto website</li>
 <li><u>Define</u> “deploy” in the context of Quarto websites</li>
 <li><u>Describe</u> the purpose of GitHub Actions (GHAs)</li>
 <li><u>Use</u> a GHA to deploy a Quarto website</li>
@@ -612,7 +611,7 @@ Prerequisite lessons or suggestions here
 </div>
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p>Quarto is a popular tool for making websites easily customizable websites and these sites can be hosted through GitHub without much additional effort. These websites are free and can be a (relatively) easy way of making a central home for a given project to share core information with external partners.</p>
+<p>Quarto is a popular tool for making easily customizable websites and these sites can be hosted through GitHub without much additional effort. These websites are free and can be a (relatively) easy way of making a central home for a given project to share core information with external partners.</p>
 <p>The goal of this lesson is to get you started by working through the fundamental setup steps of creating your own Quarto website. This topic has <em>a lot</em> of depth so we won’t be able to cover everything today, but hopefully it is still a useful primer on this topic!</p>
 </section>
 <section id="make-the-websites-github-repository" class="level2" data-number="2">
@@ -634,7 +633,6 @@ Prerequisite lessons or suggestions here
 <li>Useful if you want to make sure visitors to your website have guidelines on how they’re allowed to use the content there</li>
 </ul></li>
 </ol>
-<p>For more information on repository creation or on the .gitignore specifically, see the LTER SciComp GitHub workshop <a href="https://lter.github.io/workshop-github/">here</a>.</p>
 <section id="repository-name-website-url-aside" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="repository-name-website-url-aside"><span class="header-section-number">2.1</span> Repository Name &amp; Website URL Aside</h3>
 <p>The name you pick for your repository (and whose GitHub account owns that repository) determines the URL for the website hosted there! See below for some examples.</p>
@@ -661,7 +659,6 @@ Prerequisite lessons or suggestions here
 <section id="make-a-gh-pages-branch" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="make-a-gh-pages-branch"><span class="header-section-number">3</span> Make a “gh-pages” Branch</h2>
 <p>GitHub <strong>branches</strong> are typically short-lived development spaces that operate parallel to the ‘main’ branch of a repository. The main branch is either called “main” or (for older repositories) “master.” If you don’t think you’ve used branches so far, you’re mistaken! All repositories have at least the main branch by default.</p>
-<p>For more information on branches, see the LTER SciComp GitHub workshop <a href="https://lter.github.io/workshop-github/">here</a>.</p>
 <p><strong>Deploying a Quarto website requires you make a branch named <em>exactly</em> “gh-pages”.</strong> We will never have to directly work in that branch but GitHub will use it behind-the-scenes to host the website. We could make this branch later, but let’s go ahead and do so now while we’re here.</p>
 <section id="check-the-active-branches" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="check-the-active-branches"><span class="header-section-number">3.1</span> 1. Check the Active Branches</h3>
@@ -689,8 +686,7 @@ Prerequisite lessons or suggestions here
 </section>
 <section id="clone-that-repository" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="clone-that-repository"><span class="header-section-number">4</span> Clone that Repository</h2>
-<p>Now that you have created a repository, we need to clone it locally so we can create the content we want in our IDE. This workshop assumes that you have some familiarity with the cloning workflow but please feel free to revisit the instructions embedded below from the LTER SciComp GitHub workshop.</p>
-<iframe src="https://lter.github.io/workshop-github/ide.html" height="420" width="850" style="border: 1px solid #2e3846;"></iframe>
+<p>Now that you have created a repository on GitHub, we need to clone it locally so we can create the content we want in our IDE. This workshop assumes that you have some familiarity with the cloning workflow already so it is not recapitulated here.</p>
 </section>
 <section id="create-core-website-skeleton" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="create-core-website-skeleton"><span class="header-section-number">5</span> Create Core Website Skeleton</h2>
@@ -804,13 +800,17 @@ _quarto.yml Contents
 <section id="test-it-locally" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="test-it-locally"><span class="header-section-number">6</span> Test it Locally</h2>
 <p>To make sure that everything is set up properly so far, it is good practice to create the website on your computer (i.e., “locally”) before continuing. We can do this by running the following <i class="fa-solid fa-terminal" aria-label="terminal"></i> command line snippet.</p>
-<pre><code>quarto preview</code></pre>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>quarto preview</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <p>This should create a new tab in your default browser application that shows a living version of what your website will look like after GitHub starts hosting it. The preview will keep going until you manually stop it (from the Terminal pane with the <code>Ctrl + C</code> keyboard shortcut) so feel free to make tweaks to either <code>_quarto.yml</code> or <code>index.qmd</code> while the preview is running. The preview will update a few moments after you save your edits to either of those files.</p>
 </section>
 <section id="render-the-website" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="render-the-website"><span class="header-section-number">7</span> Render the Website</h2>
 <p>Once you’re happy with the preview, it’s a good call to completely render the website just to make sure all of your most recent edits are reflected. You can do this with the following <i class="fa-solid fa-terminal" aria-label="terminal"></i> command line code.</p>
-<pre><code>quarto render</code></pre>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>quarto render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <p>This may create a <code>docs/</code> folder and a <code>_freeze/</code> folder depending on whether you have code chunks in <code>index.qmd</code> (or anything else requiring computation). <code>docs/</code> will show up in your file explorer but <em>not</em> the area reflecting Git because of how you expanded the .gitignore earlier. <code>_freeze/</code>, on the other hand, should show up in both locations if it is created during rendering.</p>
 <section id="commit-sync" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="commit-sync"><span class="header-section-number">7.1</span> Commit &amp; Sync</h3>
@@ -827,7 +827,7 @@ _quarto.yml Contents
 <ul>
 <li>Reducing the barrier to entry for novice coders interested in editing an existing website</li>
 </ul></li>
-<li>The LTER Scientific Computing team already encourages the adoption of GitHub for many other purposes
+<li>We have already encouraged the adoption of GitHub for many other purposes
 <ul>
 <li>E.g., reproducibility, code citation, collaboration, project management</li>
 </ul></li>
@@ -897,7 +897,7 @@ publish.yml Contents
 </section>
 <section id="push-the-gha-yaml" class="level3" data-number="10.3">
 <h3 data-number="10.3" class="anchored" data-anchor-id="push-the-gha-yaml"><span class="header-section-number">10.3</span> 3. Push the GHA YAML</h3>
-<p>Once you have created “publish.yml” (in the correct folder) and put the necessary stuff into it, <strong>commit that file and push it</strong>! You may want to run the <code>quarto render</code> <i class="fa-solid fa-cli" aria-label="cli"></i> CLI code again if you’ve edited other website files since your last push/sync.</p>
+<p>Once you have created “publish.yml” (in the correct folder) and put the necessary stuff into it, <strong>commit that file and push it</strong>! You may want to run the <i class="fa-solid fa-terminal" aria-label="terminal"></i> <code>quarto render</code> CLI code again if you’ve edited other website files since your last push/sync.</p>
 <p>Once you’ve pushed the “publish.yml” file, return to your repository landing page and you should see an <strong><span style="color:orange">orange</span></strong> circle next to that commit message.</p>
 <p><a href="images/quarto_websites/gha-01.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="images/quarto_websites/gha-01.png" class="img-fluid" alt="Screenshot of the top part of a GitHub repository's landing page while a GitHub Action is in progress"></a></p>
 <p>If you <strong>click the “Actions” tab</strong> at the top of the repository’s landing page you can get more specific information about the GitHub Action’s progress.</p>
@@ -1086,7 +1086,7 @@ SCSS Contents
 </section>
 <section id="integrate-into-the-website" class="level3" data-number="14.2">
 <h3 data-number="14.2" class="anchored" data-anchor-id="integrate-into-the-website"><span class="header-section-number">14.2</span> 2. Integrate Into the Website</h3>
-<p>To get your website to use these <code>.scss</code> files, we’ll need to make some minor edits to the website’s YAML. **Open your “_quarto.yml” file in your IDE and add the following lines**.</p>
+<p>To get your website to use these <code>.scss</code> files, we’ll need to make some minor edits to the website’s YAML. <strong>Open your “_quarto.yml” file in your IDE and add the following lines</strong>.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1117,7 +1117,7 @@ SCSS Contents
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Customizing Colors</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Customizing Fonts</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<p>First, I’d recommend visiting <a href="https://coolors.co/palettes/popular">coolors.co</a> and looking at their trending color palettes for one that feels like your vibe. To incorporate that in your site <strong>you’ll need to copy the hexadecimal code (6-digit color code) and add it to the relevant <code>.scss</code> file</strong>.</p>
+<p>To find new colors, visit <a href="https://coolors.co/palettes/popular">coolors.co</a> and look at their trending color palettes for one that feels like your vibe. To incorporate that in your site <strong>you’ll need to copy the hexadecimal code (6-digit color code) and add it to the relevant <code>.scss</code> file</strong>.</p>
 <p>Typically the simplest way to do this is to <strong>assign each color to a variable name</strong>, just like the default colors you copy/pasted in earlier (e.g., <code>$cream: #F4F3EE;</code>). Be sure that each line starts with a <code>$</code> and ends with a <code>;</code>.</p>
 <p>Once you’ve assigned variable names to your new color(s), <strong>update the existing fields in the lower half of the <code>.scss</code> file</strong> with those variable names. Consult the comments for some explanation of what those variable names are called. Remember too that each variable name needs to start with <code>$</code> when you invoke it (so that Sass knows you’re talking about an existing variable).</p>
 </div>
