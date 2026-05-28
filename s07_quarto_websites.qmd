@@ -73,19 +73,19 @@ GitHub **branches** are typically short-lived development spaces that operate pa
 
 **Deploying a Quarto website requires you make a branch named _exactly_ "gh-pages".** We will never have to directly work in that branch but GitHub will use it behind-the-scenes to host the website. We could make this branch later, but let's go ahead and do so now while we're here.
 
-### 1. Check the Active Branches
+### Check the Active Branches
 
 From your repository's home page, **click the "{{< fa code-branch >}} 1 Branch" button**. It is on the left side of the same row of buttons as the "Code" button. Note that you can see your current branch name (likely "main") just to the left of the desired button. 
 
 ![](images/quarto_websites/branch-01.png){fig-alt="Screenshot of the top of a GitHub repository's landing page" .lightbox}
 
-### 2. Start Creating a New Branch
+### Start Creating a New Branch
 
 In the resulting page, **click the "New Branch" button** in the top right corner.
 
 ![](images/quarto_websites/branch-02.png){fig-alt="Screenshot of the page in a GitHub repostiory where all active branches can be viewed" .lightbox}
 
-### 3. Actually Create the "gh-pages" Branch
+### Actually Create the "gh-pages" Branch
 
 The previous step will create a small pop-up window with an empty text field for you to enter the name of your branch. **Type _exactly_ "gh-pages" and click "Create new branch"**. Note that "gh" and "pages" are separated by a hyphen. If you name this branch anything other than "gh-pages", _GitHub will not correctly host your website!_ So, triple check spelling/casing.
 
@@ -263,7 +263,7 @@ Another benefit of this approach is that <u>GitHub Actions are free for public r
 
 ## Set Up the Deployment GHA
 
-### 1. Create the GHA YAML
+### Create the GHA YAML
 
 Because we created a "gh-pages" branch when we first made the repository, all that we need to do to start our GHA is to create the YAML file that tells GitHub what action we want it to perform. GitHub requires that this file be called "publish.yml" and be at the following path within your website repository: `.github` / `workflows` / `publish.yml`. <u>Note that the `.github/` folder name starts with a period!</u>
 
@@ -306,7 +306,7 @@ jobs:
 
 **Do not commit or push/sync this file yet!** We'll get to that in a moment.
 
-### 2. Tweak GitHub Repository Settings
+### Tweak GitHub Repository Settings
 
 Before we can push our GHA file, we need to change one setting in your GitHub repository. Do the following:
 
@@ -317,7 +317,7 @@ Before we can push our GHA file, we need to change one setting in your GitHub re
 
 ![](images/quarto_websites/gh-pages-settings-01.png){fig-alt="Screenshot of GitHub Pages settings (for a repository) where the 'Source' dropdown menu is set to 'Deploy from a branch' and the 'Branch' dropdown menus are set to 'gh-pages' and '/ (root)' (from left to right)" width="80%" fig-align="center" .lightbox}
 
-### 3. Push the GHA YAML
+### Push the GHA YAML
 
 Once you have created "publish.yml" (in the correct folder) and put the necessary stuff into it, **commit that file and push it**! You may want to run the {{< fa terminal >}} `quarto render` CLI code again if you've edited other website files since your last push/sync.
 
@@ -353,7 +353,7 @@ You should now see the website in the "About" sidebar of the repository!
 
 Once you have a working website, adding content is straightforward! On your local computer, work through the following steps.
 
-### 1. Make a Quarto File
+### Make a Quarto File
 
 Each new page requires a new file. **Go ahead and create a new Quarto file.** When you save it, keep in mind that the repository-name-to-website-URL relationship will also affect the link to this specific page. Check out the example below for one way of visualizing this relationship.
 
@@ -361,7 +361,7 @@ github.com/**<span style="color:purple">owner</span>**/**<span style="color:oran
 
 If you do not use sub-folders, the same relationship would occur just without the "**<span style="color:blue">folder</span>**" part. The take-away of the above is essentially that **you should save this Quarto file with a brief name that is descriptive of this page's purpose** in your website.
 
-### 2. Update the Global YAML
+### Update the Global YAML
 
 For this new page to show up in your website, you need to edit your "_quarto.yml" file so that Quarto knows where your page should be linked (e.g., in the navbar, in a dropdown menu, etc.). To do this:
 
@@ -376,7 +376,7 @@ While indentation does not affect R code, it <u>_absolutely_ affects YAML code</
 
 :::
 
-### 3. Test it Locally
+### Test it Locally
 
 To make sure that your new page displays as you desire, run {{< fa terminal >}} `quarto preview` and make sure your website looks how you want it to. If it doesn't, edit the offending file(s), save those edits, and look at the preview again.
 
@@ -386,7 +386,7 @@ To make sure that your new page displays as you desire, run {{< fa terminal >}} 
 **The preview will keep going until you manually stop it** so be sure to stop it when you're ready to move on.
 :::
 
-### 4. Render & Push
+### Render & Push
 
 Once you're happy with how the preview looks:
 
@@ -427,7 +427,7 @@ $object: value;
 
 ## Customize the Website with Sass
 
-### 1. Create Sass Stylesheets
+### Create Sass Stylesheets
 
 **Create two new files: "theme_light.scss" and "theme_dark.scss".** This will let us easily create a light mode and a dark mode for our website so that visitors can click a toggle in the navbar to choose their desired aesthetic.
 
@@ -491,7 +491,7 @@ pre code:not(.sourceCode) { background-color: $gray-2; }
 
 This will result in your light and dark mode being identical to start with but that's okay because this method makes sure that the format of both SCSS files is correct.
 
-### 2. Integrate Into the Website
+### Integrate Into the Website
 
 To get your website to use these `.scss` files, we'll need to make some minor edits to the website's YAML. **Open your "\_quarto.yml" file in your IDE and add the following lines**.
 
@@ -515,7 +515,7 @@ If you're using a mostly unmodified `_quarto.yml`, this will be about 4 lines up
 
 **Double check that your indentation is right after you copy/paste those lines!** `theme:` and `mainfont` should both be one indent more than `html:` while `light:` and `dark:` should have an additional indent beyond `theme:`.
 
-### 3. Customize to Your Taste
+### Customize to Your Taste
 
 The Sass code you copy/pasted is functional and inoffensive but likely does not reflect your personal aesthetic sensibilities. So, take some time to find some colors that you prefer. This is also a great time to make your dark mode actually a dark mode (currently it has the same content as the light mode `.scss` file).
 
@@ -542,13 +542,13 @@ To find new possible fonts, check out Google Fonts ([fonts.google.com](https://f
 
 :::
 
-### 4. Test it Locally
+### Test it Locally
 
 To make sure that your new website displays correctly, run {{< fa terminal >}} `quarto preview`. If it doesn't, edit the offending file(s), save those edits, and look at the preview again.
 
 This step can be especially critical when fiddling with (yes, that's the technical term {{< fa smile >}}) colors for your website. Use the preview extensively to be sure you're happy with your chosen color palette.
 
-### 5. Render & Push
+### Render & Push
 
 Once you're happy with how the preview looks:
 

@@ -528,9 +528,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#make-a-gh-pages-branch" id="toc-make-a-gh-pages-branch" class="nav-link" data-scroll-target="#make-a-gh-pages-branch"><span class="header-section-number">3</span> Make a “gh-pages” Branch</a>
   <ul class="collapse">
-  <li><a href="#check-the-active-branches" id="toc-check-the-active-branches" class="nav-link" data-scroll-target="#check-the-active-branches"><span class="header-section-number">3.1</span> 1. Check the Active Branches</a></li>
-  <li><a href="#start-creating-a-new-branch" id="toc-start-creating-a-new-branch" class="nav-link" data-scroll-target="#start-creating-a-new-branch"><span class="header-section-number">3.2</span> 2. Start Creating a New Branch</a></li>
-  <li><a href="#actually-create-the-gh-pages-branch" id="toc-actually-create-the-gh-pages-branch" class="nav-link" data-scroll-target="#actually-create-the-gh-pages-branch"><span class="header-section-number">3.3</span> 3. Actually Create the “gh-pages” Branch</a></li>
+  <li><a href="#check-the-active-branches" id="toc-check-the-active-branches" class="nav-link" data-scroll-target="#check-the-active-branches"><span class="header-section-number">3.1</span> Check the Active Branches</a></li>
+  <li><a href="#start-creating-a-new-branch" id="toc-start-creating-a-new-branch" class="nav-link" data-scroll-target="#start-creating-a-new-branch"><span class="header-section-number">3.2</span> Start Creating a New Branch</a></li>
+  <li><a href="#actually-create-the-gh-pages-branch" id="toc-actually-create-the-gh-pages-branch" class="nav-link" data-scroll-target="#actually-create-the-gh-pages-branch"><span class="header-section-number">3.3</span> Actually Create the “gh-pages” Branch</a></li>
   </ul></li>
   <li><a href="#clone-that-repository" id="toc-clone-that-repository" class="nav-link" data-scroll-target="#clone-that-repository"><span class="header-section-number">4</span> Clone that Repository</a></li>
   <li><a href="#create-core-website-skeleton" id="toc-create-core-website-skeleton" class="nav-link" data-scroll-target="#create-core-website-skeleton"><span class="header-section-number">5</span> Create Core Website Skeleton</a></li>
@@ -543,26 +543,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#github-actions-ghas" id="toc-github-actions-ghas" class="nav-link" data-scroll-target="#github-actions-ghas"><span class="header-section-number">9</span> GitHub Actions (GHAs)</a></li>
   <li><a href="#set-up-the-deployment-gha" id="toc-set-up-the-deployment-gha" class="nav-link" data-scroll-target="#set-up-the-deployment-gha"><span class="header-section-number">10</span> Set Up the Deployment GHA</a>
   <ul class="collapse">
-  <li><a href="#create-the-gha-yaml" id="toc-create-the-gha-yaml" class="nav-link" data-scroll-target="#create-the-gha-yaml"><span class="header-section-number">10.1</span> 1. Create the GHA YAML</a></li>
-  <li><a href="#tweak-github-repository-settings" id="toc-tweak-github-repository-settings" class="nav-link" data-scroll-target="#tweak-github-repository-settings"><span class="header-section-number">10.2</span> 2. Tweak GitHub Repository Settings</a></li>
-  <li><a href="#push-the-gha-yaml" id="toc-push-the-gha-yaml" class="nav-link" data-scroll-target="#push-the-gha-yaml"><span class="header-section-number">10.3</span> 3. Push the GHA YAML</a></li>
+  <li><a href="#create-the-gha-yaml" id="toc-create-the-gha-yaml" class="nav-link" data-scroll-target="#create-the-gha-yaml"><span class="header-section-number">10.1</span> Create the GHA YAML</a></li>
+  <li><a href="#tweak-github-repository-settings" id="toc-tweak-github-repository-settings" class="nav-link" data-scroll-target="#tweak-github-repository-settings"><span class="header-section-number">10.2</span> Tweak GitHub Repository Settings</a></li>
+  <li><a href="#push-the-gha-yaml" id="toc-push-the-gha-yaml" class="nav-link" data-scroll-target="#push-the-gha-yaml"><span class="header-section-number">10.3</span> Push the GHA YAML</a></li>
   </ul></li>
   <li><a href="#github-housekeeping" id="toc-github-housekeeping" class="nav-link" data-scroll-target="#github-housekeeping"><span class="header-section-number">11</span> GitHub Housekeeping</a></li>
   <li><a href="#create-a-new-page" id="toc-create-a-new-page" class="nav-link" data-scroll-target="#create-a-new-page"><span class="header-section-number">12</span> Create a New Page</a>
   <ul class="collapse">
-  <li><a href="#make-a-quarto-file" id="toc-make-a-quarto-file" class="nav-link" data-scroll-target="#make-a-quarto-file"><span class="header-section-number">12.1</span> 1. Make a Quarto File</a></li>
-  <li><a href="#update-the-global-yaml" id="toc-update-the-global-yaml" class="nav-link" data-scroll-target="#update-the-global-yaml"><span class="header-section-number">12.2</span> 2. Update the Global YAML</a></li>
-  <li><a href="#test-it-locally-1" id="toc-test-it-locally-1" class="nav-link" data-scroll-target="#test-it-locally-1"><span class="header-section-number">12.3</span> 3. Test it Locally</a></li>
-  <li><a href="#render-push" id="toc-render-push" class="nav-link" data-scroll-target="#render-push"><span class="header-section-number">12.4</span> 4. Render &amp; Push</a></li>
+  <li><a href="#make-a-quarto-file" id="toc-make-a-quarto-file" class="nav-link" data-scroll-target="#make-a-quarto-file"><span class="header-section-number">12.1</span> Make a Quarto File</a></li>
+  <li><a href="#update-the-global-yaml" id="toc-update-the-global-yaml" class="nav-link" data-scroll-target="#update-the-global-yaml"><span class="header-section-number">12.2</span> Update the Global YAML</a></li>
+  <li><a href="#test-it-locally-1" id="toc-test-it-locally-1" class="nav-link" data-scroll-target="#test-it-locally-1"><span class="header-section-number">12.3</span> Test it Locally</a></li>
+  <li><a href="#render-push" id="toc-render-push" class="nav-link" data-scroll-target="#render-push"><span class="header-section-number">12.4</span> Render &amp; Push</a></li>
   </ul></li>
   <li><a href="#scss-background" id="toc-scss-background" class="nav-link" data-scroll-target="#scss-background"><span class="header-section-number">13</span> SCSS Background</a></li>
   <li><a href="#customize-the-website-with-sass" id="toc-customize-the-website-with-sass" class="nav-link" data-scroll-target="#customize-the-website-with-sass"><span class="header-section-number">14</span> Customize the Website with Sass</a>
   <ul class="collapse">
-  <li><a href="#create-sass-stylesheets" id="toc-create-sass-stylesheets" class="nav-link" data-scroll-target="#create-sass-stylesheets"><span class="header-section-number">14.1</span> 1. Create Sass Stylesheets</a></li>
-  <li><a href="#integrate-into-the-website" id="toc-integrate-into-the-website" class="nav-link" data-scroll-target="#integrate-into-the-website"><span class="header-section-number">14.2</span> 2. Integrate Into the Website</a></li>
-  <li><a href="#customize-to-your-taste" id="toc-customize-to-your-taste" class="nav-link" data-scroll-target="#customize-to-your-taste"><span class="header-section-number">14.3</span> 3. Customize to Your Taste</a></li>
-  <li><a href="#test-it-locally-2" id="toc-test-it-locally-2" class="nav-link" data-scroll-target="#test-it-locally-2"><span class="header-section-number">14.4</span> 4. Test it Locally</a></li>
-  <li><a href="#render-push-1" id="toc-render-push-1" class="nav-link" data-scroll-target="#render-push-1"><span class="header-section-number">14.5</span> 5. Render &amp; Push</a></li>
+  <li><a href="#create-sass-stylesheets" id="toc-create-sass-stylesheets" class="nav-link" data-scroll-target="#create-sass-stylesheets"><span class="header-section-number">14.1</span> Create Sass Stylesheets</a></li>
+  <li><a href="#integrate-into-the-website" id="toc-integrate-into-the-website" class="nav-link" data-scroll-target="#integrate-into-the-website"><span class="header-section-number">14.2</span> Integrate Into the Website</a></li>
+  <li><a href="#customize-to-your-taste" id="toc-customize-to-your-taste" class="nav-link" data-scroll-target="#customize-to-your-taste"><span class="header-section-number">14.3</span> Customize to Your Taste</a></li>
+  <li><a href="#test-it-locally-2" id="toc-test-it-locally-2" class="nav-link" data-scroll-target="#test-it-locally-2"><span class="header-section-number">14.4</span> Test it Locally</a></li>
+  <li><a href="#render-push-1" id="toc-render-push-1" class="nav-link" data-scroll-target="#render-push-1"><span class="header-section-number">14.5</span> Render &amp; Push</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -661,17 +661,17 @@ Prerequisite lessons or suggestions here
 <p>GitHub <strong>branches</strong> are typically short-lived development spaces that operate parallel to the ‘main’ branch of a repository. The main branch is either called “main” or (for older repositories) “master.” If you don’t think you’ve used branches so far, you’re mistaken! All repositories have at least the main branch by default.</p>
 <p><strong>Deploying a Quarto website requires you make a branch named <em>exactly</em> “gh-pages”.</strong> We will never have to directly work in that branch but GitHub will use it behind-the-scenes to host the website. We could make this branch later, but let’s go ahead and do so now while we’re here.</p>
 <section id="check-the-active-branches" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="check-the-active-branches"><span class="header-section-number">3.1</span> 1. Check the Active Branches</h3>
+<h3 data-number="3.1" class="anchored" data-anchor-id="check-the-active-branches"><span class="header-section-number">3.1</span> Check the Active Branches</h3>
 <p>From your repository’s home page, <strong>click the “<i class="fa-solid fa-code-branch" aria-label="code-branch"></i> 1 Branch” button</strong>. It is on the left side of the same row of buttons as the “Code” button. Note that you can see your current branch name (likely “main”) just to the left of the desired button.</p>
 <p><a href="images/quarto_websites/branch-01.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/quarto_websites/branch-01.png" class="img-fluid" alt="Screenshot of the top of a GitHub repository's landing page"></a></p>
 </section>
 <section id="start-creating-a-new-branch" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="start-creating-a-new-branch"><span class="header-section-number">3.2</span> 2. Start Creating a New Branch</h3>
+<h3 data-number="3.2" class="anchored" data-anchor-id="start-creating-a-new-branch"><span class="header-section-number">3.2</span> Start Creating a New Branch</h3>
 <p>In the resulting page, <strong>click the “New Branch” button</strong> in the top right corner.</p>
 <p><a href="images/quarto_websites/branch-02.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/quarto_websites/branch-02.png" class="img-fluid" alt="Screenshot of the page in a GitHub repostiory where all active branches can be viewed"></a></p>
 </section>
 <section id="actually-create-the-gh-pages-branch" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="actually-create-the-gh-pages-branch"><span class="header-section-number">3.3</span> 3. Actually Create the “gh-pages” Branch</h3>
+<h3 data-number="3.3" class="anchored" data-anchor-id="actually-create-the-gh-pages-branch"><span class="header-section-number">3.3</span> Actually Create the “gh-pages” Branch</h3>
 <p>The previous step will create a small pop-up window with an empty text field for you to enter the name of your branch. <strong>Type <em>exactly</em> “gh-pages” and click “Create new branch”</strong>. Note that “gh” and “pages” are separated by a hyphen. If you name this branch anything other than “gh-pages”, <em>GitHub will not correctly host your website!</em> So, triple check spelling/casing.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -843,7 +843,7 @@ _quarto.yml Contents
 <section id="set-up-the-deployment-gha" class="level2" data-number="10">
 <h2 data-number="10" class="anchored" data-anchor-id="set-up-the-deployment-gha"><span class="header-section-number">10</span> Set Up the Deployment GHA</h2>
 <section id="create-the-gha-yaml" class="level3" data-number="10.1">
-<h3 data-number="10.1" class="anchored" data-anchor-id="create-the-gha-yaml"><span class="header-section-number">10.1</span> 1. Create the GHA YAML</h3>
+<h3 data-number="10.1" class="anchored" data-anchor-id="create-the-gha-yaml"><span class="header-section-number">10.1</span> Create the GHA YAML</h3>
 <p>Because we created a “gh-pages” branch when we first made the repository, all that we need to do to start our GHA is to create the YAML file that tells GitHub what action we want it to perform. GitHub requires that this file be called “publish.yml” and be at the following path within your website repository: <code>.github</code> / <code>workflows</code> / <code>publish.yml</code>. <u>Note that the <code>.github/</code> folder name starts with a period!</u></p>
 <p>Once you have this file, <strong>click the collapsed menu below and copy/paste all of its contents into your empty publish.yml file.</strong></p>
 <details>
@@ -881,7 +881,7 @@ publish.yml Contents
 <p><strong>Do not commit or push/sync this file yet!</strong> We’ll get to that in a moment.</p>
 </section>
 <section id="tweak-github-repository-settings" class="level3" data-number="10.2">
-<h3 data-number="10.2" class="anchored" data-anchor-id="tweak-github-repository-settings"><span class="header-section-number">10.2</span> 2. Tweak GitHub Repository Settings</h3>
+<h3 data-number="10.2" class="anchored" data-anchor-id="tweak-github-repository-settings"><span class="header-section-number">10.2</span> Tweak GitHub Repository Settings</h3>
 <p>Before we can push our GHA file, we need to change one setting in your GitHub repository. Do the following:</p>
 <ol type="1">
 <li>Go to your GitHub repository’s landing page</li>
@@ -896,7 +896,7 @@ publish.yml Contents
 </div>
 </section>
 <section id="push-the-gha-yaml" class="level3" data-number="10.3">
-<h3 data-number="10.3" class="anchored" data-anchor-id="push-the-gha-yaml"><span class="header-section-number">10.3</span> 3. Push the GHA YAML</h3>
+<h3 data-number="10.3" class="anchored" data-anchor-id="push-the-gha-yaml"><span class="header-section-number">10.3</span> Push the GHA YAML</h3>
 <p>Once you have created “publish.yml” (in the correct folder) and put the necessary stuff into it, <strong>commit that file and push it</strong>! You may want to run the <i class="fa-solid fa-terminal" aria-label="terminal"></i> <code>quarto render</code> CLI code again if you’ve edited other website files since your last push/sync.</p>
 <p>Once you’ve pushed the “publish.yml” file, return to your repository landing page and you should see an <strong><span style="color:orange">orange</span></strong> circle next to that commit message.</p>
 <p><a href="images/quarto_websites/gha-01.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="images/quarto_websites/gha-01.png" class="img-fluid" alt="Screenshot of the top part of a GitHub repository's landing page while a GitHub Action is in progress"></a></p>
@@ -928,13 +928,13 @@ publish.yml Contents
 <h2 data-number="12" class="anchored" data-anchor-id="create-a-new-page"><span class="header-section-number">12</span> Create a New Page</h2>
 <p>Once you have a working website, adding content is straightforward! On your local computer, work through the following steps.</p>
 <section id="make-a-quarto-file" class="level3" data-number="12.1">
-<h3 data-number="12.1" class="anchored" data-anchor-id="make-a-quarto-file"><span class="header-section-number">12.1</span> 1. Make a Quarto File</h3>
+<h3 data-number="12.1" class="anchored" data-anchor-id="make-a-quarto-file"><span class="header-section-number">12.1</span> Make a Quarto File</h3>
 <p>Each new page requires a new file. <strong>Go ahead and create a new Quarto file.</strong> When you save it, keep in mind that the repository-name-to-website-URL relationship will also affect the link to this specific page. Check out the example below for one way of visualizing this relationship.</p>
 <p>github.com/<strong><span style="color:purple">owner</span></strong>/<strong><span style="color:orange">repository</span></strong>/<strong><span style="color:blue">folder</span></strong>/<strong><span style="color:green">file</span>.qmd</strong> &nbsp;&nbsp; <i class="fa-solid fa-arrow-right" aria-label="arrow-right"></i> &nbsp;&nbsp; <strong><span style="color:purple">owner</span></strong>.github.io/<strong><span style="color:orange">repository</span></strong>/<strong><span style="color:blue">folder</span></strong>/<strong><span style="color:green">file</span>.html</strong></p>
 <p>If you do not use sub-folders, the same relationship would occur just without the “<strong><span style="color:blue">folder</span></strong>” part. The take-away of the above is essentially that <strong>you should save this Quarto file with a brief name that is descriptive of this page’s purpose</strong> in your website.</p>
 </section>
 <section id="update-the-global-yaml" class="level3" data-number="12.2">
-<h3 data-number="12.2" class="anchored" data-anchor-id="update-the-global-yaml"><span class="header-section-number">12.2</span> 2. Update the Global YAML</h3>
+<h3 data-number="12.2" class="anchored" data-anchor-id="update-the-global-yaml"><span class="header-section-number">12.2</span> Update the Global YAML</h3>
 <p>For this new page to show up in your website, you need to edit your “_quarto.yml” file so that Quarto knows where your page should be linked (e.g., in the navbar, in a dropdown menu, etc.). To do this:</p>
 <ol type="1">
 <li>Open your “_quarto.yml”</li>
@@ -958,7 +958,7 @@ publish.yml Contents
 </div>
 </section>
 <section id="test-it-locally-1" class="level3" data-number="12.3">
-<h3 data-number="12.3" class="anchored" data-anchor-id="test-it-locally-1"><span class="header-section-number">12.3</span> 3. Test it Locally</h3>
+<h3 data-number="12.3" class="anchored" data-anchor-id="test-it-locally-1"><span class="header-section-number">12.3</span> Test it Locally</h3>
 <p>To make sure that your new page displays as you desire, run <i class="fa-solid fa-terminal" aria-label="terminal"></i> <code>quarto preview</code> and make sure your website looks how you want it to. If it doesn’t, edit the offending file(s), save those edits, and look at the preview again.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -975,7 +975,7 @@ publish.yml Contents
 </div>
 </section>
 <section id="render-push" class="level3" data-number="12.4">
-<h3 data-number="12.4" class="anchored" data-anchor-id="render-push"><span class="header-section-number">12.4</span> 4. Render &amp; Push</h3>
+<h3 data-number="12.4" class="anchored" data-anchor-id="render-push"><span class="header-section-number">12.4</span> Render &amp; Push</h3>
 <p>Once you’re happy with how the preview looks:</p>
 <ol type="1">
 <li>Run <i class="fa-solid fa-terminal" aria-label="terminal"></i> <code>quarto render</code></li>
@@ -1027,7 +1027,7 @@ $object: value;</code></pre>
 <section id="customize-the-website-with-sass" class="level2" data-number="14">
 <h2 data-number="14" class="anchored" data-anchor-id="customize-the-website-with-sass"><span class="header-section-number">14</span> Customize the Website with Sass</h2>
 <section id="create-sass-stylesheets" class="level3" data-number="14.1">
-<h3 data-number="14.1" class="anchored" data-anchor-id="create-sass-stylesheets"><span class="header-section-number">14.1</span> 1. Create Sass Stylesheets</h3>
+<h3 data-number="14.1" class="anchored" data-anchor-id="create-sass-stylesheets"><span class="header-section-number">14.1</span> Create Sass Stylesheets</h3>
 <p><strong>Create two new files: “theme_light.scss” and “theme_dark.scss”.</strong> This will let us easily create a light mode and a dark mode for our website so that visitors can click a toggle in the navbar to choose their desired aesthetic.</p>
 <p>Once you have these files, <strong>click the collapsed menu below and copy/paste all of its contents into both empty SCSS files.</strong></p>
 <details>
@@ -1085,7 +1085,7 @@ SCSS Contents
 <p>This will result in your light and dark mode being identical to start with but that’s okay because this method makes sure that the format of both SCSS files is correct.</p>
 </section>
 <section id="integrate-into-the-website" class="level3" data-number="14.2">
-<h3 data-number="14.2" class="anchored" data-anchor-id="integrate-into-the-website"><span class="header-section-number">14.2</span> 2. Integrate Into the Website</h3>
+<h3 data-number="14.2" class="anchored" data-anchor-id="integrate-into-the-website"><span class="header-section-number">14.2</span> Integrate Into the Website</h3>
 <p>To get your website to use these <code>.scss</code> files, we’ll need to make some minor edits to the website’s YAML. <strong>Open your “_quarto.yml” file in your IDE and add the following lines</strong>.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1111,7 +1111,7 @@ SCSS Contents
 <p><strong>Double check that your indentation is right after you copy/paste those lines!</strong> <code>theme:</code> and <code>mainfont</code> should both be one indent more than <code>html:</code> while <code>light:</code> and <code>dark:</code> should have an additional indent beyond <code>theme:</code>.</p>
 </section>
 <section id="customize-to-your-taste" class="level3" data-number="14.3">
-<h3 data-number="14.3" class="anchored" data-anchor-id="customize-to-your-taste"><span class="header-section-number">14.3</span> 3. Customize to Your Taste</h3>
+<h3 data-number="14.3" class="anchored" data-anchor-id="customize-to-your-taste"><span class="header-section-number">14.3</span> Customize to Your Taste</h3>
 <p>The Sass code you copy/pasted is functional and inoffensive but likely does not reflect your personal aesthetic sensibilities. So, take some time to find some colors that you prefer. This is also a great time to make your dark mode actually a dark mode (currently it has the same content as the light mode <code>.scss</code> file).</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Customizing Colors</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Customizing Fonts</a></li></ul>
@@ -1137,12 +1137,12 @@ SCSS Contents
 </div>
 </section>
 <section id="test-it-locally-2" class="level3" data-number="14.4">
-<h3 data-number="14.4" class="anchored" data-anchor-id="test-it-locally-2"><span class="header-section-number">14.4</span> 4. Test it Locally</h3>
+<h3 data-number="14.4" class="anchored" data-anchor-id="test-it-locally-2"><span class="header-section-number">14.4</span> Test it Locally</h3>
 <p>To make sure that your new website displays correctly, run <i class="fa-solid fa-terminal" aria-label="terminal"></i> <code>quarto preview</code>. If it doesn’t, edit the offending file(s), save those edits, and look at the preview again.</p>
 <p>This step can be especially critical when fiddling with (yes, that’s the technical term <i class="fa-solid fa-smile" aria-label="smile"></i>) colors for your website. Use the preview extensively to be sure you’re happy with your chosen color palette.</p>
 </section>
 <section id="render-push-1" class="level3" data-number="14.5">
-<h3 data-number="14.5" class="anchored" data-anchor-id="render-push-1"><span class="header-section-number">14.5</span> 5. Render &amp; Push</h3>
+<h3 data-number="14.5" class="anchored" data-anchor-id="render-push-1"><span class="header-section-number">14.5</span> Render &amp; Push</h3>
 <p>Once you’re happy with how the preview looks:</p>
 <ol type="1">
 <li>Run <i class="fa-solid fa-terminal" aria-label="terminal"></i> <code>quarto render</code></li>
