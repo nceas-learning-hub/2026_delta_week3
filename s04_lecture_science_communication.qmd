@@ -1,5 +1,5 @@
 ---
-title: "SciComm: The Message Box"
+title: "Science Communication Fundamentals"
 ---
 
 <!--
