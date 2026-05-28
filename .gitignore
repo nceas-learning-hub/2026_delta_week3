@@ -52,6 +52,7 @@ vignettes/*.pdf
 # Quarto internal stuff
 /.quarto/
 **/*.quarto_ipynb
+docs/
 
 # GenAI stuff
 .positai
