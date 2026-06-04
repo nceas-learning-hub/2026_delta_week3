@@ -3,19 +3,1153 @@ title: Interactivity with Shiny Apps
 ---
 
 <!--
-Prerequisite lessons or suggestions here
+Potential prerequisite lessons:
+- Programmatic Data Access (contentid, EDI data) - data loading approach echoed here
+- Cleaning and wrangling data with tidyverse
+- Intro to literate analysis with R and Quarto
 -->
 
 :::{.callout-learning}
 After completing this session, you will be able to:
 
-- Create learning objectives using verbs based on [Bloom's Taxonomy](https://en.wikipedia.org/wiki/Bloom%27s_taxonomy#/media/File:Bloom%E2%80%99s_Taxonomy_Verbs.png)
+- <u>Define</u> the key components of a Shiny application (UI, server, reactivity)
+- <u>Create</u> a single-file Shiny app using modern `bslib` layouts
+- <u>Apply</u> the three rules for building reactive server outputs
+- <u>Use</u> `reactive()` to create reactive data objects in the server
+- <u>Compare</u> single-file and two-file app structures
+- <u>Identify</u> options for sharing Shiny apps with others
+:::
+
+::: {.callout-note}
+## Acknowledgments
+
+This lesson draws heavily from [EDS 296: Intro to Shiny](https://ucsb-meds.github.io/EDS-296-Intro-to-Shiny/) created and taught by [Sam Csik](https://samanthacsik.github.io/) for the Bren School's Master of Environmental Data Science program, and from NCEAS [Visualization with Shiny](https://learning.nceas.ucsb.edu) training materials. Examples use data from the [Yolo Bypass Fish Monitoring Program](https://doi.org/10.6073/pasta/b0b15aef7f3b52d2c5adc10004c05a6f), collected by the Interagency Ecological Program.
 :::
 
 ## Overview
 
-Brief overview of lesson
-## Use level 2 headers for sections
+Shiny is an R package that turns your analyses into interactive web applications, without requiring web development experience. For practicing scientists and managers, this opens up real possibilities: imagine building an app that lets stakeholders explore water quality trends over time, filter fish species occurrence records by season or location, or see how monitoring outcomes compare across management scenarios -- all through a browser, with no R knowledge required on their end.
 
-Visit https://nceas-learning-hub.github.io/lh_packages/ for information on contributing new lessons, content guidelines, and style guide.
+In this session, we'll build interactive data apps from scratch using water quality and fish catch data from the Yolo Bypass Fish Monitoring Program. By the end of the core session, you'll have a working reactive Shiny app and the foundation to start building your own for the group projects.
 
+## What is Shiny?
+
+::: column-margin
+![](images/shiny/shiny-hex.png){width="80%" fig-align="right"}
+:::
+
+Shiny is an R package for creating interactive web applications entirely from R code, without needing to learn HTML, JavaScript, or CSS.
+
+### Where Shiny fits in the data product landscape {.unnumbered}
+
+You have multiple choices for how to package up and share your code-driven data analysis and findings. Consider the following table. From top to bottom, each option offers increasing interactivity, but also more complexity:
+
+| Product | What it is | Interactivity |
+|---------|------------|---------------|
+| Script or notebook | R code + narrative, rendered once | None (static output) |
+| Quarto document | Reproducible report, shareable as HTML or PDF | None (static output) |
+| Quarto doc with widgets | Same, but embeds JS-based widgets | Limited (readers can pan/zoom a Leaflet map, sort a DataTable, or hover over a Plotly chart, but only within pre-rendered data) |
+| **Shiny app** | **Live R process responds to user input** | **Full (users control what data is shown, what models are run, what is downloaded)** |
+
+The key distinction: widgets like Leaflet, DataTables, and Plotly are rendered once when the document is generated. They're clever HTML/JavaScript that runs in the browser with a fixed dataset. In contrast, a Shiny app keeps an R session running on a server, so every user action can trigger new computations, filter different data, or call external APIs.
+
+### Why build a Shiny App? {.unnumbered}
+
+<br>
+
+| Rationale | Example |
+|-----------|---------|
+| Share environmental monitoring data in an engaging, interactive format | [Delta Science Monitoring Apps](https://deltascience.shinyapps.io/monitoring/) provide interactive exploration of Delta monitoring data |
+| Make tools you've built in R accessible to colleagues and managers who don't code | [Marine Mammal Bycatch App](https://msiple.shinyapps.io/mmrefpoints/) provides interactive population model for fisheries management decisions |
+| Combine data archiving and interactive visualization, loading directly from a repository | [Alaska Board of Fisheries App](https://sasap-data.shinyapps.io/board_of_fisheries/) is an interactive explorer linked to archived data |
+
+## The Anatomy of a Shiny App
+
+### Building Blocks {.unnumbered}
+
+Every Shiny app has two fundamental components:
+
+1. A **user interface (UI)**: the web page your users see and interact with (the "frontend")
+2. A **server function**: the R code that powers the app's computations (the "backend")
+
+![Source: Intro to Shiny - EDS 430, Bren School UCSB](images/shiny/basic_shiny_app.png){.lightbox}
+
+The **UI** controls layout and appearance. It is written using functions from the `{shiny}` and `{bslib}` packages that generate HTML behind the scenes. The **server** contains the backend logic in the form of instructions for how to respond when a user makes a change.
+
+Here's what the code for a minimal Shiny app looks like:
+
+```{r}
+#| label: very-basic-shiny
+#| eval: false
+
+library(shiny)
+library(bslib)
+
+# define the UI ----
+ui <- page_sidebar(         # <1>
+  title = "My First App",
+  sidebar = sidebar(),      # <2>
+  "Hello there!"
+)
+
+# define the server ----
+server <- function(input, output) {}  # <3>
+
+# launch the app ----
+shinyApp(ui = ui, server = server)
+```
+1. `page_sidebar()` from the `{bslib}` package creates a modern dashboard-style page with a sidebar and main content area. This is the recommended starting point for most apps.
+2. The `sidebar()` is where user controls (inputs) will live. It's empty for now.
+3. The server is a function with `input` and `output` arguments. Even when there's nothing to compute, it must be defined.
+
+::: {.callout-note}
+## A note on older Shiny code
+
+You may encounter older examples that use `fluidPage()` + `sidebarLayout()` for page layout. These still work but are the legacy approach. The `{bslib}` package -- which provides Bootstrap 5-based layouts -- is now the recommended way to build Shiny UIs, and is what Posit's own documentation leads with. We use `{bslib}` throughout this lesson.
+:::
+
+### What goes in each section? {.unnumbered}
+
+| Section | Component |
+|---------|-----------|
+| **UI** | **Inputs**: widgets that collect values from the user (sliders, dropdowns, checkboxes) |
+|        | **Outputs**: placeholders for R objects the user sees (plots, tables, text) |
+|        | **Layout**: how components are arranged on the page |
+| **Server** | **Computations**: code that creates outputs in response to user inputs |
+
+### Inputs and Outputs {.unnumbered}
+
+**Inputs** (also called **widgets**) collect values from the user. Shiny provides a set of standard widgets:
+
+![](images/shiny/basic-widgets.png){width="80%" .lightbox}
+
+**Outputs** are R objects displayed in the app. Each type has a matching pair of functions: a **placeholder** in the UI and a **renderer** in the server:
+
+| UI placeholder | Server renderer |
+|----------------|-----------------|
+| `plotOutput()` | `renderPlot()` |
+| `tableOutput()` | `renderTable()` |
+| `DT::dataTableOutput()` | `DT::renderDataTable()` |
+| `textOutput()` | `renderText()` |
+| `leafletOutput()` | `renderLeaflet()` |
+
+### Reactivity: a brief intro {.unnumbered}
+
+Reactivity is **what makes Shiny apps responsive**. When a user changes an input value, the server automatically re-runs the relevant code and updates the output. At the most basic level:
+
+![Source: Intro to Shiny - EDS 430, Bren School UCSB](images/shiny/reactivity-intro.png){width="80%" .lightbox}
+
+::: {.callout-tip}
+## Want to go deeper on reactivity?
+
+Garrett Grolemund's article [How to understand reactivity in R](https://shiny.posit.co/r/articles/build/understanding-reactivity/) is an excellent resource once you're comfortable with the basics.
+:::
+
+## Setting Up a Shiny App
+
+### File structure {.unnumbered}
+
+Every Shiny app lives in its own folder. The convention is to use a file named `app.R` for a single-file app, and to house the whole thing in an R Project:
+
+```
+yolo-bypass-app/
+├── app.R
+├── scratch.R <- for prototyping plots and data wrangling (not part of the app)
+└── yolo-bypass-app.Rproj <- project file if using RStudio
+```
+
+::: {.panel-tabset}
+
+#### Positron
+
+1. Create a new folder for your app (e.g., `yolo-bypass-app`).
+2. In Positron, open the folder as a project: **File → Open Folder...** and select your folder.
+3. Create a new R file: **File → New File → R File** and save it as `app.R` inside your project folder.
+4. Copy the blank app template below into `app.R` and save.
+5. Run the app by clicking the **▷ Run App** button that appears at the top-left of the editor panel (or run `shiny::runApp()` in the Console).
+6. The app opens in the **Viewer** pane. To see it in a browser instead, click the **Open in Browser** icon in the Viewer toolbar.
+7. To stop the app, click the **■ Stop** button in the Viewer, or press `Escape` in the Console.
+
+#### RStudio
+
+1. Create a new project: **File → New Project → New Directory → Shiny Application**. Name it `yolo-bypass-app`.
+2. RStudio creates a pre-populated `app.R`. **Replace its contents** with the blank template below.
+3. Run the app with the **Run App ▷** button at the top-right of the editor.
+4. The app opens in the Viewer pane or a new browser window. Use the dropdown arrow next to Run App to toggle between the two.
+5. To stop the app, click the **■ Stop** button in the Viewer, or press `Escape` in the Console.
+
+:::
+
+```{r}
+#| label: blank-app-template
+#| eval: false
+
+# load packages ----
+library(shiny)
+library(bslib)
+
+# define UI ----
+ui <- page_sidebar(
+  title = "My App Title",
+  sidebar = sidebar(
+    # inputs will go here
+  ),
+  # outputs will go here
+)
+
+# define server ----
+server <- function(input, output) {
+  # computations will go here
+}
+
+# launch the app ----
+shinyApp(ui = ui, server = server)
+```
+
+::: {.callout-tip}
+## Tip: Use code sections for navigation
+
+Code sections (denoted by `# section name ----`) appear as collapsible entries in Positron's **Outline** panel and RStudio's **Document Outline**, making large `app.R` files much easier to navigate.
+:::
+
+## Building a Reactive App
+
+We'll build an interactive explorer for the [Yolo Bypass Fish Monitoring Program](https://doi.org/10.6073/pasta/b0b15aef7f3b52d2c5adc10004c05a6f) dataset, consisting of fish catch and water quality data from the Sacramento River floodplain collected since 1998. The final app will let users filter by date range and explore water clarity trends and fish catch patterns.
+
+### Load the data {.unnumbered}
+
+::: {.callout-tip}
+## Tip: Prototype outside the app first
+
+It's always easier to develop and test your data loading and plotting code in a regular R script *before* moving it into the Shiny app. Create a `scratch.R` file in your app folder for this purpose. Experiment there, then copy working code into `app.R`.
+:::
+
+We'll use `contentid` to load the data reliably from the EDI data repository:
+
+```{r}
+#| label: load-data
+#| eval: false
+
+library(shiny)
+library(bslib)
+library(contentid)
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+
+# load Yolo Bypass monitoring data from EDI ----
+sha1 <- "hash://sha1/317d7f840e598f5f3be732ab0e04f00a8051c6d0"
+delta_file <- contentid::resolve(sha1, registries = c("dataone"), store = TRUE)
+
+delta_data <- read.csv(delta_file) |>
+  mutate(SampleDate = mdy(SampleDate)) |>
+  filter(grepl("Salmon|Striped Bass|Smelt|Sturgeon", CommonName))
+```
+
+Put this data-loading code at the **top of `app.R`**, before the `ui` and `server` definitions. Code at the top level of `app.R` (outside `ui` and `server`) runs once when the app starts and is available throughout.
+
+### Step 1: Add a date range slider {.unnumbered}
+
+We'll add a `sliderInput()` inside `sidebar()`:
+
+```{r}
+#| label: add-slider
+#| eval: false
+
+ui <- page_sidebar(
+  title = "Yolo Bypass Fish Monitoring",
+  sidebar = sidebar(
+
+    # date range slider ----
+    sliderInput(
+      inputId = "date_range",                          # <1>
+      label = "Select date range:",
+      min = as.Date("1998-01-01"),
+      max = as.Date("2018-12-31"),
+      value = c(as.Date("1998-01-01"), as.Date("2018-12-31"))
+    )
+
+  )
+  # outputs will go here
+)
+```
+1. The `inputId` is how you'll refer to this input's current value in the server. Keep it short and descriptive, and remember that spelling matters!
+
+### Step 2: Add a plot output placeholder {.unnumbered}
+
+Output functions in the UI create **placeholders**. These are slots where server-generated content will appear. We'll add a `plotOutput()` inside a `card()`:
+
+```{r}
+#| label: add-output
+#| eval: false
+
+ui <- page_sidebar(
+  title = "Yolo Bypass Fish Monitoring",
+  sidebar = sidebar(
+
+    # date range slider ----
+    sliderInput(
+      inputId = "date_range",
+      label = "Select date range:",
+      min = as.Date("1998-01-01"),
+      max = as.Date("2018-12-31"),
+      value = c(as.Date("1998-01-01"), as.Date("2018-12-31"))
+    )
+
+  ),
+
+  # Secchi depth plot ----
+  card(
+    plotOutput(outputId = "secchi_plot")   # <1>
+  )
+
+)
+```
+1. The `outputId` is **quoted** in the UI. In the server, you'll refer to it as `output$secchi_plot` (unquoted, with `$`). These must match exactly.
+
+Run the app now. The slider appears, but no plot yet. The placeholder exists, but we haven't told the server what to put in it.
+
+### Step 3: Tell the server how to create the output {.unnumbered}
+
+There are three rules for building reactive outputs:
+
+::: {.callout-important}
+## The Three Rules of Shiny Reactivity
+
+**Rule 1:** Save objects you want to display to `output$<id>`
+
+**Rule 2:** Build reactive objects using a `render*()` function
+
+**Rule 3:** Access input values with `input$<id>`
+:::
+
+#### Rule 1: Save to `output$<id>` {.unnumbered}
+
+```{r}
+#| label: server-rule1
+#| eval: false
+
+server <- function(input, output) {
+
+  output$secchi_plot <- # plot code goes here
+
+}
+```
+
+#### Rule 2: Build with `render*()` {.unnumbered}
+
+Each `*Output()` UI function is paired with a `render*()` server function. Because we used `plotOutput()`, we use `renderPlot()`:
+
+```{r}
+#| label: server-rule2
+#| eval: false
+
+server <- function(input, output) {
+
+  # render Secchi depth plot ----
+  output$secchi_plot <- renderPlot({
+
+    ggplot(delta_data, aes(x = SampleDate, y = Secchi)) +
+      geom_point(color = "steelblue", alpha = 0.5) +
+      labs(x = "Date", y = "Secchi depth (m)") +
+      theme_light()
+
+  })
+
+}
+```
+
+Run the app. You now see a plot! But dragging the date slider still doesn't change anything, because we haven't connected the slider value to the plot yet.
+
+#### Rule 3: Access inputs with `input$<id>` {.unnumbered}
+
+To make the plot respond to the slider, we filter the data based on the slider's current value. Because this filtered dataset needs to re-compute every time the slider changes, we wrap it in a **`reactive()`** expression.
+
+::: {.callout-important}
+## Reactive expressions and the `()` requirement
+
+`reactive({...})` creates an expression that re-runs automatically whenever any `input$` values it depends on change. Whenever you use a reactive expression elsewhere in your server code, you must call it **with parentheses**: `filtered_data()`, not `filtered_data`. This tells Shiny to read the current reactive value.
+:::
+
+```{r}
+#| label: server-rule3
+#| eval: false
+
+server <- function(input, output) {
+
+  # filter data by date range ----
+  filtered_data <- reactive({                        # <1>
+    delta_data |>
+      filter(
+        SampleDate >= input$date_range[1],           # <2>
+        SampleDate <= input$date_range[2]
+      )
+  })
+
+  # render Secchi depth plot ----
+  output$secchi_plot <- renderPlot({
+    ggplot(filtered_data(), aes(x = SampleDate, y = Secchi)) +   # <3>
+      geom_point(color = "steelblue", alpha = 0.5) +
+      labs(x = "Date", y = "Secchi depth (m)") +
+      theme_light()
+  })
+
+}
+```
+1. `reactive({...})` wraps code that should re-run when inputs change
+2. `input$date_range[1]` and `[2]` are the minimum and maximum of the range slider
+3. Note the parentheses: `filtered_data()` -- this is required when calling a reactive expression
+
+Run the app and drag the slider. The plot should now update reactively!
+
+### The complete single-file app {.unnumbered}
+
+```{r}
+#| label: complete-app-v1
+#| eval: false
+#| code-fold: true
+#| code-summary: "Show complete app.R"
+
+# load packages ----
+library(shiny)
+library(bslib)
+library(contentid)
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+
+# load data ----
+sha1 <- "hash://sha1/317d7f840e598f5f3be732ab0e04f00a8051c6d0"
+delta_file <- contentid::resolve(sha1, registries = c("dataone"), store = TRUE)
+
+delta_data <- read.csv(delta_file) |>
+  mutate(SampleDate = mdy(SampleDate)) |>
+  filter(grepl("Salmon|Striped Bass|Smelt|Sturgeon", CommonName))
+
+# define UI ----
+ui <- page_sidebar(
+  title = "Yolo Bypass Fish Monitoring",
+  sidebar = sidebar(
+
+    # date range slider ----
+    sliderInput(
+      inputId = "date_range",
+      label = "Select date range:",
+      min = as.Date("1998-01-01"),
+      max = as.Date("2018-12-31"),
+      value = c(as.Date("1998-01-01"), as.Date("2018-12-31"))
+    )
+
+  ),
+
+  # Secchi depth plot ----
+  card(
+    plotOutput(outputId = "secchi_plot")
+  )
+
+)
+
+# define server ----
+server <- function(input, output) {
+
+  # filter data by date range ----
+  filtered_data <- reactive({
+    delta_data |>
+      filter(
+        SampleDate >= input$date_range[1],
+        SampleDate <= input$date_range[2]
+      )
+  })
+
+  # render Secchi depth plot ----
+  output$secchi_plot <- renderPlot({
+    ggplot(filtered_data(), aes(x = SampleDate, y = Secchi)) +
+      geom_point(color = "steelblue", alpha = 0.5) +
+      labs(x = "Date", y = "Secchi depth (m)") +
+      theme_light()
+  })
+
+}
+
+# launch the app ----
+shinyApp(ui = ui, server = server)
+```
+
+![](images/shiny/shiny-yolo-app-part-1.png){width="80%" fig-align="center" .lightbox}
+
+::: {.callout-important}
+## Common mistakes
+
+- Misspelling `inputId` as `inputID` (or `outputId` as `outputID`) -- R is case-sensitive.
+- Mismatched IDs between UI and server (e.g., `"secchi_plot"` in UI but `secchi_Plot` in server)
+- Forgetting to separate UI elements with a comma `,` -- nearly every element inside `page_sidebar()`, `sidebar()`, or `card()` needs a comma after it
+- Forgetting parentheses when calling a reactive expression (e.g., `filtered_data` should be `filtered_data()`)
+- Using `input$` values outside a reactive context -- they can only be read inside `reactive()`, `render*()`, or `observe()`
+:::
+
+## Your Turn: Add a Species Filter
+
+::: {.callout-note}
+## Exercise: Add a species checkbox and fish catch plot
+
+Working individually or in pairs, extend your single-file app by adding:
+
+1. A `checkboxGroupInput` in the sidebar that lets users select which fish species to display, with **all species pre-selected** by default
+2. A second `card()` in the main area containing a `plotOutput` showing a **bar chart of total fish catch by species** for the currently selected date range and species
+
+The date range slider and species checkbox should both filter the same reactive dataset.
+:::
+
+::: {.callout-tip}
+## Tips
+
+- Use `?checkboxGroupInput` to see the required arguments (`inputId`, `label`, `choices`, `selected`)
+- Get the actual species names with `sort(unique(delta_data$CommonName))` -- run this in your scratch script first
+- Prototype the bar chart in `scratch.R` before adding it to the server:
+  `ggplot(data, aes(x = CommonName, y = Count)) + geom_col()`
+- Update your existing `filtered_data` reactive to also filter by `CommonName %in% input$species_select`, allowing both plots to share the same filtered data
+- To get total catch by species: `group_by(CommonName) |> summarize(total = sum(Count, na.rm = TRUE))`
+:::
+
+```{r}
+#| label: your-turn-solution
+#| eval: false
+#| code-fold: true
+#| code-summary: "Solution"
+
+# load packages ----
+library(shiny)
+library(bslib)
+library(contentid)
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+
+# load data ----
+sha1 <- "hash://sha1/317d7f840e598f5f3be732ab0e04f00a8051c6d0"
+delta_file <- contentid::resolve(sha1, registries = c("dataone"), store = TRUE)
+
+delta_data <- read.csv(delta_file) |>
+  mutate(SampleDate = mdy(SampleDate)) |>
+  filter(grepl("Salmon|Striped Bass|Smelt|Sturgeon", CommonName))
+
+species_choices <- sort(unique(delta_data$CommonName))
+
+# define UI ----
+ui <- page_sidebar(
+  title = "Yolo Bypass Fish Monitoring",
+  sidebar = sidebar(
+
+    # date range slider ----
+    sliderInput(
+      inputId = "date_range",
+      label = "Select date range:",
+      min = as.Date("1998-01-01"),
+      max = as.Date("2018-12-31"),
+      value = c(as.Date("1998-01-01"), as.Date("2018-12-31"))
+    ),
+
+    # species checkbox ----
+    checkboxGroupInput(
+      inputId = "species_select",
+      label = "Select species:",
+      choices = species_choices,
+      selected = species_choices
+    )
+
+  ),
+
+  # Secchi depth plot ----
+  card(
+    plotOutput(outputId = "secchi_plot")
+  ),
+
+  # fish catch bar chart ----
+  card(
+    plotOutput(outputId = "catch_plot")
+  )
+
+)
+
+# define server ----
+server <- function(input, output) {
+
+  # filter data by date range and species ----
+  filtered_data <- reactive({
+    delta_data |>
+      filter(
+        SampleDate >= input$date_range[1],
+        SampleDate <= input$date_range[2],
+        CommonName %in% input$species_select
+      )
+  })
+
+  # render Secchi depth plot ----
+  output$secchi_plot <- renderPlot({
+    ggplot(filtered_data(), aes(x = SampleDate, y = Secchi)) +
+      geom_point(color = "steelblue", alpha = 0.5) +
+      labs(x = "Date", y = "Secchi depth (m)") +
+      theme_light()
+  })
+
+  # render fish catch bar chart ----
+  output$catch_plot <- renderPlot({
+    filtered_data() |>
+      group_by(CommonName) |>
+      summarize(total_catch = sum(Count, na.rm = TRUE), .groups = "drop") |>
+      ggplot(aes(x = reorder(CommonName, -total_catch),
+                 y = total_catch,
+                 fill = CommonName)) +
+      geom_col(show.legend = FALSE) +
+      labs(x = "Species", y = "Total catch") +
+      theme_light()
+  })
+
+}
+
+# launch the app ----
+shinyApp(ui = ui, server = server)
+```
+
+![](images/shiny/shiny-yolo-app-part-2.png){width="80%" fig-align="center" .lightbox}
+
+## Organizing Your App
+
+### Single-File vs Two-File {.unnumbered}
+
+So far we've put everything in one `app.R`. For simple apps, this works well. As apps grow, splitting the code into separate files makes it easier to navigate, maintain, and collaborate on.
+
+![Source: Intro to Shiny - EDS 430, Bren School UCSB](images/shiny/one-vs-two.png)
+
+| Format | When to use |
+|--------|-------------|
+| **Single file** (`app.R`) | Simple apps, prototypes, sharing reproducible examples |
+| **Two-file** (`ui.R` + `server.R`) | Larger apps, collaborative development, complex logic |
+
+A **third optional file**, `global.R`, runs once before `ui.R` and `server.R`. It's the right place for packages, data loading, and any objects that both files need.
+
+### What goes in `global.R`? {.unnumbered}
+
+```{r}
+#| label: global-r-example
+#| eval: false
+
+# global.R ----
+
+# load packages ----
+library(shiny)
+library(bslib)
+library(contentid)
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+library(DT)
+library(leaflet)
+library(markdown)
+
+# load data ----
+sha1 <- "hash://sha1/317d7f840e598f5f3be732ab0e04f00a8051c6d0"
+delta_file <- contentid::resolve(sha1, registries = c("dataone"), store = TRUE)
+
+delta_data <- read.csv(delta_file) |>
+  mutate(SampleDate = mdy(SampleDate)) |>
+  filter(grepl("Salmon|Striped Bass|Smelt|Sturgeon", CommonName))
+
+species_choices <- sort(unique(delta_data$CommonName))
+
+# station locations for map ----
+sites <- delta_data |>
+  distinct(StationCode, Latitude, Longitude) |>
+  drop_na()
+```
+
+### Recommended project structure {.unnumbered}
+
+```
+yolo-bypass-app/
+├── global.R          ← packages + data (runs first, available everywhere)
+├── ui.R              ← user interface definition
+├── server.R          ← server logic
+├── text/
+│   └── about.md      ← markdown text for the About page
+├── scratch.R         ← development scratch work (not part of the app)
+└── yolo-bypass-app.Rproj <- project file if using RStudio
+```
+
+![Source: Intro to Shiny - EDS 430, Bren School UCSB](images/shiny/repo-structure-details.png){width="80%"}
+
+## Building a Two-File App
+
+Let's rebuild the Yolo Bypass app in two-file format with a polished multi-page layout. The finished app will have two pages accessible via a navigation bar: an About page with context and a map, and an Explore page with the interactive plots.
+
+::: {.panel-tabset}
+
+#### About page
+
+![](images/shiny/shiny-yolo-app-tabbed-about.png){width="80%" .lightbox}
+
+#### Explore page
+
+![](images/shiny/shiny-yolo-app-tabbed-data.png){width="80%" .lightbox}
+
+:::
+
+### Build the navbar structure in `ui.R` {.unnumbered}
+
+`page_navbar()` creates a full-page layout with a top navigation bar, and `nav_panel()` defines each tab:
+
+```{r}
+#| label: two-file-ui-navbar
+#| eval: false
+
+# ui.R ----
+
+ui <- page_navbar(
+
+  title = "Yolo Bypass Fish Monitoring",
+  bg = "#2C7BB6",      # navbar color (hex or named color)
+
+  # (Tab 1) About ----
+  nav_panel(
+    title = "About",
+    # content will go here
+  ),
+
+  # (Tab 2) Explore the Data ----
+  nav_panel(
+    title = "Explore the Data",
+    # content will go here
+  )
+
+)
+```
+
+::: {.callout-tip}
+## Tip: Add placeholder text and run early
+
+Put `"Plot will go here"` or similar placeholder strings inside each `nav_panel()` so you can see the structure as you build. Run the app after each addition. Catching errors early saves a lot of debugging time!
+:::
+
+### Add the Explore tab layout {.unnumbered}
+
+Inside "Explore the Data", we'll use `layout_sidebar()` to pair inputs with outputs. Since the date slider affects both plots and the species checkbox also affects both, we use one sidebar for all inputs and two `card()` outputs in the main area:
+
+```{r}
+#| label: two-file-ui-explore
+#| eval: false
+
+# (Tab 2) Explore the Data ----
+nav_panel(
+  title = "Explore the Data",
+
+  layout_sidebar(
+
+    sidebar = sidebar(
+
+      # date range slider ----
+      sliderInput(
+        inputId = "date_range",
+        label = "Select date range:",
+        min = as.Date("1998-01-01"),
+        max = as.Date("2018-12-31"),
+        value = c(as.Date("1998-01-01"), as.Date("2018-12-31"))
+      ),
+
+      # species checkbox ----
+      checkboxGroupInput(
+        inputId = "species_select",
+        label = "Select species:",
+        choices = species_choices,    # defined in global.R
+        selected = species_choices
+      )
+
+    ), # END sidebar
+
+    # Secchi depth plot ----
+    card(
+      card_header("Water Clarity Over Time"),
+      plotOutput(outputId = "secchi_plot")
+    ),
+
+    # fish catch bar chart ----
+    card(
+      card_header("Fish Catch by Species"),
+      plotOutput(outputId = "catch_plot")
+    )
+
+  ) # END layout_sidebar
+
+) # END Explore tab
+```
+
+### Add the About page with Markdown text {.unnumbered}
+
+For longer descriptive text, write it in a Markdown file and pull it in with `includeMarkdown()`. Create `text/about.md` in your app folder:
+
+````markdown
+## Welcome to the Yolo Bypass Fish Monitoring Explorer
+
+This app provides an interactive window into the [Yolo Bypass Fish Monitoring Program](https://doi.org/10.6073/pasta/b0b15aef7f3b52d2c5adc10004c05a6f),
+which has documented fish catch and water quality in the Sacramento River floodplain
+since 1998.
+
+#### About the data
+
+Data collected by the Interagency Ecological Program. Species included: Chinook Salmon,
+Striped Bass, Delta Smelt, and White Sturgeon.
+
+#### Where are the monitoring stations?
+````
+
+Then in `ui.R`, pull it into the About tab alongside a map of station locations:
+
+```{r}
+#| label: two-file-ui-about
+#| eval: false
+
+# (Tab 1) About ----
+nav_panel(
+  title = "About",
+
+  layout_columns(
+    col_widths = c(-1, 10, -1),   # <1>
+
+    div(
+      includeMarkdown("text/about.md"),
+      card(
+        card_header("Monitoring Stations"),
+        leafletOutput(outputId = "stations_map")
+      )
+    )
+
+  ) # END layout_columns
+
+) # END About tab
+```
+1. `col_widths = c(-1, 10, -1)` creates 1-column empty gutters on each side and puts the content in the middle 10 of 12 Bootstrap columns, for a clean centered layout.
+
+### Write the server in `server.R` {.unnumbered}
+
+```{r}
+#| label: two-file-server
+#| eval: false
+
+# server.R ----
+
+server <- function(input, output) {
+
+  # render station locations map ----
+  output$stations_map <- renderLeaflet({        # <1>
+    leaflet(sites) |>
+      addTiles() |>
+      addCircleMarkers(
+        lat = ~Latitude,
+        lng = ~Longitude,
+        radius = 6,
+        fillColor = "#2C7BB6",
+        fillOpacity = 0.8,
+        weight = 1,
+        color = "white",
+        label = ~StationCode
+      )
+  })
+
+  # filter data by date range and species ----
+  filtered_data <- reactive({
+    delta_data |>
+      filter(
+        SampleDate >= input$date_range[1],
+        SampleDate <= input$date_range[2],
+        CommonName %in% input$species_select
+      )
+  })
+
+  # render Secchi depth plot ----
+  output$secchi_plot <- renderPlot({
+    ggplot(filtered_data(), aes(x = SampleDate, y = Secchi)) +
+      geom_point(color = "#2C7BB6", alpha = 0.5) +
+      labs(x = "Date", y = "Secchi depth (m)") +
+      theme_light()
+  })
+
+  # render fish catch bar chart ----
+  output$catch_plot <- renderPlot({
+    filtered_data() |>
+      group_by(CommonName) |>
+      summarize(total_catch = sum(Count, na.rm = TRUE), .groups = "drop") |>
+      ggplot(aes(x = reorder(CommonName, -total_catch),
+                 y = total_catch,
+                 fill = CommonName)) +
+      geom_col(show.legend = FALSE) +
+      labs(x = "Species", y = "Total catch") +
+      theme_light()
+  })
+
+} # END server
+```
+1. The station map doesn't depend on any user inputs, so it doesn't need `reactive()`. However, it still must be assigned to `output$` and wrapped in `render*()`.
+
+### Full two-file app code {.unnumbered}
+
+::: {.panel-tabset}
+
+#### ui.R
+
+```{r}
+#| label: full-ui-r
+#| eval: false
+
+# ui.R ----
+
+ui <- page_navbar(
+
+  title = "Yolo Bypass Fish Monitoring",
+  bg = "#2C7BB6",
+
+  # (Tab 1) About ----
+  nav_panel(
+    title = "About",
+
+    layout_columns(
+      col_widths = c(-1, 10, -1),
+      div(
+        includeMarkdown("text/about.md"),
+        card(
+          card_header("Monitoring Stations"),
+          leafletOutput(outputId = "stations_map")
+        )
+      )
+    )
+
+  ), # END About tab
+
+  # (Tab 2) Explore the Data ----
+  nav_panel(
+    title = "Explore the Data",
+
+    layout_sidebar(
+
+      sidebar = sidebar(
+
+        sliderInput(
+          inputId = "date_range",
+          label = "Select date range:",
+          min = as.Date("1998-01-01"),
+          max = as.Date("2018-12-31"),
+          value = c(as.Date("1998-01-01"), as.Date("2018-12-31"))
+        ),
+
+        checkboxGroupInput(
+          inputId = "species_select",
+          label = "Select species:",
+          choices = species_choices,
+          selected = species_choices
+        )
+
+      ), # END sidebar
+
+      card(
+        card_header("Water Clarity Over Time"),
+        plotOutput(outputId = "secchi_plot")
+      ),
+
+      card(
+        card_header("Fish Catch by Species"),
+        plotOutput(outputId = "catch_plot")
+      )
+
+    ) # END layout_sidebar
+
+  ) # END Explore tab
+
+) # END page_navbar
+```
+
+#### server.R
+
+```{r}
+#| label: full-server-r
+#| eval: false
+
+# server.R ----
+
+server <- function(input, output) {
+
+  # render station locations map ----
+  output$stations_map <- renderLeaflet({
+    leaflet(sites) |>
+      addTiles() |>
+      addCircleMarkers(
+        lat = ~Latitude,
+        lng = ~Longitude,
+        radius = 6,
+        fillColor = "#2C7BB6",
+        fillOpacity = 0.8,
+        weight = 1,
+        color = "white",
+        label = ~StationCode
+      )
+  })
+
+  # filter data by date range and species ----
+  filtered_data <- reactive({
+    delta_data |>
+      filter(
+        SampleDate >= input$date_range[1],
+        SampleDate <= input$date_range[2],
+        CommonName %in% input$species_select
+      )
+  })
+
+  # render Secchi depth plot ----
+  output$secchi_plot <- renderPlot({
+    ggplot(filtered_data(), aes(x = SampleDate, y = Secchi)) +
+      geom_point(color = "#2C7BB6", alpha = 0.5) +
+      labs(x = "Date", y = "Secchi depth (m)") +
+      theme_light()
+  })
+
+  # render fish catch bar chart ----
+  output$catch_plot <- renderPlot({
+    filtered_data() |>
+      group_by(CommonName) |>
+      summarize(total_catch = sum(Count, na.rm = TRUE), .groups = "drop") |>
+      ggplot(aes(x = reorder(CommonName, -total_catch),
+                 y = total_catch,
+                 fill = CommonName)) +
+      geom_col(show.legend = FALSE) +
+      labs(x = "Species", y = "Total catch") +
+      theme_light()
+  })
+
+} # END server
+```
+
+#### global.R
+
+```{r}
+#| label: full-global-r
+#| eval: false
+
+# global.R ----
+
+# load packages ----
+library(shiny)
+library(bslib)
+library(contentid)
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+library(leaflet)
+library(markdown)
+
+# load data ----
+sha1 <- "hash://sha1/317d7f840e598f5f3be732ab0e04f00a8051c6d0"
+delta_file <- contentid::resolve(sha1, registries = c("dataone"), store = TRUE)
+
+delta_data <- read.csv(delta_file) |>
+  mutate(SampleDate = mdy(SampleDate)) |>
+  filter(grepl("Salmon|Striped Bass|Smelt|Sturgeon", CommonName))
+
+species_choices <- sort(unique(delta_data$CommonName))
+
+# station locations for map ----
+sites <- delta_data |>
+  distinct(StationCode, Latitude, Longitude) |>
+  drop_na()
+```
+
+#### text/about.md
+
+```markdown
+## Welcome to the Yolo Bypass Fish Monitoring Explorer
+
+This app provides an interactive window into the
+[Yolo Bypass Fish Monitoring Program](https://doi.org/10.6073/pasta/b0b15aef7f3b52d2c5adc10004c05a6f),
+which has documented fish catch and water quality in the Sacramento River floodplain
+and tidal slough since 1998.
+
+#### About the data
+
+Data collected by the Interagency Ecological Program as part of a long-term
+monitoring effort in the Yolo Bypass, a critical floodplain habitat for the
+Sacramento-San Joaquin Delta ecosystem. Species monitored include Chinook Salmon,
+Striped Bass, Delta Smelt, and White Sturgeon.
+
+#### Where are the monitoring stations?
+```
+
+:::
+
+## Sharing Your App
+
+Once you've built something worth sharing, there are several ways to get it in front of others:
+
+::: {.panel-tabset}
+
+#### shinyapps.io
+
+**[shinyapps.io](https://www.shinyapps.io/)** is the easiest hosting option. This cloud service provided by Posit has a free tier (up to 5 apps, 25 active hours/month) and paid tiers for more demanding apps.
+
+**Setup:**
+
+1. Create a free account at [shinyapps.io](https://www.shinyapps.io/)
+2. Follow the on-screen instructions to link your account, which involves running a few lines from the `rsconnect` package in your Console
+3. Publish your app:
+
+::: {.panel-tabset}
+##### Positron
+
+Click the **Publish** icon (cloud with arrow) in the Viewer pane toolbar after running your app, or run `rsconnect::deployApp("path/to/your/app")` directly in the Console.
+
+##### RStudio
+
+Click the blue **Publish** button (cloud icon) in the top-right corner of the running app window.
+:::
+
+![](images/shiny/shiny-io-account.png){width="70%"}
+
+#### shinylive
+
+**[shinylive](https://posit-dev.github.io/r-shinylive/)** is a newer option that runs Shiny apps *entirely in the browser* using WebR. No server required! This means:
+
+- **No hosting costs**, because apps can live as static files on GitHub Pages or any web server
+- **Works inside Quarto documents**, allowing you to embed an interactive app directly in a `.qmd` file
+- **Great for teaching and sharing reproducible examples**
+
+```{r}
+#| label: shinylive-export
+#| eval: false
+
+install.packages("shinylive")
+
+# export app to a self-contained static site
+shinylive::export(appdir = "yolo-bypass-app/", destdir = "site/")
+```
+
+::: {.callout-tip}
+## Shinylive in Quarto
+
+You can embed Shiny apps directly in Quarto documents using the `shinylive` Quarto extension. See [posit-dev.github.io/r-shinylive](https://posit-dev.github.io/r-shinylive/) for instructions.
+:::
+
+::: {.callout-note}
+## Limitations of shinylive
+
+Because apps run in the browser, startup is slower than server-based apps, and some R packages are not yet supported. Best suited for moderately complex apps with typical CRAN packages.
+:::
+
+#### Posit Connect
+
+**[Posit Connect](https://posit.co/products/enterprise/connect/)** is an enterprise, on-premises product for organizations that need more than shinyapps.io provides. This includes user authentication, scheduled content, and greater control over infrastructure. It's the right choice for production-grade agency tools.
+
+:::
+
+## Resources
+
+- [Shiny for R Documentation](https://shiny.posit.co/r/) is the official reference, including a current `bslib` layout guide
+- [Mastering Shiny](https://mastering-shiny.org/) (Wickham) is the definitive book; free online
+- [EDS 430: Intro to Shiny](https://ucsb-meds.github.io/EDS-430-Intro-to-Shiny/) (Sam Csik, UCSB MEDS) is the primary source for this lesson
+- [bslib documentation](https://rstudio.github.io/bslib/) covers modern UI components and layouts
+- [Application Layout Guide](https://shiny.posit.co/r/articles/build/layout-guide/) is a comprehensive reference for `bslib` layout functions
+- [Ten quick tips for reproducible Shiny applications](https://doi.org/10.1371/journal.pcbi.1012786) reviews best practices for building shareable, reproducible apps
