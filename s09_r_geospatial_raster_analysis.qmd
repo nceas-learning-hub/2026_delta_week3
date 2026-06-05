@@ -3,7 +3,9 @@ title: Geospatial Raster Analysis in R
 ---
 
 <!--
-Prerequisite lessons or suggestions here
+Prerequisite lessons - 
+* recommended: geospatial vector data in R
+
 -->
 
 :::{.callout-learning}
@@ -14,8 +16,692 @@ After completing this session, you will be able to:
 
 ## Overview
 
-Brief overview of lesson
-## Use level 2 headers for sections
+In this session we cover some basics of working with spatial data presented in a gridded format, i.e., rasters, using the `terra` package.  This is distinct from vector data, such as points, lines, and polygons, which are not constrained to a grid but have problems of their own.  This will be an overview of rasters, introducing basic concepts of creating them, modifying them, and doing basic analyses with them.
 
-Visit https://nceas-learning-hub.github.io/lh_packages/ for information on contributing new lessons, content guidelines, and style guide.
+:::callout-note
+### `terra` vs. `raster` vs. `stars`
 
+The `terra` package is the current standard for working with single- and multi-layer raster data, replacing the older (but still functional) `raster` package without a lot of friction.
+
+The `stars` package is a massive overhaul of raster-style data for R to work more seamlessly with data arrays in a manner similar to `sf` for vector data.  Once you're familiar with `terra`, `stars` is an alternative worth exploring for array-oriented or time-series raster data such as time series satellite imagery.
+:::
+
+
+
+## Set Up Quarto Document
+
+Create a blank Quarto document in your desired repository.
+
+:::{.panel-tabset}
+## {{< fa p >}} Positron
+
+1.  In Positron, go to **File** {{< fa arrow-right >}} **New File**
+    {{< fa arrow-right >}} **Quarto Document**.
+2.  Update the YAML header with title, author, and other desired fields.  Delete any boilerplate below the YAML.
+
+
+## {{< fa brands r-project >}} RStudio
+
+1.  In RStudio, go to **File** {{< fa arrow-right >}} **New File**
+    {{< fa arrow-right >}} **Quarto Document**.
+2.  Give it a title (e.g., "Introduction to Quarto"), leave the other
+    options as-is, then click **Create**.
+3.  Update the YAML header with title, author, and other desired fields.  Delete any boilerplate below the YAML header.
+    
+:::
+
+For this lesson, we will need to load a few packages.  You may want to put code options in the code chunk, e.g., `#| message: false` and `#| warning: FALSE`
+
+```{r setup}
+#| message: false
+#| warning: false
+### for easy data wrangling and plotting:
+library(dplyr)     
+library(tidyr)
+library(ggplot2)
+### spatial data packages:
+library(terra)     ### for working with raster spatial data
+library(sf)        ### for working with vector spatial data
+### for easy relative file paths:
+library(here)     
+```
+
+## Let's Create a Raster!
+
+As with many things in R, there are many ways to create rasters depending on the information you have to start:
+
+* Read in a file in a raster-ready format, e.g., GeoTIFF or NetCDF
+* Read in a dataframe with x, y, and value columns and convert to a raster
+* Rasterize a vector layer, e.g., lines representing rivers or polygons representing zones
+* Create a raster from scratch by providing the necessary parameters
+* ... and more!
+
+### Raster Spatial Parameters
+
+There are several parameters that every raster must have:
+
+* A coordinate reference system (CRS), i.e., a system to locate things spatially on the surface of the earth - basically a definition of the shape of the globe (hint: not a sphere), some way to identify where X = 0 and Y = 0, and quite likely some projection to convert curved space into flat space.  Includes units, usually degrees or meters.
+* An origin, i.e., what is the spatial coordinate of the grid point closest to (0, 0), sort of like how far is your grid offset from a perfect alignment.
+* A resolution, i.e., what is the length of the sides of each grid cell, in both X and Y.  This is in units given in the coordinate reference system.
+* An extent, i.e., what are the corners of the rectangular box that bounds your raster.
+
+If you want to use multiple rasters in an analysis, these parameters generally all have to match up across every raster.
+
+### Creating a Raster: Four Ways
+:::panel-tabset
+<!--tabset for each "Create Raster from XXX"-->
+
+### From Gridded File Format
+
+Download this [LandSat sample data](data/r_geospatial_raster_analysis/landsat71.tif) - note the file format is `.tif`, i.e., a GeoTIFF.  Right click on the link, choose "Save link as...", and save it to your `data` folder in your current repository as `landsat71.tif`.
+
+Now let's load it and examine it!
+
+<!-- what the participants will type to load the data-->
+```r
+landsat_r <- terra::rast(here('data/landsat71.tif'))
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+### This chunk actually loads the data for purposes of rendering the lesson,
+### but is hidden from participants
+landsat_from_tif <- terra::rast(here('data/r_geospatial_raster_analysis/landsat71.tif'))
+```
+
+::::panel-tabset
+
+#### Inspect the Parameters
+
+```{r}
+landsat_from_tif
+```
+
+This `SpatRaster` object created from a GeoTIFF file contains gridded data for five bands of Landsat data for Santa Barbara County:  blue 450 nm - 520 nm (band 1), green (band 2), red (band 3), near-infrared (band 4), and shortwave-infrared (band 5).  Examine the parameters.
+
+#### Plot the Layers
+```{r}
+#| fig-width: 6
+#| fig-height: 3
+#| fig-align: center
+plot(landsat_from_tif)
+```
+It may be hard to tell the differences in this view, but we can see five distinct maps.
+::::
+
+### From X-Y Coords
+
+We can create a raster from a dataframe (or other formats using) X-Y coordinates (e.g., lat/long or meters E/meters N) - **as long as they're on a regular grid.**  
+
+Download this .csv of modified [LandSat sample data](data/r_geospatial_raster_analysis/Landsat71_agg.csv) - note the file format is `.csv` - and save it to your `data` folder in your current repository as `landsat71_agg.csv`.
+
+Now let's load it and examine it!
+
+<!-- what the participants will type to load the data-->
+```r
+ls_green_df <- readr::read_csv(here('data/landsat71_band2.csv'))
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+### This chunk actually loads the data for purposes of rendering the lesson,
+### but is hidden from participants
+ls_green_df <- readr::read_csv(here('data/r_geospatial_raster_analysis/landsat71_band2.csv'))
+```
+
+Examine the dataframe: columns for `x`, `y`, and `Landsat` band 2, green.  We can easily turn this into a raster using `terra::rast()`, the same function as above, which recognizes the appropriate columns (though `x` and `y` MUST be first by default!).
+
+
+``` {r create raster using a dataframe with x-y-z values}
+ls_green_from_csv <- terra::rast(ls_green_df)
+```
+
+::::panel-tabset
+
+#### Inspect the Parameters
+
+```{r}
+ls_green_from_csv
+```
+
+This contains similar information as the GeoTIFF we loaded earlier, except note the parameters are slightly different: 
+
+* There is only a single layer
+* The resolution here is 600m instead of 30m (we did this for file size - GeoTIFF is far more memory efficient! see `aggregate()` below)
+* The CRS is blank!  The GeoTIFF includes CRS information embedded in the file, but the CSV does not.
+
+Let's update the CRS using the EPSG code based on the GeoTIFF version:
+
+```{r}
+crs(ls_green_from_csv) <- 'epsg:3310' 
+### could also do crs(ls_green_from_csv) <- crs(landsat_from_tif)
+
+# ls_green_from_csv ### inspect again if you like!
+```
+
+
+#### Plot the Layers
+```{r}
+#| fig-width: 6
+#| fig-height: 3
+#| fig-align: center
+
+plot(ls_green_from_csv)
+```
+Visually, the pixels are a bit larger; otherwise it looks more or less like the version loaded from the GeoTIFF.
+
+::::
+
+### From Vector Data
+
+Download this GeoPackage of [Santa Barbara County](data/r_geospatial_raster_analysis/sb_county.gpkg) - note the file format is `.gpkg`, i.e., vector data like `.shp` - and save it to your `data` folder in your current repository as `sb_county.gpkg`.
+
+Now let's load it and examine it!  We will use the Simple Features package `sf`.
+
+<!-- what the participants will type to load the data-->
+```r
+sb_county_sf <- sf::read_sf(here('data/sb_county.gpkg'))
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+### This chunk actually loads the data for purposes of rendering the lesson,
+### but is hidden from participants
+sb_county_sf <- sf::read_sf(here('data/r_geospatial_raster_analysis/sb_county.gpkg'))
+```
+
+Examine the resulting Simple Features object: one observation with some random info about Santa Barbara County, and a `geometry` column containing MultiPolygon spatial information.  We can create a raster by overlaying this polygon onto a grid, and then assigning values to the grid based on some attribute.
+
+``` {r create raster using rasterize}
+terra::same.crs(sb_county_sf, landsat_from_tif)  ### Check that CRS are equal!
+
+sb_county_r <- terra::rasterize(x = sb_county_sf,     # <1>
+                                y = landsat_from_tif, # <2>
+                                field = 'OBJECTID')   # <3>
+```
+1. The vector data to be converted to a raster
+2. The target grid, as a SpatRaster object
+3. What value gets assigned?  Here we assign the value of the `OBJECTID` field in `sb_county_sf`, but could be any attribute, or even just a number or vector of numbers.
+
+:::: callout-important
+### Raster parameters drive the result!
+
+Note that the north half of SB County is not included in our resulting raster!  Because our Landsat raster was used to specify the parameters (including extent), the result gets cropped and some information gets lost.  Make sure your vector and raster data play well together! 
+::::
+
+::::panel-tabset
+
+#### Inspect the Parameters
+
+```{r}
+sb_county_r
+```
+
+The resulting raster has the same parameters as the `y` object used to create it!
+
+#### Plot the Layers
+```{r}
+#| fig-width: 6
+#| fig-height: 3
+#| fig-align: center
+
+plot(sb_county_r)
+```
+
+::::
+### From Scratch
+
+We can also create a raster from scratch, again using `terra::rast()`.  This is useful for creating a blank raster that can be used as a template for rasterizing polygons or lines.
+
+Here, let's create a global raster, in half-degree pixels, with a unique ID value for each cell, starting with 1 in the upper left.  Note we define the parameters manually.
+
+```{r manually create a raster from scratch}
+#| fig-width: 5
+#| fig-height: 2.5
+#| fig-align: center
+### create the blank template
+cellid_r <- rast(xmin = -180, xmax = 180, ymin = -90, ymax = 90,
+                 resolution = 0.5,
+                 crs = 'EPSG:4326') %>%
+  setNames('cell_id')
+
+### set values directly
+values(cellid_r) <- 1:ncell(cellid_r)
+
+plot(cellid_r)
+```
+
+Note, there are many variations on this, e.g., using existing rasters to set the extents and resolution.
+:::
+<!--end panel tabset for "Create Raster from XXX"-->
+
+:::callout-note
+### Single-layer vs Multi-layer Rasters
+
+A `SpatRaster` can hold one or more layers, all sharing the same spatial parameters. Multi-layer rasters are useful for multi-band imagery (like Landsat), time series, or stacking thematic layers. Access individual layers with `$name`, `['name']`, or `[[index]]`.
+:::
+
+## Let's Do Raster Math!
+
+Rasters are just a grid of numeric values, essentially a matrix, so we can do the same operations on a raster as we can with a basic vector or matrix.  Here we'll walk through some simple examples with a vector then apply the same to our LandSat data.
+
+### Basic Raster Math
+
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
+#| fig-align: center
+### operating on a vector
+vec <- 1:10
+vec * 2  ### multiply by a scalar
+vec + 20 ### add a scalar
+log(vec) ### transform with a function
+
+### subset raster using $ or [] notation:
+ls_red <- landsat_from_tif$landsat71_3    ### band 3 is red
+ls_nir <- landsat_from_tif['landsat71_4'] ### band 4 is near IR
+
+plot(ls_red + 100) ### note color ramp number changed
+plot(log(ls_red))  ### looks way different!
+```
+
+We can also add, subtract, multiply, or divide by a raster with the same spatial parameters, just as we can with vectors.
+
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
+#| fig-align: center
+vec2 <- 100:109
+vec / vec2
+
+plot(ls_red * ls_nir)
+```
+
+### Raster Indexing
+
+You can also use simple `[ ]` indexing to change values in raster pixels based on some logical test, or to replace values.  Most often, we would find values that DO NOT match our criteria and set them to NA.  Here are two examples: 
+
+:::panel-tabset
+### Where is NIR Below 30?
+
+Find cells **above** 30 and set to NA:
+
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
+#| fig-align: center
+nir_low <- ls_nir ### make a copy
+nir_low[nir_low > 30] <- NA ### any NIR value > 30, set to NA
+plot(nir_low)
+```
+
+### Where is Red Higher than NIR?
+
+Find cells where Red **is not** higher than NIR and set to NA:
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
+#| fig-align: center
+red_hi <- ls_red ### make a copy
+red_hi[red_hi < ls_nir] <- NA ### if red < NIR, set to NA
+plot(red_hi)
+```
+
+:::
+
+::: callout-example
+### Normalized Differential Vegetation Index
+
+Using basic raster math, we can use our red and NIR rasters to calculate the Normalized Difference Vegetation Index (NDVI), a common metric for vegetation health.  It works because healthy vegetation strongly reflects near IR while strongly absorbing red, unlike most non-plant matter.  The formula is:
+
+$$NDVI = \frac{NIR - Red}{NIR + Red}$$
+
+| NDVI Value  | Vegetation and Surface Type                        |
+| :---------: | :----                                              | 
+| -1.0 to 0.1 | Water, snow, clouds, or barren rock and sand       |
+| 0.1 to 0.2  | Bare soil or plowed agricultural fields            | 
+| 0.2 to 0.5  | Sparse veg, shrubs, grasslands, or senescing crops | 
+| 0.6 to 0.9  | Dense vegetation, healthy crops, or rainforests    | 
+
+Let's calculate NDVI, then identify vegetated areas using NDVI $\geq$ 0.2.
+
+::::panel-tabset
+### NDVI Calculation
+
+Note, here we run the NDVI calculation, then multiply the result using the SB County raster, which drops ocean cells, i.e., where `sb_county_r` is `NA`!  Note also, we can set a new more informative name for the result using `names()`.
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
+#| fig-align: center
+ndvi_all <- (ls_nir - ls_red) / (ls_nir + ls_red) ### all cells
+ndvi <- ndvi_all * sb_county_r
+
+names(ndvi) <- 'ndvi'
+
+plot(ndvi)
+```
+
+### NDVI Filtered and Masked
+
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
+#| fig-align: center
+
+veg <- ndvi ### create a copy of the NDVI raster so we don't overwrite that!
+veg[veg < 0.2] <- NA
+
+plot(veg)
+```
+::::
+<!-- end panel-tabset -->
+
+:::
+<!-- end callout-example -->
+
+### Summarization Functions
+
+The `terra` package allows for using basic statistical summary functions directly on rasters at the pixel level.
+
+:::panel-tabset
+### Max Pixel Value
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
+#| fig-align: center
+max_by_pixel <- max(landsat_from_tif)  ### max pixel value across multiple bands
+plot(max_by_pixel)
+```
+
+### Sum of Pixel Values
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
+#| fig-align: center
+sum_by_pixel <- sum(landsat_from_tif)  ### add up values across multiple bands
+plot(sum_by_pixel)
+```
+
+### Mean Overall
+
+To get summarized value across the entire map, use `values()` then apply the summary function:
+```{r}
+mean(values(landsat_from_tif))
+```
+:::
+
+### Example Use Cases for Basic Raster Math?
+
+* Basic combinations of rasters to quickly calculate ratios, sums, etc.
+* Rescale a raster by dividing by the max value: `rast_rescale <- rast / max(values(rast))`
+* Use a raster of presence/absence (as ones and zeros) to turn on or turn off values in a different raster (similar to `mask()`): `rast_masked <- value_rast * presence_absence_rast`
+* "Flatten" a raster to all ones and NAs by dividing the raster by itself (something divided by itself = 1, 0 divided by 0 = NaN)
+
+## Modifying Raster Parameters
+
+Raster analysis typically requires all data sources to have identical spatial parameters, but frequently we work with datasets from different sources, using spatial data with different extents, resolutions, and projections.
+
+:::panel-tabset
+
+### `project()`
+
+This is one of the most useful functions for raster analysis.  The `project()` function allows us to reproject the data from one raster into a different extent, resolution, and CRS, using either a target raster or a target CRS.  A common use case is when using multiple raster datasets from different sources: define one of your rasters as your "analysis grid" and use `project()` to convert any other rasters to match extent, resolution, and CRS of your analysis grid.
+
+Because we are translating values from one grid to another, we must specify a `method` to determine how to resolve differences when cells do not align perfectly:
+
+* `near` - Nearest neighbor works well for categorical variables, as the spatially closest value is transferred exactly.  `modal` works well too, if multiple input cells overlap with a single output cell.
+* `bilinear`, `mean`, `cubic`, and other interpolation methods work well for continuous data.
+
+As an example, let's reproject our SB county NDVI map, currently in a California Albers projection (in meters, EPSG code 3310), into something obviously wrong: a CRS optimized for Massachusetts spatial data (Massachusetts Mainland Lambert Conformal Conic, in meters, EPSG code 26986).  Let's also change the resolution from 30 m to 2000 m.
+
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
+#| fig-align: center
+ndvi_26986 <- project(x = ndvi, y = 'epsg:26986', res = 2000, method = 'bilinear')
+plot(ndvi_26986); plot(ndvi)
+```
+
+Because we are far from Massachusetts, the distortions caused by the new CRS are plain.  We can also see the NDVI values, originally ranging from -1 to 1, are now compressed to -0.20 to +0.40, as extreme values get averaged out due to the `bilinear` interpolation.
+
+### `crop()`
+
+Sometimes we want to use only a portion of the map.  We can crop a raster based on the extents of a different spatial object (`SpatRaster`, `SpatVector`, `sf`, or `extent`) **with the same CRS** (but other parameters can be different).  Let's zoom in on the NDVI around Santa Barbara city, rather than the entire county.
+
+Download this GeoPackage of [Santa Barbara cities](data/r_geospatial_raster_analysis/sb_cities.gpkg) and save it to your `data` folder in your current repository as `sb_cities.gpkg`.
+
+<!-- what the participants will type to load the data-->
+```r
+sb_city_sf <- sf::read_sf(here('data/sb_cities.gpkg')) %>%
+  filter(CITY == 'Santa Barbara')
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+### This chunk actually loads the data for purposes of rendering the lesson,
+### but is hidden from participants
+sb_city_sf <- sf::read_sf(here('data/r_geospatial_raster_analysis/sb_cities.gpkg')) %>%
+  filter(CITY == 'Santa Barbara')
+```
+
+The rectangular **extent** or **bounding box** of the vector data will automatically be applied to crop the raster.  Here we plot the raster and then the city boundary on top, to show that values outside the polygon (but within its bounding box) are still included.
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
+#| fig-align: center
+ndvi_city <- crop(ndvi, sb_city_sf)
+plot(ndvi_city); plot(sb_city_sf %>% select(CITY), border = 'yellow', col = NA, add = TRUE)
+```
+
+Compare this to `mask()` below!
+
+### `resample()`
+
+The `resample()` function is similar to `project()` in that it transfers values from one `SpatRaster` grid to another one with different geometric parameters - the difference is that it DOES NOT change the CRS.  As for `project()`, a `method` must be specified to determine how potential multiple cell values are summarized for the destination cell:
+
+* `near` - Nearest neighbor works well for categorical variables, as the spatially closest value is transferred exactly.  `modal` works well too, if multiple input cells overlap with a single output cell.
+* `bilinear`, `mean`, `cubic`, and other interpolation methods work well for continuous data.
+
+### `aggregate()`
+
+Data at very fine resolution can be computationally challenging to work with - so sometimes it is desirable to make the data more coarse, for example, to more closely match the resolution of another dataset before resampling or reprojecting.  The `aggregate` function is a fast method for converting fine resolution data to coarser resolutions by an integer multiplicative factor, without changing any other parameter.
+
+Our 30 m resolution Landsat data is great, but for a global analysis, something closer to 1 km resolution may be adequate and far more computationally accessible.  In a 1 km pixel, you could fit 33.3333 pixels at 30 m (in both x and y).  Aggregating by a factor of 33 (integer) gets us to 990 m resolution pixels, using a `method` to summarize the values of all 30 m pixels within each target 990x990 cell.  However, there is a tradeoff, as information is certainly lost in this process.
+
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
+#| fig-align: center
+ls_red_1km <- aggregate(ls_red, fact = 33, fun = 'mean')
+res(ls_red_1km)
+plot(ls_red_1km)
+```
+
+:::
+<!--end panel-tabset-->
+
+
+## Extracting Raster Values
+
+### `mask()`
+
+Sometimes we want to use one layer (raster or vector) to determine which parts of a raster layer we want to keep, like a stencil: by default, pixels inside the mask layer are kept, while pixels outside are set to NA (though this can be inverted if desired!).  Here we use the Santa Barbara city boundary as a mask, to keep only pixels within that boundary.  The city boundary is added in yellow, the county boundary is added in red.  Note that the extent of the result is unchanged, but all pixels outside the SB city boundary are now blank.
+
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
+#| fig-align: center
+ndvi_city_mask <- mask(ndvi, sb_city_sf)
+plot(ndvi_city_mask)
+plot(sb_county_sf %>% select(OBJECTID), border = 'red', col = NA, add = TRUE)
+plot(sb_city_sf %>% select(CITY), border = 'yellow', col = NA, add = TRUE)
+```
+
+:::callout-note
+### `crop()` vs `mask()` vs `trim()`
+
+* The `crop()` function changes the extents of a raster based on a target, and retains all data within the new extents.
+* The `mask()` function only retains data that overlap with pixels in the mask layer, but DOES NOT change the extents.
+* The `trim()` function takes an input raster and removes all the outer rows and columns that contain only whitespace - like a crop-to-self.  **Note, this changes the extent in the process,** which may make the result incompatible with other raster layers aligned with the original data.
+
+Try using `trim()` on the result of our `mask()` - what happens?
+:::
+
+
+### `extract()`
+
+To find values of our analysis raster based on some other spatial criteria (e.g., vector polygons/lines/points, xy coordinate), we can use `extract()`.  We can extract values of all cells that meet the criteria, or use the `fun` argument to apply a statistical function such as `mean`, `min`, `max`, `sum` to summarize by geometry ID.
+
+Let's find the mean NDVI values within the boundaries of the main cities of Santa Barbara County.  We already downloaded this file, and earlier filtered to just Santa Barbara city; let's load to a new object that includes all cities.
+
+NOTE: `extract()` returns the data as a dataframe instead of a raster, assuming that we are no longer interested in the spatial aspects of our data. 
+
+<!-- what the participants will type to load the data-->
+```r
+sb_all_cities_sf <- sf::read_sf(here('data/sb_cities.gpkg'))
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+### This chunk actually loads the data for purposes of rendering the lesson,
+### but is hidden from participants
+sb_all_cities_sf <- sf::read_sf(here('data/r_geospatial_raster_analysis/sb_cities.gpkg'))
+```
+
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
+#| fig-align: center
+
+ndvi_sb_cities <- extract(ndvi, sb_all_cities_sf, fun = mean, na.rm = TRUE)
+### note, this loses all information about the cities; let's attach that info:
+
+ndvi_sb_cities <- extract(ndvi, sb_all_cities_sf, fun = mean, na.rm = TRUE) %>%
+  cbind(sb_all_cities_sf)
+
+ndvi_sb_cities %>% st_drop_geometry() %>% select(CITY, ndvi)
+```
+
+To note: 
+
+* Why are most of these numbers so low?  While city greenery would be > 0.2, all the pavement and buildings would be below zero, dropping our averages.
+* Why are Santa Maria and Guadalupe (in north SB County) both NaN?  Because our cities vector spatial data extend beyond the edges of our NDVI data, which focuses on south SB County.
+
+:::callout-tip
+If we want to find values of our analysis raster based on a different (spatially compatible) raster with the selection criteria, (e.g., a raster of development zone ID, county ID, or country ID), `extract()` won't work - we would use the `zonal()` function instead!  In some cases, it may be more efficient to rasterize your spatial criteria and then use `zonal()` instead of `extract()`.
+:::
+
+## Working With Rasters {{<fa arrow-right-arrow-left>}} Data Frames
+
+For more complex analyses, it may be useful to convert rasters into data frames, perform the analysis there, and then convert the results back into a raster.  We saw previously how to create a raster from a .csv.  This allows the reverse!
+
+### Raster as Data Frame for Calculation
+
+Let's perform a similar analysis to the NDVI above, this time using the Normalized Difference Water Index (NDWI, McFeeters 1996) to detect water bodies:
+
+$$NDWI = \frac{Green - NIR}{Green + NIR}$$
+
+By this index, values above about 0.3 indicate water bodies, and under indicate non-water areas.
+
+To combine multiple rasters into a single multi-layer raster, simply use the `c()` function to combine. For this example:
+
+* Combine the green (band 2) and near-infrared (band 4) layers from our Landsat multi-layer raster into a single object.  We can access layers in the multilayer landsat using `[]` or `$` indexing using layer names, as above, or `[[]]` to index using layer number.  
+* Use `as.data.frame(xy = TRUE)` to convert the raster(s) to a dataframe, creating an X and Y column to hold that information (though the CRS information is lost).
+* Use standard data frame wrangling techniques to perform the calculation.
+* Then convert back to a raster, reattaching CRS from our original data.
+
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
+#| fig-align: center
+gr_nir_r <- c(landsat_from_tif[[2]], landsat_from_tif[[4]]) %>%
+  ### use setNames to rename the two layers!
+  setNames(c('green', 'nir'))
+
+gr_nir_df <- as.data.frame(gr_nir_r, xy = TRUE)
+
+ndwi_df <- gr_nir_df %>%
+  mutate(ndwi = (green - nir) / (green + nir))
+
+ndwi_r <- rast(ndwi_df, crs = crs(gr_nir_r))
+
+plot(ndwi_r)
+```
+
+Note that, because our dataframe contained multiple data columns (`green`, `nir`, and `ndwi`, along with `x` and `y`), `rast()` creates a multi-layer raster.
+
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
+#| fig-align: center
+water <- ndwi_r[[3]]       ### create a copy of just the ndwi layer
+water[water < 0.3] <- NA ### drop pixels with non-water values
+names(water) <- 'water'
+plot(water)
+```
+
+### Raster as Data Frame for `ggplot2`
+
+Up to now, we have been relying on `base::plot()` to visualize our rasters.  The `ggplot2` data visualization package requires inputs to generally be in data frame format.  So converting a raster to a dataframe opens this up as a possibility!
+
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
+#| fig-align: center
+ggplot(as.data.frame(water, xy = TRUE)) +
+  geom_raster(aes(x = x, y = y, fill = water)) +
+  theme_classic() +
+  labs(title = 'NDWI for Water Bodies of South Santa Barbara County')
+```
+
+## Saving Rasters with `writeRaster()`
+
+Finally, we can write out results of interest using `writeRaster()`.  This looks at the file extension to determine the output format; `.tif` for GeoTiff is an easy to use format with built-in compression for efficient file sizes.
+
+```r
+writeRaster(ndvi, here('data/landsat_ndvi.tif'))
+writeRaster(water, here('data/landsat_water.tif'))
+```
+
+
+## Summary and Review
+
+* Creating Rasters
+    * `terra::rast()` to load a raster from a file with appropriate format
+    * `terra::rast()` to create a raster from a dataframe with `x`, `y`, and value columns 
+    * `crs() <-` (or `set.crs()`) to assign a CRS to a raster using an EPSG code
+    * `terra::rasterize()` to rasterize a vector polygon to a raster grid 
+    * `terra::rast()` to create a raster from scratch by specifying extent, resolution, and CRS, and populate it with values using `values() <-` (or `set.values()`)
+* Raster Math and Indexing
+    * Math functions (e.g., `*`, `+`, `log()`) to directly modify raster values
+    * `$`, `[]`, and `[[]]` indexing to extract individual layers from a multi-layer raster 
+    * Logical indexing (`raster[raster > x] <- NA`) to mask out values by threshold
+    * Multi-layer summary functions (`max()`, `sum()`) to summarize across layers pixel-by-pixel
+* Modifying Raster Parameters
+    * `terra::project()` to reproject a raster to a new CRS and resolution
+    * `terra::crop()` to crop a raster to the bounding box of a vector or raster 
+    * `terra::aggregate()` to aggregate a fine-resolution raster to a coarser resolution 
+* Selecting Data from Rasters
+    * `terra::mask()` to retain only cells overlapping a vector boundary or raster 
+    * `terra::extract()` to extract (and optionally summarize) raster values within vector polygon boundaries
+* Rasters and Data Frames
+    * `as.data.frame(xy = TRUE)` to convert a raster to a data frame for use in dplyr workflows
+    * `ggplot2::geom_raster()` to visualize a raster after converting it to a data frame
+* Saving Outputs
+    * `terra::writeRaster()` to save out a raster to a file
+    
