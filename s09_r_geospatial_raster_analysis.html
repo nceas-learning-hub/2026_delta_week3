@@ -85,6 +85,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/bootstrap/bootstrap-951ce49b8f277ad05afe33a01ad03510.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/fontawesome6-6.7.2/all.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/fontawesome6-6.7.2/latex-fontsize.css" rel="stylesheet">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -547,8 +550,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
-  <li><a href="#set-up-quarto-document" id="toc-set-up-quarto-document" class="nav-link" data-scroll-target="#set-up-quarto-document"><span class="header-section-number">2</span> Set Up Quarto Document</a></li>
+  <li><a href="#scope-raster-not-vector" id="toc-scope-raster-not-vector" class="nav-link active" data-scroll-target="#scope-raster-not-vector"><span class="header-section-number">1</span> Scope: Raster, Not Vector</a></li>
+  <li><a href="#set-up-a-new-quarto-document" id="toc-set-up-a-new-quarto-document" class="nav-link" data-scroll-target="#set-up-a-new-quarto-document"><span class="header-section-number">2</span> Set Up a New Quarto Document</a></li>
   <li><a href="#lets-create-a-raster" id="toc-lets-create-a-raster" class="nav-link" data-scroll-target="#lets-create-a-raster"><span class="header-section-number">3</span> Let’s Create a Raster!</a>
   <ul class="collapse">
   <li><a href="#raster-spatial-parameters" id="toc-raster-spatial-parameters" class="nav-link" data-scroll-target="#raster-spatial-parameters"><span class="header-section-number">3.1</span> Raster Spatial Parameters</a></li>
@@ -587,7 +590,7 @@ window.Quarto = {
 
 <!--
 Prerequisite lessons - 
-* recommended: geospatial vector data in R
+* required: geospatial vector data in R - vector first is better pedagogy
 
 -->
 <div class="callout callout-style-default callout-learning no-icon callout-titled">
@@ -605,15 +608,57 @@ Prerequisite lessons -
 <div class="callout-learning">
 <p>After completing this session, you will be able to:</p>
 <ul>
-<li>Create learning objectives using verbs based on <a href="https://en.wikipedia.org/wiki/Bloom%27s_taxonomy#/media/File:Bloom%E2%80%99s_Taxonomy_Verbs.png">Bloom’s Taxonomy</a></li>
+<li><strong>Describe</strong> the key spatial parameters of a raster (coordinate reference system, extent, resolution, and origin) and explain why they must align across rasters used in a common analysis</li>
+<li><strong>Create</strong> raster objects in R from multiple starting points, including GeoTIFF files, tabular x-y data, vector polygons, and manually specified parameters</li>
+<li><strong>Apply</strong> raster math and logical indexing to calculate derived metrics such as NDVI directly from raster layers</li>
+<li><strong>Modify</strong> raster spatial parameters using <code>crop()</code>, <code>mask()</code>, <code>aggregate()</code>, <code>resample()</code>, and <code>project()</code></li>
+<li><strong>Extract</strong> and summarize raster values using vector spatial data as a selection criterion using <code>extract()</code></li>
+<li><strong>Convert</strong> between raster and data frame formats to enable <code>tidyverse</code>-style analysis workflows and <code>ggplot2</code> visualization</li>
 </ul>
 </div>
 </div>
 </div>
 </div>
-<section id="overview" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p>In this session we cover some basics of working with spatial data presented in a gridded format, i.e., rasters, using the <code>terra</code> package. This is distinct from vector data, such as points, lines, and polygons, which are not constrained to a grid but have problems of their own. This will be an overview of rasters, introducing basic concepts of creating them, modifying them, and doing basic analyses with them.</p>
+<section id="scope-raster-not-vector" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="scope-raster-not-vector"><span class="header-section-number">1</span> Scope: Raster, Not Vector</h2>
+<p>This lesson focuses on working with <strong>raster spatial data</strong> in R, primarily using the <code>terra</code> package in R. Raster data is typically a grid of pixels with each pixel containing some value of a continuous variable, like elevation or temperature. Satellite imagery and remote sensing data are common examples of raster data. This is distinct from <strong>vector spatial data</strong>, such as points, lines, and polygons, which are not constrained to a grid but have challenges of their own.</p>
+<p>In this overview of raster spatial data, we will introduce basic concepts of creating rasters, modifying them, and doing basic analyses with them. While this lesson does not <strong>focus</strong> on working with vector spatial data, we will use some vector spatial data (using the <code>sf</code> “Simple Features” spatial package) in conjunction with our raster analysis.</p>
+<div id="fig-raster-vs-vector" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-raster-vs-vector-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/r_geospatial_raster_analysis/vector_diagram.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Vector spatial data"><img src="images/r_geospatial_raster_analysis/vector_diagram.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:83.0%" alt="Diagram of vector spatial data types including points, lines (points connected by lines), and polygons (three or more points that define the edges of a shape)"></a></p>
+</figure>
+</div>
+<figcaption>Vector spatial data</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/r_geospatial_raster_analysis/raster_diagram.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Raster spatial data"><img src="images/r_geospatial_raster_analysis/raster_diagram.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Satellite picture (raster) of a forest with an inset showing how the pixels in that image relate to information stored in each pixel"></a></p>
+</figure>
+</div>
+<figcaption>Raster spatial data</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-raster-vs-vector-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Image Source - National Ecological Observatory Network (NEON)
+</figcaption>
+</figure>
+</div>
+<p>Mastering spatial data in R (or any GIS system) requires a solid understanding of both vector and raster spatial data.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -624,13 +669,13 @@ Prerequisite lessons -
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The <code>terra</code> package is the current standard for working with single- and multi-layer raster data, replacing the older (but still functional) <code>raster</code> package without a lot of friction.</p>
+<p>The <code>terra</code> package is the current standard for working with single- and multi-layer raster data, replacing the older (but still functional) <code>raster</code> package without a lot of friction, and more intuitive as a starting point.</p>
 <p>The <code>stars</code> package is a massive overhaul of raster-style data for R to work more seamlessly with data arrays in a manner similar to <code>sf</code> for vector data. Once you’re familiar with <code>terra</code>, <code>stars</code> is an alternative worth exploring for array-oriented or time-series raster data such as time series satellite imagery.</p>
 </div>
 </div>
 </section>
-<section id="set-up-quarto-document" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="set-up-quarto-document"><span class="header-section-number">2</span> Set Up Quarto Document</h2>
+<section id="set-up-a-new-quarto-document" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="set-up-a-new-quarto-document"><span class="header-section-number">2</span> Set Up a New Quarto Document</h2>
 <p>Create a blank Quarto document in your desired repository.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href=""><i class="fa-solid fa-p" aria-label="p"></i> Positron</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href=""><i class="fa-brands fa-r-project" aria-label="r-project"></i> RStudio</a></li></ul>
@@ -677,12 +722,12 @@ Prerequisite lessons -
 <h3 data-number="3.1" class="anchored" data-anchor-id="raster-spatial-parameters"><span class="header-section-number">3.1</span> Raster Spatial Parameters</h3>
 <p>There are several parameters that every raster must have:</p>
 <ul>
-<li>A coordinate reference system (CRS), i.e., a system to locate things spatially on the surface of the earth - basically a definition of the shape of the globe (hint: not a sphere), some way to identify where X = 0 and Y = 0, and quite likely some projection to convert curved space into flat space. Includes units, usually degrees or meters.</li>
-<li>An origin, i.e., what is the spatial coordinate of the grid point closest to (0, 0), sort of like how far is your grid offset from a perfect alignment.</li>
-<li>A resolution, i.e., what is the length of the sides of each grid cell, in both X and Y. This is in units given in the coordinate reference system.</li>
-<li>An extent, i.e., what are the corners of the rectangular box that bounds your raster.</li>
+<li><strong>Coordinate reference system (CRS)</strong>: A system to locate things spatially on the surface of the earth - basically a definition of the shape of the globe (hint: not a sphere), some way to identify where X = 0 and Y = 0, and quite likely some projection to convert curved space into flat space. Includes units, usually degrees or meters.</li>
+<li><strong>Resolution</strong>: The length of the sides of each grid cell, in both X and Y. This is in units given in the coordinate reference system.</li>
+<li><strong>Origin</strong>: The offset of the grid from (0, 0) (as given in the CRS), or alternately, the point closest to (0, 0) that you could get to by moving in steps of the x and y resolution.</li>
+<li><strong>Extent</strong>: The corners of the rectangular box that bounds your raster.</li>
 </ul>
-<p>If you want to use multiple rasters in an analysis, these parameters generally all have to match up across every raster.</p>
+<p>If you want to use multiple rasters in an analysis, these spatial parameters must match up across every raster, so the software can directly match and compare corresponding cells in different layers.</p>
 </section>
 <section id="creating-a-raster-four-ways" class="level3" data-number="3.2">
 <h3 data-number="3.2" class="anchored" data-anchor-id="creating-a-raster-four-ways"><span class="header-section-number">3.2</span> Creating a Raster: Four Ways</h3>
@@ -795,24 +840,24 @@ max value   :      253.01</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sb_county_sf <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(<span class="fu">here</span>(<span class="st">'data/sb_county.gpkg'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Examine the resulting Simple Features object: one observation with some random info about Santa Barbara County, and a <code>geometry</code> column containing MultiPolygon spatial information. We can create a raster by overlaying this polygon onto a grid, and then assigning values to the grid based on some attribute.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-27"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-27-1"><a href="#annotated-cell-27-1" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">same.crs</span>(sb_county_sf, landsat_from_tif)  <span class="do">### Check that CRS are equal!</span></span>
-<span id="annotated-cell-27-2"><a href="#annotated-cell-27-2" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="1">1</button><span id="annotated-cell-27-3" class="code-annotation-target"><a href="#annotated-cell-27-3" aria-hidden="true" tabindex="-1"></a>sb_county_r <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rasterize</span>(<span class="at">x =</span> sb_county_sf,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="2">2</button><span id="annotated-cell-27-4" class="code-annotation-target"><a href="#annotated-cell-27-4" aria-hidden="true" tabindex="-1"></a>                                <span class="at">y =</span> landsat_from_tif,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="3">3</button><span id="annotated-cell-27-5" class="code-annotation-target"><a href="#annotated-cell-27-5" aria-hidden="true" tabindex="-1"></a>                                <span class="at">field =</span> <span class="st">'OBJECTID'</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-26"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-26-1"><a href="#annotated-cell-26-1" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">same.crs</span>(sb_county_sf, landsat_from_tif)  <span class="do">### Check that CRS are equal!</span></span>
+<span id="annotated-cell-26-2"><a href="#annotated-cell-26-2" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="1">1</button><span id="annotated-cell-26-3" class="code-annotation-target"><a href="#annotated-cell-26-3" aria-hidden="true" tabindex="-1"></a>sb_county_r <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rasterize</span>(<span class="at">x =</span> sb_county_sf,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="2">2</button><span id="annotated-cell-26-4" class="code-annotation-target"><a href="#annotated-cell-26-4" aria-hidden="true" tabindex="-1"></a>                                <span class="at">y =</span> landsat_from_tif,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="3">3</button><span id="annotated-cell-26-5" class="code-annotation-target"><a href="#annotated-cell-26-5" aria-hidden="true" tabindex="-1"></a>                                <span class="at">field =</span> <span class="st">'OBJECTID'</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-27" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="3" data-code-annotation="1">The vector data to be converted to a raster</span>
+<span data-code-cell="annotated-cell-26" data-code-lines="3" data-code-annotation="1">The vector data to be converted to a raster</span>
 </dd>
-<dt data-target-cell="annotated-cell-27" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="4" data-code-annotation="2">The target grid, as a SpatRaster object</span>
+<span data-code-cell="annotated-cell-26" data-code-lines="4" data-code-annotation="2">The target grid, as a SpatRaster object</span>
 </dd>
-<dt data-target-cell="annotated-cell-27" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="5" data-code-annotation="3">What value gets assigned? Here we assign the value of the <code>OBJECTID</code> field in <code>sb_county_sf</code>, but could be any attribute, or even just a number or vector of numbers.</span>
+<span data-code-cell="annotated-cell-26" data-code-lines="5" data-code-annotation="3">What value gets assigned? Here we assign the value of the <code>OBJECTID</code> field in <code>sb_county_sf</code>, but could be any attribute, or even just a number or vector of numbers.</span>
 </dd>
 </dl>
 </div>
@@ -1274,18 +1319,34 @@ max value   :        1</code></pre>
 <section id="extract" class="level3" data-number="6.2">
 <h3 data-number="6.2" class="anchored" data-anchor-id="extract"><span class="header-section-number">6.2</span> <code>extract()</code></h3>
 <p>To find values of our analysis raster based on some other spatial criteria (e.g., vector polygons/lines/points, xy coordinate), we can use <code>extract()</code>. We can extract values of all cells that meet the criteria, or use the <code>fun</code> argument to apply a statistical function such as <code>mean</code>, <code>min</code>, <code>max</code>, <code>sum</code> to summarize by geometry ID.</p>
-<p>Let’s find the mean NDVI values within the boundaries of the main cities of Santa Barbara County. We already downloaded this file, and earlier filtered to just Santa Barbara city; let’s load to a new object that includes all cities.</p>
-<p>NOTE: <code>extract()</code> returns the data as a dataframe instead of a raster, assuming that we are no longer interested in the spatial aspects of our data.</p>
+<p>NOTE: <code>extract()</code> returns the data as a dataframe instead of a raster, assuming that we are no longer interested in the spatial aspects of our data. But it includes (by default) an ID column that relates to the row numbers of our boundaries (i.e., city boundaries) we are using to extract.</p>
+<p>Here we will examine the NDVI values within the boundaries of all cities in Santa Barbara County. We already downloaded this file, and earlier filtered to just Santa Barbara city; let’s load to a new object that includes all cities. Let’s also create a new column called ID that we can use later to bind our city info to our extracted values.</p>
 <!-- what the participants will type to load the data-->
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>sb_all_cities_sf <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(<span class="fu">here</span>(<span class="st">'data/sb_cities.gpkg'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>sb_all_cities_sf <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(<span class="fu">here</span>(<span class="st">'data/sb_cities.gpkg'</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ID =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true" href="">Extract all cell values</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false" href="">Summarize cell values</a></li></ul>
+<div class="tab-content">
+<div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
+<p>Let’s extract the <strong>values of all cells</strong> within the boundaries of the cities in Santa Barbara County. To extract all values, we leave <code>fun = NULL</code> (default). Then, bind the city info (but drop the <code>geometry</code> column).</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>ndvi_sb_cities <span class="ot">&lt;-</span> <span class="fu">extract</span>(ndvi, sb_all_cities_sf, <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="do">### note, this loses all information about the cities; let's attach that info:</span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>ndvi_sb_cities <span class="ot">&lt;-</span> <span class="fu">extract</span>(ndvi, sb_all_cities_sf, <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cbind</span>(sb_all_cities_sf)</span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>ndvi_sb_cities <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(CITY, ndvi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>ndvi_sb_cities <span class="ot">&lt;-</span> <span class="fu">extract</span>(ndvi, sb_all_cities_sf, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sb_all_cities_sf, <span class="at">by =</span> <span class="st">'ID'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>What is the maximum NDVI across all cells in the cities of SB? What is the minimum?</li>
+<li>Note, the pixel values have no <code>x</code> or <code>y</code> value - the spatial information has been dropped!</li>
+</ul>
+</div>
+<div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
+<p>Let’s find the mean NDVI values within the boundaries of the main cities of Santa Barbara County. Here we set <code>fun = mean</code> to summarize, rather than leaving it <code>NULL</code>. Then, bind the city info (but drop the <code>geometry</code> column).</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>ndvi_sb_cities <span class="ot">&lt;-</span> <span class="fu">extract</span>(ndvi, sb_all_cities_sf, <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sb_all_cities_sf, <span class="at">by =</span> <span class="st">'ID'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>()</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>ndvi_sb_cities <span class="sc">%&gt;%</span> <span class="fu">select</span>(CITY, ndvi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           CITY        ndvi
 1       Solvang  0.05696764
@@ -1298,11 +1359,13 @@ max value   :        1</code></pre>
 8 Santa Barbara -0.06177979</code></pre>
 </div>
 </div>
-<p>To note:</p>
 <ul>
-<li>Why are most of these numbers so low? While city greenery would be &gt; 0.2, all the pavement and buildings would be below zero, dropping our averages.</li>
+<li>Why are most of these numbers so low? While city greenery would be &gt; 0.2, all the pavement and buildings would have NDVI values below zero, dropping our averages.</li>
 <li>Why are Santa Maria and Guadalupe (in north SB County) both NaN? Because our cities vector spatial data extend beyond the edges of our NDVI data, which focuses on south SB County.</li>
 </ul>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1335,32 +1398,18 @@ Tip
 <li>Then convert back to a raster, reattaching CRS from our original data.</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>gr_nir_r <span class="ot">&lt;-</span> <span class="fu">c</span>(landsat_from_tif[[<span class="dv">2</span>]], landsat_from_tif[[<span class="dv">4</span>]]) <span class="sc">%&gt;%</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="do">### use setNames to rename the two layers!</span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">'green'</span>, <span class="st">'nir'</span>))</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>gr_nir_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(gr_nir_r, <span class="at">xy =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>ndwi_df <span class="ot">&lt;-</span> gr_nir_df <span class="sc">%&gt;%</span></span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ndwi =</span> (green <span class="sc">-</span> nir) <span class="sc">/</span> (green <span class="sc">+</span> nir))</span>
-<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>ndwi_r <span class="ot">&lt;-</span> <span class="fu">rast</span>(ndwi_df, <span class="at">crs =</span> <span class="fu">crs</span>(gr_nir_r))</span>
-<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ndwi_r)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="s09_r_geospatial_raster_analysis_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="480"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Note that, because our dataframe contained multiple data columns (<code>green</code>, <code>nir</code>, and <code>ndwi</code>, along with <code>x</code> and <code>y</code>), <code>rast()</code> creates a multi-layer raster.</p>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>water <span class="ot">&lt;-</span> ndwi_r[[<span class="dv">3</span>]]       <span class="do">### create a copy of just the ndwi layer</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>water[water <span class="sc">&lt;</span> <span class="fl">0.3</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span> <span class="do">### drop pixels with non-water values</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(water) <span class="ot">&lt;-</span> <span class="st">'water'</span></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(water)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>gr_nir_r <span class="ot">&lt;-</span> <span class="fu">c</span>(landsat_from_tif[[<span class="dv">2</span>]], landsat_from_tif[[<span class="dv">4</span>]]) <span class="sc">%&gt;%</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="do">### use setNames to rename the two layers!</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">'green'</span>, <span class="st">'nir'</span>))</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>gr_nir_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(gr_nir_r, <span class="at">xy =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>ndwi_df <span class="ot">&lt;-</span> gr_nir_df <span class="sc">%&gt;%</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ndwi =</span> (green <span class="sc">-</span> nir) <span class="sc">/</span> (green <span class="sc">+</span> nir))</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>ndwi_r <span class="ot">&lt;-</span> <span class="fu">rast</span>(ndwi_df, <span class="at">crs =</span> <span class="fu">crs</span>(gr_nir_r))</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ndwi_r)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1369,19 +1418,12 @@ Tip
 </div>
 </div>
 </div>
-</section>
-<section id="raster-as-data-frame-for-ggplot2" class="level3" data-number="7.2">
-<h3 data-number="7.2" class="anchored" data-anchor-id="raster-as-data-frame-for-ggplot2"><span class="header-section-number">7.2</span> Raster as Data Frame for <code>ggplot2</code></h3>
-<p>Up to now, we have been relying on <code>base::plot()</code> to visualize our rasters. The <code>ggplot2</code> data visualization package requires inputs to generally be in data frame format. So converting a raster to a dataframe opens this up as a possibility!</p>
+<p>Note that, because our dataframe contained multiple data columns (<code>green</code>, <code>nir</code>, and <code>ndwi</code>, along with <code>x</code> and <code>y</code>), <code>rast()</code> creates a multi-layer raster.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(water, <span class="at">xy =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">fill =</span> water)) <span class="sc">+</span></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'NDWI for Water Bodies of South Santa Barbara County'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted
-ℹ Consider using `geom_tile()` instead.</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>water <span class="ot">&lt;-</span> ndwi_r[[<span class="dv">3</span>]]       <span class="do">### create a copy of just the ndwi layer</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>water[water <span class="sc">&lt;</span> <span class="fl">0.3</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span> <span class="do">### drop pixels with non-water values</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(water) <span class="ot">&lt;-</span> <span class="st">'water'</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(water)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1391,12 +1433,33 @@ Tip
 </div>
 </div>
 </section>
+<section id="raster-as-data-frame-for-ggplot2" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="raster-as-data-frame-for-ggplot2"><span class="header-section-number">7.2</span> Raster as Data Frame for <code>ggplot2</code></h3>
+<p>Up to now, we have been relying on <code>base::plot()</code> to visualize our rasters. The <code>ggplot2</code> data visualization package requires inputs to generally be in data frame format. So converting a raster to a dataframe opens this up as a possibility!</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(water, <span class="at">xy =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">fill =</span> water)) <span class="sc">+</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'NDWI for Water Bodies of South Santa Barbara County'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted
+ℹ Consider using `geom_tile()` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="s09_r_geospatial_raster_analysis_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="saving-rasters-with-writeraster" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="saving-rasters-with-writeraster"><span class="header-section-number">8</span> Saving Rasters with <code>writeRaster()</code></h2>
 <p>Finally, we can write out results of interest using <code>writeRaster()</code>. This looks at the file extension to determine the output format; <code>.tif</code> for GeoTiff is an easy to use format with built-in compression for efficient file sizes.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(ndvi, <span class="fu">here</span>(<span class="st">'data/landsat_ndvi.tif'</span>))</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(water, <span class="fu">here</span>(<span class="st">'data/landsat_water.tif'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(ndvi, <span class="fu">here</span>(<span class="st">'data/landsat_ndvi.tif'</span>))</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(water, <span class="fu">here</span>(<span class="st">'data/landsat_water.tif'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="summary-and-review" class="level2" data-number="9">
 <h2 data-number="9" class="anchored" data-anchor-id="summary-and-review"><span class="header-section-number">9</span> Summary and Review</h2>
@@ -1915,6 +1978,38 @@ Tip
     </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
