@@ -490,9 +490,10 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#create-a-branch" id="toc-create-a-branch" class="nav-link" data-scroll-target="#create-a-branch"><span class="header-section-number">4.1</span> Create a Branch</a></li>
   <li><a href="#work-in-the-branch" id="toc-work-in-the-branch" class="nav-link" data-scroll-target="#work-in-the-branch"><span class="header-section-number">4.2</span> Work in the Branch</a></li>
-  <li><a href="#merging-branches" id="toc-merging-branches" class="nav-link" data-scroll-target="#merging-branches"><span class="header-section-number">4.3</span> Merging Branches</a></li>
-  <li><a href="#github-post-merge-housekeeping" id="toc-github-post-merge-housekeeping" class="nav-link" data-scroll-target="#github-post-merge-housekeeping"><span class="header-section-number">4.4</span> GitHub Post-Merge Housekeeping</a></li>
+  <li><a href="#open-merge-a-pull-request" id="toc-open-merge-a-pull-request" class="nav-link" data-scroll-target="#open-merge-a-pull-request"><span class="header-section-number">4.3</span> Open &amp; Merge a Pull Request</a></li>
+  <li><a href="#post-merge-housekeeping" id="toc-post-merge-housekeeping" class="nav-link" data-scroll-target="#post-merge-housekeeping"><span class="header-section-number">4.4</span> Post-Merge Housekeeping</a></li>
   <li><a href="#update-the-local-clone" id="toc-update-the-local-clone" class="nav-link" data-scroll-target="#update-the-local-clone"><span class="header-section-number">4.5</span> Update the Local Clone</a></li>
+  <li><a href="#branch-housekeeping" id="toc-branch-housekeeping" class="nav-link" data-scroll-target="#branch-housekeeping"><span class="header-section-number">4.6</span> Branch Housekeeping</a></li>
   </ul></li>
   <li><a href="#fork-workflow" id="toc-fork-workflow" class="nav-link" data-scroll-target="#fork-workflow"><span class="header-section-number">5</span> Fork Workflow</a>
   <ul class="collapse">
@@ -562,10 +563,9 @@ Prerequisite lessons or suggestions here
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Branches</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Forks</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p><strong>A “branch” is essentially a working environment in your Git repository that is separate from your main working area.</strong></p>
-<p>Branches can be incredibly useful when you have a task to work on but you don’t want to risk damaging the version of your code that already works. Note that “branch” can be either a noun or a verb as with many of the Git vocabulary words discussed earlier (e.g., “commit”, “push”).</p>
-<p>Branches are typically created with <strong>the intent to put the work in the branch back into the main branch when you are done with it.</strong> Implicit in that rationale is the fact that most branches are created with a specific task/sub-task in mind and known to be temporary from the outset.</p>
-<p>As an example, imagine that you want to put a better engine in your car but you don’t want to risk damaging your car as you go about that job. In Git terms you could create a branch to work on those mechanical improvements while at the same time preserving your original car separately (in the “main” branch). When you’re done experimenting and happy with the new version of your car, you can merge the two cars, keeping all of the improvements you made in your branch.</p>
+<p><strong>A “branch” is essentially a working area in your Git repository that is separate from, but connected to, your main working area.</strong> Branches can be incredibly useful when you have a task to work on but you don’t want to risk damaging the version of your code that already works. Note that “branch” can be either a noun or a verb as with many of the Git vocabulary words discussed earlier (e.g., “commit”, “push”).</p>
+<p><strong><em>Typically</em>, branches are typically created with a specific task/sub-task in mind and deleted once that task is done.</strong> There are some exceptions to this but generally keeping a manageable number of active branches and deleting inactive branches will make it easier for your team to collaborate in the right branch(es).</p>
+<p>As an analogy, imagine that you want to put a better engine in your car but you don’t want to risk damaging your car as you go about that job. In Git terms, you’d create a copy of your car that you could work on (i.e., a branch) while still running errands or driving to work with the version of your car before you started tinkering (i.e., the main branch). When you feel that you’ve finished upgrading your car, you can seamlessly combine the two cars, keeping all improvements made in the branch version. You could instead decide that the branch version of your car isn’t actually worthwhile and abandon/delete it instead of merging it with the ‘actual’ version of your car.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -582,15 +582,16 @@ Prerequisite lessons or suggestions here
 <tbody>
 <tr class="odd">
 <td>1. Enables parallel development and experimentation<br>2. Facilitates isolation of features or bug fixes<br>3. Provides flexibility and control over project workflows</td>
-<td>When working on larger projects with multiple features or bug fixes simultaneously.<br>When you want to maintain a stable main branch while developing new features or resolving issues on separate branches.<br>When collaborating with teammates on different aspects of a project and later integrating their changes.</td>
-<td>When working on small projects with a single developer or limited codebase.<br>When the project scope is simple and doesn’t require extensive branch management.<br>When there is no need to isolate features or bug fixes.</td>
+<td>- When working on larger projects with multiple features or bug fixes simultaneously.<br> - When you want to maintain a stable main branch while developing new features or resolving issues on separate branches.<br> - When collaborating with teammates on different aspects of a project and later integrating their changes.</td>
+<td>- When working on small projects with a single developer or limited codebase.<br> - When the project scope is simple and doesn’t require extensive branch management.<br> - When there is no need to isolate features or bug fixes.</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p><strong>A “fork” is a duplicate of a GitHub repository that has a different owner than the original.</strong> Any repository that you can view on GitHub, you can fork. This includes (1) any public repository, and (2) private repositories to which you have access.</p>
-<p>Forks are most commonly used when you want to use someone else’s work to ‘jump start’ your own, but aren’t collaborating with that person / likely don’t want to re-integrate your changes into their version of the project. For example, if you attend a workshop that has a GitHub repository full of examples, you might fork that repository and change the examples for your subject area so that you can use it in your own version of the workshop.</p>
+<p>Forks are most commonly used when you want to use someone else’s work to ‘jump start’ your own, but aren’t collaborating with that person and likely don’t want to re-integrate your changes into their version of the project.</p>
+<p>Returning to our car analogy, a fork would be when you like a car that you see someone else driving so you make a copy of it and then modify your copy to better suit your lifestyle and aesthetic tastes. You <em>could</em> offer your changes back to the original car owner but probably if they wanted those edits, you’d be a formal collaborator and you’d be working in a branch of their repository rather than your own fork.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -607,15 +608,15 @@ Prerequisite lessons or suggestions here
 <tbody>
 <tr class="odd">
 <td>1. Enables independent experimentation and development<br>2. Provides a way to contribute to a project without direct access<br>3. Allows for creating separate, standalone copies of a repository</td>
-<td>When you want to contribute to a project without having direct write access to the original repository.<br>When you want to work on an independent variation or extension of an existing project.<br>When experimenting with changes or modifications to a project while keeping the original repository intact.</td>
-<td>When collaborating on a project with direct write access to the original repository.<br>When the project does not allow external contributions or forking.<br>When the project size or complexity doesn’t justify the need for independent variations.</td>
+<td>- When you want to contribute to a project without having direct write access to the original repository.<br> - When you want to work on an independent variation or extension of an existing project.<br> - When experimenting with changes or modifications to a project while keeping the original repository intact.</td>
+<td>- When collaborating on a project with direct write access to the original repository.<br> - When the project does not allow external contributions or forking.<br> - When the project size or complexity doesn’t justify the need for independent variations.</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
-<p>The difference between <strong>forks</strong> and <strong>branches</strong> is a source of great confusion for many (even veteran!) Git and GitHub users but hopefully this list helps to clarify!</p>
+<p>The difference between <strong>forks</strong> and <strong>branches</strong> is a source of great confusion for many (even veteran!) Git and GitHub users but hopefully this table helps to clarify!</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 62%">
@@ -624,26 +625,26 @@ Prerequisite lessons or suggestions here
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;"><strong>FAQ</strong></th>
-<th style="text-align: center;"><strong>Fork</strong></th>
-<th style="text-align: center;"><strong>Branch</strong></th>
+<th style="text-align: left;">FAQ</th>
+<th style="text-align: center;">Branch</th>
+<th style="text-align: center;">Fork</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Does making one also create a new repository?</td>
-<td style="text-align: center;"><strong>Yes!</strong></td>
 <td style="text-align: center;">No</td>
+<td style="text-align: center;"><strong>Yes!</strong></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Does repository ownership change when you make one?</td>
-<td style="text-align: center;"><strong>Yes!</strong></td>
 <td style="text-align: center;">No</td>
+<td style="text-align: center;"><strong>Yes!</strong></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Does <u>Git</u> know the “parent” repository/branch?</td>
-<td style="text-align: center;">No</td>
 <td style="text-align: center;"><strong>Yes!</strong></td>
+<td style="text-align: center;">No</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Does <u>GitHub</u> know the “parent” repository/branch</td>
@@ -655,7 +656,7 @@ Prerequisite lessons or suggestions here
 </section>
 <section id="pull-requests" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="pull-requests"><span class="header-section-number">3</span> Pull Requests</h2>
-<p>Regardless of whether you branch or fork, when you want to merge your changes into another branch or back to the original repository, it is good practice to use a <strong>pull request</strong> to do this!</p>
+<p>Regardless of whether you branch or fork, when you want to merge your changes into another branch or back to the original repository, it is good practice to use a <strong>“pull request”</strong> to do this! A pull request (a.k.a. “PR”) is a GitHub feature that allows collaborators on a project to do a specific review of the content from a branch/fork as a final check before those edits are integrated into the another branch/repository.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -672,28 +673,31 @@ Prerequisite lessons or suggestions here
 <tbody>
 <tr class="odd">
 <td>1. Facilitates code review and discussion<br>2. Allows for collaboration and feedback from team members<br>3. Enables better organization and tracking of proposed changes</td>
-<td>When working on a shared repository with a team and wanting to contribute changes in a controlled and collaborative manner.<br>When you want to propose changes to a project managed by others and seek review and approval before merging them into the main codebase.</td>
-<td>When working on personal projects or individual coding tasks without the need for collaboration.<br>When immediate changes or fixes are required without review processes.<br>When working on projects with a small team or single developer with direct write access to the repository.</td>
+<td>- When working on a shared repository with a team and wanting to contribute changes in a controlled and collaborative manner.<br>- When you want to propose changes to a project managed by others and seek review and approval before merging them into the main codebase.</td>
+<td>- When working on personal projects or individual coding tasks without the need for collaboration.<br>- When immediate changes or fixes are required without review processes.<br>- When working on projects with a small team or single developer with direct write access to the repository.</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="branch-workflow" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="branch-workflow"><span class="header-section-number">4</span> Branch Workflow</h2>
-<p>Before diving into the specifics of how to use branches while working with Git, let’s take a look at a general overview of that process.</p>
-<p>As with many other Git operations, the first thing to do is <strong><span style="color:blue">pull</span></strong> from GitHub to your local repository to ensure that you’re working with the most up-to-date version of everything in the repo (see <strong>Step 1</strong> below).</p>
-<p>Once that is done, you can create a branch on your local machine. This will automatically shift your IDE into that new branch. Doing this on your machine also updates GitHub to show that there are multiple branches (see <strong>Step 2</strong> below).</p>
-<p>Once you have created a branch you can work in it locally (and via GitHub directly) as you would normally. You can <strong><span style="color:gold">edit</span></strong> your files locally, <strong>commit</strong> those changes, <strong><span style="color:blue">pull</span></strong> from GitHub (within the branch), and <strong><span style="color:green">push</span></strong> to GitHub (see <strong>Steps 3-4</strong> below).</p>
-<p>When you are done working with the branch (i.e., you’ve finished the task for which you created the branch), you can use GitHub to merge your branch with the main one (see <strong>Step 5</strong> below). This puts all of the content in your branch into the main one now (which puts your local version of the “main” branch behind!).</p>
-<p>Once the two branches are merged on GitHub, go back to your local computer, manually change the branch to the main branch and pull (see <strong>Step 7</strong> below). This updates your local version of the main branch and avoids future problems.</p>
-<p>Given that most branches are not used again after they are merged, it is often a good housekeeping step to then <strong>delete</strong> your branch on GitHub and locally once you have successfully merged the pull request (see <strong>Steps 6 &amp; 8</strong> below). Note that in the below diagram step 6 and 8 occur on either side of step 7 but in truth they can both come after depending on your preference.</p>
-<p>However, deletion of the branch either locally or via GitHub <strong>must</strong> come <em>after</em> step 5!</p>
-<p>As you can see from the above text and the below diagram, branches have a few more moving parts than the Git and GitHub operations we’ve discussed so far. That said, they can be a powerful tool in service of collaborative work because you can have multiple branches active at the same all working on separate tasks. This approach can be an easy (or at least eas<em>ier</em>) workflow for working together while avoiding conflicts.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/git_advanced_git_github/git-branch-workflow.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%" alt="Graphic demonstrating the process of using branches on a Git/GitHub repository. Essentially you pull the latest changes before making a branch, then make the branch and work in it. Once you're happy with your progress, you can submit a pull request to merge your work back into the 'main' branch and then you delete your branch"></p>
-</figure>
-</div>
+<p>Before diving into the specifics of how to use branches while working with Git, let’s take a high-level look at what a branch workflow might look like. <strong>Before you start, identify a ‘branch-worthy’ task</strong>–this should be a specific, actionable task that can only be done by potentially breaking core project files that need to be unbroken while the task is being pursued.</p>
+<p>Once the task is identified:</p>
+<ol type="1">
+<li>Make sure your local repository’s main branch is up-to-date with the remote’s main branch</li>
+<li>Create a branch</li>
+<li>Work in the branch as you would normally with Git
+<ul>
+<li>I.e., make commits as needed and periodically sync with the remote repository</li>
+</ul></li>
+<li>When the branch-worthy task is done, merge the branch back into the main branch of the repository
+<ul>
+<li>Open a pull request if you want an added layer of checks/safety before integrating your changes</li>
+</ul></li>
+<li>Switch your local repository back to main and pull the now-integrated changes</li>
+<li>Delete the branch (locally and on the remote)</li>
+</ol>
+<p>As you can see from the above text, branches have a few more steps than the Git/GitHub operations we’ve discussed so far. That said, they can be a powerful tool in service of collaborative work because you can have multiple branches active at the same all working on separate tasks. This approach can be an easy (or at least <em>easier</em>) workflow for working together while avoiding conflicts.</p>
 <p>Now we’ve gone over this big picture overview, let’s walk step-by-step through creating, working in and ultimately merging branches!</p>
 <section id="create-a-branch" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="create-a-branch"><span class="header-section-number">4.1</span> Create a Branch</h3>
@@ -756,11 +760,9 @@ Prerequisite lessons or suggestions here
 </ol>
 <p>The reason you use the same workflow is–as previously stated–even if you don’t typically use branches, all work in Git is functionally done in the “main” branch of your repository so your work in this new branch should use the same order of operations as work done in the “main” branch.</p>
 </section>
-<section id="merging-branches" class="level3" data-number="4.3">
-<h3 data-number="4.3" class="anchored" data-anchor-id="merging-branches"><span class="header-section-number">4.3</span> Merging Branches</h3>
+<section id="open-merge-a-pull-request" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="open-merge-a-pull-request"><span class="header-section-number">4.3</span> Open &amp; Merge a Pull Request</h3>
 <p>When you are done with your work in the branch, you will want to merge your new branch with the “main” branch of the repository. This branch merging is most easily done via GitHub so the following instructions are agnostic to IDE and purposefully exclude the repository name from the screen capture area. To start, <strong><span style="color:green">push</span>/sync your final commit(s) from your local branch with GitHub.</strong></p>
-<section id="open-merge-a-pull-request" class="level4" data-number="4.3.1">
-<h4 data-number="4.3.1" class="anchored" data-anchor-id="open-merge-a-pull-request"><span class="header-section-number">4.3.1</span> Open &amp; Merge a Pull Request</h4>
 <p>After you <span style="color:green">push</span>/sync your changes, GitHub should recognize this and automatically create a button at the top of your repository’s home page for you to start the process of creating a “pull request.” Pull requests are how you merge branches on GitHub and the entire process is conducted entirely in the browser so we’ll leave our IDEs until the pull request is completed.</p>
 <p>To start the branch merging process, <strong>click the “Compare &amp; pull request” button</strong></p>
 <div class="quarto-figure quarto-figure-center">
@@ -782,9 +784,8 @@ Prerequisite lessons or suggestions here
 <p><img src="images/git_advanced_git_github/github-04_pr-merge-message.png" class="img-fluid" alt="Screenshot of the menu that opens on GitHub when you click 'merge pull request' where you are prompted to add an optional description before clicking 'confirm merge'"></p>
 <p>Your pull request has now been merged! Now we need to do some minor housekeeping in GitHub that–fortunately–GitHub makes really accessible.</p>
 </section>
-</section>
-<section id="github-post-merge-housekeeping" class="level3" data-number="4.4">
-<h3 data-number="4.4" class="anchored" data-anchor-id="github-post-merge-housekeeping"><span class="header-section-number">4.4</span> GitHub Post-Merge Housekeeping</h3>
+<section id="post-merge-housekeeping" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="post-merge-housekeeping"><span class="header-section-number">4.4</span> Post-Merge Housekeeping</h3>
 <p>Branches are meant to be short-lived and deleted once the specific purpose for which they were created has been accomplished. So, once the pull request is merged, we should <strong>click the “Delete branch” button.</strong> This will ensure that the number of active branches remains manageable and also will let you re-use branch names later on if you deem that necessary.</p>
 <p><img src="images/git_advanced_git_github/github-05_pr-merged.png" class="img-fluid" alt="Screenshot of a closed pull request on GitHub with a 'delete branch' button provided"></p>
 <p>After you click “Delete branch” it will be replaced by a “Restore branch” button so you could always reclaim it if the deletion was premature.</p>
@@ -820,19 +821,6 @@ Prerequisite lessons or suggestions here
 </figure>
 </div>
 </section>
-<section id="branch-housekeeping" class="level4" data-number="4.5.2">
-<h4 data-number="4.5.2" class="anchored" data-anchor-id="branch-housekeeping"><span class="header-section-number">4.5.2</span> Branch Housekeeping</h4>
-<p>Now that our “main” branch is updated, we need to do the same sort of branch housekeeping that we did in GitHub after merging the pull request. In RStudio’s <i class="fa-solid fa-terminal" aria-label="terminal"></i> “Terminal” pane, <strong>delete the finished branch with the following command line code.</strong> <em>Remember to replace “BRANCH_NAME” with whatever you named your branch!</em></p>
-<pre><code>git branch -d BRANCH_NAME</code></pre>
-<p>Once you’ve deleted that branch, you’ll need to “prune” your branches. The previous code deleted the local version of your branch but your IDE still ‘thinks’ that GitHub has an equivalent of the branch. To reduce the potential for confusion, <strong>prune your local clone with the following command line code.</strong> Just like branch deletion, this should code should be run in RStudio’s <i class="fa-solid fa-terminal" aria-label="terminal"></i> “Terminal” pane.</p>
-<pre><code>git remote update origin --prune</code></pre>
-<p>You can confirm that these two lines of code worked as expected by clicking the “main” branch name in RStudio’s Git pane. The resulting dropdown of local and remote branches should only list the “main” branch under each sub-heading.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/git_advanced_git_github/post-branch_rstudio-04_confirm-prune.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" alt="Screenshot of the Git branch dropdown menu in RStudio"></p>
-</figure>
-</div>
-</section>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <p>First, in the “source control” part of Positron, <strong>hover over the “Changes” menu and click <code>...</code></strong> to expand the set of Git operations that are visible. In the resulting dropdown, <strong>scroll down and click “Checkout to…”.</strong> Note that you may want to close your open files before doing this, particularly if some files were created in the branch because they wouldn’t yet exist in the “main” branch locally (you merged on GitHub with the pull request but haven’t pulled those updates locally).</p>
@@ -859,19 +847,35 @@ Prerequisite lessons or suggestions here
 <p><img src="images/git_advanced_git_github/post-branch_positron-04_success.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" alt="Screenshot of the branch diagram in Positron's source control menu"></p>
 </figure>
 </div>
-<section id="branch-housekeeping-1" class="level4" data-number="4.5.3">
-<h4 data-number="4.5.3" class="anchored" data-anchor-id="branch-housekeeping-1"><span class="header-section-number">4.5.3</span> Branch Housekeeping</h4>
-<p>Now that our “main” branch is updated, we need to do the same sort of branch housekeeping that we did in GitHub after merging the pull request. In Positron’s <i class="fa-solid fa-terminal" aria-label="terminal"></i> “Terminal” pane, <strong>delete the finished branch with the following command line code.</strong> <em>Remember to replace “BRANCH_NAME” with whatever you named your branch!</em></p>
+</div>
+</div>
+</div>
+</section>
+<section id="branch-housekeeping" class="level3" data-number="4.6">
+<h3 data-number="4.6" class="anchored" data-anchor-id="branch-housekeeping"><span class="header-section-number">4.6</span> Branch Housekeeping</h3>
+<p>Now that our “main” branch is updated, we need to do the same sort of branch housekeeping that we did in GitHub after merging the pull request. In your IDE’s <i class="fa-solid fa-terminal" aria-label="terminal"></i> Terminal, <strong>delete the finished branch with the following command line code.</strong> <em>Remember to replace “BRANCH_NAME” with whatever you named your branch!</em></p>
 <pre><code>git branch -d BRANCH_NAME</code></pre>
-<p>Once you’ve deleted that branch, you’ll need to “prune” your branches. The previous code deleted the local version of your branch but your IDE still ‘thinks’ that GitHub has an equivalent of the branch. To reduce the potential for confusion, <strong>prune your local clone with the following command line code.</strong> Just like branch deletion, this should code should be run in Positron’s <i class="fa-solid fa-terminal" aria-label="terminal"></i> “Terminal” pane.</p>
+<p>Once you’ve deleted that branch, you’ll need to “prune” your branches. The previous code deleted the local version of your branch but your IDE still ‘thinks’ that GitHub has an equivalent of the branch. To reduce the potential for confusion, <strong>prune your local clone with the following command line code.</strong> Just like branch deletion, this should code should be run in the <i class="fa-solid fa-terminal" aria-label="terminal"></i> Terminal.</p>
 <pre><code>git remote update origin --prune</code></pre>
-<p>You can confirm that these two lines of code worked as expected by clicking the “Checkout to…” button in the dropdown menu of Git operations. The resulting list of branches should only list the “main” branch under each sub-heading.</p>
+<p>Once you’ve run those two lines of code, confirm that it worked by following the below instructions for your IDE!</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">RStudio</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Positron</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<p>Click the “main” branch name in RStudio’s Git pane. The resulting dropdown of local and remote branches should only list the “main” branch under each sub-heading.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/git_advanced_git_github/post-branch_rstudio-04_confirm-prune.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" alt="Screenshot of the Git branch dropdown menu in RStudio"></p>
+</figure>
+</div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<p>Click the “Checkout to…” button in the dropdown menu of Git operations. The resulting list of branches should only list the “main” branch under each sub-heading.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/git_advanced_git_github/post-branch_positron-05_confirm-prune.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="Screenshot of the Git branch dropdown menu in Positron"></p>
 </figure>
 </div>
-</section>
 </div>
 </div>
 </div>
@@ -879,35 +883,41 @@ Prerequisite lessons or suggestions here
 </section>
 <section id="fork-workflow" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="fork-workflow"><span class="header-section-number">5</span> Fork Workflow</h2>
-<p>Forking is (arguably) one of the more straightforward GitHub operations but before we cover it in detail, let’s review the broader context.</p>
-<p>You begin by going to the GitHub page for a repository that you do not own. From there, there is a convenient “Fork” button you can click that (after a screen very much like that of creating a new repository) creates a duplicate of the repository that is owned by your GitHub identity.</p>
-<p>Once the fork is created, you simply clone the repository as you would when beginning work with any other GitHub repository.</p>
-<p>From there on you work as your normally would with GitHub: <strong><span style="color:gold">edit</span></strong>, <strong>commit</strong>, <strong><span style="color:blue">pull</span></strong>, and <strong><span style="color:green">push</span></strong>.</p>
-<p>While it is not shown in the below diagram, if needed you can submit a “pull request” to merge your version of the repository with the version you initially forked from. This is not a required part of the workflow which is why it is excluded from the diagram.</p>
+<p>Forking is (arguably) one of the more straightforward GitHub operations but before we cover it in detail, let’s review the broader context. <strong>You should only make a fork if <em>all</em> of the following are true:</strong></p>
+<ul>
+<li>You don’t have edit access to the original repository (and can’t reasonably ask for it)</li>
+<li>Your work can’t be done in a branch</li>
+<li>It is unlikely that any edits you want to make will/should ever be integrated back into the original repository</li>
+</ul>
+<p>If you’re confident that a fork is warranted:</p>
+<ol type="1">
+<li>From the GitHub landing page for the repository, click the “Fork” button</li>
+<li>Clone your fork of the repository</li>
+<li>Work in your fork as you would normally with Git</li>
+<li>If warranted, open a pull request to merge your edits back into the original repository</li>
+</ol>
+<p>Note that in many cases, you won’t do step 4 and in some cases you may not even do step 3. For example, some people fork repositories that have key resources (e.g., education materials, non-CRAN R packages), just so they can guarantee that those resources stay available to them; even if the original repository is deleted/archived, your fork remains safe and active!</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/git_advanced_git_github/git-fork-workflow.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%" alt="Graphic of the workflow when using forks. Begins by forking someone else's repository then working in your fork as you normally would"></p>
 </figure>
 </div>
-<p>Now we’ve covered the general operation of forking, let’s go over the specifics step-by-step.</p>
 <section id="create-a-fork" class="level3" data-number="5.1">
 <h3 data-number="5.1" class="anchored" data-anchor-id="create-a-fork"><span class="header-section-number">5.1</span> Create a Fork</h3>
-<p>On GitHub, navigate to the repository that you would like to fork for your own use. Note that in this case the repository we created to take these screen captures is very new but this need not be the case!</p>
-<p>In the top right of the repository’s GitHub page there is a “Fork” button (between “Unwatch” and “Star”), click it to begin forking.</p>
+<p>To start, <strong>go to the repository landing page for the repo you want to fork.</strong> In the top right of the repository’s GitHub page there is a “Fork” button (between “Unwatch” and “Star”), click it to begin forking.</p>
 <p><img src="images/git_advanced_git_github/forks-1-start.png" class="img-fluid" alt="Screenshot of the top of a GitHub repository including the 'fork' button in the top right (in-line with the name of the repository)"></p>
 <p>This redirects you to a page that is very similar to the page for creating a new repository <em>de novo</em>.</p>
 <p>Here you can select who you want to own the repository from a dropdown including any organizations you are a member of and your username if you want to personally own the fork. You can also change the repository name (though the default is to retain the same name) and add a description of your purpose for the fork.</p>
 <p>You may notice that in this page you do not have the option to specify public versus private or any of the ‘initialize’ steps (e.g., README, gitignore, or license). Forks will inherit these settings from the repository they are forked from so they do not need to specified here.</p>
 <p>Once you are happy with the owner of the fork, the name, and the description, click the <span style="color:green">green</span> “Create fork” button.</p>
 <p><img src="images/git_advanced_git_github/forks-2-name-fork.png" class="img-fluid" alt="Screenshot of the GitHub interface for making a fork (where the repository can be renamed and have a description added)"></p>
-<p>Depending on the amount of content in the repository you are forking and your internet speed this may take anywhere from a few seconds to 1-2 minutes so you will need to wait for a moment while GitHub creates a new duplicate repository under the control of the owner you specified.</p>
+<p>Depending on the amount of content in the repository you are forking and your internet speed this may take anywhere from a few seconds to 1-2 minutes so you may need to wait for a moment while GitHub creates a new duplicate repository under the control of the owner you specified.</p>
 <p>After the process completes the page will refresh and you will find yourself on the landing page for your new forked repository!</p>
 <p><img src="images/git_advanced_git_github/forks-3-fork-landing-page.png" class="img-fluid" alt="Screenshot of the forked repository owned by a different owner than the original repository"></p>
 <p>This repository has a fork icon in the top left (to the left of the owner/repository name) and includes a link to the repository that it came from just beneath that.</p>
-<p>The other salient difference is that between the branch and “Code” buttons and the list of files there is a bar that indicates whether the fork is up to date with the repository it was forked from.</p>
-<p>If the “parent” repository is updated (i.e., someone pushes changes to it after you forked) you can click the “Fetch upstream” button to integrate those changes with your fork.</p>
-<p>If you decide that your changes are a meaningful improvement that the parent repository could benefit from, you can click the “Contribute” button to begin the process of submitting a pull request to integrate your edits with the parent.</p>
+<p>There is also a new status bar indicating how ‘ahead of’ or ‘behind’ the fork is relative to the original repository. If the “parent” repository is updated (i.e., someone pushes changes to it after you forked) you can click the “Fetch upstream” button to integrate those changes with your fork.</p>
 <p>From here on you can work within your fork as you would within any other repository! <strong><span style="color:purple">Clone</span></strong> the fork into your local computer and work as you normally would.</p>
+<p>If you decide that your changes are a meaningful improvement that the parent repository could benefit from, you can click the “Contribute” button to begin the process of submitting a pull request to integrate your edits with the parent.</p>
 </section>
 </section>
 <section id="git-logs" class="level2" data-number="6">
