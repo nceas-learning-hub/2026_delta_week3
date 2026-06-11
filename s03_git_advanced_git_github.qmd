@@ -99,23 +99,7 @@ Now we've gone over this big picture overview, let's walk step-by-step through c
 
 :::{.panel-tabset}
 
-### In RStudio
-
-To create a branch, click the **<span style="color:purple">purple</span>** button in the "Git" tab of RStudio that shows two rectangles connected by a diamond at right-angles from one another.
-
-![](images/git_advanced_git_github/rstudio-01_start.png){fig-alt="Screen capture of RStudio"}
-
-In the resulting dialogue box, **give your new branch an informative name.** In this example we haven't given our new branch a great name but in a "real" repository you will greatly appreciate having concise but descriptive branch names. Once you're happy with the name, **click the "Create" button** (you can ignore the other options and buttons on this dialogue box).
-
-![](images/git_advanced_git_github/rstudio-02_branch-details.png){fig-alt="Screenshot of the menu that opens when you click the purple 'create branch' button in RStudio. Includes a text field for the branch name as well as a some other checkboxes/options (that can be safely left at their default settings in many cases)" fig-align="center" width="50%"}
-
-This will create a confirmation message that is superficially similar to the format of messages returned by other Git actions.
-
-![](images/git_advanced_git_github/rstudio-03_branch-message.png){fig-alt="Screenshot of the text returned when you create a branch in RStudio" fig-align="center" width="80%"}
-
-You may also notice that in your Git tab where previously it said "main" it now shows whatever name you chose for your branch.
-
-### In Positron
+### Positron
 
 To begin, **go to the "source control" section of Positron.**
 
@@ -136,6 +120,22 @@ Now that you've made your new branch locally, you need to send it up to GitHub. 
 You'll know that this worked when you look at the branch diagram in the bottom left corner of Positron's source control menu. Note how the second commit from the top has the "origin/main" label while the top-most one has the label that matches whatever you named your new branch.
 
 ![](images/git_advanced_git_github/positron-05_published.png){fig-alt="Screenshot of the Positron 'source control' pane after a new branch has been published" fig-align="center" width="80%"}
+
+### RStudio
+
+To create a branch, click the **<span style="color:purple">purple</span>** button in the "Git" tab of RStudio that shows two rectangles connected by a diamond at right-angles from one another.
+
+![](images/git_advanced_git_github/rstudio-01_start.png){fig-alt="Screen capture of RStudio"}
+
+In the resulting dialogue box, **give your new branch an informative name.** In this example we haven't given our new branch a great name but in a "real" repository you will greatly appreciate having concise but descriptive branch names. Once you're happy with the name, **click the "Create" button** (you can ignore the other options and buttons on this dialogue box).
+
+![](images/git_advanced_git_github/rstudio-02_branch-details.png){fig-alt="Screenshot of the menu that opens when you click the purple 'create branch' button in RStudio. Includes a text field for the branch name as well as a some other checkboxes/options (that can be safely left at their default settings in many cases)" fig-align="center" width="50%"}
+
+This will create a confirmation message that is superficially similar to the format of messages returned by other Git actions.
+
+![](images/git_advanced_git_github/rstudio-03_branch-message.png){fig-alt="Screenshot of the text returned when you create a branch in RStudio" fig-align="center" width="80%"}
+
+You may also notice that in your Git tab where previously it said "main" it now shows whatever name you chose for your branch.
 
 :::
 
@@ -205,23 +205,8 @@ Finally, if we return to the home page of the repository, we can see that the mo
 Now that the branches have been merged on GitHub, we need to make sure our local clone gets those updates from GitHub. This is particularly important if our IDE is still in the branch we created earlier because--now that we've deleted the branch's counterpart in GitHub--we'll get an error if we attempt to push from that branch.
 
 ::::{.panel-tabset}
-### In RStudio
 
-#### Get Updates
-
-First, in the top right corner of RStudio, **click the active branch name and switch to back to the "main" branch.** Note that you may want to close your open files before doing this, particularly if some files were created in the branch because they wouldn't yet exist in the "main" branch locally (you merged on GitHub with the pull request but haven't pulled those updates locally).
-
-![](images/git_advanced_git_github/post-branch_rstudio-01_switch.png){fig-alt="Screenshot of the Git branch dropdown menu in RStudio" fig-align="center" width="50%"}
-
-This should create a message that looks like the following image. You should **ignore the part of the message telling you that your are up to date**; you are not up to date with GitHub yet. The message is referring to the status of your local clone's version of the "main" branch.
-
-![](images/git_advanced_git_github/post-branch_rstudio-02_switch-message.png){fig-alt="Screenshot of the Git message in RStudio when switching branches" fig-align="center" width="80%"}
-
-Now that you're back in the "main" branch, **pull the latest changes from GitHub.** You should receive all of the commits that you just merged via pull request earlier. This will create a message that is something like the following image--though of course it will list all changed files so it may be a longer message than what is pictured below if you edited more files.
-
-![](images/git_advanced_git_github/post-branch_rstudio-03_pull-main.png){fig-alt="Screenshot of the Git message in RStudio when switching branches" fig-align="center" width="80%"}
-
-### In Positron
+### Positron
 
 First, in the "source control" part of Positron, **hover over the "Changes" menu and click `...`** to expand the set of Git operations that are visible. In the resulting dropdown, **scroll down and click "Checkout to...".** Note that you may want to close your open files before doing this, particularly if some files were created in the branch because they wouldn't yet exist in the "main" branch locally (you merged on GitHub with the pull request but haven't pulled those updates locally).
 
@@ -238,6 +223,20 @@ Now that you're back in the "main" branch, **pull the latest changes from GitHub
 You will know this was successful when you **look at the branch diagram at the bottom of the "source control" menu** and see that the line for your experimental branch now re-connects to the leftmost branch's line.
 
 ![](images/git_advanced_git_github/post-branch_positron-04_success.png){fig-alt="Screenshot of the branch diagram in Positron's source control menu" fig-align="center" width="50%"}
+
+### RStudio
+
+First, in the top right corner of RStudio, **click the active branch name and switch to back to the "main" branch.** Note that you may want to close your open files before doing this, particularly if some files were created in the branch because they wouldn't yet exist in the "main" branch locally (you merged on GitHub with the pull request but haven't pulled those updates locally).
+
+![](images/git_advanced_git_github/post-branch_rstudio-01_switch.png){fig-alt="Screenshot of the Git branch dropdown menu in RStudio" fig-align="center" width="50%"}
+
+This should create a message that looks like the following image. You should **ignore the part of the message telling you that your are up to date**; you are not up to date with GitHub yet. The message is referring to the status of your local clone's version of the "main" branch.
+
+![](images/git_advanced_git_github/post-branch_rstudio-02_switch-message.png){fig-alt="Screenshot of the Git message in RStudio when switching branches" fig-align="center" width="80%"}
+
+Now that you're back in the "main" branch, **pull the latest changes from GitHub.** You should receive all of the commits that you just merged via pull request earlier. This will create a message that is something like the following image--though of course it will list all changed files so it may be a longer message than what is pictured below if you edited more files.
+
+![](images/git_advanced_git_github/post-branch_rstudio-03_pull-main.png){fig-alt="Screenshot of the Git message in RStudio when switching branches" fig-align="center" width="80%"}
 
 ::::
 
@@ -258,17 +257,18 @@ git remote update origin --prune
 Once you've run those two lines of code, confirm that it worked by following the below instructions for your IDE!
 
 :::{.panel-tabset}
-### RStudio
-
-Click the "main" branch name in RStudio's Git pane. The resulting dropdown of local and remote branches should only list the "main" branch under each sub-heading.
-
-![](images/git_advanced_git_github/post-branch_rstudio-04_confirm-prune.png){fig-alt="Screenshot of the Git branch dropdown menu in RStudio" fig-align="center" width="50%"}
 
 ### Positron
 
 Click the "Checkout to..." button in the dropdown menu of Git operations. The resulting list of branches should only list the "main" branch under each sub-heading.
 
 ![](images/git_advanced_git_github/post-branch_positron-05_confirm-prune.png){fig-alt="Screenshot of the Git branch dropdown menu in Positron" fig-align="center" width="80%"}
+
+### RStudio
+
+Click the "main" branch name in RStudio's Git pane. The resulting dropdown of local and remote branches should only list the "main" branch under each sub-heading.
+
+![](images/git_advanced_git_github/post-branch_rstudio-04_confirm-prune.png){fig-alt="Screenshot of the Git branch dropdown menu in RStudio" fig-align="center" width="50%"}
 
 :::
 
