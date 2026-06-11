@@ -703,26 +703,9 @@ Prerequisite lessons or suggestions here
 <h3 data-number="4.1" class="anchored" data-anchor-id="create-a-branch"><span class="header-section-number">4.1</span> Create a Branch</h3>
 <p><strong><em>Before</em> you create a branch, <span style="color:blue">pull</span> from/sync with GitHub</strong> as a precaution so that you are certain your local repository has the most up-to-date content. Failing to do so is a recipe for a brutal merge conflict when you are finished with your branch and want to merge it back into the main flow of your repository.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">In RStudio</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">In Positron</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Positron</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">RStudio</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<p>To create a branch, click the <strong><span style="color:purple">purple</span></strong> button in the “Git” tab of RStudio that shows two rectangles connected by a diamond at right-angles from one another.</p>
-<p><img src="images/git_advanced_git_github/rstudio-01_start.png" class="img-fluid" alt="Screen capture of RStudio"></p>
-<p>In the resulting dialogue box, <strong>give your new branch an informative name.</strong> In this example we haven’t given our new branch a great name but in a “real” repository you will greatly appreciate having concise but descriptive branch names. Once you’re happy with the name, <strong>click the “Create” button</strong> (you can ignore the other options and buttons on this dialogue box).</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/git_advanced_git_github/rstudio-02_branch-details.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" alt="Screenshot of the menu that opens when you click the purple 'create branch' button in RStudio. Includes a text field for the branch name as well as a some other checkboxes/options (that can be safely left at their default settings in many cases)"></p>
-</figure>
-</div>
-<p>This will create a confirmation message that is superficially similar to the format of messages returned by other Git actions.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/git_advanced_git_github/rstudio-03_branch-message.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="Screenshot of the text returned when you create a branch in RStudio"></p>
-</figure>
-</div>
-<p>You may also notice that in your Git tab where previously it said “main” it now shows whatever name you chose for your branch.</p>
-</div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <p>To begin, <strong>go to the “source control” section of Positron.</strong></p>
 <p><img src="images/git_advanced_git_github/positron-01_start.png" class="img-fluid" alt="Screen capture of Positron"></p>
 <p>To create a branch, <strong>hover over the “Changes” dropdown menu and click <code>...</code></strong> to expand the set of Git operations that are visible. From there, <strong>scroll down to “Branch” and click it.</strong> Finally, <strong>click “Create Branch…”.</strong></p>
@@ -745,6 +728,23 @@ Prerequisite lessons or suggestions here
 <p><img src="images/git_advanced_git_github/positron-05_published.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="Screenshot of the Positron 'source control' pane after a new branch has been published"></p>
 </figure>
 </div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>To create a branch, click the <strong><span style="color:purple">purple</span></strong> button in the “Git” tab of RStudio that shows two rectangles connected by a diamond at right-angles from one another.</p>
+<p><img src="images/git_advanced_git_github/rstudio-01_start.png" class="img-fluid" alt="Screen capture of RStudio"></p>
+<p>In the resulting dialogue box, <strong>give your new branch an informative name.</strong> In this example we haven’t given our new branch a great name but in a “real” repository you will greatly appreciate having concise but descriptive branch names. Once you’re happy with the name, <strong>click the “Create” button</strong> (you can ignore the other options and buttons on this dialogue box).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/git_advanced_git_github/rstudio-02_branch-details.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" alt="Screenshot of the menu that opens when you click the purple 'create branch' button in RStudio. Includes a text field for the branch name as well as a some other checkboxes/options (that can be safely left at their default settings in many cases)"></p>
+</figure>
+</div>
+<p>This will create a confirmation message that is superficially similar to the format of messages returned by other Git actions.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/git_advanced_git_github/rstudio-03_branch-message.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="Screenshot of the text returned when you create a branch in RStudio"></p>
+</figure>
+</div>
+<p>You may also notice that in your Git tab where previously it said “main” it now shows whatever name you chose for your branch.</p>
 </div>
 </div>
 </div>
@@ -797,32 +797,9 @@ Prerequisite lessons or suggestions here
 <h3 data-number="4.5" class="anchored" data-anchor-id="update-the-local-clone"><span class="header-section-number">4.5</span> Update the Local Clone</h3>
 <p>Now that the branches have been merged on GitHub, we need to make sure our local clone gets those updates from GitHub. This is particularly important if our IDE is still in the branch we created earlier because–now that we’ve deleted the branch’s counterpart in GitHub–we’ll get an error if we attempt to push from that branch.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">In RStudio</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">In Positron</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Positron</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">RStudio</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<section id="get-updates" class="level4" data-number="4.5.1">
-<h4 data-number="4.5.1" class="anchored" data-anchor-id="get-updates"><span class="header-section-number">4.5.1</span> Get Updates</h4>
-<p>First, in the top right corner of RStudio, <strong>click the active branch name and switch to back to the “main” branch.</strong> Note that you may want to close your open files before doing this, particularly if some files were created in the branch because they wouldn’t yet exist in the “main” branch locally (you merged on GitHub with the pull request but haven’t pulled those updates locally).</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/git_advanced_git_github/post-branch_rstudio-01_switch.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" alt="Screenshot of the Git branch dropdown menu in RStudio"></p>
-</figure>
-</div>
-<p>This should create a message that looks like the following image. You should <strong>ignore the part of the message telling you that your are up to date</strong>; you are not up to date with GitHub yet. The message is referring to the status of your local clone’s version of the “main” branch.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/git_advanced_git_github/post-branch_rstudio-02_switch-message.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="Screenshot of the Git message in RStudio when switching branches"></p>
-</figure>
-</div>
-<p>Now that you’re back in the “main” branch, <strong>pull the latest changes from GitHub.</strong> You should receive all of the commits that you just merged via pull request earlier. This will create a message that is something like the following image–though of course it will list all changed files so it may be a longer message than what is pictured below if you edited more files.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/git_advanced_git_github/post-branch_rstudio-03_pull-main.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="Screenshot of the Git message in RStudio when switching branches"></p>
-</figure>
-</div>
-</section>
-</div>
-<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <p>First, in the “source control” part of Positron, <strong>hover over the “Changes” menu and click <code>...</code></strong> to expand the set of Git operations that are visible. In the resulting dropdown, <strong>scroll down and click “Checkout to…”.</strong> Note that you may want to close your open files before doing this, particularly if some files were created in the branch because they wouldn’t yet exist in the “main” branch locally (you merged on GitHub with the pull request but haven’t pulled those updates locally).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -848,6 +825,26 @@ Prerequisite lessons or suggestions here
 </figure>
 </div>
 </div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<p>First, in the top right corner of RStudio, <strong>click the active branch name and switch to back to the “main” branch.</strong> Note that you may want to close your open files before doing this, particularly if some files were created in the branch because they wouldn’t yet exist in the “main” branch locally (you merged on GitHub with the pull request but haven’t pulled those updates locally).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/git_advanced_git_github/post-branch_rstudio-01_switch.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" alt="Screenshot of the Git branch dropdown menu in RStudio"></p>
+</figure>
+</div>
+<p>This should create a message that looks like the following image. You should <strong>ignore the part of the message telling you that your are up to date</strong>; you are not up to date with GitHub yet. The message is referring to the status of your local clone’s version of the “main” branch.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/git_advanced_git_github/post-branch_rstudio-02_switch-message.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="Screenshot of the Git message in RStudio when switching branches"></p>
+</figure>
+</div>
+<p>Now that you’re back in the “main” branch, <strong>pull the latest changes from GitHub.</strong> You should receive all of the commits that you just merged via pull request earlier. This will create a message that is something like the following image–though of course it will list all changed files so it may be a longer message than what is pictured below if you edited more files.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/git_advanced_git_github/post-branch_rstudio-03_pull-main.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="Screenshot of the Git message in RStudio when switching branches"></p>
+</figure>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -859,21 +856,21 @@ Prerequisite lessons or suggestions here
 <pre><code>git remote update origin --prune</code></pre>
 <p>Once you’ve run those two lines of code, confirm that it worked by following the below instructions for your IDE!</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">RStudio</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Positron</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Positron</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">RStudio</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<p>Click the “main” branch name in RStudio’s Git pane. The resulting dropdown of local and remote branches should only list the “main” branch under each sub-heading.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/git_advanced_git_github/post-branch_rstudio-04_confirm-prune.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" alt="Screenshot of the Git branch dropdown menu in RStudio"></p>
-</figure>
-</div>
-</div>
-<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <p>Click the “Checkout to…” button in the dropdown menu of Git operations. The resulting list of branches should only list the “main” branch under each sub-heading.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/git_advanced_git_github/post-branch_positron-05_confirm-prune.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="Screenshot of the Git branch dropdown menu in Positron"></p>
+</figure>
+</div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<p>Click the “main” branch name in RStudio’s Git pane. The resulting dropdown of local and remote branches should only list the “main” branch under each sub-heading.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/git_advanced_git_github/post-branch_rstudio-04_confirm-prune.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" alt="Screenshot of the Git branch dropdown menu in RStudio"></p>
 </figure>
 </div>
 </div>
