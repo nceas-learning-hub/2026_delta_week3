@@ -462,22 +462,11 @@
     ]
   },
   {
-    "objectID": "s03_git_advanced_git_github.html#git-logs",
-    "href": "s03_git_advanced_git_github.html#git-logs",
-    "title": "Advanced Git and GitHub",
-    "section": "6 Git Logs",
-    "text": "6 Git Logs\n Under construction; check back later",
-    "crumbs": [
-      "Day 2",
-      "Advanced Git and GitHub"
-    ]
-  },
-  {
     "objectID": "s03_git_advanced_git_github.html#git-resets",
     "href": "s03_git_advanced_git_github.html#git-resets",
     "title": "Advanced Git and GitHub",
-    "section": "7 Git Resets",
-    "text": "7 Git Resets\n Under construction; check back later",
+    "section": "6 Git Resets",
+    "text": "6 Git Resets\nWhat if you make a commit that you want to undo (i.e., remove from your repository’s history)? Git offers a command known as a “reset” to undo commits. There are three levels of severity to a reset; click through the tabs below for more details on each.\n\n\n\n\n\n\nNoteWhen a Reset is Warranted\n\n\n\nIf you want to undo a commit for merely cosmetic reasons, consider just leaving it as-is, but if you commit sensitive information or large files, undoing a commit can be a useful solution.\n\n\n\nSoftMixedHard",
     "crumbs": [
       "Day 2",
       "Advanced Git and GitHub"
