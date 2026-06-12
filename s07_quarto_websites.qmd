@@ -31,9 +31,7 @@ Much of this page was adapted from the Long Term Ecological Research (LTER) Netw
 
 ## Overview
 
-Quarto is a popular tool for making easily customizable websites and these sites can be hosted through GitHub without much additional effort. These websites are free and can be a (relatively) easy way of making a central home for a given project to share core information with external partners.
-
-The goal of this lesson is to get you started by working through the fundamental setup steps of creating your own Quarto website. This topic has _a lot_ of depth so we won't be able to cover everything today, but hopefully it is still a useful primer on this topic!
+Quarto is a popular tool for making easily customizable websites and these sites can be hosted through GitHub without much additional effort. These websites are free and can be a (relatively) easy way of making a central home for a given project to share core information with external partners. **The goal of this lesson is to get you started by working through the fundamental setup steps of creating your own Quarto website.** This topic has _a lot_ of depth so we won't be able to cover everything today, but hopefully it is still a useful primer on this topic!
 
 ## Make the Website's GitHub Repository
 
@@ -167,7 +165,7 @@ execute:
 
 website:
   title: "My Website" # <1>
-  repo-url: https://github.com/lter/workshop-quarto # <2>
+  repo-url: https://github.com/nceas-learning-hub/2026_delta_week3 # <2>
   repo-actions: [issue]
   navbar:
     background: primary
@@ -176,9 +174,9 @@ website:
         href: index.qmd
     right: 
       - icon: github
-        href: https://github.com/lter/workshop-quarto # <3>
+        href: https://github.com/nceas-learning-hub/2026_delta_week3 # <3>
   page-footer: 
-    center: "Copyright &copy; 2026, LTER Network" # <4>
+    center: "Copyright &copy; 2026, Delta Stewardship Council" # <4>
     background: secondary
 
 format:
@@ -194,7 +192,13 @@ format:
 
 </details>
 
-Once you have that file, **change the two lines that link to a GitHub repository to link to your website's repository.**
+Once you have that file, **update the following:**
+
+1. The two lines that link to a GitHub repository
+    - Should be the link to the repo you just made
+2. The copyright holder
+    - Should be your name
+3. _Optionally,_ the website title
 
 ### 3. Make "index.qmd"
 
@@ -418,17 +422,26 @@ Quarto supports us making our own, customized stylesheets with [Sass](https://sa
 
 If you're an R coder, it might be helpful to compare how R assigns values to objects versus how SCSS binds values to variables as well as how to write a comment (i.e., a non-coding line).
 
+:::{.columns}
+::::{.column width="50%"}
+
 {{< fa brands r-project >}} R code
 ```
 # Comment
 object <- value
 ```
 
+::::
+::::{.column width="50%"}
+
 {{< fa brands sass >}} Sass code
 ```
 // Comment
 $object: value;
 ```
+::::
+:::
+
 :::
 
 ## Customize the Website with Sass
@@ -491,6 +504,13 @@ $code-block-bg: $gray-2; // code block background color
 
 // Improve background contrast for code chunk ouput
 pre code:not(.sourceCode) { background-color: $gray-2; }
+
+// Improve contrast for tabset panels
+.nav-tabs .nav-link.active { 
+  background-color: #FFF; 
+  color: $black;
+}
+.tab-content { background-color: #FFF; }
 ```
 
 </details>
