@@ -703,20 +703,22 @@ sites <- delta_data |>
 ### Recommended project structure {.unnumbered}
 
 <div style="font-family: monospace; font-size: 0.8rem;">
-{{< fa brands r-project >}} yolo_bypass_app/  
- ├── {{< fa file-code >}} **global.R**           _packages + data (runs first, available everywhere)_  
- ├── {{< fa file-code >}} **ui.R**               _user interface definition_  
- ├── {{< fa file-code >}} **server.R**           _server logic_  
- ├── {{< fa folder >}} **text/**  _(optional) text elements for UI)_  
- │   └── {{< fa brands markdown >}} **about.md**      _markdown text for the About page_  
- ├── {{< fa folder >}} **data/**  _(optional) data for use in app_   
- │   └── {{< fa file-csv >}} **my_data.csv**  
- ├── {{< fa folder >}} **www/**   _(optional) images, HTML, CSS, etc - MUST BE CALLED www!_  
- │   ├── {{< fa brands css >}} **my_styles.css**    
- │   └── {{< fa file-image >}} **my_image.png**    
- ├── {{< fa file-code >}} scratch.R          _development scratch work (not part of the app)_  
- └── {{< fa file-code >}} yolo_bypass_app.Rproj    _project file (if using RStudio)_  
+{{< fa brands r-project >}} **yolo_bypass_app/**  
+ ├── {{< fa file-code >}} **global.R**     _(optional) packages + data (runs first, available everywhere)_  
+ ├── {{< fa file-code >}} **ui.R**                    _user interface definition_  
+ ├── {{< fa file-code >}} **server.R**                _server logic_  
+ ├── {{< fa folder >}} text/       _(optional) text elements for UI_  
+ │   └── {{< fa brands markdown >}} about.md           _markdown text for the About page_  
+ ├── {{< fa folder >}} data/       _(optional) data for use in app_   
+ │   └── {{< fa file-csv >}} my_data.csv  
+ ├── {{< fa folder >}} www/        _(optional) images, HTML, CSS, etc - MUST BE CALLED www!_  
+ │   ├── {{< fa brands css >}} my_styles.css    
+ │   └── {{< fa file-image >}} my_image.png    
+ ├── {{< fa file-code >}} scratch.R               _development scratch work (not part of the app)_  
+ └── {{< fa file-code >}} yolo_bypass_app.Rproj   _project file (if using RStudio)_  
 </div>
+
+Note, the optional `www` folder MUST be called `www` - this is where Shiny looks for static elements to be rendered in the app, but that are not products of the scripts, like images.  When you add an image to your app, you skip the `www` part in the file path - e.g., `img(src = 'my_image.png')`.
 
 <!-- ![Source: Intro to Shiny - EDS 430, Bren School UCSB](images/shiny_introduction/repo-structure-details.png){width="70%" .lightbox fig-align="center"} -->
 
@@ -1149,7 +1151,7 @@ Once you've built something worth sharing, there are several ways to get it in f
 **Setup:**
 
 1. Create a free account at [shinyapps.io](https://www.shinyapps.io/)
-2. Follow the on-screen instructions to link your account, which involves running a few lines from the `rsconnect` package in your Console
+2. Follow the instructions here for configuring your local computer and deploying your app.
 3. Publish your app:
 
 :::: {.panel-tabset}
@@ -1159,10 +1161,10 @@ Click the **Publish** icon (cloud with arrow) in the Viewer pane toolbar after r
 
 #### RStudio
 
-Click the blue **Publish** button (cloud icon) in the top-right corner of the running app window.
+Click the blue **Publish** button (cloud icon) in the top-right corner of the running app window, or run `rsconnect::deployApp("path/to/your/app")` directly in the Console.
 ::::
 
-![](images/shiny_introduction/shiny-io-account.png){width="70%" .lightbox fig-align="center"}
+<!-- ![](images/shiny_introduction/shiny-io-account.png){width="70%" .lightbox fig-align="center"} -->
 
 ### shinylive
 
@@ -1201,6 +1203,9 @@ Because apps run in the browser, startup is slower than server-based apps, and s
 
 **[Posit Connect](https://posit.co/products/enterprise/connect/)** is an enterprise, on-premises product for organizations that need more than shinyapps.io provides. This includes user authentication, scheduled content, and greater control over infrastructure. It's the right choice for production-grade agency tools.
 
+### R Package
+
+Wrapping your Shiny app into an R package can allow others to easily install your app from CRAN or from GitHub, and then run it locally.  It also provides a more formal structure, formalized documentation, and testing/checking processes. For more information, see this chapter in [Mastering Shiny](https://mastering-shiny.org/scaling-packaging.html) by Hadley Wickham.
 :::
 
 ## Resources
