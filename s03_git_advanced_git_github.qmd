@@ -319,10 +319,21 @@ From here on you can work within your fork as you would within any other reposit
 
 If you decide that your changes are a meaningful improvement that the parent repository could benefit from, you can click the "Contribute" button to begin the process of submitting a pull request to integrate your edits with the parent.
 
-## Git Logs
-
-{{< fa person-digging >}} Under construction; check back later
-
 ## Git Resets
 
-{{< fa person-digging >}} Under construction; check back later
+What if you make a commit that you want to _undo_ (i.e., remove from your repository's history)? Git offers a command known as a "reset" to undo commits. There are three levels of severity to a reset; click through the tabs below for more details on each.
+
+:::{.callout-note icon="false"}
+### When a Reset is Warranted
+
+If you want to undo a commit for merely cosmetic reasons, consider just leaving it as-is, but if you commit sensitive information or large files, undoing a commit can be a useful solution.
+:::
+
+:::{.panel-tabset}
+### Soft
+
+### Mixed
+
+### Hard
+
+:::
