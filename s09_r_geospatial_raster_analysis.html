@@ -83,6 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/bootstrap/bootstrap-5a0716c032bb00a2e3c0c98c747440ac.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark-6ef12456229a54ab8c571c8ae7cb70f9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="site_libs/bootstrap/bootstrap-5a0716c032bb00a2e3c0c98c747440ac.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/fontawesome6-6.7.2/all.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/fontawesome6-6.7.2/latex-fontsize.css" rel="stylesheet">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
@@ -697,7 +698,7 @@ Figure&nbsp;1: Image Source - National Ecological Observatory Network (NEON)
 </div>
 <p>For this lesson, we will need to load a few packages. You may want to put code options in the code chunk, e.g., <code>#| message: false</code> and <code>#| warning: FALSE</code></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">### for easy data wrangling and plotting:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">### for easy data wrangling and plotting:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)     </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -738,15 +739,15 @@ Figure&nbsp;1: Image Source - National Ecological Observatory Network (NEON)
 <p>Download this <a href="data/r_geospatial_raster_analysis/landsat71.tif">LandSat sample data</a> - note the file format is <code>.tif</code>, i.e., a GeoTIFF. Right click on the link, choose “Save link as…”, and save it to your <code>data</code> folder in your current repository as <code>landsat71.tif</code>.</p>
 <p>Now let’s load it and examine it!</p>
 <!-- what the participants will type to load the data-->
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>landsat_r <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">'data/landsat71.tif'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>landsat_r <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">'data/landsat71.tif'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Inspect the Parameters</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Plot the Layers</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>landsat_from_tif</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>landsat_from_tif</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster
+<pre data-code-line-numbers=""><code>class       : SpatRaster
 size        : 1758, 3701, 5  (nrow, ncol, nlyr)
 resolution  : 30, 30  (x, y)
 extent      : -59564.57, 51465.43, -404675.9, -351935.9  (xmin, xmax, ymin, ymax)
@@ -761,7 +762,7 @@ max values  :         255,         255,         255,         255,         255</c
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(landsat_from_tif)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(landsat_from_tif)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -780,19 +781,19 @@ max values  :         255,         255,         255,         255,         255</c
 <p>Download this .csv of modified <a href="data/r_geospatial_raster_analysis/Landsat71_agg.csv">LandSat sample data</a> - note the file format is <code>.csv</code> - and save it to your <code>data</code> folder in your current repository as <code>landsat71_agg.csv</code>.</p>
 <p>Now let’s load it and examine it!</p>
 <!-- what the participants will type to load the data-->
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ls_green_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">'data/landsat71_band2.csv'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ls_green_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">'data/landsat71_band2.csv'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Examine the dataframe: columns for <code>x</code>, <code>y</code>, and <code>Landsat</code> band 2, green. We can easily turn this into a raster using <code>terra::rast()</code>, the same function as above, which recognizes the appropriate columns (though <code>x</code> and <code>y</code> MUST be first by default!).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ls_green_from_csv <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(ls_green_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ls_green_from_csv <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(ls_green_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Inspect the Parameters</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Plot the Layers</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ls_green_from_csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ls_green_from_csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster
+<pre data-code-line-numbers=""><code>class       : SpatRaster
 size        : 87, 185, 1  (nrow, ncol, nlyr)
 resolution  : 600, 600  (x, y)
 extent      : -59564.57, 51435.43, -404135.9, -351935.9  (xmin, xmax, ymin, ymax)
@@ -811,7 +812,7 @@ max value   :      253.01</code></pre>
 </ul>
 <p>Let’s update the CRS using the EPSG code based on the GeoTIFF version:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(ls_green_from_csv) <span class="ot">&lt;-</span> <span class="st">'epsg:3310'</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(ls_green_from_csv) <span class="ot">&lt;-</span> <span class="st">'epsg:3310'</span> </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="do">### could also do crs(ls_green_from_csv) &lt;- crs(landsat_from_tif)</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ls_green_from_csv </span><span class="al">###</span><span class="co"> inspect again if you like!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -819,7 +820,7 @@ max value   :      253.01</code></pre>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ls_green_from_csv)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ls_green_from_csv)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -837,10 +838,10 @@ max value   :      253.01</code></pre>
 <p>Download this GeoPackage of <a href="data/r_geospatial_raster_analysis/sb_county.gpkg">Santa Barbara County</a> - note the file format is <code>.gpkg</code>, i.e., vector data like <code>.shp</code> - and save it to your <code>data</code> folder in your current repository as <code>sb_county.gpkg</code>.</p>
 <p>Now let’s load it and examine it! We will use the Simple Features package <code>sf</code>.</p>
 <!-- what the participants will type to load the data-->
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sb_county_sf <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(<span class="fu">here</span>(<span class="st">'data/sb_county.gpkg'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sb_county_sf <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(<span class="fu">here</span>(<span class="st">'data/sb_county.gpkg'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Examine the resulting Simple Features object: one observation with some random info about Santa Barbara County, and a <code>geometry</code> column containing MultiPolygon spatial information. We can create a raster by overlaying this polygon onto a grid, and then assigning values to the grid based on some attribute.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-26"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-26-1"><a href="#annotated-cell-26-1" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">same.crs</span>(sb_county_sf, landsat_from_tif)  <span class="do">### Check that CRS are equal!</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-26" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-26-1"><a href="#annotated-cell-26-1" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">same.crs</span>(sb_county_sf, landsat_from_tif)  <span class="do">### Check that CRS are equal!</span></span>
 <span id="annotated-cell-26-2"><a href="#annotated-cell-26-2" aria-hidden="true" tabindex="-1"></a></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="1">1</button><span id="annotated-cell-26-3" class="code-annotation-target"><a href="#annotated-cell-26-3" aria-hidden="true" tabindex="-1"></a>sb_county_r <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rasterize</span>(<span class="at">x =</span> sb_county_sf,</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="2">2</button><span id="annotated-cell-26-4" class="code-annotation-target"><a href="#annotated-cell-26-4" aria-hidden="true" tabindex="-1"></a>                                <span class="at">y =</span> landsat_from_tif,</span>
@@ -862,7 +863,7 @@ max value   :      253.01</code></pre>
 </dl>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] TRUE</code></pre>
+<pre data-code-line-numbers=""><code>[1] TRUE</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -883,9 +884,9 @@ max value   :      253.01</code></pre>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sb_county_r</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sb_county_r</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster
+<pre data-code-line-numbers=""><code>class       : SpatRaster
 size        : 1758, 3701, 1  (nrow, ncol, nlyr)
 resolution  : 30, 30  (x, y)
 extent      : -59564.57, 51465.43, -404675.9, -351935.9  (xmin, xmax, ymin, ymax)
@@ -900,7 +901,7 @@ max value   :        1</code></pre>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sb_county_r)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sb_county_r)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -917,7 +918,7 @@ max value   :        1</code></pre>
 <p>We can also create a raster from scratch, again using <code>terra::rast()</code>. This is useful for creating a blank raster that can be used as a template for rasterizing polygons or lines.</p>
 <p>Here, let’s create a global raster, in half-degree pixels, with a unique ID value for each cell, starting with 1 in the upper left. Note we define the parameters manually.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">### create the blank template</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">### create the blank template</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>cellid_r <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="at">xmin =</span> <span class="sc">-</span><span class="dv">180</span>, <span class="at">xmax =</span> <span class="dv">180</span>, <span class="at">ymin =</span> <span class="sc">-</span><span class="dv">90</span>, <span class="at">ymax =</span> <span class="dv">90</span>,</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">resolution =</span> <span class="fl">0.5</span>,</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">crs =</span> <span class="st">'EPSG:4326'</span>) <span class="sc">%&gt;%</span></span>
@@ -961,22 +962,22 @@ max value   :        1</code></pre>
 <section id="basic-raster-math" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="basic-raster-math"><span class="header-section-number">4.1</span> Basic Raster Math</h3>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="do">### operating on a vector</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="do">### operating on a vector</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>vec <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>vec <span class="sc">*</span> <span class="dv">2</span>  <span class="do">### multiply by a scalar</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  2  4  6  8 10 12 14 16 18 20</code></pre>
+<pre data-code-line-numbers=""><code> [1]  2  4  6  8 10 12 14 16 18 20</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>vec <span class="sc">+</span> <span class="dv">20</span> <span class="do">### add a scalar</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>vec <span class="sc">+</span> <span class="dv">20</span> <span class="do">### add a scalar</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 21 22 23 24 25 26 27 28 29 30</code></pre>
+<pre data-code-line-numbers=""><code> [1] 21 22 23 24 25 26 27 28 29 30</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(vec) <span class="do">### transform with a function</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(vec) <span class="do">### transform with a function</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
+<pre data-code-line-numbers=""><code> [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
  [8] 2.0794415 2.1972246 2.3025851</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="do">### subset raster using $ or [] notation:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="do">### subset raster using $ or [] notation:</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>ls_red <span class="ot">&lt;-</span> landsat_from_tif<span class="sc">$</span>landsat71_3    <span class="do">### band 3 is red</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>ls_nir <span class="ot">&lt;-</span> landsat_from_tif[<span class="st">'landsat71_4'</span>] <span class="do">### band 4 is near IR</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -988,7 +989,7 @@ max value   :        1</code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(ls_red))  <span class="do">### looks way different!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(ls_red))  <span class="do">### looks way different!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -999,13 +1000,13 @@ max value   :        1</code></pre>
 </div>
 <p>We can also add, subtract, multiply, or divide by a raster with the same spatial parameters, just as we can with vectors.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>vec2 <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">:</span><span class="dv">109</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>vec2 <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">:</span><span class="dv">109</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>vec <span class="sc">/</span> vec2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 0.01000000 0.01980198 0.02941176 0.03883495 0.04807692 0.05714286
+<pre data-code-line-numbers=""><code> [1] 0.01000000 0.01980198 0.02941176 0.03883495 0.04807692 0.05714286
  [7] 0.06603774 0.07476636 0.08333333 0.09174312</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ls_red <span class="sc">*</span> ls_nir)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ls_red <span class="sc">*</span> ls_nir)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1024,7 +1025,7 @@ max value   :        1</code></pre>
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <p>Find cells <strong>above</strong> 30 and set to NA:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>nir_low <span class="ot">&lt;-</span> ls_nir <span class="do">### make a copy</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>nir_low <span class="ot">&lt;-</span> ls_nir <span class="do">### make a copy</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>nir_low[nir_low <span class="sc">&gt;</span> <span class="dv">30</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span> <span class="do">### any NIR value &gt; 30, set to NA</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nir_low)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -1039,7 +1040,7 @@ max value   :        1</code></pre>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
 <p>Find cells where Red <strong>is not</strong> higher than NIR and set to NA:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>red_hi <span class="ot">&lt;-</span> ls_red <span class="do">### make a copy</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>red_hi <span class="ot">&lt;-</span> ls_red <span class="do">### make a copy</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>red_hi[red_hi <span class="sc">&lt;</span> ls_nir] <span class="ot">&lt;-</span> <span class="cn">NA</span> <span class="do">### if red &lt; NIR, set to NA</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(red_hi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -1102,7 +1103,7 @@ max value   :        1</code></pre>
 <div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
 <p>Note, here we run the NDVI calculation, then multiply the result using the SB County raster, which drops ocean cells, i.e., where <code>sb_county_r</code> is <code>NA</code>! Note also, we can set a new more informative name for the result using <code>names()</code>.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>ndvi_all <span class="ot">&lt;-</span> (ls_nir <span class="sc">-</span> ls_red) <span class="sc">/</span> (ls_nir <span class="sc">+</span> ls_red) <span class="do">### all cells</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>ndvi_all <span class="ot">&lt;-</span> (ls_nir <span class="sc">-</span> ls_red) <span class="sc">/</span> (ls_nir <span class="sc">+</span> ls_red) <span class="do">### all cells</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>ndvi <span class="ot">&lt;-</span> ndvi_all <span class="sc">*</span> sb_county_r</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ndvi) <span class="ot">&lt;-</span> <span class="st">'ndvi'</span></span>
@@ -1119,7 +1120,7 @@ max value   :        1</code></pre>
 </div>
 <div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>veg <span class="ot">&lt;-</span> ndvi <span class="do">### create a copy of the NDVI raster so we don't overwrite that!</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>veg <span class="ot">&lt;-</span> ndvi <span class="do">### create a copy of the NDVI raster so we don't overwrite that!</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>veg[veg <span class="sc">&lt;</span> <span class="fl">0.2</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(veg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1149,7 +1150,7 @@ max value   :        1</code></pre>
 <div class="tab-content">
 <div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>max_by_pixel <span class="ot">&lt;-</span> <span class="fu">max</span>(landsat_from_tif)  <span class="do">### max pixel value across multiple bands</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>max_by_pixel <span class="ot">&lt;-</span> <span class="fu">max</span>(landsat_from_tif)  <span class="do">### max pixel value across multiple bands</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(max_by_pixel)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1162,7 +1163,7 @@ max value   :        1</code></pre>
 </div>
 <div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>sum_by_pixel <span class="ot">&lt;-</span> <span class="fu">sum</span>(landsat_from_tif)  <span class="do">### add up values across multiple bands</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>sum_by_pixel <span class="ot">&lt;-</span> <span class="fu">sum</span>(landsat_from_tif)  <span class="do">### add up values across multiple bands</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sum_by_pixel)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1176,9 +1177,9 @@ max value   :        1</code></pre>
 <div id="tabset-8-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-3-tab">
 <p>To get summarized value across the entire map, use <code>values()</code> then apply the summary function:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">values</span>(landsat_from_tif))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">values</span>(landsat_from_tif))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 69.10275</code></pre>
+<pre data-code-line-numbers=""><code>[1] 69.10275</code></pre>
 </div>
 </div>
 </div>
@@ -1210,7 +1211,7 @@ max value   :        1</code></pre>
 </ul>
 <p>As an example, let’s reproject our SB county NDVI map, currently in a California Albers projection (in meters, EPSG code 3310), into something obviously wrong: a CRS optimized for Massachusetts spatial data (Massachusetts Mainland Lambert Conformal Conic, in meters, EPSG code 26986). Let’s also change the resolution from 30 m to 2000 m.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>ndvi_26986 <span class="ot">&lt;-</span> <span class="fu">project</span>(<span class="at">x =</span> ndvi, <span class="at">y =</span> <span class="st">'epsg:26986'</span>, <span class="at">res =</span> <span class="dv">2000</span>, <span class="at">method =</span> <span class="st">'bilinear'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>ndvi_26986 <span class="ot">&lt;-</span> <span class="fu">project</span>(<span class="at">x =</span> ndvi, <span class="at">y =</span> <span class="st">'epsg:26986'</span>, <span class="at">res =</span> <span class="dv">2000</span>, <span class="at">method =</span> <span class="st">'bilinear'</span>)</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ndvi_26986); <span class="fu">plot</span>(ndvi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1233,11 +1234,11 @@ max value   :        1</code></pre>
 <p>Sometimes we want to use only a portion of the map. We can crop a raster based on the extents of a different spatial object (<code>SpatRaster</code>, <code>SpatVector</code>, <code>sf</code>, or <code>extent</code>) <strong>with the same CRS</strong> (but other parameters can be different). Let’s zoom in on the NDVI around Santa Barbara city, rather than the entire county.</p>
 <p>Download this GeoPackage of <a href="data/r_geospatial_raster_analysis/sb_cities.gpkg">Santa Barbara cities</a> and save it to your <code>data</code> folder in your current repository as <code>sb_cities.gpkg</code>.</p>
 <!-- what the participants will type to load the data-->
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>sb_city_sf <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(<span class="fu">here</span>(<span class="st">'data/sb_cities.gpkg'</span>)) <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>sb_city_sf <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(<span class="fu">here</span>(<span class="st">'data/sb_cities.gpkg'</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CITY <span class="sc">==</span> <span class="st">'Santa Barbara'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The rectangular <strong>extent</strong> or <strong>bounding box</strong> of the vector data will automatically be applied to crop the raster. Here we plot the raster and then the city boundary on top, to show that values outside the polygon (but within its bounding box) are still included.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>ndvi_city <span class="ot">&lt;-</span> <span class="fu">crop</span>(ndvi, sb_city_sf)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>ndvi_city <span class="ot">&lt;-</span> <span class="fu">crop</span>(ndvi, sb_city_sf)</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ndvi_city); <span class="fu">plot</span>(sb_city_sf <span class="sc">%&gt;%</span> <span class="fu">select</span>(CITY), <span class="at">border =</span> <span class="st">'yellow'</span>, <span class="at">col =</span> <span class="cn">NA</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1260,12 +1261,12 @@ max value   :        1</code></pre>
 <p>Data at very fine resolution can be computationally challenging to work with - so sometimes it is desirable to make the data more coarse, for example, to more closely match the resolution of another dataset before resampling or reprojecting. The <code>aggregate</code> function is a fast method for converting fine resolution data to coarser resolutions by an integer multiplicative factor, without changing any other parameter.</p>
 <p>Our 30 m resolution Landsat data is great, but for a global analysis, something closer to 1 km resolution may be adequate and far more computationally accessible. In a 1 km pixel, you could fit 33.3333 pixels at 30 m (in both x and y). Aggregating by a factor of 33 (integer) gets us to 990 m resolution pixels, using a <code>method</code> to summarize the values of all 30 m pixels within each target 990x990 cell. However, there is a tradeoff, as information is certainly lost in this process.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>ls_red_1km <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(ls_red, <span class="at">fact =</span> <span class="dv">33</span>, <span class="at">fun =</span> <span class="st">'mean'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>ls_red_1km <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(ls_red, <span class="at">fact =</span> <span class="dv">33</span>, <span class="at">fun =</span> <span class="st">'mean'</span>)</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">res</span>(ls_red_1km)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 990 990</code></pre>
+<pre data-code-line-numbers=""><code>[1] 990 990</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ls_red_1km)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ls_red_1km)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1285,7 +1286,7 @@ max value   :        1</code></pre>
 <h3 data-number="6.1" class="anchored" data-anchor-id="mask"><span class="header-section-number">6.1</span> <code>mask()</code></h3>
 <p>Sometimes we want to use one layer (raster or vector) to determine which parts of a raster layer we want to keep, like a stencil: by default, pixels inside the mask layer are kept, while pixels outside are set to NA (though this can be inverted if desired!). Here we use the Santa Barbara city boundary as a mask, to keep only pixels within that boundary. The city boundary is added in yellow, the county boundary is added in red. Note that the extent of the result is unchanged, but all pixels outside the SB city boundary are now blank.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>ndvi_city_mask <span class="ot">&lt;-</span> <span class="fu">mask</span>(ndvi, sb_city_sf)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>ndvi_city_mask <span class="ot">&lt;-</span> <span class="fu">mask</span>(ndvi, sb_city_sf)</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ndvi_city_mask)</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sb_county_sf <span class="sc">%&gt;%</span> <span class="fu">select</span>(OBJECTID), <span class="at">border =</span> <span class="st">'red'</span>, <span class="at">col =</span> <span class="cn">NA</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sb_city_sf <span class="sc">%&gt;%</span> <span class="fu">select</span>(CITY), <span class="at">border =</span> <span class="st">'yellow'</span>, <span class="at">col =</span> <span class="cn">NA</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1322,7 +1323,7 @@ max value   :        1</code></pre>
 <p>NOTE: <code>extract()</code> returns the data as a dataframe instead of a raster, assuming that we are no longer interested in the spatial aspects of our data. But it includes (by default) an ID column that relates to the row numbers of our boundaries (i.e., city boundaries) we are using to extract.</p>
 <p>Here we will examine the NDVI values within the boundaries of all cities in Santa Barbara County. We already downloaded this file, and earlier filtered to just Santa Barbara city; let’s load to a new object that includes all cities. Let’s also create a new column called ID that we can use later to bind our city info to our extracted values.</p>
 <!-- what the participants will type to load the data-->
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>sb_all_cities_sf <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(<span class="fu">here</span>(<span class="st">'data/sb_cities.gpkg'</span>)) <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>sb_all_cities_sf <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(<span class="fu">here</span>(<span class="st">'data/sb_cities.gpkg'</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ID =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true" href="">Extract all cell values</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false" href="">Summarize cell values</a></li></ul>
@@ -1330,7 +1331,7 @@ max value   :        1</code></pre>
 <div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
 <p>Let’s extract the <strong>values of all cells</strong> within the boundaries of the cities in Santa Barbara County. To extract all values, we leave <code>fun = NULL</code> (default). Then, bind the city info (but drop the <code>geometry</code> column).</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>ndvi_sb_cities <span class="ot">&lt;-</span> <span class="fu">extract</span>(ndvi, sb_all_cities_sf, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>ndvi_sb_cities <span class="ot">&lt;-</span> <span class="fu">extract</span>(ndvi, sb_all_cities_sf, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sb_all_cities_sf, <span class="at">by =</span> <span class="st">'ID'</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -1342,13 +1343,13 @@ max value   :        1</code></pre>
 <div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
 <p>Let’s find the mean NDVI values within the boundaries of the main cities of Santa Barbara County. Here we set <code>fun = mean</code> to summarize, rather than leaving it <code>NULL</code>. Then, bind the city info (but drop the <code>geometry</code> column).</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>ndvi_sb_cities <span class="ot">&lt;-</span> <span class="fu">extract</span>(ndvi, sb_all_cities_sf, <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>ndvi_sb_cities <span class="ot">&lt;-</span> <span class="fu">extract</span>(ndvi, sb_all_cities_sf, <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sb_all_cities_sf, <span class="at">by =</span> <span class="st">'ID'</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>()</span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>ndvi_sb_cities <span class="sc">%&gt;%</span> <span class="fu">select</span>(CITY, ndvi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           CITY        ndvi
+<pre data-code-line-numbers=""><code>           CITY        ndvi
 1       Solvang  0.05696764
 2      Buellton -0.05036708
 3        Lompoc -0.02311393
@@ -1398,7 +1399,7 @@ Tip
 <li>Then convert back to a raster, reattaching CRS from our original data.</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>gr_nir_r <span class="ot">&lt;-</span> <span class="fu">c</span>(landsat_from_tif[[<span class="dv">2</span>]], landsat_from_tif[[<span class="dv">4</span>]]) <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>gr_nir_r <span class="ot">&lt;-</span> <span class="fu">c</span>(landsat_from_tif[[<span class="dv">2</span>]], landsat_from_tif[[<span class="dv">4</span>]]) <span class="sc">%&gt;%</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="do">### use setNames to rename the two layers!</span></span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">'green'</span>, <span class="st">'nir'</span>))</span>
 <span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1420,7 +1421,7 @@ Tip
 </div>
 <p>Note that, because our dataframe contained multiple data columns (<code>green</code>, <code>nir</code>, and <code>ndwi</code>, along with <code>x</code> and <code>y</code>), <code>rast()</code> creates a multi-layer raster.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>water <span class="ot">&lt;-</span> ndwi_r[[<span class="dv">3</span>]]       <span class="do">### create a copy of just the ndwi layer</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>water <span class="ot">&lt;-</span> ndwi_r[[<span class="dv">3</span>]]       <span class="do">### create a copy of just the ndwi layer</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>water[water <span class="sc">&lt;</span> <span class="fl">0.3</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span> <span class="do">### drop pixels with non-water values</span></span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(water) <span class="ot">&lt;-</span> <span class="st">'water'</span></span>
 <span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(water)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1437,12 +1438,12 @@ Tip
 <h3 data-number="7.2" class="anchored" data-anchor-id="raster-as-data-frame-for-ggplot2"><span class="header-section-number">7.2</span> Raster as Data Frame for <code>ggplot2</code></h3>
 <p>Up to now, we have been relying on <code>base::plot()</code> to visualize our rasters. The <code>ggplot2</code> data visualization package requires inputs to generally be in data frame format. So converting a raster to a dataframe opens this up as a possibility!</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(water, <span class="at">xy =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(water, <span class="at">xy =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">fill =</span> water)) <span class="sc">+</span></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
 <span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'NDWI for Water Bodies of South Santa Barbara County'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted
+<pre data-code-line-numbers=""><code>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted
 ℹ Consider using `geom_tile()` instead.</code></pre>
 </div>
 <div class="cell-output-display">
@@ -1458,7 +1459,7 @@ Tip
 <section id="saving-rasters-with-writeraster" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="saving-rasters-with-writeraster"><span class="header-section-number">8</span> Saving Rasters with <code>writeRaster()</code></h2>
 <p>Finally, we can write out results of interest using <code>writeRaster()</code>. This looks at the file extension to determine the output format; <code>.tif</code> for GeoTiff is an easy to use format with built-in compression for efficient file sizes.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(ndvi, <span class="fu">here</span>(<span class="st">'data/landsat_ndvi.tif'</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(ndvi, <span class="fu">here</span>(<span class="st">'data/landsat_ndvi.tif'</span>))</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(water, <span class="fu">here</span>(<span class="st">'data/landsat_water.tif'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="summary-and-review" class="level2" data-number="9">
@@ -2014,4 +2015,5 @@ Tip
 
 
 
+<script src="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.js" defer="true"></script>
 </body></html>

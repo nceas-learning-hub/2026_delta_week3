@@ -48,6 +48,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/bootstrap/bootstrap-5a0716c032bb00a2e3c0c98c747440ac.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark-6ef12456229a54ab8c571c8ae7cb70f9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="site_libs/bootstrap/bootstrap-5a0716c032bb00a2e3c0c98c747440ac.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/fontawesome6-6.7.2/all.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/fontawesome6-6.7.2/latex-fontsize.css" rel="stylesheet">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
@@ -852,9 +853,9 @@ Prerequisite lessons or suggestions here
 <section id="branch-housekeeping" class="level3" data-number="4.6">
 <h3 data-number="4.6" class="anchored" data-anchor-id="branch-housekeeping"><span class="header-section-number">4.6</span> Branch Housekeeping</h3>
 <p>Now that our “main” branch is updated, we need to do the same sort of branch housekeeping that we did in GitHub after merging the pull request. In your IDE’s <i class="fa-solid fa-terminal" aria-label="terminal"></i> Terminal, <strong>delete the finished branch with the following command line code.</strong> <em>Remember to replace “BRANCH_NAME” with whatever you named your branch!</em></p>
-<pre><code>git branch -d BRANCH_NAME</code></pre>
+<pre data-code-line-numbers=""><code>git branch -d BRANCH_NAME</code></pre>
 <p>Once you’ve deleted that branch, you’ll need to “prune” your branches. The previous code deleted the local version of your branch but your IDE still ‘thinks’ that GitHub has an equivalent of the branch. To reduce the potential for confusion, <strong>prune your local clone with the following command line code.</strong> Just like branch deletion, this should code should be run in the <i class="fa-solid fa-terminal" aria-label="terminal"></i> Terminal.</p>
-<pre><code>git remote update origin --prune</code></pre>
+<pre data-code-line-numbers=""><code>git remote update origin --prune</code></pre>
 <p>Once you’ve run those two lines of code, confirm that it worked by following the below instructions for your IDE!</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Positron</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">RStudio</a></li></ul>
@@ -1462,4 +1463,5 @@ Prerequisite lessons or suggestions here
 
 
 
+<script src="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.js" defer="true"></script>
 </body></html>
