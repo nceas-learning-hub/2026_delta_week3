@@ -321,19 +321,72 @@ If you decide that your changes are a meaningful improvement that the parent rep
 
 ## Git Resets
 
-What if you make a commit that you want to _undo_ (i.e., remove from your repository's history)? Git offers a command known as a "reset" to undo commits. There are three levels of severity to a reset; click through the tabs below for more details on each.
+What if you make a commit that you want to _undo_ (i.e., remove from your repository's history)? Git offers a command known as a "reset" to undo commits. There are three levels of severity to a reset; see the table below for more details on each.
 
 :::{.callout-note icon="false"}
 ### When a Reset is Warranted
 
-If you want to undo a commit for merely cosmetic reasons, consider just leaving it as-is, but if you commit sensitive information or large files, undoing a commit can be a useful solution.
+If you want to undo a commit for merely cosmetic reasons, consider just leaving it as-is, but if you commit sensitive information or large files, or attach an incorrect commit message, undoing a commit can be a useful solution.
 :::
+
+| Reset Type | Un-Does Commit | Un-Stages File(s) | Discards Changes | Use-Case |
+|:-:|:-----:|:-----:|:-----:|:---------------------|
+| <span style="color:#c77dff">**Soft**</span> | **Yes!** | No | No | You make a commit but want to edit a typo in the commit message |
+| <span style="color:#9d4edd">**Mixed**</span> <br>(Default) | **Yes!** | **Yes!** | No | Your commit included files you actually didn't mean to include at all (or at least not in that commit) |
+| <span style="color:#5a189a">**Hard**</span> | **Yes!** | **Yes!** | **Yes!** | This is a "scorched earth" solution that is _highly_ situational |
+
+<br> 
+
+Once you've chosen the type of reset that you need, you can use the following syntax to execute it. Note that this is {{< fa terminal >}} Command Line code that must be run in the "Terminal" pane of Positron/RStudio.
 
 :::{.panel-tabset}
-### Soft
+### Reset the Most Recent Commit
 
-### Mixed
+To undo just the most recent commit:
+```
+git reset --soft HEAD~1
+```
 
-### Hard
+### Reset to a Specific Commit
 
+To undo every commit after a specific commit, you can use the target commit's "hash" (unique letter/number string identifying that commit). This method does not care how long ago the target commit was so use with caution!
+
+```
+git reset --mixed <commit-hash>
+```
+
+**It is _much_ safer to just roll back one commit at a time** until you're happy with how things look than it is to use this approach!
 :::
+
+### Finding a Particular Commit
+
+Before you can reset to a specific commit, you need to be able to find the "hash," and even if you just want to roll back one commit, it's probably a good idea to take a quick glance at what that commit actually included before un-doing it!
+
+To see your most recent commits (in reverse chronological order), you can run the following {{< fa terminal >}} Command Line code.
+
+```
+git log --oneline
+```
+
+**The commit hashes are the 7-character letter/number strings** (e.g., `f3b8b9a`) on the left of the output from the command above.
+
+A similar view can be found in GitHub by checking out the commit history of your remote repository but if you're trying to un-do a commit that you _haven't_ pushed, GitHub can't show you that commit.
+
+### Re<u>set</u> vs. Re<u>vert</u>
+
+If resetting feels too extreme, you could also revert a commit. **Reverting moves the status of all files back to what they were under a particular commit but <u>retains the full commit history</u>--including commits made after that focal commit.** You can then make a new commit where you officially change files back to that old status but you don't lose the history of the changes you now skip over as you would with a reset.
+
+To revert a repository:
+
+```
+git revert <commit-hash>
+```
+
+### Local vs. Remote Commits
+
+All of the above only affects _local_ commits (i.e., commits that have not been synced/pushed). If you realize that you want to undo a commit that you've already pushed to GitHub, you'll need to both reset the commit and "force" push back to GitHub to get the remote repository to reset in the same way.
+
+```
+git reset --hard HEAD~1
+git push --force
+```
