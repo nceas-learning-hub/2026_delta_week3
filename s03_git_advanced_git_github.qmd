@@ -24,7 +24,9 @@ Parts of this page was adapted from the Long Term Ecological Research (LTER) Net
 
 ## Overview
 
-{{< fa person-digging >}} Under construction; check back later
+At this point, you're likely at least somewhat familiar with the fundamental operations of Git and GitHub; you know how to stage your edits, make (informative) commit messages, and sync (pull/push) those changes between a remote repository and a local clone of that repository. However, in prior modules, a handful of topics have been raised but only touched on in a superficial way. This module is where we will dig into greater detail on some of these "advanced" topics.
+
+We'll discuss branches and forks--what they are, how they differ, and when/how to use them--how they relate to pull requests, and how to un-do problematic commits with varying levels of severity.
 
 ## Core Vocabulary
 
