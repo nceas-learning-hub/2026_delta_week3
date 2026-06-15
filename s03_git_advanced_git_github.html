@@ -503,7 +503,12 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#create-a-fork" id="toc-create-a-fork" class="nav-link" data-scroll-target="#create-a-fork"><span class="header-section-number">5.1</span> Create a Fork</a></li>
   </ul></li>
-  <li><a href="#git-resets" id="toc-git-resets" class="nav-link" data-scroll-target="#git-resets"><span class="header-section-number">6</span> Git Resets</a></li>
+  <li><a href="#git-resets" id="toc-git-resets" class="nav-link" data-scroll-target="#git-resets"><span class="header-section-number">6</span> Git Resets</a>
+  <ul class="collapse">
+  <li><a href="#finding-a-particular-commit" id="toc-finding-a-particular-commit" class="nav-link" data-scroll-target="#finding-a-particular-commit"><span class="header-section-number">6.1</span> Finding a Particular Commit</a></li>
+  <li><a href="#reset-vs.-revert" id="toc-reset-vs.-revert" class="nav-link" data-scroll-target="#reset-vs.-revert"><span class="header-section-number">6.2</span> Re<u>set</u> vs.&nbsp;Re<u>vert</u></a></li>
+  <li><a href="#local-vs.-remote-commits" id="toc-local-vs.-remote-commits" class="nav-link" data-scroll-target="#local-vs.-remote-commits"><span class="header-section-number">6.3</span> Local vs.&nbsp;Remote Commits</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -533,10 +538,11 @@ Prerequisite lessons or suggestions here
 <div class="callout-learning">
 <p>After completing this session, you will be able to:</p>
 <ul>
-<li><u>Define</u> “branch” and “fork” in the context of Git/GitHub</li>
+<li><u>Define</u> branch, fork, reset, and revert in the context of Git/GitHub</li>
 <li><u>Contrast</u> branches and forks</li>
 <li><u>Create</u> a branch on an existing repository</li>
 <li><u>Use</u> the fork feature on GitHub for an existing repository</li>
+<li><u>Explain</u> the three different types of reset, when they’re useful, and how they differ in severity</li>
 </ul>
 </div>
 </div>
@@ -557,7 +563,8 @@ Prerequisite lessons or suggestions here
 </div>
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p><i class="fa-solid fa-person-digging" aria-label="person-digging"></i> Under construction; check back later</p>
+<p>At this point, you’re likely at least somewhat familiar with the fundamental operations of Git and GitHub; you know how to stage your edits, make (informative) commit messages, and sync (pull/push) those changes between a remote repository and a local clone of that repository. However, in prior modules, a handful of topics have been raised but only touched on in a superficial way. This module is where we will dig into greater detail on some of these “advanced” topics.</p>
+<p>We’ll discuss branches and forks–what they are, how they differ, and when/how to use them–how they relate to pull requests, and how to un-do problematic commits with varying levels of severity.</p>
 </section>
 <section id="core-vocabulary" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="core-vocabulary"><span class="header-section-number">2</span> Core Vocabulary</h2>
@@ -921,7 +928,7 @@ Prerequisite lessons or suggestions here
 </section>
 <section id="git-resets" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="git-resets"><span class="header-section-number">6</span> Git Resets</h2>
-<p>What if you make a commit that you want to <em>undo</em> (i.e., remove from your repository’s history)? Git offers a command known as a “reset” to undo commits. There are three levels of severity to a reset; click through the tabs below for more details on each.</p>
+<p>What if you make a commit that you want to <em>undo</em> (i.e., remove from your repository’s history)? Git offers a command known as a “reset” to undo commits. There are three levels of severity to a reset; see the table below for more details on each.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -932,25 +939,88 @@ Prerequisite lessons or suggestions here
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If you want to undo a commit for merely cosmetic reasons, consider just leaving it as-is, but if you commit sensitive information or large files, undoing a commit can be a useful solution.</p>
+<p>If you want to undo a commit for merely cosmetic reasons, consider just leaving it as-is, but if you commit sensitive information or large files, or attach an incorrect commit message, undoing a commit can be a useful solution.</p>
 </div>
 </div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Reset Type</th>
+<th style="text-align: center;">Un-Does Commit</th>
+<th style="text-align: center;">Un-Stages File(s)</th>
+<th style="text-align: center;">Discards Changes</th>
+<th style="text-align: left;">Use-Case</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span style="color:#c77dff"><strong>Soft</strong></span></td>
+<td style="text-align: center;"><strong>Yes!</strong></td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: left;">You make a commit but want to edit a typo in the commit message</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span style="color:#9d4edd"><strong>Mixed</strong></span> <br>(Default)</td>
+<td style="text-align: center;"><strong>Yes!</strong></td>
+<td style="text-align: center;"><strong>Yes!</strong></td>
+<td style="text-align: center;">No</td>
+<td style="text-align: left;">Your commit included files you actually didn’t mean to include at all (or at least not in that commit)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span style="color:#5a189a"><strong>Hard</strong></span></td>
+<td style="text-align: center;"><strong>Yes!</strong></td>
+<td style="text-align: center;"><strong>Yes!</strong></td>
+<td style="text-align: center;"><strong>Yes!</strong></td>
+<td style="text-align: left;">This is a “scorched earth” solution that is <em>highly</em> situational</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>Once you’ve chosen the type of reset that you need, you can use the following syntax to execute it. Note that this is <i class="fa-solid fa-terminal" aria-label="terminal"></i> Command Line code that must be run in the “Terminal” pane of Positron/RStudio.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Soft</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Mixed</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false" href="">Hard</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Reset the Most Recent Commit</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Reset to a Specific Commit</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
-
+<p>To undo just the most recent commit:</p>
+<pre data-code-line-numbers=""><code>git reset --soft HEAD~1</code></pre>
 </div>
 <div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
-
-</div>
-<div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
-
-</div>
+<p>To undo every commit after a specific commit, you can use the target commit’s “hash” (unique letter/number string identifying that commit). This method does not care how long ago the target commit was so use with caution!</p>
+<pre data-code-line-numbers=""><code>git reset --mixed &lt;commit-hash&gt;</code></pre>
+<p><strong>It is <em>much</em> safer to just roll back one commit at a time</strong> until you’re happy with how things look than it is to use this approach!</p>
 </div>
 </div>
+</div>
+<section id="finding-a-particular-commit" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="finding-a-particular-commit"><span class="header-section-number">6.1</span> Finding a Particular Commit</h3>
+<p>Before you can reset to a specific commit, you need to be able to find the “hash,” and even if you just want to roll back one commit, it’s probably a good idea to take a quick glance at what that commit actually included before un-doing it!</p>
+<p>To see your most recent commits (in reverse chronological order), you can run the following <i class="fa-solid fa-terminal" aria-label="terminal"></i> Command Line code.</p>
+<pre data-code-line-numbers=""><code>git log --oneline</code></pre>
+<p><strong>The commit hashes are the 7-character letter/number strings</strong> (e.g., <code>f3b8b9a</code>) on the left of the output from the command above.</p>
+<p>A similar view can be found in GitHub by checking out the commit history of your remote repository but if you’re trying to un-do a commit that you <em>haven’t</em> pushed, GitHub can’t show you that commit.</p>
+</section>
+<section id="reset-vs.-revert" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="reset-vs.-revert"><span class="header-section-number">6.2</span> Re<u>set</u> vs.&nbsp;Re<u>vert</u></h3>
+<p>If resetting feels too extreme, you could also revert a commit. <strong>Reverting moves the status of all files back to what they were under a particular commit but <u>retains the full commit history</u>–including commits made after that focal commit.</strong> You can then make a new commit where you officially change files back to that old status but you don’t lose the history of the changes you now skip over as you would with a reset.</p>
+<p>To revert a repository:</p>
+<pre data-code-line-numbers=""><code>git revert &lt;commit-hash&gt;</code></pre>
+</section>
+<section id="local-vs.-remote-commits" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="local-vs.-remote-commits"><span class="header-section-number">6.3</span> Local vs.&nbsp;Remote Commits</h3>
+<p>All of the above only affects <em>local</em> commits (i.e., commits that have not been synced/pushed). If you realize that you want to undo a commit that you’ve already pushed to GitHub, you’ll need to both reset the commit and “force” push back to GitHub to get the remote repository to reset in the same way.</p>
+<pre data-code-line-numbers=""><code>git reset --hard HEAD~1
+git push --force</code></pre>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
