@@ -551,16 +551,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#organizing-your-app" id="toc-organizing-your-app" class="nav-link" data-scroll-target="#organizing-your-app"><span class="header-section-number">7</span> Organizing Your App</a>
   <ul class="collapse">
   <li><a href="#single-file-vs-two-file" id="toc-single-file-vs-two-file" class="nav-link" data-scroll-target="#single-file-vs-two-file">Single-File vs Two-File</a></li>
-  <li><a href="#what-goes-in-global.r" id="toc-what-goes-in-global.r" class="nav-link" data-scroll-target="#what-goes-in-global.r">What goes in <code>global.R</code>?</a></li>
   <li><a href="#recommended-project-structure" id="toc-recommended-project-structure" class="nav-link" data-scroll-target="#recommended-project-structure">Recommended project structure</a></li>
   </ul></li>
   <li><a href="#building-a-two-file-app" id="toc-building-a-two-file-app" class="nav-link" data-scroll-target="#building-a-two-file-app"><span class="header-section-number">8</span> Building a Two-File App</a>
   <ul class="collapse">
-  <li><a href="#build-the-navbar-structure-in-ui.r" id="toc-build-the-navbar-structure-in-ui.r" class="nav-link" data-scroll-target="#build-the-navbar-structure-in-ui.r">Build the navbar structure in <code>ui.R</code></a></li>
-  <li><a href="#add-the-explore-tab-layout" id="toc-add-the-explore-tab-layout" class="nav-link" data-scroll-target="#add-the-explore-tab-layout">Add the Explore tab layout</a></li>
-  <li><a href="#add-the-about-page-with-markdown-text" id="toc-add-the-about-page-with-markdown-text" class="nav-link" data-scroll-target="#add-the-about-page-with-markdown-text">Add the About page with Markdown text</a></li>
-  <li><a href="#write-the-server-in-server.r" id="toc-write-the-server-in-server.r" class="nav-link" data-scroll-target="#write-the-server-in-server.r">Write the server in <code>server.R</code></a></li>
-  <li><a href="#full-two-file-app-code" id="toc-full-two-file-app-code" class="nav-link" data-scroll-target="#full-two-file-app-code">Full two-file app code</a></li>
+  <li><a href="#load-packages-and-data-in-global.r" id="toc-load-packages-and-data-in-global.r" class="nav-link" data-scroll-target="#load-packages-and-data-in-global.r">Load Packages and Data in <code>global.R</code></a></li>
+  <li><a href="#write-ui-in-ui.r" id="toc-write-ui-in-ui.r" class="nav-link" data-scroll-target="#write-ui-in-ui.r"><span class="header-section-number">8.1</span> Write UI in <code class="unnumbered">ui.R</code></a></li>
+  <li><a href="#write-reactive-functionality-in-server.r" id="toc-write-reactive-functionality-in-server.r" class="nav-link" data-scroll-target="#write-reactive-functionality-in-server.r">Write Reactive Functionality in <code>server.R</code></a></li>
+  <li><a href="#full-two-file-app-code" id="toc-full-two-file-app-code" class="nav-link" data-scroll-target="#full-two-file-app-code">Full Two-file App Code</a></li>
   </ul></li>
   <li><a href="#sharing-your-app" id="toc-sharing-your-app" class="nav-link" data-scroll-target="#sharing-your-app"><span class="header-section-number">9</span> Sharing Your App</a></li>
   <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">10</span> Resources</a></li>
@@ -1490,11 +1488,67 @@ NOTE ON source-line-numbers FOR CODE HIGHLIGHTS:
 </tr>
 </tbody>
 </table>
-<p>A <strong>third optional file</strong>, <code>global.R</code>, runs once before <code>ui.R</code> and <code>server.R</code>. It’s the right place for packages, data loading, and any objects that both files need.</p>
+<p>A <strong>third optional file</strong>, <code>global.R</code>, runs once before <code>ui.R</code> and <code>server.R</code> (or before <code>app.R</code> for a single-file app). It’s the right place for packages, data loading, and any objects that both files need - in the single-file app above, everything before starting the <code>ui</code> definition is a good candidate for <code>global.R</code>.</p>
 </section>
-<section id="what-goes-in-global.r" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="what-goes-in-global.r">What goes in <code>global.R</code>?</h3>
-<p>In the single-file app, everything before starting the <code>ui</code> definition is a good candidate for <code>global.R</code>. Below includes all the same information, plus station locations we’ll use to build on the simple one-file app.</p>
+<section id="recommended-project-structure" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="recommended-project-structure">Recommended project structure</h3>
+<div style="font-family: monospace; font-size: 0.8rem;">
+<p><i class="fa-brands fa-r-project" aria-label="r-project"></i> <strong>yolo_bypass_app/</strong><br>
+├── <i class="fa-solid fa-file-code" aria-label="file-code"></i> <strong>global.R</strong> &nbsp;&nbsp;&nbsp; <em>(optional) packages + data (runs first, available everywhere)</em><br>
+├── <i class="fa-solid fa-file-code" aria-label="file-code"></i> <strong>ui.R</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>user interface definition</em><br>
+├── <i class="fa-solid fa-file-code" aria-label="file-code"></i> <strong>server.R</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>server logic</em><br>
+├── <i class="fa-solid fa-folder" aria-label="folder"></i> text/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>(optional) text elements for UI</em><br>
+│&nbsp;&nbsp;&nbsp;└── <i class="fa-brands fa-markdown" aria-label="markdown"></i> about.md &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>markdown text for the About page</em><br>
+├── <i class="fa-solid fa-folder" aria-label="folder"></i> data/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>(optional) data for use in app</em><br>
+│&nbsp;&nbsp;&nbsp;└── <i class="fa-solid fa-file-csv" aria-label="file-csv"></i> my_data.csv<br>
+├── <i class="fa-solid fa-folder" aria-label="folder"></i> www/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>(optional) images, HTML, CSS, etc - MUST BE CALLED www!</em><br>
+│&nbsp;&nbsp;&nbsp;├── <i class="fa-brands fa-css" aria-label="css"></i> my_styles.css<br>
+│&nbsp;&nbsp;&nbsp;└── <i class="fa-solid fa-file-image" aria-label="file-image"></i> my_image.png<br>
+├── <i class="fa-solid fa-file-code" aria-label="file-code"></i> scratch.R &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>development scratch work (not part of the app)</em><br>
+└── <i class="fa-solid fa-file-code" aria-label="file-code"></i> yolo_bypass_app.Rproj &nbsp;&nbsp;<em>project file (if using RStudio)</em></p>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>The optional <code>www</code> folder is special!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The optional <code>www</code> folder MUST be called <code>www</code> - this is where Shiny looks for static elements to be rendered in the app, but that are not products of the scripts, like images. When you add an image to your app, you skip the <code>www</code> part in the file path - e.g., <code>img(src = 'my_image.png')</code>.</p>
+<p>Other folders, e.g., <code>data</code> and <code>text</code> above, can contain files accessed by <code>server.R</code> through regular file path functions, e.g., <code>here::here()</code> or <code>file.path()</code>.</p>
+</div>
+</div>
+<!-- ![Source: Intro to Shiny - EDS 430, Bren School UCSB](images/shiny_introduction/repo-structure-details.png){width="70%" .lightbox fig-align="center"} -->
+</section>
+</section>
+<section id="building-a-two-file-app" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="building-a-two-file-app"><span class="header-section-number">8</span> Building a Two-File App</h2>
+<p>Let’s rebuild the Yolo Bypass app in two-file format with a polished multi-page layout. The finished app will have two pages accessible via a navigation bar: an About page with context and a map, and an Explore page with the interactive plots.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">About page</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Explore page</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/shiny_introduction/shiny-yolo-app-tabbed-about.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="images/shiny_introduction/shiny-yolo-app-tabbed-about.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></a></p>
+</figure>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/shiny_introduction/shiny-yolo-app-tabbed-data.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="images/shiny_introduction/shiny-yolo-app-tabbed-data.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<section id="load-packages-and-data-in-global.r" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="load-packages-and-data-in-global.r">Load Packages and Data in <code>global.R</code></h3>
+<p>Below includes all the same information we used in the single-file app above, plus station locations we’ll use to expand upon the simple one-file app.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a><span class="do">### global.R ----</span></span>
 <span id="annotated-cell-11-2"><a href="#annotated-cell-11-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1523,51 +1577,17 @@ NOTE ON source-line-numbers FOR CODE HIGHLIGHTS:
 <span id="annotated-cell-11-25"><a href="#annotated-cell-11-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="recommended-project-structure" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="recommended-project-structure">Recommended project structure</h3>
-<div style="font-family: monospace; font-size: 0.8rem;">
-<p><i class="fa-brands fa-r-project" aria-label="r-project"></i> <strong>yolo_bypass_app/</strong><br>
-├── <i class="fa-solid fa-file-code" aria-label="file-code"></i> <strong>global.R</strong> &nbsp;&nbsp;&nbsp; <em>(optional) packages + data (runs first, available everywhere)</em><br>
-├── <i class="fa-solid fa-file-code" aria-label="file-code"></i> <strong>ui.R</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>user interface definition</em><br>
-├── <i class="fa-solid fa-file-code" aria-label="file-code"></i> <strong>server.R</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>server logic</em><br>
-├── <i class="fa-solid fa-folder" aria-label="folder"></i> text/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>(optional) text elements for UI</em><br>
-│&nbsp;&nbsp;&nbsp;└── <i class="fa-brands fa-markdown" aria-label="markdown"></i> about.md &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>markdown text for the About page</em><br>
-├── <i class="fa-solid fa-folder" aria-label="folder"></i> data/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>(optional) data for use in app</em><br>
-│&nbsp;&nbsp;&nbsp;└── <i class="fa-solid fa-file-csv" aria-label="file-csv"></i> my_data.csv<br>
-├── <i class="fa-solid fa-folder" aria-label="folder"></i> www/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>(optional) images, HTML, CSS, etc - MUST BE CALLED www!</em><br>
-│&nbsp;&nbsp;&nbsp;├── <i class="fa-brands fa-css" aria-label="css"></i> my_styles.css<br>
-│&nbsp;&nbsp;&nbsp;└── <i class="fa-solid fa-file-image" aria-label="file-image"></i> my_image.png<br>
-├── <i class="fa-solid fa-file-code" aria-label="file-code"></i> scratch.R &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>development scratch work (not part of the app)</em><br>
-└── <i class="fa-solid fa-file-code" aria-label="file-code"></i> yolo_bypass_app.Rproj &nbsp;&nbsp;<em>project file (if using RStudio)</em></p>
-</div>
-<p>Note, the optional <code>www</code> folder MUST be called <code>www</code> - this is where Shiny looks for static elements to be rendered in the app, but that are not products of the scripts, like images. When you add an image to your app, you skip the <code>www</code> part in the file path - e.g., <code>img(src = 'my_image.png')</code>.</p>
-<!-- ![Source: Intro to Shiny - EDS 430, Bren School UCSB](images/shiny_introduction/repo-structure-details.png){width="70%" .lightbox fig-align="center"} -->
-</section>
-</section>
-<section id="building-a-two-file-app" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="building-a-two-file-app"><span class="header-section-number">8</span> Building a Two-File App</h2>
-<p>Let’s rebuild the Yolo Bypass app in two-file format with a polished multi-page layout. The finished app will have two pages accessible via a navigation bar: an About page with context and a map, and an Explore page with the interactive plots.</p>
+<section id="write-ui-in-ui.r" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="write-ui-in-ui.r"><span class="header-section-number">8.1</span> Write UI in <code class="unnumbered">ui.R</code></h3>
+<p>Here we structure the user interface as a <code>page_navbar()</code> design, with a top navigation bar to navigate among two tabs. We’ll use a few new UI elements to compare to the ones we used in the single-file <code>app.R</code>.</p>
+<ul>
+<li>For our “Explore” tab, we’ll add input widgets and outputs that will be generated by our <code>server.R</code>.</li>
+<li>For our “About” page we will put the text in a separate Markdown document to make the <code>ui.R</code> a little cleaner, and make it easy to find and update our “About” information without needing to mess with the <code>ui.R</code> file.</li>
+</ul>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">About page</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Explore page</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">1. Build UI structure</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">2. Build Explore tab</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">3. Build About page</a></li></ul>
 <div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/shiny_introduction/shiny-yolo-app-tabbed-about.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="images/shiny_introduction/shiny-yolo-app-tabbed-about.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></a></p>
-</figure>
-</div>
-</div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/shiny_introduction/shiny-yolo-app-tabbed-data.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="images/shiny_introduction/shiny-yolo-app-tabbed-data.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></a></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<section id="build-the-navbar-structure-in-ui.r" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="build-the-navbar-structure-in-ui.r">Build the navbar structure in <code>ui.R</code></h3>
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <p><code>page_navbar()</code> creates a full-page layout with a top navigation bar, and <code>nav_panel()</code> defines each tab:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">### ui.R ----</span></span>
@@ -1591,9 +1611,8 @@ NOTE ON source-line-numbers FOR CODE HIGHLIGHTS:
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>) <span class="do">### </span><span class="re">END</span><span class="do"> page_navbar</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="add-the-explore-tab-layout" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="add-the-explore-tab-layout">Add the Explore tab layout</h3>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <p>Inside “Explore the Data”, we’ll use <code>layout_sidebar()</code> to pair inputs with outputs. Since the date slider affects both plots and the species checkbox also affects both, we use one sidebar for all inputs and two <code>card()</code> outputs in the main area:</p>
 <div class="cell" data-source-line-numbers="8-49">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-source-line-numbers="8-49" data-code-line-numbers="8-49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">page_navbar</span>(</span>
@@ -1648,9 +1667,8 @@ NOTE ON source-line-numbers FOR CODE HIGHLIGHTS:
 <span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>) <span class="do">### </span><span class="re">END</span><span class="do"> page_navbar</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="add-the-about-page-with-markdown-text" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="add-the-about-page-with-markdown-text">Add the About page with Markdown text</h3>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
 <p>For longer descriptive text, write it in a Markdown file and pull it in with <code>includeMarkdown()</code>. Create <code>text/about.md</code> in your app folder:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Welcome to the Yolo Bypass Fish Monitoring Explorer</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1666,116 +1684,153 @@ NOTE ON source-line-numbers FOR CODE HIGHLIGHTS:
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Where are the monitoring stations?</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then in <code>ui.R</code>, pull it into the About tab alongside a map of station locations:</p>
 <div class="cell" data-source-line-numbers="4-21">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-15" data-source-line-numbers="4-21" data-code-line-numbers="4-21"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">page_navbar</span>(</span>
-<span id="annotated-cell-15-2"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>  ...</span>
-<span id="annotated-cell-15-3"><a href="#annotated-cell-15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-15-4"><a href="#annotated-cell-15-4" aria-hidden="true" tabindex="-1"></a>  <span class="do">### (Tab 1) About ----</span></span>
-<span id="annotated-cell-15-5"><a href="#annotated-cell-15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nav_panel</span>(</span>
-<span id="annotated-cell-15-6"><a href="#annotated-cell-15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"About"</span>,</span>
-<span id="annotated-cell-15-7"><a href="#annotated-cell-15-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="annotated-cell-15-8"><a href="#annotated-cell-15-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">layout_columns</span>(</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1">1</button><span id="annotated-cell-15-9" class="code-annotation-target"><a href="#annotated-cell-15-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">col_widths =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">10</span>, <span class="sc">-</span><span class="dv">1</span>),</span>
-<span id="annotated-cell-15-10"><a href="#annotated-cell-15-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="annotated-cell-15-11"><a href="#annotated-cell-15-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">div</span>(</span>
-<span id="annotated-cell-15-12"><a href="#annotated-cell-15-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">includeMarkdown</span>(<span class="st">"text/about.md"</span>),</span>
-<span id="annotated-cell-15-13"><a href="#annotated-cell-15-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">card</span>(</span>
-<span id="annotated-cell-15-14"><a href="#annotated-cell-15-14" aria-hidden="true" tabindex="-1"></a>          <span class="fu">card_header</span>(<span class="st">"Monitoring Stations"</span>),</span>
-<span id="annotated-cell-15-15"><a href="#annotated-cell-15-15" aria-hidden="true" tabindex="-1"></a>          <span class="fu">leafletOutput</span>(<span class="at">outputId =</span> <span class="st">"stations_map"</span>)</span>
-<span id="annotated-cell-15-16"><a href="#annotated-cell-15-16" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="annotated-cell-15-17"><a href="#annotated-cell-15-17" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="annotated-cell-15-18"><a href="#annotated-cell-15-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="annotated-cell-15-19"><a href="#annotated-cell-15-19" aria-hidden="true" tabindex="-1"></a>    ) <span class="do">### </span><span class="re">END</span><span class="do"> layout_columns</span></span>
-<span id="annotated-cell-15-20"><a href="#annotated-cell-15-20" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="annotated-cell-15-21"><a href="#annotated-cell-15-21" aria-hidden="true" tabindex="-1"></a>  ), <span class="do">### </span><span class="re">END</span><span class="do"> About tab nav_panel</span></span>
-<span id="annotated-cell-15-22"><a href="#annotated-cell-15-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="annotated-cell-15-23"><a href="#annotated-cell-15-23" aria-hidden="true" tabindex="-1"></a>  <span class="do">### (Tab 2) Explore the Data ----</span></span>
-<span id="annotated-cell-15-24"><a href="#annotated-cell-15-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nav_panel</span>(</span>
-<span id="annotated-cell-15-25"><a href="#annotated-cell-15-25" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="annotated-cell-15-26"><a href="#annotated-cell-15-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="do">### </span><span class="re">END</span><span class="do"> Explore tab nav_panel</span></span>
-<span id="annotated-cell-15-27"><a href="#annotated-cell-15-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-15-28"><a href="#annotated-cell-15-28" aria-hidden="true" tabindex="-1"></a>) <span class="do">### </span><span class="re">END</span><span class="do"> page_navbar</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-15" data-code-lines="9" data-code-annotation="1"><code>col_widths = c(-1, 10, -1)</code> creates 1-column empty gutters on each side and puts the content in the middle 10 of 12 Bootstrap columns, for a clean centered layout.</span>
-</dd>
-</dl>
-</div>
-</div>
-</section>
-<section id="write-the-server-in-server.r" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="write-the-server-in-server.r">Write the server in <code>server.R</code></h3>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-16-1"><a href="#annotated-cell-16-1" aria-hidden="true" tabindex="-1"></a><span class="do">### server.R ----</span></span>
-<span id="annotated-cell-16-2"><a href="#annotated-cell-16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-16-3"><a href="#annotated-cell-16-3" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
-<span id="annotated-cell-16-4"><a href="#annotated-cell-16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-16-5"><a href="#annotated-cell-16-5" aria-hidden="true" tabindex="-1"></a>  <span class="do">### render station locations map ----</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="1">1</button><span id="annotated-cell-16-6" class="code-annotation-target"><a href="#annotated-cell-16-6" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>stations_map <span class="ot">&lt;-</span> <span class="fu">renderLeaflet</span>({</span>
-<span id="annotated-cell-16-7"><a href="#annotated-cell-16-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">leaflet</span>(sites) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-16-8"><a href="#annotated-cell-16-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">addTiles</span>() <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-16-9"><a href="#annotated-cell-16-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">addCircleMarkers</span>(</span>
-<span id="annotated-cell-16-10"><a href="#annotated-cell-16-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">lat =</span> <span class="sc">~</span>Latitude,</span>
-<span id="annotated-cell-16-11"><a href="#annotated-cell-16-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">lng =</span> <span class="sc">~</span>Longitude,</span>
-<span id="annotated-cell-16-12"><a href="#annotated-cell-16-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">radius =</span> <span class="dv">6</span>,</span>
-<span id="annotated-cell-16-13"><a href="#annotated-cell-16-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">fillColor =</span> <span class="st">"#2C7BB6"</span>,</span>
-<span id="annotated-cell-16-14"><a href="#annotated-cell-16-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">fillOpacity =</span> <span class="fl">0.8</span>,</span>
-<span id="annotated-cell-16-15"><a href="#annotated-cell-16-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">weight =</span> <span class="dv">1</span>,</span>
-<span id="annotated-cell-16-16"><a href="#annotated-cell-16-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"white"</span>,</span>
-<span id="annotated-cell-16-17"><a href="#annotated-cell-16-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="sc">~</span>StationCode</span>
-<span id="annotated-cell-16-18"><a href="#annotated-cell-16-18" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="annotated-cell-16-19"><a href="#annotated-cell-16-19" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="annotated-cell-16-20"><a href="#annotated-cell-16-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-16-21"><a href="#annotated-cell-16-21" aria-hidden="true" tabindex="-1"></a>  <span class="do">### filter data by date range and species ----</span></span>
-<span id="annotated-cell-16-22"><a href="#annotated-cell-16-22" aria-hidden="true" tabindex="-1"></a>  filtered_data <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="annotated-cell-16-23"><a href="#annotated-cell-16-23" aria-hidden="true" tabindex="-1"></a>    delta_data <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-16-24"><a href="#annotated-cell-16-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(</span>
-<span id="annotated-cell-16-25"><a href="#annotated-cell-16-25" aria-hidden="true" tabindex="-1"></a>        SampleDate <span class="sc">&gt;=</span> input<span class="sc">$</span>date_range[<span class="dv">1</span>],</span>
-<span id="annotated-cell-16-26"><a href="#annotated-cell-16-26" aria-hidden="true" tabindex="-1"></a>        SampleDate <span class="sc">&lt;=</span> input<span class="sc">$</span>date_range[<span class="dv">2</span>],</span>
-<span id="annotated-cell-16-27"><a href="#annotated-cell-16-27" aria-hidden="true" tabindex="-1"></a>        CommonName <span class="sc">%in%</span> input<span class="sc">$</span>species_select</span>
-<span id="annotated-cell-16-28"><a href="#annotated-cell-16-28" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="annotated-cell-16-29"><a href="#annotated-cell-16-29" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="annotated-cell-16-30"><a href="#annotated-cell-16-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-16-31"><a href="#annotated-cell-16-31" aria-hidden="true" tabindex="-1"></a>  <span class="do">### render Secchi depth plot ----</span></span>
-<span id="annotated-cell-16-32"><a href="#annotated-cell-16-32" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>secchi_plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="annotated-cell-16-33"><a href="#annotated-cell-16-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">filtered_data</span>(), <span class="fu">aes</span>(<span class="at">x =</span> SampleDate, <span class="at">y =</span> Secchi)) <span class="sc">+</span></span>
-<span id="annotated-cell-16-34"><a href="#annotated-cell-16-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#2C7BB6"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="annotated-cell-16-35"><a href="#annotated-cell-16-35" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Secchi depth (m)"</span>) <span class="sc">+</span></span>
-<span id="annotated-cell-16-36"><a href="#annotated-cell-16-36" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_light</span>()</span>
-<span id="annotated-cell-16-37"><a href="#annotated-cell-16-37" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="annotated-cell-16-38"><a href="#annotated-cell-16-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-16-39"><a href="#annotated-cell-16-39" aria-hidden="true" tabindex="-1"></a>  <span class="do">### render fish catch bar chart ----</span></span>
-<span id="annotated-cell-16-40"><a href="#annotated-cell-16-40" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>catch_plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="annotated-cell-16-41"><a href="#annotated-cell-16-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filtered_data</span>() <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-16-42"><a href="#annotated-cell-16-42" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(CommonName) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-16-43"><a href="#annotated-cell-16-43" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarize</span>(<span class="at">total_catch =</span> <span class="fu">sum</span>(Count, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-16-44"><a href="#annotated-cell-16-44" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(CommonName, <span class="sc">-</span>total_catch),</span>
-<span id="annotated-cell-16-45"><a href="#annotated-cell-16-45" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> total_catch,</span>
-<span id="annotated-cell-16-46"><a href="#annotated-cell-16-46" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> CommonName)) <span class="sc">+</span></span>
-<span id="annotated-cell-16-47"><a href="#annotated-cell-16-47" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="annotated-cell-16-48"><a href="#annotated-cell-16-48" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Species"</span>, <span class="at">y =</span> <span class="st">"Total catch"</span>) <span class="sc">+</span></span>
-<span id="annotated-cell-16-49"><a href="#annotated-cell-16-49" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_light</span>()</span>
-<span id="annotated-cell-16-50"><a href="#annotated-cell-16-50" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="annotated-cell-16-51"><a href="#annotated-cell-16-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-16-52"><a href="#annotated-cell-16-52" aria-hidden="true" tabindex="-1"></a>} <span class="do">### </span><span class="re">END</span><span class="do"> server</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-16" data-source-line-numbers="4-21" data-code-line-numbers="4-21"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-16-1"><a href="#annotated-cell-16-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">page_navbar</span>(</span>
+<span id="annotated-cell-16-2"><a href="#annotated-cell-16-2" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="annotated-cell-16-3"><a href="#annotated-cell-16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-16-4"><a href="#annotated-cell-16-4" aria-hidden="true" tabindex="-1"></a>  <span class="do">### (Tab 1) About ----</span></span>
+<span id="annotated-cell-16-5"><a href="#annotated-cell-16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nav_panel</span>(</span>
+<span id="annotated-cell-16-6"><a href="#annotated-cell-16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"About"</span>,</span>
+<span id="annotated-cell-16-7"><a href="#annotated-cell-16-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="annotated-cell-16-8"><a href="#annotated-cell-16-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">layout_columns</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="1">1</button><span id="annotated-cell-16-9" class="code-annotation-target"><a href="#annotated-cell-16-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">col_widths =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">10</span>, <span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="annotated-cell-16-10"><a href="#annotated-cell-16-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="annotated-cell-16-11"><a href="#annotated-cell-16-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">div</span>(</span>
+<span id="annotated-cell-16-12"><a href="#annotated-cell-16-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">includeMarkdown</span>(<span class="st">"text/about.md"</span>),</span>
+<span id="annotated-cell-16-13"><a href="#annotated-cell-16-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">card</span>(</span>
+<span id="annotated-cell-16-14"><a href="#annotated-cell-16-14" aria-hidden="true" tabindex="-1"></a>          <span class="fu">card_header</span>(<span class="st">"Monitoring Stations"</span>),</span>
+<span id="annotated-cell-16-15"><a href="#annotated-cell-16-15" aria-hidden="true" tabindex="-1"></a>          <span class="fu">leafletOutput</span>(<span class="at">outputId =</span> <span class="st">"stations_map"</span>)</span>
+<span id="annotated-cell-16-16"><a href="#annotated-cell-16-16" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="annotated-cell-16-17"><a href="#annotated-cell-16-17" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="annotated-cell-16-18"><a href="#annotated-cell-16-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="annotated-cell-16-19"><a href="#annotated-cell-16-19" aria-hidden="true" tabindex="-1"></a>    ) <span class="do">### </span><span class="re">END</span><span class="do"> layout_columns</span></span>
+<span id="annotated-cell-16-20"><a href="#annotated-cell-16-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="annotated-cell-16-21"><a href="#annotated-cell-16-21" aria-hidden="true" tabindex="-1"></a>  ), <span class="do">### </span><span class="re">END</span><span class="do"> About tab nav_panel</span></span>
+<span id="annotated-cell-16-22"><a href="#annotated-cell-16-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="annotated-cell-16-23"><a href="#annotated-cell-16-23" aria-hidden="true" tabindex="-1"></a>  <span class="do">### (Tab 2) Explore the Data ----</span></span>
+<span id="annotated-cell-16-24"><a href="#annotated-cell-16-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nav_panel</span>(</span>
+<span id="annotated-cell-16-25"><a href="#annotated-cell-16-25" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="annotated-cell-16-26"><a href="#annotated-cell-16-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="do">### </span><span class="re">END</span><span class="do"> Explore tab nav_panel</span></span>
+<span id="annotated-cell-16-27"><a href="#annotated-cell-16-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-16-28"><a href="#annotated-cell-16-28" aria-hidden="true" tabindex="-1"></a>) <span class="do">### </span><span class="re">END</span><span class="do"> page_navbar</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-16" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-16" data-code-lines="6" data-code-annotation="1">The station map doesn’t depend on any user inputs, so it doesn’t need <code>reactive()</code>. However, it still must be assigned to <code>output$</code> and wrapped in <code>render*()</code>.</span>
+<span data-code-cell="annotated-cell-16" data-code-lines="9" data-code-annotation="1"><code>col_widths = c(-1, 10, -1)</code> creates 1-column empty gutters on each side and puts the content in the middle 10 of 12 Bootstrap columns, for a clean centered layout.</span>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- END ui.R -->
+</section>
+<section id="write-reactive-functionality-in-server.r" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="write-reactive-functionality-in-server.r">Write Reactive Functionality in <code>server.R</code></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-12-1"><a href="#annotated-cell-12-1" aria-hidden="true" tabindex="-1"></a><span class="do">### server.R ----</span></span>
+<span id="annotated-cell-12-2"><a href="#annotated-cell-12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-12-3"><a href="#annotated-cell-12-3" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="annotated-cell-12-4"><a href="#annotated-cell-12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-12-5"><a href="#annotated-cell-12-5" aria-hidden="true" tabindex="-1"></a>  <span class="do">### render station locations map ----</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1">1</button><span id="annotated-cell-12-6" class="code-annotation-target"><a href="#annotated-cell-12-6" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>stations_map <span class="ot">&lt;-</span> <span class="fu">renderLeaflet</span>({</span>
+<span id="annotated-cell-12-7"><a href="#annotated-cell-12-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">leaflet</span>(sites) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-12-8"><a href="#annotated-cell-12-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">addTiles</span>() <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-12-9"><a href="#annotated-cell-12-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">addCircleMarkers</span>(</span>
+<span id="annotated-cell-12-10"><a href="#annotated-cell-12-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">lat =</span> <span class="sc">~</span>Latitude,</span>
+<span id="annotated-cell-12-11"><a href="#annotated-cell-12-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">lng =</span> <span class="sc">~</span>Longitude,</span>
+<span id="annotated-cell-12-12"><a href="#annotated-cell-12-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">radius =</span> <span class="dv">6</span>,</span>
+<span id="annotated-cell-12-13"><a href="#annotated-cell-12-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">fillColor =</span> <span class="st">"#2C7BB6"</span>,</span>
+<span id="annotated-cell-12-14"><a href="#annotated-cell-12-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">fillOpacity =</span> <span class="fl">0.8</span>,</span>
+<span id="annotated-cell-12-15"><a href="#annotated-cell-12-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">weight =</span> <span class="dv">1</span>,</span>
+<span id="annotated-cell-12-16"><a href="#annotated-cell-12-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"white"</span>,</span>
+<span id="annotated-cell-12-17"><a href="#annotated-cell-12-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="sc">~</span>StationCode</span>
+<span id="annotated-cell-12-18"><a href="#annotated-cell-12-18" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="annotated-cell-12-19"><a href="#annotated-cell-12-19" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="annotated-cell-12-20"><a href="#annotated-cell-12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-12-21"><a href="#annotated-cell-12-21" aria-hidden="true" tabindex="-1"></a>  <span class="do">### filter data by date range and species ----</span></span>
+<span id="annotated-cell-12-22"><a href="#annotated-cell-12-22" aria-hidden="true" tabindex="-1"></a>  filtered_data <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="annotated-cell-12-23"><a href="#annotated-cell-12-23" aria-hidden="true" tabindex="-1"></a>    delta_data <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-12-24"><a href="#annotated-cell-12-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(</span>
+<span id="annotated-cell-12-25"><a href="#annotated-cell-12-25" aria-hidden="true" tabindex="-1"></a>        SampleDate <span class="sc">&gt;=</span> input<span class="sc">$</span>date_range[<span class="dv">1</span>],</span>
+<span id="annotated-cell-12-26"><a href="#annotated-cell-12-26" aria-hidden="true" tabindex="-1"></a>        SampleDate <span class="sc">&lt;=</span> input<span class="sc">$</span>date_range[<span class="dv">2</span>],</span>
+<span id="annotated-cell-12-27"><a href="#annotated-cell-12-27" aria-hidden="true" tabindex="-1"></a>        CommonName <span class="sc">%in%</span> input<span class="sc">$</span>species_select</span>
+<span id="annotated-cell-12-28"><a href="#annotated-cell-12-28" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="annotated-cell-12-29"><a href="#annotated-cell-12-29" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="annotated-cell-12-30"><a href="#annotated-cell-12-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-12-31"><a href="#annotated-cell-12-31" aria-hidden="true" tabindex="-1"></a>  <span class="do">### render Secchi depth plot ----</span></span>
+<span id="annotated-cell-12-32"><a href="#annotated-cell-12-32" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>secchi_plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="annotated-cell-12-33"><a href="#annotated-cell-12-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">filtered_data</span>(), <span class="fu">aes</span>(<span class="at">x =</span> SampleDate, <span class="at">y =</span> Secchi)) <span class="sc">+</span></span>
+<span id="annotated-cell-12-34"><a href="#annotated-cell-12-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#2C7BB6"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-12-35"><a href="#annotated-cell-12-35" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Secchi depth (m)"</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-12-36"><a href="#annotated-cell-12-36" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_light</span>()</span>
+<span id="annotated-cell-12-37"><a href="#annotated-cell-12-37" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="annotated-cell-12-38"><a href="#annotated-cell-12-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-12-39"><a href="#annotated-cell-12-39" aria-hidden="true" tabindex="-1"></a>  <span class="do">### render fish catch bar chart ----</span></span>
+<span id="annotated-cell-12-40"><a href="#annotated-cell-12-40" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>catch_plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="annotated-cell-12-41"><a href="#annotated-cell-12-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filtered_data</span>() <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-12-42"><a href="#annotated-cell-12-42" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(CommonName) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-12-43"><a href="#annotated-cell-12-43" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarize</span>(<span class="at">total_catch =</span> <span class="fu">sum</span>(Count, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-12-44"><a href="#annotated-cell-12-44" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(CommonName, <span class="sc">-</span>total_catch),</span>
+<span id="annotated-cell-12-45"><a href="#annotated-cell-12-45" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> total_catch,</span>
+<span id="annotated-cell-12-46"><a href="#annotated-cell-12-46" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> CommonName)) <span class="sc">+</span></span>
+<span id="annotated-cell-12-47"><a href="#annotated-cell-12-47" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-12-48"><a href="#annotated-cell-12-48" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Species"</span>, <span class="at">y =</span> <span class="st">"Total catch"</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-12-49"><a href="#annotated-cell-12-49" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_light</span>()</span>
+<span id="annotated-cell-12-50"><a href="#annotated-cell-12-50" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="annotated-cell-12-51"><a href="#annotated-cell-12-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-12-52"><a href="#annotated-cell-12-52" aria-hidden="true" tabindex="-1"></a>} <span class="do">### </span><span class="re">END</span><span class="do"> server</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-12" data-code-lines="6" data-code-annotation="1">The station map doesn’t depend on any user inputs, so it doesn’t need <code>reactive()</code>. However, it still must be assigned to <code>output$</code> and wrapped in <code>render*()</code>.</span>
 </dd>
 </dl>
 </div>
 </div>
 </section>
 <section id="full-two-file-app-code" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="full-two-file-app-code">Full two-file app code</h3>
+<h3 class="unnumbered anchored" data-anchor-id="full-two-file-app-code">Full Two-file App Code</h3>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">ui.R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">server.R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">global.R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false" href="">text/about.md</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">global.R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">ui.R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">server.R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-4" role="tab" aria-controls="tabset-4-4" aria-selected="false" href="">text/about.md</a></li></ul>
 <div class="tab-content">
-<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="cell">
+<details class="code-fold">
+<summary>Show complete global.R</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-17-1"><a href="#annotated-cell-17-1" aria-hidden="true" tabindex="-1"></a><span class="do">### global.R ----</span></span>
+<span id="annotated-cell-17-2"><a href="#annotated-cell-17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-17-3"><a href="#annotated-cell-17-3" aria-hidden="true" tabindex="-1"></a><span class="do">### load packages ----</span></span>
+<span id="annotated-cell-17-4"><a href="#annotated-cell-17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="annotated-cell-17-5"><a href="#annotated-cell-17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bslib)</span>
+<span id="annotated-cell-17-6"><a href="#annotated-cell-17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="annotated-cell-17-7"><a href="#annotated-cell-17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="annotated-cell-17-8"><a href="#annotated-cell-17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="annotated-cell-17-9"><a href="#annotated-cell-17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
+<span id="annotated-cell-17-10"><a href="#annotated-cell-17-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(markdown)</span>
+<span id="annotated-cell-17-11"><a href="#annotated-cell-17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-17-12"><a href="#annotated-cell-17-12" aria-hidden="true" tabindex="-1"></a><span class="do">### load Yolo Bypass monitoring data from EDI ----</span></span>
+<span id="annotated-cell-17-13"><a href="#annotated-cell-17-13" aria-hidden="true" tabindex="-1"></a>delta_file <span class="ot">&lt;-</span> <span class="st">"https://pasta.lternet.edu/package/data/eml/edi/233/2/015e494911cf35c90089ced5a3127334"</span> </span>
+<span id="annotated-cell-17-14"><a href="#annotated-cell-17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-17-15"><a href="#annotated-cell-17-15" aria-hidden="true" tabindex="-1"></a>delta_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(delta_file) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-17-16"><a href="#annotated-cell-17-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SampleDate =</span> <span class="fu">mdy</span>(SampleDate)) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-17-17"><a href="#annotated-cell-17-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Salmon|Striped Bass|Smelt|Sturgeon"</span>, CommonName))</span>
+<span id="annotated-cell-17-18"><a href="#annotated-cell-17-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-17-19"><a href="#annotated-cell-17-19" aria-hidden="true" tabindex="-1"></a>species_choices <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(delta_data<span class="sc">$</span>CommonName))</span>
+<span id="annotated-cell-17-20"><a href="#annotated-cell-17-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-17-21"><a href="#annotated-cell-17-21" aria-hidden="true" tabindex="-1"></a><span class="do">### station locations for map ----</span></span>
+<span id="annotated-cell-17-22"><a href="#annotated-cell-17-22" aria-hidden="true" tabindex="-1"></a>sites <span class="ot">&lt;-</span> delta_data <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-17-23"><a href="#annotated-cell-17-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(StationCode, Latitude, Longitude) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-17-24"><a href="#annotated-cell-17-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show complete ui.R</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">### ui.R ----</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">page_navbar</span>(</span>
@@ -1840,10 +1895,13 @@ NOTE ON source-line-numbers FOR CODE HIGHLIGHTS:
 <span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>  ) <span class="do">### </span><span class="re">END</span><span class="do"> Explore tab nav_panel</span></span>
 <span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>) <span class="do">### </span><span class="re">END</span><span class="do"> page_navbar</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </div>
-<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
 <div class="cell">
+<details class="code-fold">
+<summary>Show complete server.R</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">### server.R ----</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
@@ -1896,37 +1954,10 @@ NOTE ON source-line-numbers FOR CODE HIGHLIGHTS:
 <span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>  })</span>
 <span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>} <span class="do">### </span><span class="re">END</span><span class="do"> server</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </div>
-<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-19" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-19-1"><a href="#annotated-cell-19-1" aria-hidden="true" tabindex="-1"></a><span class="do">### global.R ----</span></span>
-<span id="annotated-cell-19-2"><a href="#annotated-cell-19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-19-3"><a href="#annotated-cell-19-3" aria-hidden="true" tabindex="-1"></a><span class="do">### load packages ----</span></span>
-<span id="annotated-cell-19-4"><a href="#annotated-cell-19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="annotated-cell-19-5"><a href="#annotated-cell-19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bslib)</span>
-<span id="annotated-cell-19-6"><a href="#annotated-cell-19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="annotated-cell-19-7"><a href="#annotated-cell-19-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="annotated-cell-19-8"><a href="#annotated-cell-19-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="annotated-cell-19-9"><a href="#annotated-cell-19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
-<span id="annotated-cell-19-10"><a href="#annotated-cell-19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(markdown)</span>
-<span id="annotated-cell-19-11"><a href="#annotated-cell-19-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-19-12"><a href="#annotated-cell-19-12" aria-hidden="true" tabindex="-1"></a><span class="do">### load Yolo Bypass monitoring data from EDI ----</span></span>
-<span id="annotated-cell-19-13"><a href="#annotated-cell-19-13" aria-hidden="true" tabindex="-1"></a>delta_file <span class="ot">&lt;-</span> <span class="st">"https://pasta.lternet.edu/package/data/eml/edi/233/2/015e494911cf35c90089ced5a3127334"</span> </span>
-<span id="annotated-cell-19-14"><a href="#annotated-cell-19-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-19-15"><a href="#annotated-cell-19-15" aria-hidden="true" tabindex="-1"></a>delta_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(delta_file) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-19-16"><a href="#annotated-cell-19-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SampleDate =</span> <span class="fu">mdy</span>(SampleDate)) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-19-17"><a href="#annotated-cell-19-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Salmon|Striped Bass|Smelt|Sturgeon"</span>, CommonName))</span>
-<span id="annotated-cell-19-18"><a href="#annotated-cell-19-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-19-19"><a href="#annotated-cell-19-19" aria-hidden="true" tabindex="-1"></a>species_choices <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(delta_data<span class="sc">$</span>CommonName))</span>
-<span id="annotated-cell-19-20"><a href="#annotated-cell-19-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-19-21"><a href="#annotated-cell-19-21" aria-hidden="true" tabindex="-1"></a><span class="do">### station locations for map ----</span></span>
-<span id="annotated-cell-19-22"><a href="#annotated-cell-19-22" aria-hidden="true" tabindex="-1"></a>sites <span class="ot">&lt;-</span> delta_data <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-19-23"><a href="#annotated-cell-19-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(StationCode, Latitude, Longitude) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-19-24"><a href="#annotated-cell-19-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-<div id="tabset-3-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-4-tab">
+<div id="tabset-4-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-4-tab">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Welcome to the Yolo Bypass Fish Monitoring Explorer</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>This app provides an interactive window into the</span>
@@ -1951,9 +1982,9 @@ NOTE ON source-line-numbers FOR CODE HIGHLIGHTS:
 <h2 data-number="9" class="anchored" data-anchor-id="sharing-your-app"><span class="header-section-number">9</span> Sharing Your App</h2>
 <p>Once you’ve built something worth sharing, there are several ways to get it in front of others:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">shinyapps.io</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">shinylive</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false" href="">Posit Connect</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-4" role="tab" aria-controls="tabset-5-4" aria-selected="false" href="">R Package</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">shinyapps.io</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">shinylive</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false" href="">Posit Connect</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-4" role="tab" aria-controls="tabset-6-4" aria-selected="false" href="">R Package</a></li></ul>
 <div class="tab-content">
-<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <p><strong><a href="https://www.shinyapps.io/">shinyapps.io</a></strong> is the easiest hosting option. This cloud service provided by Posit has a free tier (up to 5 apps, 25 active hours/month) and paid tiers for more demanding apps.</p>
 <p><strong>Setup:</strong></p>
 <ol type="1">
@@ -1962,19 +1993,19 @@ NOTE ON source-line-numbers FOR CODE HIGHLIGHTS:
 <li>Publish your app:</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Positron</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">RStudio</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Positron</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">RStudio</a></li></ul>
 <div class="tab-content">
-<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <p>Click the <strong>Publish</strong> icon (cloud with arrow) in the Viewer pane toolbar after running your app, or run <code>rsconnect::deployApp("path/to/your/app")</code> directly in the Console.</p>
 </div>
-<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
 <p>Click the blue <strong>Publish</strong> button (cloud icon) in the top-right corner of the running app window, or run <code>rsconnect::deployApp("path/to/your/app")</code> directly in the Console.</p>
 </div>
 </div>
 </div>
 <!-- ![](images/shiny_introduction/shiny-io-account.png){width="70%" .lightbox fig-align="center"} -->
 </div>
-<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
 <p><strong><a href="https://posit-dev.github.io/r-shinylive/">shinylive</a></strong> is a newer option that runs Shiny apps <em>entirely in the browser</em> using WebR. No server required! This means:</p>
 <ul>
 <li><strong>No hosting costs</strong>, because apps can live as static files on GitHub Pages or any web server</li>
@@ -2016,10 +2047,10 @@ NOTE ON source-line-numbers FOR CODE HIGHLIGHTS:
 </div>
 </div>
 </div>
-<div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
 <p><strong><a href="https://posit.co/products/enterprise/connect/">Posit Connect</a></strong> is an enterprise, on-premises product for organizations that need more than shinyapps.io provides. This includes user authentication, scheduled content, and greater control over infrastructure. It’s the right choice for production-grade agency tools.</p>
 </div>
-<div id="tabset-5-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-4-tab">
+<div id="tabset-6-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-4-tab">
 <p>Wrapping your Shiny app into an R package can allow others to easily install your app from CRAN or from GitHub, and then run it locally. It also provides a more formal structure, formalized documentation, and testing/checking processes. For more information, see this chapter in <a href="https://mastering-shiny.org/scaling-packaging.html">Mastering Shiny</a> by Hadley Wickham.</p>
 </div>
 </div>
