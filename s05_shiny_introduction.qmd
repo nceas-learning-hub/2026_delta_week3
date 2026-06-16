@@ -663,11 +663,55 @@ So far we've put everything in one `app.R`. For simple apps, this works well. As
 | **Single file** (`app.R`) | Simple apps, prototypes, sharing reproducible examples |
 | **Two-file** (`ui.R` + `server.R`) | Larger apps, collaborative development, complex logic |
 
-A **third optional file**, `global.R`, runs once before `ui.R` and `server.R`. It's the right place for packages, data loading, and any objects that both files need.
+A **third optional file**, `global.R`, runs once before `ui.R` and `server.R` (or before `app.R` for a single-file app). It's the right place for packages, data loading, and any objects that both files need - in the single-file app above, everything before starting the `ui` definition is a good candidate for `global.R`.
 
-### What goes in `global.R`? {.unnumbered}
+### Recommended project structure {.unnumbered}
 
-In the single-file app, everything before starting the `ui` definition is a good candidate for `global.R`.  Below includes all the same information, plus station locations we'll use to build on the simple one-file app.
+<div style="font-family: monospace; font-size: 0.8rem;">
+{{< fa brands r-project >}} **yolo_bypass_app/**  
+ ├── {{< fa file-code >}} **global.R**     _(optional) packages + data (runs first, available everywhere)_  
+ ├── {{< fa file-code >}} **ui.R**                    _user interface definition_  
+ ├── {{< fa file-code >}} **server.R**                _server logic_  
+ ├── {{< fa folder >}} text/       _(optional) text elements for UI_  
+ │   └── {{< fa brands markdown >}} about.md           _markdown text for the About page_  
+ ├── {{< fa folder >}} data/       _(optional) data for use in app_   
+ │   └── {{< fa file-csv >}} my_data.csv  
+ ├── {{< fa folder >}} www/        _(optional) images, HTML, CSS, etc - MUST BE CALLED www!_  
+ │   ├── {{< fa brands css >}} my_styles.css    
+ │   └── {{< fa file-image >}} my_image.png    
+ ├── {{< fa file-code >}} scratch.R               _development scratch work (not part of the app)_  
+ └── {{< fa file-code >}} yolo_bypass_app.Rproj   _project file (if using RStudio)_  
+</div>
+
+:::callout-important
+### The optional `www` folder is special!
+
+The optional `www` folder MUST be called `www` - this is where Shiny looks for static elements to be rendered in the app, but that are not products of the scripts, like images.  When you add an image to your app, you skip the `www` part in the file path - e.g., `img(src = 'my_image.png')`.
+
+Other folders, e.g., `data` and `text` above, can contain files accessed by `server.R` through regular file path functions, e.g., `here::here()` or `file.path()`.
+:::
+
+<!-- ![Source: Intro to Shiny - EDS 430, Bren School UCSB](images/shiny_introduction/repo-structure-details.png){width="70%" .lightbox fig-align="center"} -->
+
+## Building a Two-File App
+
+Let's rebuild the Yolo Bypass app in two-file format with a polished multi-page layout. The finished app will have two pages accessible via a navigation bar: an About page with context and a map, and an Explore page with the interactive plots.
+
+::: {.panel-tabset}
+
+#### About page
+
+![](images/shiny_introduction/shiny-yolo-app-tabbed-about.png){width="70%" .lightbox fig-align="center"}
+
+#### Explore page
+
+![](images/shiny_introduction/shiny-yolo-app-tabbed-data.png){width="70%" .lightbox fig-align="center"}
+
+:::
+
+### Load Packages and Data in `global.R` {.unnumbered}
+
+Below includes all the same information we used in the single-file app above, plus station locations we'll use to expand upon the simple one-file app.
 
 ```{r}
 #| label: global-r-example
@@ -700,45 +744,15 @@ sites <- delta_data |>
   drop_na()
 ```
 
-### Recommended project structure {.unnumbered}
+### Write UI in `ui.R`{.unnumbered}
 
-<div style="font-family: monospace; font-size: 0.8rem;">
-{{< fa brands r-project >}} **yolo_bypass_app/**  
- ├── {{< fa file-code >}} **global.R**     _(optional) packages + data (runs first, available everywhere)_  
- ├── {{< fa file-code >}} **ui.R**                    _user interface definition_  
- ├── {{< fa file-code >}} **server.R**                _server logic_  
- ├── {{< fa folder >}} text/       _(optional) text elements for UI_  
- │   └── {{< fa brands markdown >}} about.md           _markdown text for the About page_  
- ├── {{< fa folder >}} data/       _(optional) data for use in app_   
- │   └── {{< fa file-csv >}} my_data.csv  
- ├── {{< fa folder >}} www/        _(optional) images, HTML, CSS, etc - MUST BE CALLED www!_  
- │   ├── {{< fa brands css >}} my_styles.css    
- │   └── {{< fa file-image >}} my_image.png    
- ├── {{< fa file-code >}} scratch.R               _development scratch work (not part of the app)_  
- └── {{< fa file-code >}} yolo_bypass_app.Rproj   _project file (if using RStudio)_  
-</div>
+Here we structure the user interface as a `page_navbar()` design, with a top navigation bar to navigate among two tabs.  We'll use a few new UI elements to compare to the ones we used in the single-file `app.R`.
 
-Note, the optional `www` folder MUST be called `www` - this is where Shiny looks for static elements to be rendered in the app, but that are not products of the scripts, like images.  When you add an image to your app, you skip the `www` part in the file path - e.g., `img(src = 'my_image.png')`.
+* For our "Explore" tab, we'll add input widgets and outputs that will be generated by our `server.R`.
+* For our "About" page we will put the text in a separate Markdown document to make the `ui.R` a little cleaner, and make it easy to find and update our "About" information without needing to mess with the `ui.R` file.
 
-<!-- ![Source: Intro to Shiny - EDS 430, Bren School UCSB](images/shiny_introduction/repo-structure-details.png){width="70%" .lightbox fig-align="center"} -->
-
-## Building a Two-File App
-
-Let's rebuild the Yolo Bypass app in two-file format with a polished multi-page layout. The finished app will have two pages accessible via a navigation bar: an About page with context and a map, and an Explore page with the interactive plots.
-
-::: {.panel-tabset}
-
-#### About page
-
-![](images/shiny_introduction/shiny-yolo-app-tabbed-about.png){width="70%" .lightbox fig-align="center"}
-
-#### Explore page
-
-![](images/shiny_introduction/shiny-yolo-app-tabbed-data.png){width="70%" .lightbox fig-align="center"}
-
-:::
-
-### Build the navbar structure in `ui.R` {.unnumbered}
+:::panel-tabset
+#### 1. Build UI structure
 
 `page_navbar()` creates a full-page layout with a top navigation bar, and `nav_panel()` defines each tab:
 
@@ -769,7 +783,7 @@ ui <- page_navbar(
 ```
 
 
-### Add the Explore tab layout {.unnumbered}
+#### 2. Build Explore tab
 
 Inside "Explore the Data", we'll use `layout_sidebar()` to pair inputs with outputs. Since the date slider affects both plots and the species checkbox also affects both, we use one sidebar for all inputs and two `card()` outputs in the main area:
 
@@ -831,7 +845,7 @@ ui <- page_navbar(
 ) ### END page_navbar
 ```
 
-### Add the About page with Markdown text {.unnumbered}
+#### 3. Build About page
 
 For longer descriptive text, write it in a Markdown file and pull it in with `includeMarkdown()`. Create `text/about.md` in your app folder:
 
@@ -888,7 +902,10 @@ ui <- page_navbar(
 ```
 1. `col_widths = c(-1, 10, -1)` creates 1-column empty gutters on each side and puts the content in the middle 10 of 12 Bootstrap columns, for a clean centered layout.
 
-### Write the server in `server.R` {.unnumbered}
+:::
+<!-- END ui.R -->
+
+### Write Reactive Functionality in `server.R` {.unnumbered}
 
 ```{r}
 #| label: two-file-server
@@ -949,15 +966,51 @@ server <- function(input, output) {
 ```
 1. The station map doesn't depend on any user inputs, so it doesn't need `reactive()`. However, it still must be assigned to `output$` and wrapped in `render*()`.
 
-### Full two-file app code {.unnumbered}
+### Full Two-file App Code {.unnumbered}
 
 ::: {.panel-tabset}
+#### global.R
+
+```{r}
+#| label: full-global-r
+#| eval: false
+#| code-fold: true
+#| code-summary: "Show complete global.R"
+
+### global.R ----
+
+### load packages ----
+library(shiny)
+library(bslib)
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+library(leaflet)
+library(markdown)
+
+### load Yolo Bypass monitoring data from EDI ----
+delta_file <- "https://pasta.lternet.edu/package/data/eml/edi/233/2/015e494911cf35c90089ced5a3127334" 
+
+delta_data <- read.csv(delta_file) |>  # <1>
+  mutate(SampleDate = mdy(SampleDate)) |>
+  filter(grepl("Salmon|Striped Bass|Smelt|Sturgeon", CommonName))
+
+species_choices <- sort(unique(delta_data$CommonName))
+
+### station locations for map ----
+sites <- delta_data |>
+  distinct(StationCode, Latitude, Longitude) |>
+  drop_na()
+```
+
 
 #### ui.R
 
 ```{r}
 #| label: full-ui-r
 #| eval: false
+#| code-fold: true
+#| code-summary: "Show complete ui.R"
 
 ### ui.R ----
 
@@ -1030,6 +1083,8 @@ ui <- page_navbar(
 ```{r}
 #| label: full-server-r
 #| eval: false
+#| code-fold: true
+#| code-summary: "Show complete server.R"
 
 ### server.R ----
 
@@ -1083,38 +1138,6 @@ server <- function(input, output) {
   })
 
 } ### END server
-```
-
-#### global.R
-
-```{r}
-#| label: full-global-r
-#| eval: false
-
-### global.R ----
-
-### load packages ----
-library(shiny)
-library(bslib)
-library(dplyr)
-library(lubridate)
-library(ggplot2)
-library(leaflet)
-library(markdown)
-
-### load Yolo Bypass monitoring data from EDI ----
-delta_file <- "https://pasta.lternet.edu/package/data/eml/edi/233/2/015e494911cf35c90089ced5a3127334" 
-
-delta_data <- read.csv(delta_file) |>  # <1>
-  mutate(SampleDate = mdy(SampleDate)) |>
-  filter(grepl("Salmon|Striped Bass|Smelt|Sturgeon", CommonName))
-
-species_choices <- sort(unique(delta_data$CommonName))
-
-### station locations for map ----
-sites <- delta_data |>
-  distinct(StationCode, Latitude, Longitude) |>
-  drop_na()
 ```
 
 #### text/about.md
