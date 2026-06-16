@@ -11,15 +11,15 @@ Prerequisite lessons or suggestions here
 :::{.callout-learning}
 After completing this session, you will be able to:
 
-- <u>Make</u> a new branch on a GitHub repository
-- <u>Create</u> a Quarto website
-- <u>Define</u> "deploy" in the context of Quarto websites
-- <u>Describe</u> the purpose of GitHub Actions (GHAs)
-- <u>Use</u> a GHA to deploy a Quarto website
-- <u>Create</u> a new page for an existing Quarto website
-- <u>Identify</u> components of SCSS stylesheets
-- <u>Describe</u> key code syntax differences between SCSS and R code
-- <u>Use</u> SCSS stylesheets to customize a deployed Quarto website
+- Make a new branch on a GitHub repository
+- Create a Quarto website
+- Define "deploy" in the context of Quarto websites
+- Describe the purpose of GitHub Actions (GHAs)
+- Use a GHA to deploy a Quarto website
+- Create a new page for an existing Quarto website
+- Identify components of SCSS stylesheets
+- Describe key code syntax differences between SCSS and R code
+- Use SCSS stylesheets to customize a deployed Quarto website
 
 :::
 

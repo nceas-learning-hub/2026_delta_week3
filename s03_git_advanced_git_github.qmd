@@ -9,11 +9,11 @@ Prerequisite lessons or suggestions here
 :::{.callout-learning}
 After completing this session, you will be able to:
 
-- <u>Define</u> branch, fork, reset, and revert in the context of Git/GitHub 
-- <u>Contrast</u> branches and forks
-- <u>Create</u> a branch on an existing repository
-- <u>Use</u> the fork feature on GitHub for an existing repository
-- <u>Explain</u> the three different types of reset, when they're useful, and how they differ in severity
+- Define branch, fork, reset, and revert in the context of Git/GitHub 
+- Contrast branches and forks
+- Create a branch on an existing repository
+- Use the fork feature on GitHub for an existing repository
+- Explain the three different types of reset, when they're useful, and how they differ in severity
 
 :::
 
