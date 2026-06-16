@@ -17,12 +17,12 @@ NOTE ON source-line-numbers FOR CODE HIGHLIGHTS:
 :::{.callout-learning}
 After completing this session, you will be able to:
 
-- <u>Define</u> the key components of a Shiny application (UI, server, reactivity)
-- <u>Create</u> a single-file Shiny app using modern `bslib` layouts
-- <u>Apply</u> the three rules for building reactive server outputs
-- <u>Use</u> `reactive()` to create reactive data objects in the server
-- <u>Compare</u> single-file and two-file app structures
-- <u>Identify</u> options for sharing Shiny apps with others
+- Define the key components of a Shiny application (UI, server, reactivity)
+- Create a single-file Shiny app using modern `bslib` layouts
+- Apply the three rules for building reactive server outputs
+- Use `reactive()` to create reactive data objects in the server
+- Compare single-file and two-file app structures
+- Identify options for sharing Shiny apps with others
 :::
 
 ::: {.callout-note}

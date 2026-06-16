@@ -11,12 +11,12 @@ Prerequisite lessons -
 :::{.callout-learning}
 After completing this session, you will be able to:
 
-* **Describe** the key spatial parameters of a raster (coordinate reference system, extent, resolution, and origin) and explain why they must align across rasters used in a common analysis
-* **Create** raster objects in R from multiple starting points, including GeoTIFF files, tabular x-y data, vector polygons, and manually specified parameters
-* **Apply** raster math and logical indexing to calculate derived metrics such as NDVI directly from raster layers
-* **Modify** raster spatial parameters using `crop()`, `mask()`, `aggregate()`, `resample()`, and `project()`
-* **Extract** and summarize raster values using vector spatial data as a selection criterion using `extract()`
-* **Convert** between raster and data frame formats to enable `tidyverse`-style analysis workflows and `ggplot2` visualization
+* Describe the key spatial parameters of a raster (coordinate reference system, extent, resolution, and origin) and explain why they must align across rasters used in a common analysis
+* Create raster objects in R from multiple starting points, including GeoTIFF files, tabular x-y data, vector polygons, and manually specified parameters
+* Apply raster math and logical indexing to calculate derived metrics such as NDVI directly from raster layers
+* Modify raster spatial parameters using `crop()`, `mask()`, `aggregate()`, `resample()`, and `project()`
+* Extract and summarize raster values using vector spatial data as a selection criterion using `extract()`
+* Convert between raster and data frame formats to enable `tidyverse`-style analysis workflows and `ggplot2` visualization
 
 :::
 
