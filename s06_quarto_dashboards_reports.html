@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Interactive Dashboards and Reports – 2026 Delta Synthesis Working Groups week 3 (April 2026)</title>
+<title>Interactive Dashboards with Quarto – 2026 Delta Synthesis Working Groups week 3 (April 2026)</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -49,6 +84,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/bootstrap/bootstrap-dark-6ef12456229a54ab8c571c8ae7cb70f9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="site_libs/bootstrap/bootstrap-5a0716c032bb00a2e3c0c98c747440ac.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -82,6 +120,9 @@ ul.task-list li input[type="checkbox"] {
         background: #44444444;
       }
 </style>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="site_libs/quarto-contrib/quarto-project/nceas-learning-hub/theme/banner/banner.css">
@@ -322,7 +363,7 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title">Interactive Dashboards and Reports</h1>
+          <h1 class="quarto-secondary-nav-title">Interactive Dashboards with Quarto</h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -334,7 +375,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title d-none d-lg-block">Interactive Dashboards and Reports</h1>
+      <h1 class="title d-none d-lg-block">Interactive Dashboards with Quarto</h1>
                       </div>
   </div>
     
@@ -438,7 +479,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./s06_quarto_dashboards_reports.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Interactive Dashboards and Reports</span></a>
+ <span class="menu-text">Interactive Dashboards with Quarto</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -483,6 +524,40 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
+  <li><a href="#where-dashboards-fit" id="toc-where-dashboards-fit" class="nav-link" data-scroll-target="#where-dashboards-fit"><span class="header-section-number">2</span> Where Dashboards Fit</a>
+  <ul class="collapse">
+  <li><a href="#when-to-use-a-dashboard-vs.-shiny" id="toc-when-to-use-a-dashboard-vs.-shiny" class="nav-link" data-scroll-target="#when-to-use-a-dashboard-vs.-shiny">When to use a dashboard vs.&nbsp;Shiny</a></li>
+  <li><a href="#real-world-examples" id="toc-real-world-examples" class="nav-link" data-scroll-target="#real-world-examples">Real-world examples</a></li>
+  </ul></li>
+  <li><a href="#dashboard-anatomy" id="toc-dashboard-anatomy" class="nav-link" data-scroll-target="#dashboard-anatomy"><span class="header-section-number">3</span> Dashboard Anatomy</a>
+  <ul class="collapse">
+  <li><a href="#setting-up-the-yaml" id="toc-setting-up-the-yaml" class="nav-link" data-scroll-target="#setting-up-the-yaml">Setting up the YAML</a></li>
+  <li><a href="#layout-attributes" id="toc-layout-attributes" class="nav-link" data-scroll-target="#layout-attributes">Layout attributes</a></li>
+  </ul></li>
+  <li><a href="#dashboard-components" id="toc-dashboard-components" class="nav-link" data-scroll-target="#dashboard-components"><span class="header-section-number">4</span> Dashboard Components</a>
+  <ul class="collapse">
+  <li><a href="#value-boxes" id="toc-value-boxes" class="nav-link" data-scroll-target="#value-boxes">Value Boxes</a></li>
+  <li><a href="#interactive-charts" id="toc-interactive-charts" class="nav-link" data-scroll-target="#interactive-charts">Interactive Charts</a></li>
+  <li><a href="#interactive-tables" id="toc-interactive-tables" class="nav-link" data-scroll-target="#interactive-tables">Interactive Tables</a></li>
+  </ul></li>
+  <li><a href="#building-a-dashboard" id="toc-building-a-dashboard" class="nav-link" data-scroll-target="#building-a-dashboard"><span class="header-section-number">5</span> Building a Dashboard</a>
+  <ul class="collapse">
+  <li><a href="#setup-create-the-file" id="toc-setup-create-the-file" class="nav-link" data-scroll-target="#setup-create-the-file">Setup: Create the file</a></li>
+  <li><a href="#step-1-add-a-page-and-value-boxes" id="toc-step-1-add-a-page-and-value-boxes" class="nav-link" data-scroll-target="#step-1-add-a-page-and-value-boxes">Step 1: Add a page and value boxes</a></li>
+  <li><a href="#step-2-add-an-interactive-chart" id="toc-step-2-add-an-interactive-chart" class="nav-link" data-scroll-target="#step-2-add-an-interactive-chart">Step 2: Add an interactive chart</a></li>
+  <li><a href="#step-3-add-an-interactive-table" id="toc-step-3-add-an-interactive-table" class="nav-link" data-scroll-target="#step-3-add-an-interactive-table">Step 3: Add an interactive table</a></li>
+  <li><a href="#step-4-add-a-second-page" id="toc-step-4-add-a-second-page" class="nav-link" data-scroll-target="#step-4-add-a-second-page">Step 4: Add a second page</a></li>
+  <li><a href="#step-5-add-tabsets" id="toc-step-5-add-tabsets" class="nav-link" data-scroll-target="#step-5-add-tabsets">Step 5: Add tabsets</a></li>
+  <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together">Putting it all together</a></li>
+  </ul></li>
+  <li><a href="#applying-a-theme" id="toc-applying-a-theme" class="nav-link" data-scroll-target="#applying-a-theme"><span class="header-section-number">6</span> Applying a Theme</a></li>
+  <li><a href="#your-turn" id="toc-your-turn" class="nav-link" data-scroll-target="#your-turn"><span class="header-section-number">7</span> Your Turn</a></li>
+  <li><a href="#bonus-adding-shiny-interactivity" id="toc-bonus-adding-shiny-interactivity" class="nav-link" data-scroll-target="#bonus-adding-shiny-interactivity"><span class="header-section-number">8</span> Bonus: Adding Shiny Interactivity</a>
+  <ul class="collapse">
+  <li><a href="#applying-this-to-the-delta-dashboard" id="toc-applying-this-to-the-delta-dashboard" class="nav-link" data-scroll-target="#applying-this-to-the-delta-dashboard">Applying this to the Delta Dashboard</a></li>
+  </ul></li>
+  <li><a href="#deploying-your-dashboard" id="toc-deploying-your-dashboard" class="nav-link" data-scroll-target="#deploying-your-dashboard"><span class="header-section-number">9</span> Deploying Your Dashboard</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">10</span> Resources</a></li>
   </ul>
 </nav>
     </div>
@@ -495,7 +570,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 <!--
-Prerequisite lessons or suggestions here
+Ideal prerequisite lessons:
+- Intro to literate analysis with R and Quarto
+- Interactivity with Shiny Apps
 -->
 <div class="callout callout-style-default callout-learning no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
@@ -512,16 +589,982 @@ Prerequisite lessons or suggestions here
 <div class="callout-learning">
 <p>After completing this session, you will be able to:</p>
 <ul>
-<li>Create learning objectives using verbs based on <a href="https://en.wikipedia.org/wiki/Bloom%27s_taxonomy#/media/File:Bloom%E2%80%99s_Taxonomy_Verbs.png">Bloom’s Taxonomy</a></li>
+<li><u>Describe</u> what a Quarto Dashboard is and where it fits in the data product landscape</li>
+<li><u>Configure</u> the YAML header to render a <code>.qmd</code> file as a Quarto Dashboard</li>
+<li><u>Organize</u> dashboard layout using markdown heading levels and attributes</li>
+<li><u>Add</u> value boxes, interactive charts, and interactive tables to a dashboard</li>
+<li><u>Customize</u> a dashboard’s appearance using built-in themes</li>
+<li><u>Publish</u> a static Quarto Dashboard</li>
 </ul>
 </div>
 </div>
 </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Acknowledgments
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This lesson draws from the <a href="https://quarto.org/docs/dashboards/">Quarto Dashboards documentation</a>, and uses data from the <a href="https://doi.org/10.6073/pasta/b0b15aef7f3b52d2c5adc10004c05a6f">Yolo Bypass Fish Monitoring Program</a>, collected by the Interagency Ecological Program.</p>
+</div>
+</div>
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p>Brief overview of lesson ## Use level 2 headers for sections</p>
-<p>Visit https://nceas-learning-hub.github.io/lh_packages/ for information on contributing new lessons, content guidelines, and style guide.</p>
+<p>Using Shiny, you can build fully reactive apps powered by a live R server. Sometimes, though, you want something easier to build and share. Imagine a dashboard layout with basic interactive charts and tables, rendered once and published as a static web page. That is exactly what Quarto Dashboards offer.</p>
+<p>In this session, we will build a monitoring dashboard for the Yolo Bypass fish dataset from scratch. By the end, you will have a multi-page, themed, interactive dashboard and know how to publish it.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Quarto version requirement
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Quarto Dashboards require <strong>Quarto 1.4 or later</strong>. Check your version by running <code>quarto check</code> in the terminal. Download the latest version at <a href="https://quarto.org/docs/download/">quarto.org/docs/download</a>.</p>
+</div>
+</div>
+</section>
+<section id="where-dashboards-fit" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="where-dashboards-fit"><span class="header-section-number">2</span> Where Dashboards Fit</h2>
+<p>At a high level, here is where Quarto Dashboards fit into the data product landscape:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 33%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Product</th>
+<th>What it is</th>
+<th>Interactivity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Script or notebook</td>
+<td>R code rendered once</td>
+<td>None (static output)</td>
+</tr>
+<tr class="even">
+<td>Quarto document</td>
+<td>Reproducible report as HTML or PDF</td>
+<td>None (static output)</td>
+</tr>
+<tr class="odd">
+<td>Quarto doc + widgets</td>
+<td>Same, with JS-based widgets embedded</td>
+<td>Limited (hover, zoom, sort on pre-rendered data)</td>
+</tr>
+<tr class="even">
+<td><strong>Quarto Dashboard</strong></td>
+<td><strong>Card-based layout with JS widgets</strong></td>
+<td><strong>Limited (same browser-side interactivity, in a purpose-built layout)</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Quarto Dashboard + Shiny</strong></td>
+<td><strong>Dashboard layout with a live R server</strong></td>
+<td><strong>Full (users control computations)</strong></td>
+</tr>
+<tr class="even">
+<td>Shiny app</td>
+<td>Standalone reactive application</td>
+<td>Full (users control everything)</td>
+</tr>
+</tbody>
+</table>
+<p>Dashboards occupy a sweet spot: they look like dashboards and support a rich layout, but require no server to host. Interactive charts (Plotly) and tables (DT) run entirely in the reader’s browser.</p>
+<section id="when-to-use-a-dashboard-vs.-shiny" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="when-to-use-a-dashboard-vs.-shiny">When to use a dashboard vs.&nbsp;Shiny</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A[Goal: share data interactively] --&gt; B{Does it need\nreactivity from R?}
+    B -- Yes --&gt; C[Shiny or\nDashboard + Shiny]
+    B -- No --&gt; D{Is a card-based layout\nwith browser widgets enough?}
+    D -- Yes --&gt; E[Quarto Dashboard\nstatic]
+    D -- No --&gt; F[Shiny app]
+    E --&gt; G[Easy to build\nHost anywhere -- no server needed]
+    C --&gt; H[Requires Posit Connect Cloud\nor shinyapps.io]
+    F --&gt; H
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="real-world-examples" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="real-world-examples">Real-world examples</h3>
+<ul>
+<li><a href="https://pub.demo.posit.team/public/nz-quakes/quakes.html">New Zealand Earthquakes</a> – spatial data with interactive map</li>
+<li><a href="https://ivelasq.github.io/mortgage-dashboard/">Housing Market at a Glance</a> – multi-page layout with value boxes and maps</li>
+<li><a href="https://jjallaire.shinyapps.io/diamonds/">Diamonds Data</a> – adds Shiny inputs for full reactivity</li>
+</ul>
+</section>
+</section>
+<section id="dashboard-anatomy" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="dashboard-anatomy"><span class="header-section-number">3</span> Dashboard Anatomy</h2>
+<p>A Quarto Dashboard is a <code>.qmd</code> file with <code>format: dashboard</code> in its YAML header. Everything else uses the Quarto markdown you already know, but now the heading hierarchy takes on a special meaning for layout:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Markdown</th>
+<th>Dashboard meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>#</code> Level 1 heading</td>
+<td>A new <strong>page</strong> (shown in the navigation bar)</td>
+</tr>
+<tr class="even">
+<td><code>##</code> Level 2 heading</td>
+<td>A new <strong>row</strong> (within a page)</td>
+</tr>
+<tr class="odd">
+<td>Code chunk</td>
+<td>A <strong>card</strong> (column within the current row)</td>
+</tr>
+</tbody>
+</table>
+<p><a href="images/dashboards/dashboard-structure.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/dashboards/dashboard-structure.png" class="img-fluid" data-fig-cap="Dashboard layout: each `##` heading is a row; each code chunk within a row is a column card."></a></p>
+<section id="setting-up-the-yaml" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="setting-up-the-yaml">Setting up the YAML</h3>
+<p>Like any Quarto document, we need a YAML document header specifying metadata and options. For a dashboard, the only required option is <code>format: dashboard</code>.</p>
+<p>Here is an example of minimum YAML for a dashboard:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers=""><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Dashboard"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> dashboard</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And here is more complete YAML with theming, which we’ll discuss more later:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-code-line-numbers=""><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Delta Fish Monitoring"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Your Name"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">dashboard</span><span class="kw">:</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">orientation</span><span class="kw">:</span><span class="at"> rows</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>orientation: rows</code> is the default (so <code>##</code> headings create rows). Setting <code>orientation: columns</code> flips it so <code>##</code> headings create columns.</p>
+</section>
+<section id="layout-attributes" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="layout-attributes">Layout attributes</h3>
+<p>Control relative sizes by adding attributes to headings:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Row {height="30%"}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Row {height="70%"}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Create tabsets within a row with the <code>.tabset</code> class:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Row {.tabset}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Heading text is discarded
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dashboard headings define <em>layout</em> only. The heading text itself (e.g., <code>Row</code> in the examples above) is not displayed in the rendered output. Use whatever text helps you navigate your source code.</p>
+</div>
+</div>
+<p>Here is a quick reference for some useful layout attributes:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 40%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Attribute</th>
+<th>Where to use</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>{height="30%"}</code></td>
+<td><code>##</code> row heading</td>
+<td>Sets relative row height on the page</td>
+</tr>
+<tr class="even">
+<td><code>{width="40%"}</code></td>
+<td><code>###</code> column heading</td>
+<td>Sets relative column width within a row</td>
+</tr>
+<tr class="odd">
+<td><code>{.tabset}</code></td>
+<td><code>##</code> row or <code>###</code> column</td>
+<td>Converts cards into tabs</td>
+</tr>
+<tr class="even">
+<td><code>{.sidebar}</code></td>
+<td><code>##</code> heading</td>
+<td>Creates an input sidebar (for Shiny integration)</td>
+</tr>
+<tr class="odd">
+<td><code>{.hidden}</code></td>
+<td><code>#</code> page heading</td>
+<td>Excludes a page from the navigation bar</td>
+</tr>
+<tr class="even">
+<td><code>orientation: columns</code></td>
+<td>YAML</td>
+<td>Makes <code>##</code> headings into columns instead of rows</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-simple callout-caution no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Add multiple attributes within one set of curly braces, separated by a space: <code>## Row {height="30%" .tabset}</code></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="dashboard-components" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="dashboard-components"><span class="header-section-number">4</span> Dashboard Components</h2>
+<section id="value-boxes" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="value-boxes">Value Boxes</h3>
+<p>Value boxes display a single key metric with a title, icon, and color. They are a natural fit for summary statistics at the top of a dashboard.</p>
+<p>Use the <code>#| content: valuebox</code> chunk option and return a named <code>list()</code> with three fields:</p>
+<div class="cell" content="valuebox" title="Species Monitored">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">icon =</span> <span class="st">"binoculars"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">color =</span> <span class="st">"primary"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="dv">4</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li><strong><code>icon</code></strong>: a <a href="https://icons.getbootstrap.com/">Bootstrap Icon</a> name – search the gallery by keyword (e.g., <code>"water"</code>, <code>"binoculars"</code>, <code>"bar-chart"</code>)</li>
+<li><strong><code>color</code></strong>: a Bootstrap role (<code>primary</code>, <code>secondary</code>, <code>success</code>, <code>info</code>, <code>warning</code>, <code>danger</code>) or a hex string like <code>"#2C7BB6"</code></li>
+<li><strong><code>value</code></strong>: any R object rendered as text – a number, formatted string, etc.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Custom icons
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Bootstrap Icons covers 2,000+ icons; searching by keyword (try “water”, “arrow-up-circle”, “clipboard-data”) finds something usable in most cases. If you genuinely need a custom image or agency logo, you can pass an SVG string via <code>htmltools::HTML('&lt;svg ...&gt;...&lt;/svg&gt;')</code> as the <code>icon</code> value – see the <a href="https://quarto.org/docs/dashboards/data-display.html#value-boxes">value box documentation</a> for details and caveats.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="interactive-charts" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="interactive-charts">Interactive Charts</h3>
+<p>Any R graphics output works as a dashboard card, including <code>ggplot2</code>, base R, and <code>lattice</code>. For interactive charts, <a href="https://plotly.com/r/"><code>plotly</code></a> is the simplest option: <code>ggplotly()</code> converts any <code>ggplot2</code> plot into an interactive Plotly chart.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="annotated-cell-6-3"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-6-4"><a href="#annotated-cell-6-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(fish, <span class="fu">aes</span>(<span class="at">x =</span> SampleDate, <span class="at">y =</span> Secchi)) <span class="sc">+</span></span>
+<span id="annotated-cell-6-5"><a href="#annotated-cell-6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-6-6"><a href="#annotated-cell-6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Secchi depth (m)"</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-6-7"><a href="#annotated-cell-6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span>
+<span id="annotated-cell-6-8"><a href="#annotated-cell-6-8" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-9" class="code-annotation-target"><a href="#annotated-cell-6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(p)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="9" data-code-annotation="1"><code>ggplotly()</code> wraps any ggplot – no other changes needed</span>
+</dd>
+</dl>
+</div>
+</div>
+</section>
+<section id="interactive-tables" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="interactive-tables">Interactive Tables</h3>
+<p>Use <code>DT::datatable()</code> for interactive, sortable, searchable tables:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>catch_summary <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>(</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">rownames =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">10</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For simple static tables, <code>knitr::kable()</code> works fine and renders faster.</p>
+</section>
+</section>
+<section id="building-a-dashboard" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="building-a-dashboard"><span class="header-section-number">5</span> Building a Dashboard</h2>
+<p>Now let us build a Delta Fish Monitoring dashboard from scratch using the Yolo Bypass dataset.</p>
+<section id="setup-create-the-file" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="setup-create-the-file">Setup: Create the file</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Positron</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">RStudio</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<ol type="1">
+<li>Go to <strong>File → New File → Quarto Document</strong> and save it as <code>delta-dashboard.qmd</code> in your project folder.</li>
+<li>Replace the default YAML with the dashboard YAML below.</li>
+</ol>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<ol type="1">
+<li>Go to <strong>File → New File → Quarto Document…</strong>, give it a title, click <strong>Create</strong>, and save as <code>delta-dashboard.qmd</code>.</li>
+<li>Replace the default YAML with the dashboard YAML below.</li>
+</ol>
+</div>
+</div>
+</div>
+<p>Start with this YAML at the top of the file:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-code-line-numbers=""><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Delta Fish Monitoring"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">dashboard</span><span class="kw">:</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then add a chunk right after the YAML to load packages. Here we use a hash-pipe <code>label</code> option to label this chunk. This will <em>not</em> be used in the dashboard, but enables convenient automatic outline-based navigation of your document in IDEs like Positron:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load packages</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Next add a chunk for loading data. Rather than simply loading from the URL, we apply an <code>if</code>/<code>else</code> caching pattern to download the data file only if hasn’t already been locally cached.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load data</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set paths</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>yolo_catch_url <span class="ot">&lt;-</span> <span class="st">"https://pasta.lternet.edu/package/data/eml/edi/233/2/015e494911cf35c90089ced5a3127334"</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>data_dir <span class="ot">&lt;-</span> <span class="st">"data"</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>yolo_catch_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(data_dir, <span class="st">"yolo_catch.csv"</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Download data if not already cached</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(yolo_catch_file)) {</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"Downloading file..."</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(data_dir, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">url =</span> yolo_catch_url,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">destfile =</span> yolo_catch_file</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"Saved to: "</span>, yolo_catch_file)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"Using cached file."</span>)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the (locally cached) data</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>fish <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(yolo_catch_file, <span class="at">guess_max =</span> <span class="dv">100000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SampleDate =</span> <span class="fu">mdy</span>(SampleDate)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Salmon|Striped Bass|Smelt|Sturgeon"</span>, CommonName))</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<!--
+library(contentid)
+sha1 <- "hash://sha1/317d7f840e598f5f3be732ab0e04f00a8051c6d0"
+yolo_catch_file <- contentid::resolve(sha1, registries = c("dataone"), store = TRUE)
+-->
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Tip: render early and often
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>After each incremental change to the Quarto document, render the file (Ctrl/Cmd+Shift+K or the <strong>Render</strong> button) and open the result in a browser to see the layout take shape. Catching layout issues early is much easier than debugging them at the end!</p>
+</div>
+</div>
+</section>
+<section id="step-1-add-a-page-and-value-boxes" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="step-1-add-a-page-and-value-boxes">Step 1: Add a page and value boxes</h3>
+<p>After the setup chunk, add a Level 1 heading to create the first page, a row heading with a height attribute, and three value box chunks:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Summary</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Row {height="25%"}</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| content: valuebox</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Species Monitored"</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(<span class="at">icon =</span> <span class="st">"binoculars"</span>, <span class="at">color =</span> <span class="st">"primary"</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">value =</span> <span class="fu">n_distinct</span>(fish<span class="sc">$</span>CommonName))</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#| content: valuebox</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Years of Data"</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(<span class="at">icon =</span> <span class="st">"calendar3"</span>, <span class="at">color =</span> <span class="st">"success"</span>,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">value =</span> <span class="fu">n_distinct</span>(<span class="fu">year</span>(fish<span class="sc">$</span>SampleDate)))</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">#| content: valuebox</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Total Observations"</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(<span class="at">icon =</span> <span class="st">"table"</span>, <span class="at">color =</span> <span class="st">"info"</span>,</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>     <span class="at">value =</span> <span class="fu">nrow</span>(fish))</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>#</code> heading creates a “Summary” page in the navigation bar. Three code chunks in the same row produce three side-by-side columns automatically.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span><code>height</code> is relative, not absolute
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>{height="25%"}</code> sets the <em>proportion</em> of vertical space this row gets relative to other rows on the same page. With only one row defined so far, it expands to fill the whole screen – that is normal. The height constraint only takes effect in Step 2 once a second row exists to share the space with.</p>
+</div>
+</div>
+<p>Render the file. You should see a single page with three value boxes filling the screen.</p>
+<p><a href="images/dashboards/dashboard-valueboxes.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/dashboards/dashboard-valueboxes.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
+</section>
+<section id="step-2-add-an-interactive-chart" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="step-2-add-an-interactive-chart">Step 2: Add an interactive chart</h3>
+<p>Add a second row below the value boxes with a Plotly time series:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Row {height="75%"}</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Water Clarity Over Time"</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> fish <span class="sc">%&gt;%</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> SampleDate, <span class="at">y =</span> Secchi)) <span class="sc">+</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#2C7BB6"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Secchi depth (m)"</span>) <span class="sc">+</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(p)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The card title comes from <code>#| title:</code> – it appears as the card header in the dashboard. The two rows now sum to 100% of the page height (25% + 75%).</p>
+<p><a href="images/dashboards/dashboard-plotly.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/dashboards/dashboard-plotly.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exercise: Show a static plot instead
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notice the difference if you remove the <code>ggplotly()</code> call, and just return <code>p</code> as a plain <code>ggplot2</code> object instead.</p>
+</div>
+</div>
+</section>
+<section id="step-3-add-an-interactive-table" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="step-3-add-an-interactive-table">Step 3: Add an interactive table</h3>
+<p>Add a second chunk inside the same <code>## Row {height="75%"}</code> block to put a table alongside the chart:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Catch by Species"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>fish <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(CommonName) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Observations =</span> <span class="fu">n</span>(),</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Total Catch</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(Count, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Avg Secchi (m)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Secchi, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>(<span class="at">rownames =</span> <span class="cn">FALSE</span>, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">5</span>))</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Multiple chunks in the same row produce side-by-side columns. Quarto divides the row width equally by default.</p>
+<p><a href="images/dashboards/dashboard-datatable.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/dashboards/dashboard-datatable.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exercise: Show a static table instead
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notice the difference if you remove the <code>datatable()</code> call, and instead format the data frame as a static HTML table using <code>knitr::kable()</code>.</p>
+</div>
+</div>
+</section>
+<section id="step-4-add-a-second-page" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="step-4-add-a-second-page">Step 4: Add a second page</h3>
+<p>Add a new <code>#</code> heading below everything to create a second page:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Catch Trends</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Row</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Annual Catch by Species"</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>annual_catch <span class="ot">&lt;-</span> fish <span class="sc">%&gt;%</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">year</span>(SampleDate)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year, CommonName) <span class="sc">%&gt;%</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_catch =</span> <span class="fu">sum</span>(Count, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> annual_catch <span class="sc">%&gt;%</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> total_catch, <span class="at">color =</span> CommonName)) <span class="sc">+</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Total Catch"</span>, <span class="at">color =</span> <span class="st">"Species"</span>) <span class="sc">+</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(p2)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The navigation bar now shows two pages: Summary and Catch Trends.</p>
+<p><a href="images/dashboards/dashboard-page2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="images/dashboards/dashboard-page2.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
+</section>
+<section id="step-5-add-tabsets" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="step-5-add-tabsets">Step 5: Add tabsets</h3>
+<p>The Catch Trends page currently shows the annual chart as a single full-page card. Tabsets let you pack additional content into the same row: add <code>.tabset</code> to the <code>## Row</code> heading and each code chunk becomes a separate tab.</p>
+<p>Go back to the <code># Catch Trends</code> page you added in Step 4 and replace its content with the following code; the only change to the existing row is adding <code>.tabset</code>, plus a second chunk for a raw data table:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Catch Trends</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Row {.tabset}</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "By Year"</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>annual_catch <span class="ot">&lt;-</span> fish <span class="sc">%&gt;%</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">year</span>(SampleDate)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year, CommonName) <span class="sc">%&gt;%</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_catch =</span> <span class="fu">sum</span>(Count, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> annual_catch <span class="sc">%&gt;%</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> total_catch, <span class="at">color =</span> CommonName)) <span class="sc">+</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Total Catch"</span>, <span class="at">color =</span> <span class="st">"Species"</span>) <span class="sc">+</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(p2)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Raw Data"</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>fish <span class="sc">%&gt;%</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SampleDate, CommonName, Count, Secchi) <span class="sc">%&gt;%</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>(<span class="at">rownames =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Render again. The Catch Trends page should now show two tabs: the interactive line chart and a browseable raw data table.</p>
+<p><a href="images/dashboards/dashboard-page2tab2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="images/dashboards/dashboard-page2tab2.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
+</section>
+<section id="putting-it-all-together" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="putting-it-all-together">Putting it all together</h3>
+<p>If you’ve been following along this whole time, you should now have a dashboard that looks something like this:</p>
+<p><a href="images/dashboards/dashboard-full-page1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="images/dashboards/dashboard-full-page1.png" class="img-fluid" data-fig-cap=""></a></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Complete delta-dashboard.qmd
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Delta Fish Monitoring"</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">  dashboard:</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: cosmo</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load packages</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load data</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Set paths</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>yolo_catch_url <span class="ot">&lt;-</span> <span class="st">"https://pasta.lternet.edu/package/data/eml/edi/233/2/015e494911cf35c90089ced5a3127334"</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>data_dir <span class="ot">&lt;-</span> <span class="st">"data"</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>yolo_catch_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(data_dir, <span class="st">"yolo_catch.csv"</span>)</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Download data if not already cached</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(yolo_catch_file)) {</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"Downloading file..."</span>)</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(data_dir, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">url =</span> yolo_catch_url,</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">destfile =</span> yolo_catch_file</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"Saved to: "</span>, yolo_catch_file)</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"Using cached file."</span>)</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the (locally cached) data</span></span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>fish <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(yolo_catch_file, <span class="at">guess_max =</span> <span class="dv">100000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SampleDate =</span> <span class="fu">mdy</span>(SampleDate)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Salmon|Striped Bass|Smelt|Sturgeon"</span>, CommonName))</span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a><span class="fu"># Summary</span></span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Row {height="25%"}</span></span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a><span class="co">#| content: valuebox</span></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Species Monitored"</span></span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(<span class="at">icon =</span> <span class="st">"binoculars"</span>, <span class="at">color =</span> <span class="st">"primary"</span>,</span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>     <span class="at">value =</span> <span class="fu">n_distinct</span>(fish<span class="sc">$</span>CommonName))</span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a><span class="co">#| content: valuebox</span></span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Years of Data"</span></span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(<span class="at">icon =</span> <span class="st">"calendar3"</span>, <span class="at">color =</span> <span class="st">"success"</span>,</span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a>     <span class="at">value =</span> <span class="fu">n_distinct</span>(<span class="fu">year</span>(fish<span class="sc">$</span>SampleDate)))</span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a><span class="co">#| content: valuebox</span></span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Total Observations"</span></span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(<span class="at">icon =</span> <span class="st">"table"</span>, <span class="at">color =</span> <span class="st">"info"</span>,</span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a>     <span class="at">value =</span> <span class="fu">nrow</span>(fish))</span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a><span class="fu">## Row {height="75%"}</span></span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Water Clarity Over Time"</span></span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> fish <span class="sc">%&gt;%</span></span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> SampleDate, <span class="at">y =</span> Secchi)) <span class="sc">+</span></span>
+<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#2C7BB6"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Secchi depth (m)"</span>) <span class="sc">+</span></span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(p)</span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Catch by Species"</span></span>
+<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a>fish <span class="sc">%&gt;%</span></span>
+<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(CommonName) <span class="sc">%&gt;%</span></span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a>    <span class="at">Observations =</span> <span class="fu">n</span>(),</span>
+<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Total Catch</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(Count, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Avg Secchi (m)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">mean</span>(Secchi, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>)</span>
+<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>(<span class="at">rownames =</span> <span class="cn">FALSE</span>, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">5</span>))</span>
+<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a><span class="fu"># Catch Trends</span></span>
+<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a><span class="fu">## Row {.tabset}</span></span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "By Year"</span></span>
+<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a>annual_catch <span class="ot">&lt;-</span> fish <span class="sc">%&gt;%</span></span>
+<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">year</span>(SampleDate)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year, CommonName) <span class="sc">%&gt;%</span></span>
+<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_catch =</span> <span class="fu">sum</span>(Count, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> annual_catch <span class="sc">%&gt;%</span></span>
+<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> total_catch, <span class="at">color =</span> CommonName)) <span class="sc">+</span></span>
+<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Total Catch"</span>, <span class="at">color =</span> <span class="st">"Species"</span>) <span class="sc">+</span></span>
+<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span>
+<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(p2)</span>
+<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-116"><a href="#cb15-116" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-117"><a href="#cb15-117" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Raw Data"</span></span>
+<span id="cb15-118"><a href="#cb15-118" aria-hidden="true" tabindex="-1"></a>fish <span class="sc">%&gt;%</span></span>
+<span id="cb15-119"><a href="#cb15-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SampleDate, CommonName, Count, Secchi) <span class="sc">%&gt;%</span></span>
+<span id="cb15-120"><a href="#cb15-120" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>(<span class="at">rownames =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-121"><a href="#cb15-121" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="applying-a-theme" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="applying-a-theme"><span class="header-section-number">6</span> Applying a Theme</h2>
+<p>Change the <code>theme:</code> in your YAML to any of the available Bootstrap themes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16" data-code-line-numbers=""><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">dashboard</span><span class="kw">:</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> flatly</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Available themes: <code>cerulean</code>, <code>cosmo</code>, <code>cyborg</code>, <code>darkly</code>, <code>flatly</code>, <code>journal</code>, <code>lumen</code>, <code>lux</code>, <code>minty</code>, <code>pulse</code>, <code>sandstone</code>, <code>simplex</code>, <code>sketchy</code>, <code>slate</code>, <code>solar</code>, <code>spacelab</code>, <code>superhero</code>, <code>united</code>, <code>vapor</code>, <code>yeti</code>, <code>zephyr</code>.</p>
+<p>Re-render to see the change immediately. Themes like <code>flatly</code>, <code>lumen</code>, and <code>cosmo</code> tend to look professional and clean. For a dramatic alternative, try <code>darkly</code>.</p>
+<p>Browse the full gallery and explore further customization options at <a href="https://quarto.org/docs/dashboards/theming.html">quarto.org/docs/dashboards/theming.html</a>.</p>
+</section>
+<section id="your-turn" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="your-turn"><span class="header-section-number">7</span> Your Turn</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exercise: Extend the Delta Dashboard
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Working on your <code>delta-dashboard.qmd</code>, complete the following tasks:</p>
+<ol type="1">
+<li><p><strong>Add a value box</strong> that shows the date range of the data (e.g., “1998 - 2018”).</p>
+<ul>
+<li>Hint: extract the year with <code>format(min(fish$SampleDate), "%Y")</code></li>
+<li>Combine two year strings with <code>paste0(start_year, " - ", end_year)</code></li>
+</ul></li>
+<li><p><strong>Add a smoothed trend line</strong> to the Secchi depth scatter plot.</p>
+<ul>
+<li>Add <code>geom_smooth(method = "loess", color = "firebrick")</code> to the ggplot before calling <code>ggplotly()</code></li>
+</ul></li>
+<li><p><strong>Add a third page</strong> with a visualization or summary of your choosing. Some ideas:</p>
+<ul>
+<li>A bar chart of total catch by species across all years</li>
+<li>A histogram of Secchi depth values</li>
+<li>A summary table of the 10 most recent observations</li>
+</ul></li>
+<li><p><strong>Try two different themes</strong> and pick the one you prefer. Change <code>theme:</code> in your YAML and re-render each time.</p></li>
+<li><p><strong>Revise the layout</strong> by converting the main chart row of the Summary page to a tabset showing the Secchi chart and the catch table as tabs instead of side by side.</p></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Tips
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Bootstrap Icons gallery: <a href="https://icons.getbootstrap.com/">icons.getbootstrap.com</a> – search by keyword (try “water”, “arrow-up”, “bar-chart”)</li>
+<li>Value box color options: <code>primary</code>, <code>secondary</code>, <code>success</code>, <code>info</code>, <code>warning</code>, <code>danger</code></li>
+<li>Quarto Dashboard theming reference: <a href="https://quarto.org/docs/dashboards/theming.html">quarto.org/docs/dashboards/theming.html</a></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="bonus-adding-shiny-interactivity" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="bonus-adding-shiny-interactivity"><span class="header-section-number">8</span> Bonus: Adding Shiny Interactivity</h2>
+<p>Static dashboards cover a lot of ground, especially with interactive components like <code>plotly</code> figures and <code>DT</code> tables. However, if you need reactive user input such as filtering by date, selecting a species, or re-running a model, you can layer Shiny into a Quarto Dashboard.</p>
+<p>Add <code>server: shiny</code> to the YAML:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" data-code-line-numbers=""><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Reactive Dashboard"</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> dashboard</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">server</span><span class="kw">:</span><span class="at"> shiny</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then label your data-loading chunk with <code>context: setup</code> (runs once on startup), use <code>## Sidebar {.sidebar}</code> to create an input panel, place an output placeholder in the body, and fill it in a <code>context: server</code> chunk:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| context: setup</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>fish <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(...)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sidebar {.sidebar}</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sliderInput</span>(<span class="st">"date_range"</span>, <span class="st">"Date range:"</span>, ...)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Row</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plotOutput</span>(<span class="st">"my_plot"</span>)  <span class="co"># UI: reserves the card slot and registers an ID</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="co">#| context: server</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>my_plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({ ... })  <span class="co"># server: reactively fills the slot</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Shiny dashboards require hosting where an R session can run – Posit Connect Cloud (connect.posit.cloud), shinyapps.io, a Shiny server, or your own computer just for internal purposes – just like standalone Shiny apps. Consequently, they don’t have the same ease of deployment as plain Quarto dashboards.</p>
+</div>
+</div>
+<section id="applying-this-to-the-delta-dashboard" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="applying-this-to-the-delta-dashboard">Applying this to the Delta Dashboard</h3>
+<p>Here is exactly what changes in <code>delta-dashboard.qmd</code> to add and use a species multiselect. Nothing else needs to move.</p>
+<p><strong>1. YAML</strong>: Add <code>server: shiny</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19" data-code-line-numbers=""><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Delta Fish Monitoring"</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">dashboard</span><span class="kw">:</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">server</span><span class="kw">:</span><span class="at"> shiny</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>2. Setup chunk</strong>: Add <code>context: setup</code> to both the package and data loading chunks so that these happen only once at startup rather than once per user interaction. Here’s an excerpted example for the package loading chunk:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load packages</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| context: setup</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>3. Global sidebar</strong>: Add <code>## Sidebar {.sidebar}</code> before the first <code>#</code> page heading so the input appears on every page. Within this chunk, we’ll add a Shiny multiselect widget.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sidebar {.sidebar}</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">checkboxGroupInput</span>(</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">inputId =</span> <span class="st">"species"</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> <span class="st">"Select species:"</span>,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">choices  =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(fish<span class="sc">$</span>CommonName)),</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">selected =</span> <span class="fu">sort</span>(<span class="fu">unique</span>(fish<span class="sc">$</span>CommonName))</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>4. Reactive charts</strong>: Each reactive output requires a pair of chunks – one for the UI and one for the server. This means splitting up the single chunk we used in the ordinary dashboard document and adding the Shiny functions.</p>
+<p>The <strong>UI chunk</strong> uses an <code>*Output</code> function to reserve space in the card, add the UI label, and name the output slot:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Annual Catch by Species"</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotlyOutput</span>(<span class="st">"annual_catch_plot"</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <strong>server chunk</strong> uses a <code>render*</code> function to fill the output slot reactively whenever <code>input$species</code> (from our widget in the sidebar) changes. Don’t forget to add <code>filter(CommonName %in% input$species)</code> to the data pipeline in this chunk!</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| context: server</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>annual_catch_plot <span class="ot">&lt;-</span> <span class="fu">renderPlotly</span>({</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  annual_catch <span class="ot">&lt;-</span> fish <span class="sc">%&gt;%</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(CommonName <span class="sc">%in%</span> input<span class="sc">$</span>species) <span class="sc">%&gt;%</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">year</span>(SampleDate)) <span class="sc">%&gt;%</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Year, CommonName) <span class="sc">%&gt;%</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">total_catch =</span> <span class="fu">sum</span>(Count, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  p2 <span class="ot">&lt;-</span> annual_catch <span class="sc">%&gt;%</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> total_catch, <span class="at">color =</span> CommonName)) <span class="sc">+</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Total Catch"</span>, <span class="at">color =</span> <span class="st">"Species"</span>) <span class="sc">+</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_light</span>()</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplotly</span>(p2)</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why two chunks?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In a Quarto Dashboard with <code>server: shiny</code>, all reactive outputs require the explicit UI/server split: a UI chunk with the output placeholder created by calling <code>*Output()</code> with some <code>id</code>, and a <code>context: server</code> chunk that assigns to <code>output$id</code> using a corresponding <code>render*()</code> function.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Output type</th>
+<th>UI placeholder</th>
+<th>Server renderer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ggplot2</td>
+<td><code>plotOutput("id")</code></td>
+<td><code>renderPlot({})</code></td>
+</tr>
+<tr class="even">
+<td>Plotly</td>
+<td><code>plotlyOutput("id")</code></td>
+<td><code>renderPlotly({})</code></td>
+</tr>
+<tr class="odd">
+<td>DT table</td>
+<td><code>DTOutput("id")</code></td>
+<td><code>renderDT({})</code></td>
+</tr>
+<tr class="even">
+<td>Value box</td>
+<td><code>valueBoxOutput("id")</code></td>
+<td><code>renderValueBox({})</code></td>
+</tr>
+<tr class="odd">
+<td>Arbitrary HTML</td>
+<td><code>uiOutput("id")</code></td>
+<td><code>renderUI({})</code></td>
+</tr>
+</tbody>
+</table>
+<p>Calling <code>renderPlot()</code> or <code>renderPlotly()</code> inline without a matching output placeholder produces a blank card.</p>
+</div>
+</div>
+<p>That is the whole pattern! Chunks that don’t use the fish data (or that you simply don’t need to be reactive) can stay unchanged.</p>
+</section>
+</section>
+<section id="deploying-your-dashboard" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="deploying-your-dashboard"><span class="header-section-number">9</span> Deploying Your Dashboard</h2>
+<p>Once your dashboard renders correctly, there are several ways to share it. Static dashboards (no Shiny) are easiest to host because they are just HTML files.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">GitHub Pages</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Posit Connect Cloud</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">shinyapps.io</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<p>If you already have a GitHub repository, publish the rendered HTML to GitHub Pages using the same approach covered in the Quarto Websites session.</p>
+<ol type="1">
+<li>Render locally: <code>quarto render delta-dashboard.qmd</code></li>
+<li>Commit the generated <code>delta-dashboard.html</code> to your repository</li>
+<li>Enable GitHub Pages in the repository settings</li>
+</ol>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<p><a href="https://connect.posit.cloud/">Posit Connect Cloud</a> is a free hosting service from Posit for Quarto content and Shiny apps. Create an account, then publish directly from the terminal:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24" data-code-line-numbers=""><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> publish connect-cloud delta-dashboard.qmd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Follow the prompts to authenticate in your browser. Your dashboard will be assigned a public URL under <code>connect.posit.cloud</code>. Posit Connect Cloud handles both <strong>static dashboards</strong> and <strong>Shiny dashboards</strong> (with <code>server: shiny</code>).</p>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<p><a href="https://www.shinyapps.io/">shinyapps.io</a> is an older Posit service that also hosts Shiny dashboards. If your dashboard uses <code>server: shiny</code> and you already have a shinyapps.io account, publish using the Publish button or the <code>rsconnect</code> package:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Positron</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">RStudio</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<p>Click the <strong>Publish</strong> icon (cloud with arrow) in the Viewer toolbar after running the app, or run <code>rsconnect::deployApp("path/to/your/dashboard")</code> in the Console.</p>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>Click the blue <strong>Publish</strong> button in the top-right corner of the running app window.</p>
+</div>
+</div>
+</div>
+<p>See the <a href="./s05_shiny_introduction.html">Shiny session</a> for full account setup instructions.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="resources" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="resources"><span class="header-section-number">10</span> Resources</h2>
+<ul>
+<li><a href="https://quarto.org/docs/dashboards/">Quarto Dashboards documentation</a> is the official reference for all layout options, components, and theming</li>
+<li><a href="https://quarto.org/docs/dashboards/layout.html">Quarto Dashboard layout guide</a> shows detailed layout options with examples</li>
+<li><a href="https://quarto.org/docs/dashboards/theming.html">Quarto theming reference</a> describes dashboard color and font options</li>
+<li><a href="https://icons.getbootstrap.com/">Bootstrap Icons gallery</a> is a searchable icon library for value boxes</li>
+<li><a href="https://plotly.com/r/">plotly for R</a> is an interactive chart library that integrates with <code>ggplot2</code></li>
+<li><a href="https://rstudio.github.io/DT/">DT package documentation</a> shows how to create interactive HTML tables using R</li>
+</ul>
 
 
 </section>
@@ -1000,6 +2043,38 @@ Prerequisite lessons or suggestions here
     </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
