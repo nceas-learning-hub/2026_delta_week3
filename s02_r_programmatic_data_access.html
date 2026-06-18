@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Programmatic Data Access – 2026 Delta Synthesis Working Groups week 3 (April 2026)</title>
+<title>Programmatic Data Access in R – 2026 Delta Synthesis Working Groups week 3 (April 2026)</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -49,6 +84,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/bootstrap/bootstrap-dark-6ef12456229a54ab8c571c8ae7cb70f9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="site_libs/bootstrap/bootstrap-5a0716c032bb00a2e3c0c98c747440ac.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -322,7 +360,7 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title">Programmatic Data Access</h1>
+          <h1 class="quarto-secondary-nav-title">Programmatic Data Access in R</h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -334,7 +372,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title d-none d-lg-block">Programmatic Data Access</h1>
+      <h1 class="title d-none d-lg-block">Programmatic Data Access in R</h1>
                       </div>
   </div>
     
@@ -392,7 +430,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./s02_r_programmatic_data_access.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Programmatic Data Access</span></a>
+ <span class="menu-text">Programmatic Data Access in R</span></a>
   </div>
 </li>
       </ul>
@@ -483,7 +521,38 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
-  <li><a href="#use-level-2-headers-for-sections" id="toc-use-level-2-headers-for-sections" class="nav-link" data-scroll-target="#use-level-2-headers-for-sections"><span class="header-section-number">2</span> Use level 2 headers for sections</a></li>
+  <li><a href="#the-data-reproducibility-problem" id="toc-the-data-reproducibility-problem" class="nav-link" data-scroll-target="#the-data-reproducibility-problem"><span class="header-section-number">2</span> The Data Reproducibility Problem</a>
+  <ul class="collapse">
+  <li><a href="#file-paths-as-a-reproducibility-barrier" id="toc-file-paths-as-a-reproducibility-barrier" class="nav-link" data-scroll-target="#file-paths-as-a-reproducibility-barrier"><span class="header-section-number">2.1</span> File paths as a reproducibility barrier</a></li>
+  <li><a href="#reading-data-directly-from-a-url" id="toc-reading-data-directly-from-a-url" class="nav-link" data-scroll-target="#reading-data-directly-from-a-url"><span class="header-section-number">2.2</span> Reading data directly from a URL</a></li>
+  </ul></li>
+  <li><a href="#downloading-and-caching-data" id="toc-downloading-and-caching-data" class="nav-link" data-scroll-target="#downloading-and-caching-data"><span class="header-section-number">3</span> Downloading and Caching Data</a>
+  <ul class="collapse">
+  <li><a href="#the-cache-check-pattern" id="toc-the-cache-check-pattern" class="nav-link" data-scroll-target="#the-cache-check-pattern"><span class="header-section-number">3.1</span> The cache-check pattern</a></li>
+  </ul></li>
+  <li><a href="#retrieving-water-data-with-dataretrieval" id="toc-retrieving-water-data-with-dataretrieval" class="nav-link" data-scroll-target="#retrieving-water-data-with-dataretrieval"><span class="header-section-number">4</span> Retrieving Water Data with <code>dataRetrieval</code></a>
+  <ul class="collapse">
+  <li><a href="#the-monitoring-network" id="toc-the-monitoring-network" class="nav-link" data-scroll-target="#the-monitoring-network"><span class="header-section-number">4.1</span> The monitoring network</a></li>
+  <li><a href="#discover-monitoring-stations" id="toc-discover-monitoring-stations" class="nav-link" data-scroll-target="#discover-monitoring-stations"><span class="header-section-number">4.2</span> Discover monitoring stations</a></li>
+  <li><a href="#explore-data-availability" id="toc-explore-data-availability" class="nav-link" data-scroll-target="#explore-data-availability"><span class="header-section-number">4.3</span> Explore data availability</a></li>
+  <li><a href="#retrieve-daily-water-temperature-data" id="toc-retrieve-daily-water-temperature-data" class="nav-link" data-scroll-target="#retrieve-daily-water-temperature-data"><span class="header-section-number">4.4</span> Retrieve daily water temperature data</a></li>
+  <li><a href="#visualize-the-data" id="toc-visualize-the-data" class="nav-link" data-scroll-target="#visualize-the-data"><span class="header-section-number">4.5</span> Visualize the data</a></li>
+  <li><a href="#retrieving-additional-parameters" id="toc-retrieving-additional-parameters" class="nav-link" data-scroll-target="#retrieving-additional-parameters"><span class="header-section-number">4.6</span> Retrieving additional parameters</a></li>
+  </ul></li>
+  <li><a href="#under-the-hood-how-apis-work" id="toc-under-the-hood-how-apis-work" class="nav-link" data-scroll-target="#under-the-hood-how-apis-work"><span class="header-section-number">5</span> Under the Hood: How APIs Work</a>
+  <ul class="collapse">
+  <li><a href="#the-client-server-model" id="toc-the-client-server-model" class="nav-link" data-scroll-target="#the-client-server-model"><span class="header-section-number">5.1</span> The client-server model</a></li>
+  <li><a href="#anatomy-of-an-api-request" id="toc-anatomy-of-an-api-request" class="nav-link" data-scroll-target="#anatomy-of-an-api-request"><span class="header-section-number">5.2</span> Anatomy of an API request</a></li>
+  <li><a href="#what-the-server-sends-back" id="toc-what-the-server-sends-back" class="nav-link" data-scroll-target="#what-the-server-sends-back"><span class="header-section-number">5.3</span> What the server sends back</a></li>
+  </ul></li>
+  <li><a href="#optional-building-custom-api-requests-with-httr2" id="toc-optional-building-custom-api-requests-with-httr2" class="nav-link" data-scroll-target="#optional-building-custom-api-requests-with-httr2"><span class="header-section-number">6</span> Optional: Building Custom API Requests with <code>httr2</code></a>
+  <ul class="collapse">
+  <li><a href="#the-httr2-workflow" id="toc-the-httr2-workflow" class="nav-link" data-scroll-target="#the-httr2-workflow"><span class="header-section-number">6.1</span> The httr2 workflow</a></li>
+  <li><a href="#navigating-the-json-response" id="toc-navigating-the-json-response" class="nav-link" data-scroll-target="#navigating-the-json-response"><span class="header-section-number">6.2</span> Navigating the JSON response</a></li>
+  <li><a href="#when-to-use-httr2-vs.-a-package" id="toc-when-to-use-httr2-vs.-a-package" class="nav-link" data-scroll-target="#when-to-use-httr2-vs.-a-package"><span class="header-section-number">6.3</span> When to use <code>httr2</code> vs.&nbsp;a package</a></li>
+  </ul></li>
+  <li><a href="#your-turn" id="toc-your-turn" class="nav-link" data-scroll-target="#your-turn"><span class="header-section-number">7</span> Your Turn</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">8</span> Resources</a></li>
   </ul>
 </nav>
     </div>
@@ -496,7 +565,10 @@ ul.task-list li input[type="checkbox"] {
 
 
 <!--
-Prerequisite lessons or suggestions here
+Prerequisite lessons:
+- Reproducible data discovery, access, and management (Week 1 lecture)
+- Intro to literate analysis with R and Quarto (Week 1)
+- Cleaning and wrangling data using R and tidyverse (Week 1)
 -->
 <div class="callout callout-style-default callout-learning no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
@@ -513,7 +585,13 @@ Prerequisite lessons or suggestions here
 <div class="callout-learning">
 <p>After completing this session, you will be able to:</p>
 <ul>
-<li>Create learning objectives using verbs based on <a href="https://en.wikipedia.org/wiki/Bloom%27s_taxonomy#/media/File:Bloom%E2%80%99s_Taxonomy_Verbs.png">Bloom’s Taxonomy</a></li>
+<li><u>Explain</u> why reading data from URLs is more reproducible than using hardcoded local file paths</li>
+<li><u>Apply</u> a file-existence cache pattern to avoid redundant downloads in R scripts</li>
+<li><u>Use</u> <code>read_waterdata_monitoring_location()</code> and <code>read_waterdata_combined_meta()</code> to discover USGS monitoring stations and available data</li>
+<li><u>Retrieve</u> daily water data for monitoring stations using <code>read_waterdata_daily()</code></li>
+<li><u>Visualize</u> water temperature time series and seasonal patterns with <code>ggplot2</code></li>
+<li><u>Describe</u> the client-server model and explain how HTTP APIs work conceptually</li>
+<li><u>Construct</u> a basic API request using <code>httr2</code> <em>(optional)</em></li>
 </ul>
 </div>
 </div>
@@ -521,11 +599,781 @@ Prerequisite lessons or suggestions here
 </div>
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p>Brief overview of lesson</p>
+<p>One of the most common reproducibility barriers in data-driven science isn’t in the analysis code itself, but rather in how data gets loaded in the first place. A script full of hardcoded file paths like <code>read_csv("C:/Users/jsmith/Desktop/data_final_v3.csv")</code> might work perfectly on one machine and fail immediately on every other.</p>
+<p>Getting data <strong>programmatically</strong> – directly in your code, from a remote source – solves this problem. In this session, we’ll move from ad-hoc data downloads to systematic, reproducible data access. We’ll learn a caching pattern for downloading files reliably, then use the <code>dataRetrieval</code> package to retrieve and visualize USGS streamflow data from monitoring stations. Along the way, we’ll peek under the hood at how web APIs work.</p>
 </section>
-<section id="use-level-2-headers-for-sections" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="use-level-2-headers-for-sections"><span class="header-section-number">2</span> Use level 2 headers for sections</h2>
-<p>Visit https://nceas-learning-hub.github.io/lh_packages/ for information on contributing new lessons, content guidelines, and style guide.</p>
+<section id="the-data-reproducibility-problem" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="the-data-reproducibility-problem"><span class="header-section-number">2</span> The Data Reproducibility Problem</h2>
+<section id="file-paths-as-a-reproducibility-barrier" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="file-paths-as-a-reproducibility-barrier"><span class="header-section-number">2.1</span> File paths as a reproducibility barrier</h3>
+<p>Consider what happens when you share this script with a colleague:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This path only works on one specific machine</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>delta_catch <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"C:/Users/jsmith/Documents/2023/delta_catch.csv"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Relative paths help, but only if the data travels with the code</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>delta_taxa <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../../data_archive/delta_taxa.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Neither version is truly portable. The hardcoded path only works on one machine with one person’s folder structure. The relative path works only if the recipient has the data file in exactly the right location relative to the project.</p>
+</section>
+<section id="reading-data-directly-from-a-url" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="reading-data-directly-from-a-url"><span class="header-section-number">2.2</span> Reading data directly from a URL</h3>
+<p>The first step toward reproducible data access is reading data straight from a URL. Most R functions that read data from files can also read from URLs:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Works on any computer with an internet connection</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>yolo_catch_url <span class="ot">&lt;-</span> <span class="st">"https://pasta.lternet.edu/package/data/eml/edi/233/2/015e494911cf35c90089ced5a3127334"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>yolo_catch <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(yolo_catch_url, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(yolo_catch)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This is already a big improvement over local paths. But reading from a URL every time your script runs has real drawbacks:</p>
+<ul>
+<li><strong>Fragile</strong>: fails without an internet connection</li>
+<li><strong>Slow</strong>: large files take time to download on every run</li>
+<li><strong>Wasteful</strong>: downloads the same bytes repeatedly</li>
+<li><strong>Unstable</strong>: the data might change between runs (or the URL might disappear)</li>
+</ul>
+<p>The solution is <strong>caching</strong>. In its simplest form, this involves saving a local copy after the first download, and using that copy from then on.</p>
+</section>
+</section>
+<section id="downloading-and-caching-data" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="downloading-and-caching-data"><span class="header-section-number">3</span> Downloading and Caching Data</h2>
+<p>The core caching pattern is a simple <code>if</code>/<code>else</code>:</p>
+<ol type="1">
+<li>Check if the local file already exists</li>
+<li>If it doesn’t, download it and save it</li>
+<li>Either way, load from the local copy</li>
+</ol>
+<section id="the-cache-check-pattern" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="the-cache-check-pattern"><span class="header-section-number">3.1</span> The cache-check pattern</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set paths</span></span>
+<span id="annotated-cell-3-2"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a>yolo_catch_url <span class="ot">&lt;-</span> <span class="st">"https://pasta.lternet.edu/package/data/eml/edi/233/2/015e494911cf35c90089ced5a3127334"</span></span>
+<span id="annotated-cell-3-3"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a>data_dir <span class="ot">&lt;-</span> <span class="st">"data"</span></span>
+<span id="annotated-cell-3-4"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a>yolo_catch_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(data_dir, <span class="st">"yolo_catch.csv"</span>)</span>
+<span id="annotated-cell-3-5"><a href="#annotated-cell-3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-3-6"><a href="#annotated-cell-3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Download data if not already cached</span></span>
+<span id="annotated-cell-3-7"><a href="#annotated-cell-3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(yolo_catch_file)) {</span>
+<span id="annotated-cell-3-8"><a href="#annotated-cell-3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"Downloading file..."</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-9" class="code-annotation-target"><a href="#annotated-cell-3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(data_dir, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="annotated-cell-3-10"><a href="#annotated-cell-3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(</span>
+<span id="annotated-cell-3-11"><a href="#annotated-cell-3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">url =</span> yolo_catch_url,</span>
+<span id="annotated-cell-3-12"><a href="#annotated-cell-3-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">destfile =</span> yolo_catch_file</span>
+<span id="annotated-cell-3-13"><a href="#annotated-cell-3-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="annotated-cell-3-14"><a href="#annotated-cell-3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"Saved to: "</span>, yolo_catch_file)</span>
+<span id="annotated-cell-3-15"><a href="#annotated-cell-3-15" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="annotated-cell-3-16"><a href="#annotated-cell-3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"Using cached file."</span>)</span>
+<span id="annotated-cell-3-17"><a href="#annotated-cell-3-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="annotated-cell-3-18"><a href="#annotated-cell-3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-3-19"><a href="#annotated-cell-3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the (locally cached) data</span></span>
+<span id="annotated-cell-3-20"><a href="#annotated-cell-3-20" aria-hidden="true" tabindex="-1"></a>yolo_catch <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(yolo_catch_file, <span class="at">guess_max =</span> <span class="dv">100000</span>)</span>
+<span id="annotated-cell-3-21"><a href="#annotated-cell-3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(yolo_catch)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="9" data-code-annotation="1"><code>showWarnings = FALSE</code> prevents an error if the directory already exists.</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>The first time you run this, the file downloads. Every subsequent run skips the download and directly loads the saved file. Anyone who has the code and an internet connection can run it; after the first run, they can work offline too.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>RDS vs.&nbsp;CSV for cached data
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you’re caching an R data frame (rather than a raw file), prefer RDS format over CSV:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Saves the data frame with its types preserved</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(my_data, <span class="st">"data/my_data.rds"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Restores the data frame exactly, keeping dates as dates and factors as factors</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/my_data.rds"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>CSV loses column type information (dates become character strings, and you have to re-specify types every time you load). RDS is faster to read and write, and perfectly reconstructs the original object.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Going further: <code>pins</code> and <code>contentid</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The simple cache pattern works well for solo work. For teams or projects where you need versioned, shareable data artifacts with stable identifiers:</p>
+<ul>
+<li><strong><code>pins</code></strong> (v1.x) stores and retrieves R objects from local folders, cloud storage (S3, GCS, Azure), or Posit Connect. Ideal for sharing processed data across a team.</li>
+<li><strong><code>contentid</code></strong> identifies data files by a hash of their content rather than their URL. If the URL changes, the data can still be found anywhere it has been registered.</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="retrieving-water-data-with-dataretrieval" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="retrieving-water-data-with-dataretrieval"><span class="header-section-number">4</span> Retrieving Water Data with <code>dataRetrieval</code></h2>
+<p>Using <code>download.file()</code> works when someone has published a file at a stable URL. But many high-value data sources don’t work that way. Instead, they provide a <strong>web API</strong>. This is a structured, internet-accessible service that lets you ask for exactly the data you want, rather than downloading a pre-packaged file.</p>
+<p>The USGS Water Data for the Nation (WDFN) program is a premier example. It provides access to data from a network of thousands of real-time monitoring stations across the US, measuring streamflow, water quality, groundwater, and more. Rather than pre-packaging files, NWIS lets you query by site, parameter, and date range.</p>
+<p>The <a href="https://doi-usgs.github.io/dataRetrieval/"><code>dataRetrieval</code></a> package provides a clean R interface to WDFN via public Water Data APIs (and the broader <a href="https://www.waterqualitydata.us/">Water Quality Portal</a>), hiding all the API details behind simple functions.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Setup
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Load required data packages, after first installing any (<code>install.packages("&lt;package_name&gt;")</code>) if you don’t already have them.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dataRetrieval)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tigris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A note on USGS function names
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The <code>dataRetrieval</code> package is in the middle of a transition. Various legacy functions (<code>readNWISdv()</code>, <code>whatNWISsites()</code>, <code>whatNWISdata()</code>) are still functional but are being phased out as USGS migrates to a modernized backend. You’ll see those names in many existing tutorials and StackOverflow answers, but running them now produces deprecation warnings, and eventually they will stop working.</p>
+<p>This lesson uses the <strong>new snake_case functions</strong> (<code>read_waterdata_daily()</code>, <code>read_waterdata_monitoring_location()</code>, etc.) that will remain supported going forward. The mapping is straightforward: if you see old code, the function names and the key differences are summarized in <a href="https://doi-usgs.github.io/dataRetrieval/articles/read_waterdata_functions.html">the migration guide</a>.</p>
+</div>
+</div>
+</div>
+<section id="the-monitoring-network" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="the-monitoring-network"><span class="header-section-number">4.1</span> The monitoring network</h3>
+<p>Here is a screenshot of the USGS National Water Dashboard showing monitoring stations (circles) across the Sacramento-San Joaquin Delta in California. Within this region, USGS maintains dozens of monitoring stations that record various paremeters over time – often every 15 minutes – with readings archived in many cases for decades.</p>
+<p><a href="images/data-access/usgs-national-water-dashboard-delta.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/data-access/usgs-national-water-dashboard-delta.png" class="img-fluid" data-fig-cap="The USGS National Water Dashboard (dashboard.waterdata.usgs.gov) lets you explore monitoring stations interactively before querying with R." alt="Screenshot of the USGS National Water Dashboard showing monitoring stations (circles) across the Sacramento-San Joaquin Delta."></a> <!-- map URL:  https://dashboard.waterdata.usgs.gov/app/nwd/en/?aoi=bbox-%5B-122.6491%2C37.4988%2C-120.74873%2C38.63946%5D&view=%7B%22basemap%22%3A%22EsriTopo%22%2C%22bounds%22%3A%22-122.64910174474248%2C37.4987964305809%2C-120.74873295729783%2C38.639462893940745%22%2C%22insetMap%22%3Afalse%2C%22panel%22%3A%7B%22id%22%3A%22ViewerTools%22%2C%22open%22%3Afalse%2C%22checkbox%22%3A%220%2C10%2C21%2C22%2C23%22%2C%22hiddenSubgroup%22%3A%22%22%2C%22range%22%3A%220%3A1.0%2C1%3A1.0%2C2%3A1.0%2C3%3A1.0%2C4%3A1.0%2C5%3A1.0%2C6%3A1.0%2C7%3A1.0%2C8%3A0.8%2C9%3A0.3%2C10%3A0.5%2C11%3A0.5%2C12%3A0.5%2C13%3A0.5%2C14%3A0.5%2C15%3A0.5%2C16%3A0.5%2C17%3A1.0%2C18%3A1.0%2C19%3A1.0%2C20%3A1.0%22%2C%22select%22%3A%220%3A0%2C1%3A0%2C2%3A0%2C3%3A0%2C4%3A0%2C5%3A0%2C6%3A0%2C7%3A0%2C8%3A0%2C9%3A0%2C10%3A0%2C11%3A0%2C12%3A0%2C13%3A0%2C14%3A0%2C15%3A0%2C16%3A0%2C17%3A0%2C18%3A0%2C19%3A0%22%7D%7D --></p>
+<p>Many different parameters are available depending on the station and time period. Here are a few examples:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>What is measured</th>
+<th>Parameter code</th>
+<th>Units</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Discharge (streamflow)</td>
+<td><code>00060</code></td>
+<td>cfs</td>
+</tr>
+<tr class="even">
+<td>Gage height (water level)</td>
+<td><code>00065</code></td>
+<td>ft</td>
+</tr>
+<tr class="odd">
+<td>Water temperature</td>
+<td><code>00010</code></td>
+<td>°C</td>
+</tr>
+<tr class="even">
+<td>Specific conductance</td>
+<td><code>00095</code></td>
+<td>μS/cm</td>
+</tr>
+<tr class="odd">
+<td>Turbidity</td>
+<td><code>63680</code></td>
+<td>FNU</td>
+</tr>
+<tr class="even">
+<td>Dissolved oxygen</td>
+<td><code>00300</code></td>
+<td>mg/L</td>
+</tr>
+<tr class="odd">
+<td>pH</td>
+<td><code>00400</code></td>
+<td>standard units</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="discover-monitoring-stations" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="discover-monitoring-stations"><span class="header-section-number">4.2</span> Discover monitoring stations</h3>
+<p>The <code>read_waterdata_monitoring_location()</code> function is a great starting point for data discovery. It retrieves station metadata and returns an <strong><code>sf</code> spatial data frame</strong> that stores station coordinates in a <code>geometry</code> column rather than separate lat/lon columns. Let’s start by searching for all stream gauge stations in California:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all stream gauge stations in California</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ca_streams <span class="ot">&lt;-</span> <span class="fu">read_waterdata_monitoring_location</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">state_name =</span> <span class="st">"California"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">site_type =</span> <span class="st">"Stream"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that <code>read_waterdata_monitoring_location()</code> returns an <code>sf</code> spatial object rather than an ordinary data frame. This means coordinates are stored in a <code>geometry</code> column (from the <code>sf</code> package), which spatial filters like <code>st_filter()</code> work, and you can map stations directly with <code>ggplot2</code> + <code>geom_sf()</code> or <code>leaflet</code> without extra coordinate wrangling.</p>
+</div>
+</div>
+<p>To narrow results to a smaller region, use <code>sf::st_filter()</code> with a bounding box:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1">1</button><span id="annotated-cell-5-1" class="code-annotation-target"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a bounding box for a region of interest, then filter spatially</span></span>
+<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>delta_bbox <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_bbox</span>(<span class="fu">c</span>(<span class="at">xmin =</span> <span class="sc">-</span><span class="fl">122.1</span>, <span class="at">ymin =</span> <span class="fl">37.8</span>,</span>
+<span id="annotated-cell-5-3"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">xmax =</span> <span class="sc">-</span><span class="fl">121.2</span>, <span class="at">ymax =</span> <span class="fl">38.5</span>),</span>
+<span id="annotated-cell-5-4"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">crs =</span> sf<span class="sc">::</span><span class="fu">st_crs</span>(<span class="dv">4326</span>))</span>
+<span id="annotated-cell-5-5"><a href="#annotated-cell-5-5" aria-hidden="true" tabindex="-1"></a>delta_sites <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_filter</span>(ca_streams, sf<span class="sc">::</span><span class="fu">st_as_sfc</span>(delta_bbox))</span>
+<span id="annotated-cell-5-6"><a href="#annotated-cell-5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-5-7"><a href="#annotated-cell-5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># How many stations?</span></span>
+<span id="annotated-cell-5-8"><a href="#annotated-cell-5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(delta_sites)</span>
+<span id="annotated-cell-5-9"><a href="#annotated-cell-5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-5-10"><a href="#annotated-cell-5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview results (geometry column is retained automatically)</span></span>
+<span id="annotated-cell-5-11"><a href="#annotated-cell-5-11" aria-hidden="true" tabindex="-1"></a>delta_sites <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-5-12"><a href="#annotated-cell-5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(monitoring_location_id, monitoring_location_name) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-5-13"><a href="#annotated-cell-5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="1" data-code-annotation="1">The bounding box covers the core Sacramento-San Joaquin Delta, from roughly Antioch in the west to Stockton in the east and Sacramento in the north.</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>Among the returned stations, you’ll find <strong>Sacramento River at Freeport</strong> (station <code>USGS-11447650</code>). Freeport sits on the Sacramento River just south of Sacramento, making it a key reference point for water entering the Delta from the north.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Bonus step: Map the stations
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Since <code>delta_sites</code> is an <code>sf</code> object with point geometries, you can visualize the station on a map. Here we use the <code>tigris</code> package to obtain Census TIGER/Line water polygons and county boundaries for the basemap. The counties to fetch are determined automatically from the station’s map extent, with needing to hardcode county names.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-19" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-19" data-target-annotation="1">1</button><span id="annotated-cell-19-1" class="code-annotation-target"><a href="#annotated-cell-19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">tigris_use_cache =</span> <span class="cn">TRUE</span>)</span>
+<span id="annotated-cell-19-2"><a href="#annotated-cell-19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-19-3"><a href="#annotated-cell-19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Station of interest (already an sf object from delta_sites)</span></span>
+<span id="annotated-cell-19-4"><a href="#annotated-cell-19-4" aria-hidden="true" tabindex="-1"></a>freeport <span class="ot">&lt;-</span> delta_sites <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-19-5"><a href="#annotated-cell-19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(monitoring_location_id <span class="sc">==</span> <span class="st">"USGS-11447650"</span>)</span>
+<span id="annotated-cell-19-6"><a href="#annotated-cell-19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-19-7"><a href="#annotated-cell-19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute map extent: ±0.35° around the station</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-19" data-target-annotation="2">2</button><span id="annotated-cell-19-8" class="code-annotation-target"><a href="#annotated-cell-19-8" aria-hidden="true" tabindex="-1"></a>lon <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(sf<span class="sc">::</span><span class="fu">st_coordinates</span>(freeport)[<span class="dv">1</span>, <span class="st">"X"</span>])</span>
+<span id="annotated-cell-19-9"><a href="#annotated-cell-19-9" aria-hidden="true" tabindex="-1"></a>lat <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(sf<span class="sc">::</span><span class="fu">st_coordinates</span>(freeport)[<span class="dv">1</span>, <span class="st">"Y"</span>])</span>
+<span id="annotated-cell-19-10"><a href="#annotated-cell-19-10" aria-hidden="true" tabindex="-1"></a>buf <span class="ot">&lt;-</span> <span class="fl">0.35</span></span>
+<span id="annotated-cell-19-11"><a href="#annotated-cell-19-11" aria-hidden="true" tabindex="-1"></a>map_xlim <span class="ot">&lt;-</span> <span class="fu">c</span>(lon <span class="sc">-</span> buf, lon <span class="sc">+</span> buf)</span>
+<span id="annotated-cell-19-12"><a href="#annotated-cell-19-12" aria-hidden="true" tabindex="-1"></a>map_ylim <span class="ot">&lt;-</span> <span class="fu">c</span>(lat <span class="sc">-</span> buf, lat <span class="sc">+</span> buf)</span>
+<span id="annotated-cell-19-13"><a href="#annotated-cell-19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-19-14"><a href="#annotated-cell-19-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Find counties intersecting the visual extent</span></span>
+<span id="annotated-cell-19-15"><a href="#annotated-cell-19-15" aria-hidden="true" tabindex="-1"></a>vis_rect <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_sfc</span>(</span>
+<span id="annotated-cell-19-16"><a href="#annotated-cell-19-16" aria-hidden="true" tabindex="-1"></a>  sf<span class="sc">::</span><span class="fu">st_polygon</span>(<span class="fu">list</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(</span>
+<span id="annotated-cell-19-17"><a href="#annotated-cell-19-17" aria-hidden="true" tabindex="-1"></a>    map_xlim[<span class="dv">1</span>], map_ylim[<span class="dv">1</span>], map_xlim[<span class="dv">2</span>], map_ylim[<span class="dv">1</span>],</span>
+<span id="annotated-cell-19-18"><a href="#annotated-cell-19-18" aria-hidden="true" tabindex="-1"></a>    map_xlim[<span class="dv">2</span>], map_ylim[<span class="dv">2</span>], map_xlim[<span class="dv">1</span>], map_ylim[<span class="dv">2</span>],</span>
+<span id="annotated-cell-19-19"><a href="#annotated-cell-19-19" aria-hidden="true" tabindex="-1"></a>    map_xlim[<span class="dv">1</span>], map_ylim[<span class="dv">1</span>]</span>
+<span id="annotated-cell-19-20"><a href="#annotated-cell-19-20" aria-hidden="true" tabindex="-1"></a>  ), <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))),</span>
+<span id="annotated-cell-19-21"><a href="#annotated-cell-19-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">crs =</span> sf<span class="sc">::</span><span class="fu">st_crs</span>(<span class="dv">4326</span>)</span>
+<span id="annotated-cell-19-22"><a href="#annotated-cell-19-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="annotated-cell-19-23"><a href="#annotated-cell-19-23" aria-hidden="true" tabindex="-1"></a>all_ca <span class="ot">&lt;-</span> <span class="fu">counties</span>(<span class="at">state =</span> <span class="st">"CA"</span>, <span class="at">year =</span> <span class="dv">2022</span>, <span class="at">progress_bar =</span> <span class="cn">FALSE</span>)</span>
+<span id="annotated-cell-19-24"><a href="#annotated-cell-19-24" aria-hidden="true" tabindex="-1"></a>area_counties <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_filter</span>(all_ca,</span>
+<span id="annotated-cell-19-25"><a href="#annotated-cell-19-25" aria-hidden="true" tabindex="-1"></a>    sf<span class="sc">::</span><span class="fu">st_transform</span>(vis_rect, sf<span class="sc">::</span><span class="fu">st_crs</span>(all_ca)))</span>
+<span id="annotated-cell-19-26"><a href="#annotated-cell-19-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-19-27"><a href="#annotated-cell-19-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Water-body polygons for those counties</span></span>
+<span id="annotated-cell-19-28"><a href="#annotated-cell-19-28" aria-hidden="true" tabindex="-1"></a>area_water_sf <span class="ot">&lt;-</span> <span class="fu">map</span>(area_counties<span class="sc">$</span>NAME,</span>
+<span id="annotated-cell-19-29"><a href="#annotated-cell-19-29" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span><span class="fu">area_water</span>(<span class="st">"CA"</span>, <span class="at">county =</span> .x, <span class="at">year =</span> <span class="dv">2022</span>)) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-19-30"><a href="#annotated-cell-19-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>()</span>
+<span id="annotated-cell-19-31"><a href="#annotated-cell-19-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-19-32"><a href="#annotated-cell-19-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract Freeport station coordinates for the text label (avoids</span></span>
+<span id="annotated-cell-19-33"><a href="#annotated-cell-19-33" aria-hidden="true" tabindex="-1"></a><span class="co"># geom_sf_text CRS warning)</span></span>
+<span id="annotated-cell-19-34"><a href="#annotated-cell-19-34" aria-hidden="true" tabindex="-1"></a>site_coords <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(sf<span class="sc">::</span><span class="fu">st_coordinates</span>(freeport))</span>
+<span id="annotated-cell-19-35"><a href="#annotated-cell-19-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-19-36"><a href="#annotated-cell-19-36" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="annotated-cell-19-37"><a href="#annotated-cell-19-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> area_counties, <span class="at">fill =</span> <span class="st">"#f5f0e8"</span>,</span>
+<span id="annotated-cell-19-38"><a href="#annotated-cell-19-38" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">"gray60"</span>, <span class="at">linewidth =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-19-39"><a href="#annotated-cell-19-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> area_water_sf, <span class="at">fill =</span> <span class="st">"#a6cee3"</span>,</span>
+<span id="annotated-cell-19-40"><a href="#annotated-cell-19-40" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">"#6baed6"</span>, <span class="at">linewidth =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-19-41"><a href="#annotated-cell-19-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> freeport, <span class="at">color =</span> <span class="st">"#e31a1c"</span>,</span>
+<span id="annotated-cell-19-42"><a href="#annotated-cell-19-42" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"#e31a1c"</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-19-43"><a href="#annotated-cell-19-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> site_coords,</span>
+<span id="annotated-cell-19-44"><a href="#annotated-cell-19-44" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> Y, <span class="at">label =</span> <span class="st">"Freeport</span><span class="sc">\n</span><span class="st">(11447650)"</span>),</span>
+<span id="annotated-cell-19-45"><a href="#annotated-cell-19-45" aria-hidden="true" tabindex="-1"></a>            <span class="at">nudge_x =</span> <span class="fl">0.05</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="fl">2.8</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-19-46"><a href="#annotated-cell-19-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> map_xlim, <span class="at">ylim =</span> map_ylim, <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-19-47"><a href="#annotated-cell-19-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sacramento River at Freeport (USGS 11447650)"</span>,</span>
+<span id="annotated-cell-19-48"><a href="#annotated-cell-19-48" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="annotated-cell-19-49"><a href="#annotated-cell-19-49" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="annotated-cell-19-50"><a href="#annotated-cell-19-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="annotated-cell-19-51"><a href="#annotated-cell-19-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#e8f4f8"</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-19" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-19" data-code-lines="1" data-code-annotation="1">Caches downloaded TIGER/Line shapefiles locally so repeat runs don’t re-download.</span>
+</dd>
+<dt data-target-cell="annotated-cell-19" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-19" data-code-lines="8" data-code-annotation="2"><code>as.numeric()</code> strips the matrix column name so the coordinate works cleanly in arithmetic.</span>
+</dd>
+</dl>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What is <code>tigris</code>?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <a href="https://github.com/walkerke/tigris"><code>tigris</code></a> package downloads US Census Bureau <a href="https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html">TIGER/Line</a> shapefiles directly into R as <code>sf</code> objects. These contain the same boundaries and geographic features used for the US Census, updated every few years.</p>
+<p>For station maps, two functions are especially useful:</p>
+<ul>
+<li><strong><code>counties(state, year)</code></strong>: county boundaries for any US state</li>
+<li><strong><code>area_water(state, county, year)</code></strong>: areal water bodies: rivers (as polygons), lakes, bays, and estuaries.</li>
+</ul>
+<p>Setting <code>options(tigris_use_cache = TRUE)</code> tells <code>tigris</code> to save downloaded shapefiles to a local cache folder. Repeat calls load from disk instantly with no network request.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><a href="images/data-access/freeport-location.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/data-access/freeport-location.png" class="img-fluid" data-fig-cap="Expected output: Sacramento River at Freeport (USGS 11447650), the upstream gateway to the Delta. Counties and water channels from Census TIGER/Line via `tigris`." alt="Map showing Sacramento River at Freeport (USGS 11447650) marked along the Sacramento River south of Sacramento city, with water channels shown in blue."></a></p>
+</section>
+<section id="explore-data-availability" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="explore-data-availability"><span class="header-section-number">4.3</span> Explore data availability</h3>
+<p>Before downloading, it’s worth checking what’s actually available at a station. <code>read_waterdata_combined_meta()</code> returns a row for each monitored parameter at a site:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What data does Freeport have?</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>freeport_avail <span class="ot">&lt;-</span> <span class="fu">read_waterdata_combined_meta</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">monitoring_location_id =</span> <span class="st">"USGS-11447650"</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Which parameters are available, and for how long?</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>freeport_avail <span class="sc">|&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(parameter_code, parameter_name, statistic_id, begin, end) <span class="sc">|&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(parameter_code, statistic_id)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Look for your desired parameter(s) in the results. The <code>begin</code> and <code>end</code> timestamps show the period of record. It’s useful to consult this information before constructing your data retrieval code, because there’s no point requesting data outside that range!</p>
+<p>Notice that water temperature (<code>00010</code>) appears <strong>multiple times</strong>, with different <code>statistic_id</code> values. This is because the API stores separate time series for each computed statistic:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>freeport_avail <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(parameter_code <span class="sc">==</span> <span class="st">"00010"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(statistic_id)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Although you can manually look up names and descriptions of all possible <a href="https://api.waterdata.usgs.gov/ogcapi/v0/collections/statistic-codes/items">statistic codes</a> in a browser, you can also retrieve this information directly via the package:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>stat_codes <span class="ot">&lt;-</span> <span class="fu">read_waterdata_metadata</span>(<span class="st">"statistic-codes"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Show statistic names along with other station availability data</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>freeport_avail <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(parameter_code <span class="sc">==</span> <span class="st">"00010"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(parameter_code, parameter_name, statistic_id, begin, end) <span class="sc">%&gt;%</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(stat_codes, <span class="at">by =</span> <span class="fu">join_by</span>(statistic_id <span class="sc">==</span> statistic_code)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>statistic_description) <span class="sc">%&gt;%</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(statistic_name, <span class="at">.after =</span> statistic_id) <span class="sc">%&gt;%</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(parameter_code, statistic_id)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The four codes you’ll typically see for daily temperature are daily maximum (<code>00001</code>), daily minimum (<code>00002</code>), daily mean (<code>00003</code>), and instantaneous values (<code>00011</code>). When you call <code>read_waterdata_daily()</code>, you select which statistic you want by passing <code>statistic_id</code>.</p>
+</section>
+<section id="retrieve-daily-water-temperature-data" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="retrieve-daily-water-temperature-data"><span class="header-section-number">4.4</span> Retrieve daily water temperature data</h3>
+<p><code>read_waterdata_daily()</code> retrieves daily values. We pass <code>parameter_code = "00010"</code> to select water temperature and <code>statistic_id = "00003"</code> to select the daily mean, and wrap the call in our caching pattern:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a>freeport_temp_file <span class="ot">&lt;-</span> <span class="st">"data/freeport_temp.rds"</span></span>
+<span id="annotated-cell-9-2"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-9-3"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(freeport_temp_file)) {</span>
+<span id="annotated-cell-9-4"><a href="#annotated-cell-9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"Fetching daily temperature from USGS..."</span>)</span>
+<span id="annotated-cell-9-5"><a href="#annotated-cell-9-5" aria-hidden="true" tabindex="-1"></a>  freeport_temp <span class="ot">&lt;-</span> <span class="fu">read_waterdata_daily</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1">1</button><span id="annotated-cell-9-6" class="code-annotation-target"><a href="#annotated-cell-9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">monitoring_location_id =</span> <span class="st">"USGS-11447650"</span>,  <span class="co"># note "USGS-" prefix</span></span>
+<span id="annotated-cell-9-7"><a href="#annotated-cell-9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">parameter_code =</span> <span class="st">"00010"</span>,  <span class="co"># water temperature</span></span>
+<span id="annotated-cell-9-8"><a href="#annotated-cell-9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">statistic_id =</span> <span class="st">"00003"</span>,  <span class="co"># daily mean</span></span>
+<span id="annotated-cell-9-9"><a href="#annotated-cell-9-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">time =</span> <span class="fu">c</span>(<span class="st">"2020-01-01"</span>, <span class="st">"2025-12-31"</span>)</span>
+<span id="annotated-cell-9-10"><a href="#annotated-cell-9-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="annotated-cell-9-11"><a href="#annotated-cell-9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(<span class="st">"data"</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
+<span id="annotated-cell-9-12"><a href="#annotated-cell-9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(freeport_temp, freeport_temp_file)</span>
+<span id="annotated-cell-9-13"><a href="#annotated-cell-9-13" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="annotated-cell-9-14"><a href="#annotated-cell-9-14" aria-hidden="true" tabindex="-1"></a>  freeport_temp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(freeport_temp_file)</span>
+<span id="annotated-cell-9-15"><a href="#annotated-cell-9-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="annotated-cell-9-16"><a href="#annotated-cell-9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-9-17"><a href="#annotated-cell-9-17" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(freeport_temp)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-9" data-code-lines="6" data-code-annotation="1">The new API requires the <code>"USGS-"</code> prefix on all site numbers. Old functions accepted bare numbers like <code>"11447650"</code>.</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>The returned data is in <strong>long format</strong>, with one row per observation. Note that the result is an <code>sf</code> object – it retains the station’s <code>geometry</code> column – so you can join or map it directly without extra steps.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Understanding approval status
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>approval_status</code> column tells you whether a value has been reviewed. <code>"Approved"</code> means a USGS hydrologist has checked and signed off on the data. <code>"Provisional"</code> means the data is real-time and hasn’t been reviewed yet. For analyses using historical data, filter to <code>approval_status == "Approved"</code> if data quality is critical.</p>
+</div>
+</div>
+</section>
+<section id="visualize-the-data" class="level3" data-number="4.5">
+<h3 data-number="4.5" class="anchored" data-anchor-id="visualize-the-data"><span class="header-section-number">4.5</span> Visualize the data</h3>
+<p>A time series plot is the natural first look at the data:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(freeport_temp, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"#e34a33"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">linewidth =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Temperature (°C)"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Daily Mean Water Temperature at the Sacramento River near Freeport"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"USGS Station 11447650 (2000-2023)"</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><a href="images/data-access/freeport-temperature-time-series.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/data-access/freeport-temperature-time-series.png" class="img-fluid" data-fig-cap="Daily mean water temperature at Freeport, 2000--2023. The seasonal signal is strong and consistent across years." alt="Time series plot showing daily mean water temperature at Sacramento River at Freeport from 2000 to 2023. A clear seasonal oscillation is visible between cold winters and warm summers, with values ranging roughly 5 to 26°C."></a></p>
+<section id="seasonal-patterns" class="level4" data-number="4.5.1">
+<h4 data-number="4.5.1" class="anchored" data-anchor-id="seasonal-patterns"><span class="header-section-number">4.5.1</span> Seasonal patterns</h4>
+<p>A monthly boxplot makes the seasonal structure explicit:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>freeport_temp <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">month</span>(time, <span class="at">label =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"#8abcfd"</span>, <span class="at">outlier.alpha =</span> <span class="fl">0.2</span>, <span class="at">outlier.size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Month"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Temperature (°C)"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Seasonal Temperature Distribution"</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Sacramento River near Freeport (2000-2023)"</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><a href="images/data-access/freeport-temperature-by-month.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/data-access/freeport-temperature-by-month.png" class="img-fluid" data-fig-cap="Monthly temperature distribution at Freeport shows a clear seasonal cycle, with cold winters and warm summers. Summer temperatures often exceed thresholds that stress salmon and other cold-water species." alt="Boxplot of daily mean temperature by month. Temperatures are lowest in January (around 8°C) and peak in July-August (around 22°C), with lower variability in summer than in winter."></a></p>
+</section>
+</section>
+<section id="retrieving-additional-parameters" class="level3" data-number="4.6">
+<h3 data-number="4.6" class="anchored" data-anchor-id="retrieving-additional-parameters"><span class="header-section-number">4.6</span> Retrieving additional parameters</h3>
+<p>The same workflow retrieves any other parameter at Freeport. For example, here’s a very similar function call for getting daily mean suspended sediment concentration:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>freeport_ss <span class="ot">&lt;-</span> <span class="fu">read_waterdata_daily</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">monitoring_location_id =</span> <span class="st">"USGS-11447650"</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">parameter_code =</span> <span class="st">"80154"</span>,  <span class="co"># suspnd sedmnt conc</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">statistic_id =</span> <span class="st">"00003"</span>,  <span class="co"># daily mean</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">time =</span> <span class="fu">c</span>(<span class="st">"2020-01-01"</span>, <span class="st">"2025-12-31"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># value column holds the daily mean specific conductance in μS/cm</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Fetching multiple parameters in one call
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pass a vector of parameter codes to retrieve several parameters at once. The result is still long format (i.e., one row per observation) with <code>parameter_code</code> identifying which parameter each row belongs to:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>multi <span class="ot">&lt;-</span> <span class="fu">read_waterdata_daily</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">monitoring_location_id =</span> <span class="st">"USGS-11447650"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">parameter_code =</span> <span class="fu">c</span>(<span class="st">"00010"</span>, <span class="st">"00060"</span>, <span class="st">"80154"</span>),  <span class="co"># temp, discharge, susp sedmnt conc</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">statistic_id =</span> <span class="st">"00003"</span>,  <span class="co"># daily mean for all three</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">time =</span> <span class="fu">c</span>(<span class="st">"2000-01-01"</span>, <span class="st">"2023-12-31"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot time series faceted by parameter</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>multi <span class="sc">%&gt;%</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> value, <span class="at">col =</span> parameter_code)) <span class="sc">+</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>parameter_code, <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>One call, three parameters, all stacked in long format, easy to filter or facet!</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Water Quality Portal: beyond USGS
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>dataRetrieval</code> also connects to the <a href="https://www.waterqualitydata.us/">Water Quality Portal</a>, which aggregates data from USGS, EPA, and over 400 state and local agencies. Use <code>readWQPdata()</code> to query this broader dataset:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Water quality data from all agencies at a USGS site</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>wq <span class="ot">&lt;-</span> <span class="fu">readWQPdata</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">siteid =</span> <span class="st">"USGS-11447650"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">characteristicName =</span> <span class="st">"Turbidity"</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This is particularly useful for parameters like nutrients, metals, or biological data that NWIS doesn’t collect but state environmental agencies often do.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="under-the-hood-how-apis-work" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="under-the-hood-how-apis-work"><span class="header-section-number">5</span> Under the Hood: How APIs Work</h2>
+<p>We just retrieved many months of streamflow data with a handful of function calls. But what was actually happening? Understanding the mechanics will help you work with any API, including ones that don’t have a ready-made R package.</p>
+<section id="the-client-server-model" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="the-client-server-model"><span class="header-section-number">5.1</span> The client-server model</h3>
+<p>When you call <code>read_waterdata_daily()</code>, your R session (the <strong>client</strong>) sends a structured request across the internet to the USGS water services <strong>server</strong>. The server uses information in the request to perform some action(s) – e.g., query its database for the requested data – and then sends a response back.</p>
+<p><a href="images/data-access/client-server-diagram.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="images/data-access/client-server-diagram.png" class="img-fluid" data-fig-cap="The client-server model: your R session asks for data, and a remote server retrieves and returns it." alt="Diagram showing two boxes: 'Your R Session (Client)' on the left sends a 'request' arrow to 'USGS Water Services (Server)' on the right. The server sends a 'response (data)' arrow back to the left. Small labels on each arrow show example content: 'sites=USGS-11447650, etc, ...' for the request, and 'JSON payload with station time series data' for the response."></a></p>
+</section>
+<section id="anatomy-of-an-api-request" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="anatomy-of-an-api-request"><span class="header-section-number">5.2</span> Anatomy of an API request</h3>
+<p>Every request to a web API is ultimately a URL. Here’s what <code>read_waterdata_daily(monitoring_location_id = "USGS-11447650", parameter_code = "00010", statistic_id = "00003", time = c("2020-01-01", "2020-01-05"))</code> constructs behind the scenes:</p>
+<pre data-code-line-numbers=""><code>https://api.waterdata.usgs.gov/ogcapi/v0/collections/daily/items?f=json&amp;lang=en-US&amp;monitoring_location_id=USGS-11447650&amp;parameter_code=00010&amp;statistic_id=00003&amp;time=2020-01-01%2F2020-01-05&amp;limit=50000</code></pre>
+<p><a href="images/data-access/url-anatomy.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="images/data-access/url-anatomy.png" class="img-fluid" data-fig-cap="An API URL has three parts: the server address, the endpoint (which service to use), and query parameters (what data you want)." alt="The URL broken into labeled parts: 'https://api.waterdata.usgs.gov/ogcapi/v0' labeled as 'Base URL (server address)', '/collections/daily/items' labeled as 'Endpoint (which service)', and 'f=json&amp;lang=en-US&amp;monitoring_location_id=USGS-11447650' labeled as 'Query parameters (e.g., data criteria, formats, etc)'."></a></p>
+<p><strong>Try it yourself:</strong> paste that URL into a browser. The raw JSON data that <code>dataRetrieval</code> processes for you will appear as text in the browser window.</p>
+</section>
+<section id="what-the-server-sends-back" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="what-the-server-sends-back"><span class="header-section-number">5.3</span> What the server sends back</h3>
+<p>An HTTP response has two key parts:</p>
+<ol type="1">
+<li>A <strong>status code</strong>: a number indicating success or failure.
+<ul>
+<li><code>200</code> – success</li>
+<li><code>404</code> – resource not found</li>
+<li><code>429</code> – too many requests (you’re being rate-limited)</li>
+<li><code>500</code> – server error</li>
+</ul></li>
+<li>A <strong>response body</strong>: the actual data, typically as JSON, CSV, or XML.</li>
+</ol>
+<p><code>dataRetrieval</code> handles all of this automatically. It builds the URL, sends the request, checks the status, and parses the JSON body into a tidy R data frame. Most of the time, that’s exactly what you want. When no R package exists for an API you need, <code>httr2</code> lets you do these steps yourself.</p>
+</section>
+</section>
+<section id="optional-building-custom-api-requests-with-httr2" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="optional-building-custom-api-requests-with-httr2"><span class="header-section-number">6</span> Optional: Building Custom API Requests with <code>httr2</code></h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>This section is optional
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Skip ahead to <strong>Your Turn</strong> if time is short. The techniques here are useful when you need to work with an API that has no dedicated R package, but you won’t need them otherwise.</p>
+</div>
+</div>
+<p>The <a href="https://httr2.r-lib.org/"><code>httr2</code></a> package provides a pipe-based interface for building and sending HTTP requests. Think of it as doing manually what <code>dataRetrieval</code> does automatically.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Setup
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"httr2"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<section id="the-httr2-workflow" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="the-httr2-workflow"><span class="header-section-number">6.1</span> The httr2 workflow</h3>
+<p><code>httr2</code> separates building a request from executing it. You assemble everything first, then send it:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-14-1"><a href="#annotated-cell-14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the same request that read_waterdata_daily() constructs</span></span>
+<span id="annotated-cell-14-2"><a href="#annotated-cell-14-2" aria-hidden="true" tabindex="-1"></a>req <span class="ot">&lt;-</span> <span class="fu">request</span>(<span class="st">"https://api.waterdata.usgs.gov/ogcapi/v0"</span>) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-14-3"><a href="#annotated-cell-14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">req_url_path_append</span>(<span class="st">"/collections/daily/items"</span>) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-14-4"><a href="#annotated-cell-14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">req_url_query</span>(</span>
+<span id="annotated-cell-14-5"><a href="#annotated-cell-14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">monitoring_location_id =</span> <span class="st">"USGS-11447650"</span>,</span>
+<span id="annotated-cell-14-6"><a href="#annotated-cell-14-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">parameter_code =</span> <span class="st">"00010"</span>,</span>
+<span id="annotated-cell-14-7"><a href="#annotated-cell-14-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">statistic_id =</span> <span class="st">"00003"</span>,</span>
+<span id="annotated-cell-14-8"><a href="#annotated-cell-14-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">time =</span> <span class="st">"2024-01-01/2020-01-05"</span>  <span class="co"># ISO 8601 interval format</span></span>
+<span id="annotated-cell-14-9"><a href="#annotated-cell-14-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="annotated-cell-14-10"><a href="#annotated-cell-14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-14-11"><a href="#annotated-cell-14-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview the request without actually sending it</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="1">1</button><span id="annotated-cell-14-12" class="code-annotation-target"><a href="#annotated-cell-14-12" aria-hidden="true" tabindex="-1"></a><span class="fu">req_dry_run</span>(req)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-14" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-14" data-code-lines="12" data-code-annotation="1"><code>req_dry_run()</code> prints the exact URL and headers that <em>would</em> be sent.</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>Once you’re happy with the request structure, execute it:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Send the request, returning a response</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>resp <span class="ot">&lt;-</span> <span class="fu">req_perform</span>(req)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the HTTP status code</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">resp_status</span>(resp)  <span class="co"># 200 = success</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Parse the JSON response body</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">resp_body_json</span>(resp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="navigating-the-json-response" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="navigating-the-json-response"><span class="header-section-number">6.2</span> Navigating the JSON response</h3>
+<p>The Water Data API returns a GeoJSON response with observations nested inside. You can explore it interactively in the Positron or RStudio console, or extract the data directly:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull the observation list out of the GeoJSON structure</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>resp_data <span class="ot">&lt;-</span> <span class="fu">resp_body_json</span>(resp) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">pluck</span>(<span class="st">"features"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map</span>(<span class="st">"properties"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">bind_rows</span>()</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(resp_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This produces the same data as calling <code>read_waterdata_daily()</code>, but this time we did the plumbing ourselves!</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>httr2 features for real-world API use
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Beyond the basics, <code>httr2</code> has useful built-ins for production API work:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 43%">
+<col style="width: 56%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>req_retry(max_tries = 3)</code></td>
+<td>Automatically retry failed requests</td>
+</tr>
+<tr class="even">
+<td><code>req_throttle(rate = 10)</code></td>
+<td>Limit requests per second (respects rate limits)</td>
+</tr>
+<tr class="odd">
+<td><code>req_cache(path = tempdir())</code></td>
+<td>Cache responses to disk</td>
+</tr>
+<tr class="even">
+<td><code>req_auth_bearer_token(token)</code></td>
+<td>Add an API authentication token</td>
+</tr>
+<tr class="odd">
+<td><code>req_headers(Accept = "application/json")</code></td>
+<td>Set custom request headers</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="when-to-use-httr2-vs.-a-package" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="when-to-use-httr2-vs.-a-package"><span class="header-section-number">6.3</span> When to use <code>httr2</code> vs.&nbsp;a package</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 68%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situation</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A well-maintained R package exists (<code>dataRetrieval</code>, <code>rgbif</code>, <code>dataone</code>, …)</td>
+<td>The package</td>
+</tr>
+<tr class="even">
+<td>An API exists but no R package wraps it</td>
+<td><code>httr2</code></td>
+</tr>
+<tr class="odd">
+<td>You need request features the package doesn’t expose</td>
+<td><code>httr2</code></td>
+</tr>
+<tr class="even">
+<td>You’re building your own R package around an API</td>
+<td><code>httr2</code> as the foundation</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="your-turn" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="your-turn"><span class="header-section-number">7</span> Your Turn</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Activity: Retrieve and visualize water data
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Working individually or in pairs (10 min), choose one of the following:</p>
+<p><strong>Option A: Different station:</strong> Retrieve daily mean water temperature (<code>parameter_code = "00010"</code>, <code>statistic_id = "00003"</code>) for one of these other nearby stations and compare the seasonal pattern with Freeport. Is the annual cycle the same shape? Earlier or later in the year?</p>
+<ul>
+<li>San Joaquin River at Vernalis: <code>USGS-11303500</code></li>
+<li>Cache Slough near Ryer Island: <code>USGS-11455385</code></li>
+<li>Sacramento River at Rio Vista: <code>USGS-11455420</code></li>
+</ul>
+<p><strong>Option B: Different statistic:</strong> At Freeport (<code>USGS-11447650</code>), retrieve the <strong>daily maximum</strong> (<code>statistic_id = "00001"</code>) and <strong>daily minimum</strong> (<code>00002"</code>) temperature in addition to the mean. Plot all three on one time series. How wide is the daily range? Does it vary by season?</p>
+<p><strong>Option C: Temperature vs.&nbsp;discharge:</strong> Retrieve both daily mean temperature (<code>00010</code>) and daily mean suspended sediment concentration (<code>80154</code>) at Freeport. Make a scatter plot. Is there a clear relationship? What might you look at next?</p>
+<p>Include the cache pattern in your code so it only downloads once!</p>
+</div>
+</div>
+</section>
+<section id="resources" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="resources"><span class="header-section-number">8</span> Resources</h2>
+<ul>
+<li><a href="https://doi-usgs.github.io/dataRetrieval/">dataRetrieval package documentation</a> – function reference, vignettes, and worked examples</li>
+<li><a href="https://dashboard.waterdata.usgs.gov/">USGS National Water Dashboard</a> – interactive map for exploring monitoring stations before querying with R</li>
+<li><a href="https://help.waterdata.usgs.gov/codes-and-parameters/parameters">USGS NWIS Parameter Codes</a> – look up parameter codes and descriptions (or use <code>dataRetrieval::parameterCdFile</code> in R)</li>
+<li><a href="https://www.waterqualitydata.us/">Water Quality Portal</a> – access water quality data from USGS, EPA, and partner state/local agencies</li>
+<li><a href="https://waterservices.usgs.gov/">USGS NWIS Web Services</a> – documentation for the REST API that <code>dataRetrieval</code> uses under the hood</li>
+<li><a href="https://httr2.r-lib.org/">httr2 documentation</a> – full reference for building custom API requests in R</li>
+</ul>
 
 
 </section>
@@ -1004,6 +1852,38 @@ Prerequisite lessons or suggestions here
     </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
