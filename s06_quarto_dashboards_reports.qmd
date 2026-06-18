@@ -66,13 +66,13 @@ reader's browser.
 
 ```{mermaid}
 flowchart TD
-    A[Goal: share data interactively] --> B{Does it need\nreactivity from R?}
-    B -- Yes --> C[Shiny or\nDashboard + Shiny]
-    B -- No --> D{Is a card-based layout\nwith browser widgets enough?}
-    D -- Yes --> E[Quarto Dashboard\nstatic]
+    A[Goal: share data interactively] --> B{Does it need<br>reactivity from R?}
+    B -- Yes --> C[Shiny or<br>Dashboard + Shiny]
+    B -- No --> D{Is a card-based layout<br>with browser widgets enough?}
+    D -- Yes --> E[Quarto Dashboard<br>static]
     D -- No --> F[Shiny app]
-    E --> G[Easy to build\nHost anywhere -- no server needed]
-    C --> H[Requires Posit Connect Cloud\nor shinyapps.io]
+    E --> G[Easy to build<br>Host anywhere -- no server needed]
+    C --> H[Requires Posit Connect Cloud<br>or shinyapps.io]
     F --> H
 ```
 
