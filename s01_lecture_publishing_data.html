@@ -23,7 +23,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -82,6 +136,9 @@ ul.task-list li input[type="checkbox"] {
         background: #44444444;
       }
 </style>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="site_libs/quarto-contrib/quarto-project/nceas-learning-hub/theme/banner/banner.css">
@@ -483,7 +540,29 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
-  <li><a href="#use-level-2-headers-for-sections" id="toc-use-level-2-headers-for-sections" class="nav-link" data-scroll-target="#use-level-2-headers-for-sections"><span class="header-section-number">2</span> Use level 2 headers for sections</a></li>
+  <li><a href="#the-data-life-cycle" id="toc-the-data-life-cycle" class="nav-link" data-scroll-target="#the-data-life-cycle"><span class="header-section-number">2</span> The Data Life Cycle</a></li>
+  <li><a href="#where-data-lives-choosing-a-repository" id="toc-where-data-lives-choosing-a-repository" class="nav-link" data-scroll-target="#where-data-lives-choosing-a-repository"><span class="header-section-number">3</span> Where Data Lives: Choosing a Repository</a>
+  <ul class="collapse">
+  <li><a href="#github-is-not-an-archival-location" id="toc-github-is-not-an-archival-location" class="nav-link" data-scroll-target="#github-is-not-an-archival-location">GitHub is Not an Archival Location</a></li>
+  <li><a href="#dedicated-data-repositories" id="toc-dedicated-data-repositories" class="nav-link" data-scroll-target="#dedicated-data-repositories">Dedicated Data Repositories</a></li>
+  <li><a href="#explore-repositories-for-environmental-science" id="toc-explore-repositories-for-environmental-science" class="nav-link" data-scroll-target="#explore-repositories-for-environmental-science">Explore Repositories for Environmental Science</a></li>
+  <li><a href="#data-packages-the-unit-of-publication" id="toc-data-packages-the-unit-of-publication" class="nav-link" data-scroll-target="#data-packages-the-unit-of-publication">Data Packages: The Unit of Publication</a></li>
+  </ul></li>
+  <li><a href="#metadata-the-key-ingredient" id="toc-metadata-the-key-ingredient" class="nav-link" data-scroll-target="#metadata-the-key-ingredient"><span class="header-section-number">4</span> Metadata: The Key Ingredient</a>
+  <ul class="collapse">
+  <li><a href="#what-a-complete-metadata-record-includes" id="toc-what-a-complete-metadata-record-includes" class="nav-link" data-scroll-target="#what-a-complete-metadata-record-includes">What a Complete Metadata Record Includes</a></li>
+  <li><a href="#orcid-your-research-identity" id="toc-orcid-your-research-identity" class="nav-link" data-scroll-target="#orcid-your-research-identity">ORCID: Your Research Identity</a></li>
+  <li><a href="#metadata-standards" id="toc-metadata-standards" class="nav-link" data-scroll-target="#metadata-standards">Metadata Standards</a></li>
+  <li><a href="#eml-a-closer-look" id="toc-eml-a-closer-look" class="nav-link" data-scroll-target="#eml-a-closer-look">EML: A Closer Look</a></li>
+  </ul></li>
+  <li><a href="#fair-and-care-principles" id="toc-fair-and-care-principles" class="nav-link" data-scroll-target="#fair-and-care-principles"><span class="header-section-number">5</span> FAIR and CARE Principles</a>
+  <ul class="collapse">
+  <li><a href="#what-is-fair" id="toc-what-is-fair" class="nav-link" data-scroll-target="#what-is-fair">What is FAIR?</a></li>
+  <li><a href="#applying-fair-to-your-work" id="toc-applying-fair-to-your-work" class="nav-link" data-scroll-target="#applying-fair-to-your-work">Applying FAIR to Your Work</a></li>
+  <li><a href="#care-principles-for-indigenous-data-governance" id="toc-care-principles-for-indigenous-data-governance" class="nav-link" data-scroll-target="#care-principles-for-indigenous-data-governance">CARE Principles for Indigenous Data Governance</a></li>
+  </ul></li>
+  <li><a href="#activity-evaluate-a-data-package" id="toc-activity-evaluate-a-data-package" class="nav-link" data-scroll-target="#activity-evaluate-a-data-package"><span class="header-section-number">6</span> Activity: Evaluate a Data Package</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">7</span> Resources</a></li>
   </ul>
 </nav>
     </div>
@@ -495,9 +574,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<!--
-Prerequisite lessons or suggestions here
--->
 <div class="callout callout-style-default callout-learning no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -513,7 +589,10 @@ Prerequisite lessons or suggestions here
 <div class="callout-learning">
 <p>After completing this session, you will be able to:</p>
 <ul>
-<li>Create learning objectives using verbs based on <a href="https://en.wikipedia.org/wiki/Bloom%27s_taxonomy#/media/File:Bloom%E2%80%99s_Taxonomy_Verbs.png">Bloom’s Taxonomy</a></li>
+<li>Describe where data preservation and discovery fit in the open science lifecycle</li>
+<li>Identify appropriate repositories for publishing environmental and related data</li>
+<li>Define metadata and explain what a complete metadata record for environmental data includes</li>
+<li>Apply FAIR and CARE principles as a lens for evaluating and improving data publications</li>
 </ul>
 </div>
 </div>
@@ -521,16 +600,560 @@ Prerequisite lessons or suggestions here
 </div>
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
-<p>Brief overview of lesson</p>
+<p>Imagine you are conducting a synthesis project relating stream environmental conditions to ecological outcomes over a 50-year historical period. You’ll likely need data collected by multiple federal agencies, various state and regional authorities, university researchers who manage relevant labs and programs, and other organizations such as local watershed coalitions and non-profit groups. Some of the data you can find immediately; some requires sending email requests for datasets that, if you’re lucky, you eventually receive via email attachments with minimal documentation; some of it you’re never able to access – or perhaps it was never permanently saved in the first place.</p>
+<p>Despite tremendous improvements in recent decades, this is still the current reality of environmental data, and it is an obstacle to science. The practices in this session are how we change it.</p>
+<p>This module covers data documentation, publication, and sharing: why it matters, where data should live, what makes data truly reusable, and how to evaluate data publications using a principled framework. You can – and should! – view this from the perspective of both a consumer and producer. After all, as you work on your own data-oriented project, you will almost certainly generate new data products that you should make available for others in the spirit of open and collaborative science.</p>
 </section>
-<section id="use-level-2-headers-for-sections" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="use-level-2-headers-for-sections"><span class="header-section-number">2</span> Use level 2 headers for sections</h2>
-<p>Visit https://nceas-learning-hub.github.io/lh_packages/ for information on contributing new lessons, content guidelines, and style guide.</p>
+<section id="the-data-life-cycle" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="the-data-life-cycle"><span class="header-section-number">2</span> The Data Life Cycle</h2>
+<p>The <a href="https://dataoneorg.github.io/Education">DataONE</a> data life cycle provides a helpful map of the major stages that data moves through in a research project. You may be used to thinking of data work as mostly about collection and analysis, but the full cycle is much richer.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/publishing_data/data-life-cycle.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Data life cycle wheel showing the eight DataONE stages in a circle (Plan → Collect → Assure → Describe → Preserve → Discover → Integrate → Analyze)"></p>
+</figure>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Stage</th>
+<th>What happens</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Plan</td>
+<td>Map out the full lifecycle before you collect anything</td>
+</tr>
+<tr class="even">
+<td>Collect</td>
+<td>Gather observations, record values, structure raw data</td>
+</tr>
+<tr class="odd">
+<td>Assure</td>
+<td>QA/QC – check for errors, outliers, and inconsistencies</td>
+</tr>
+<tr class="even">
+<td><strong>Describe</strong></td>
+<td><strong>Document the data: metadata, variable definitions, methods</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Preserve</strong></td>
+<td><strong>Archive data in a repository for long-term access</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Discover</strong></td>
+<td><strong>Make data findable; find others’ data to build on</strong></td>
+</tr>
+<tr class="odd">
+<td>Integrate</td>
+<td>Combine datasets from multiple sources</td>
+</tr>
+<tr class="even">
+<td>Analyze</td>
+<td>Extract patterns, test hypotheses, create outputs</td>
+</tr>
+</tbody>
+</table>
+<p>The stages in <strong>bold</strong> are the focus of this session. Most researchers invest heavily in Collect and Analyze but underinvest in Describe and Preserve; that is exactly where scientific value is lost.</p>
+<p><strong>Why this matters in synthesis research:</strong> Even when focusing on existing data rather than collecting new data, synthesis projects usually add value to their input datasets and/or create new derived datasets combined over those inputs. By the end of the project, they almost always have novel data contributions worth preserving. Thus, just like with projects that involve primary data collection, the practices covered in this lesson are important for ensuring that synthetic data products are still accessible and usable in five, ten, or thirty years.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A shifting culture
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Across studies of data sharing, a common pattern is that researchers report a strong <em>willingness</em> to share data, but fall short when it comes to following through – especially in a way that conforms with best practices <span class="citation" data-cites="kaiser_2023">(<a href="#ref-kaiser_2023" role="doc-biblioref">Kaiser and Brainard 2023</a>)</span>. Slowly but surely, sharing is becoming more widespread as funders and journals adopt stricter sharing requirements, technology adds more documentation and reuse capability, and the research community more broadly recognizes the benefits of open data.</p>
+</div>
+</div>
+</section>
+<section id="where-data-lives-choosing-a-repository" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="where-data-lives-choosing-a-repository"><span class="header-section-number">3</span> Where Data Lives: Choosing a Repository</h2>
+<section id="github-is-not-an-archival-location" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="github-is-not-an-archival-location">GitHub is Not an Archival Location</h3>
+<p>GitHub is excellent for version-controlling code and and collaborating on analyses, with a variety of features that enable and support open science. However, it is <em>not</em> designed to be a long-term data archive:</p>
+<ul>
+<li>Repositories can be deleted or set to private at any time</li>
+<li>There is no guarantee of persistent identifiers or permanent URLs</li>
+<li>There is no built-in metadata system for scientific data</li>
+<li>There is no curation, peer review, or data validation</li>
+</ul>
+<p>GitHub is where your <em>analysis code and scripted workflows</em> live. Dedicated data repositories are where your <em>data</em> should live.</p>
+</section>
+<section id="dedicated-data-repositories" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="dedicated-data-repositories">Dedicated Data Repositories</h3>
+<p>Dedicated data repositories are built specifically for the long-term preservation and discovery of scientific data. They provide:</p>
+<ul>
+<li><strong>Persistent identifiers</strong> – a stable, citable address for your dataset, often using DOIs</li>
+<li><strong>Rich metadata infrastructure</strong> – structured ways to document the data</li>
+<li><strong>Long-term archival commitment</strong> – certified missions to preserve data for decades</li>
+<li><strong>Search and discovery</strong> – useful pathways for people to find the data</li>
+<li><strong>Version tracking</strong> – a persistent record of any updates over time</li>
+</ul>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><img src="images/publishing_data/repo-logos.png" class="img-fluid" alt="Logos for EDI, KNB, DataONE, and Zenodo"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="explore-repositories-for-environmental-science" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="explore-repositories-for-environmental-science">Explore Repositories for Environmental Science</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">KNB</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">EDI</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">DataONE</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Zenodo</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false" href="">re3data</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p><strong>Knowledge Network for Biocomplexity (KNB)</strong></p>
+<p>KNB was founded at NCEAS in 1998 as the first public data repository serving the needs of ecological synthesis research. Its development was interwined with the origins and maturation of Ecological Metadata Language (EML), now a widespread standard in this field. KNB continues to operate today as a repository for the broader ecology and environmental science community, with an emphasis on accommodating highly heterogeneous data while applying standardized metadata. It is a DataONE member, meaning data submitted there is searchable through the DataONE portal.</p>
+<p>If you have used NCEAS resources in the past, you may have published to or accessed data from KNB.</p>
+<p><strong>Website</strong>: <a href="https://knb.ecoinformatics.org">knb.ecoinformatics.org</a></p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p><strong>Environmental Data Initiative (EDI)</strong></p>
+<p>EDI is the primary repository for LTER (Long-Term Ecological Research) and other NSF-funded ecological datasets. Like the KNB, it uses the Ecological Metadata Language (EML) standard, is part of the DataONE federation, and accepts data from the broader envrionmental research community. For example, the Interagency Ecological Program (IEP) – a nine-agency consortium monitoring the Bay-Delta since 1959 – publishes many of its monitoring datasets through EDI.</p>
+<p><strong>Website</strong>: <a href="https://edirepository.org">edirepository.org</a></p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p><strong>DataONE Federation</strong></p>
+<p>DataONE is not a repository itself, but rather a federation of 65+ member repositories that share a common search interface and benefit from other shared services.</p>
+<p>When you search DataONE, you are searching across all of its member nodes at once, including EDI, KNB, the Arctic Data Center, and others. This is particularly useful for discovery; instead of visiting each repository separately, you can surface data from across the entire network with one search. As of 2026, over 1 million data packages have been published across the DataONE federation!</p>
+<p><strong>Website</strong>: <a href="https://dataone.org">dataone.org</a></p>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<p><strong>Zenodo</strong></p>
+<p>Zenodo is a general-purpose open repository operated by CERN (the European particle physics laboratory). In addition to archiving data, Zenodo stores many other kinds of research artifacts – code, reports, figures, and other scholarly outouts – with assigned DOIs. It is especially popular for archiving GitHub repositories (you can link a GitHub release directly to a Zenodo deposit) and for data that does not fit neatly into a domain-specific repository.</p>
+<p>Zenodo has a generous 50GB per deposit limit and is free to use.</p>
+<p><strong>Website</strong>: <a href="https://zenodo.org">zenodo.org</a></p>
+</div>
+<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
+<p><strong>re3data.org</strong></p>
+<p>Although it does not provide any data repository services itself, re3data is useful as a searchable <strong>registry of data repositories</strong>. If you’re wondering whether there’s a specialized repository for your type of data (wetlands, genomics, satellite imagery, social science), start here. You can filter by subject, content type, country, certification level, and more.</p>
+<p><strong>Website</strong>: <a href="https://re3data.org">re3data.org</a></p>
+</div>
+</div>
+</div>
+</section>
+<section id="data-packages-the-unit-of-publication" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="data-packages-the-unit-of-publication">Data Packages: The Unit of Publication</h3>
+<p>When you publish to a repository like KNB or EDI, you don’t just submit a CSV file. Rather, you submit a <strong>data package</strong> in one form or another. This is a scientifically useful bundle that includes everything needed to find, understand, and reuse the data. The figure below depicts a data package that bundles multiple data files and an R script with a metadata document, and receives a citable DOI.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    DOI["📄 DOI: doi:10.6073/pasta/abc123&lt;br&gt;(citable identifier)"]
+    META["📋 Metadata file&lt;br&gt;(EML .xml)"]
+    DATA1["🗂 Raw data&lt;br&gt;(survey_data_2024.csv)"]
+    DATA2["🗂 Processed data&lt;br&gt;(cleaned_2024.csv)"]
+    CODE["💻 R script&lt;br&gt;(cleaning_script.R)"]
+    DOI --&gt; META
+    META --&gt; DATA1
+    META --&gt; DATA2
+    META --&gt; CODE
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The metadata document is what ties the package together. It describes every file, every variable, the methods used, who collected it, where, and when. Without it, the data files are hard to interpret and nearly impossible to discover.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>DOIs and Data Citation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <a href="https://www.doi.org/the-identifier/what-is-a-doi/">DOI</a> (Digital Object Identifier) is a unique string of characters that identifies some object and can be resolved to basic object metadata, importantly including the object’s online location. Most user-facing systems that use DOIs automatically resolve them directly to that location. When obtained and applied to published data, think of a DOI like an uber-persistent URL for your data package. Unlike a web URL that can break when a website is reorganized, the DOI is designed to remain stable and resolvable for decades.</p>
+<p>Many journals now <strong>require</strong> a data DOI before they will accept a manuscript. You should <strong>cite data</strong> you use (even your own) in every publication, just as you cite papers.</p>
+<p>Most repositories also version datasets: if you update the data, the new version gets a new DOI. This means you can cite the exact version used in an analysis, which is critical for reproducibility.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="metadata-the-key-ingredient" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="metadata-the-key-ingredient"><span class="header-section-number">4</span> Metadata: The Key Ingredient</h2>
+<p>Metadata is documentation that describes the content, context, and structure of your data to enable future interpretation and reuse.</p>
+<p>The simplest way to think about what belongs in metadata is: <strong>what would a researcher 30 years from now need in order to understand and reuse this dataset?</strong></p>
+<section id="what-a-complete-metadata-record-includes" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="what-a-complete-metadata-record-includes">What a Complete Metadata Record Includes</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Bibliographic Information</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Rights and Attribution</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Discovery Information</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false" href="">Methods Information</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-5" role="tab" aria-controls="tabset-2-5" aria-selected="false" href="">Data Structure</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<p>The basics that enable discovery and citation:</p>
+<ul>
+<li><strong>Global identifier</strong> – e.g., a DOI</li>
+<li><strong>Title</strong> – descriptive, including topic, geographic area, and dates</li>
+<li><strong>Abstract</strong> – brief overview of purpose and contents</li>
+<li><strong>People &amp; organizations</strong> – Creators, contacts, contributors, and more</li>
+<li><strong>Funding</strong> – grant numbers and sponsoring organizations</li>
+</ul>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>The details that govern reuse:</p>
+<ul>
+<li><strong>License</strong> – how can others use this data? (CC-0 or CC-BY are common open choices)</li>
+<li><strong>Attribution requirements</strong> – what citation should data users provide?</li>
+<li><strong>Use constraints</strong> – any restrictions on use (rare, but sometimes necessary)</li>
+<li><strong>Redistribution rights</strong> – who may copy and redistribute the data?</li>
+</ul>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<p>The details that make your data findable:</p>
+<ul>
+<li><strong>Geographic coverage</strong> – bounding coordinates, place names, sampling locations</li>
+<li><strong>Temporal coverage</strong> – start/end dates, frequency, time zone</li>
+<li><strong>Taxonomic coverage</strong> – what species, what taxonomy standard</li>
+<li><strong>Keywords</strong> – especially from controlled vocabularies</li>
+</ul>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<p>The details that make your data interpretable:</p>
+<ul>
+<li><strong>Collection methods</strong> – protocols, equipment, instrument specs, calibration</li>
+<li><strong>Processing methods</strong> – QA/QC steps, transformations, filtering decisions</li>
+<li><strong>Software and hardware</strong> – versions matter for reproducibility</li>
+<li><strong>Provenance</strong> – where did the raw data come from?</li>
+</ul>
+</div>
+<div id="tabset-2-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-5-tab">
+<p>The details that let software and people read your data correctly:</p>
+<ul>
+<li><strong>Every variable defined</strong> – name, label, definition, units, measurement type</li>
+<li><strong>Coded values explained</strong> – if “1” means “male” or “0” means “not detected,” say so</li>
+<li><strong>Missing value codes</strong> – what does <code>NA</code>, <code>999</code>, or <code>-9999</code> mean in this dataset?</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Variable-Level Metadata: The Most Overlooked Piece
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The most common metadata gap in published datasets is <strong>attribute-level documentation</strong>: descriptions of individual variables (columns) in tabular or similarly structured data.</p>
+<p>Consider a column named <code>wtemp</code> in a CSV. Without metadata, a future user has no way to know:</p>
+<ul>
+<li>Is this water temperature at the surface or at depth?</li>
+<li>Is it in Celsius or Fahrenheit?</li>
+<li>Was it measured by a probe or a thermometer?</li>
+<li>What does <code>-9999</code> mean in this column?</li>
+</ul>
+<p>A complete attribute metadata record answers all of these questions for every column in every file. It is tedious to write, but it is the difference between data that can be reused and data that will sit unused and uninterpretable in an archive.</p>
+</div>
+</div>
+</section>
+<section id="orcid-your-research-identity" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="orcid-your-research-identity">ORCID: Your Research Identity</h3>
+<p><a href="https://orcid.org">ORCID</a> (Open Researcher and Contributor ID) is a free, persistent identifier for researchers. It’s a unique ID that follows you across name changes, institution changes, and career stages. Using ORCIDs to identify people in metadata ensures that their contributions are correctly attributed no matter what changes over time.</p>
+<p>If you don’t have an ORCID, it takes about two minutes to create one at <code>orcid.org</code>. Most repositories and journals now support ORCID login.</p>
+</section>
+<section id="metadata-standards" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="metadata-standards">Metadata Standards</h3>
+<p>Writing good metadata is necessary but not sufficient on its own. The metadata also needs to be structured in a way that software can reliably read and interpret it. That is what a <strong>metadata standard</strong> provides: a formal, community-agreed specification that defines <em>which fields</em> to include, <em>what values are acceptable</em>, and <em>how to encode</em> the information (e.g., as XML, JSON, or a structured text file).</p>
+<p>Think of a metadata standard like a shared form template. If every dataset follows the same template, a repository can automatically extract the title, creator, date, and geographic extent from any submission, without manual interpretation. This is what makes cross-repository search, automated data pipelines, and large-scale data synthesis possible. Without shared standards, metadata is just free text that only humans can parse, one record at a time.</p>
+<p>Different scientific communities have developed standards tuned to their needs, so you will encounter several in the wild:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">EML</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">ISO 19115 / 19139</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">BDP</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false" href="">Dublin Core</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-5" role="tab" aria-controls="tabset-3-5" aria-selected="false" href="">Darwin Core</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-6" role="tab" aria-controls="tabset-3-6" aria-selected="false" href="">CF Conventions</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-7" role="tab" aria-controls="tabset-3-7" aria-selected="false" href="">DataCite</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-8-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-8" role="tab" aria-controls="tabset-3-8" aria-selected="false" href="">NMDC / MIxS</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-9-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-9" role="tab" aria-controls="tabset-3-9" aria-selected="false" href="">PREMIS</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-10-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-10" role="tab" aria-controls="tabset-3-10" aria-selected="false" href="">METS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<p><strong><a href="https://eml.ecoinformatics.org/">Ecological Metadata Language (EML)</a></strong></p>
+<p>An XML-based standard developed specifically for ecological and environmental datasets. EML is the native metadata format for KNB, EDI, and numerous other members of the broader DataONE federation. It is the standard you are most likely to encounter when working with heterogeneous observational and experimental data recorded in the field – increasingly including various types of sensor data products – but has also been used to describe many other types of datasets including ethnographic studies, climate model outputs, and more.</p>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<p><strong><a href="https://www.fgdc.gov/metadata/iso-standards">Geospatial Metadata Standards (ISO 19115 / ISO 19139)</a></strong></p>
+<p>The international standard for geographic information metadata. ISO 19115 defines the content model (which fields to include and what they mean); ISO 19139 defines the corresponding XML encoding. Required by FGDC and widely adopted by USGS, federal GIS programs, and national spatial data infrastructure initiatives.</p>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<p><strong><a href="https://www.fgdc.gov/standards/projects/FGDC-standards-projects/metadata/biometadata/biodatap.pdf">Biological Data Profile (BDP)</a></strong></p>
+<p>An FGDC extension of the older Content Standard for Digital Geospatial Metadata (CSDGM), adding biological-specific fields for species, taxonomy, and natural resources data. Used by federal wildlife and natural resources agencies. Largely predates the ISO transition and is considered legacy, but still appears in older agency datasets and workflows.</p>
+</div>
+<div id="tabset-3-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-4-tab">
+<p><strong><a href="https://www.dublincore.org/">Dublin Core</a></strong></p>
+<p>A minimal, domain-agnostic standard with just 15 basic fields (title, creator, date, description, and so on). Extremely widely supported across web platforms and libraries, but too general to capture the scientific detail needed for most research datasets. Often used as a lowest-common- denominator format for cross-domain discovery.</p>
+</div>
+<div id="tabset-3-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-5-tab">
+<p><strong><a href="https://dwc.tdwg.org/">Darwin Core</a></strong></p>
+<p>A TDWG community standard for sharing biodiversity occurrence data — species observations, museum specimen records, and taxonomic information. The format underlying GBIF and iNaturalist data exports, and a common interchange format for organismal data of the kind used in species distribution modeling and biodiversity assessments.</p>
+</div>
+<div id="tabset-3-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-6-tab">
+<p><strong><a href="https://cfconventions.org/">CF Conventions (Climate and Forecast)</a></strong></p>
+<p>The dominant metadata standard for gridded atmospheric, oceanographic, and climate data stored in NetCDF format. Defines how to encode coordinate systems, units, and variable semantics so that software can interpret the data without additional documentation. Essential for anyone working with climate model output, reanalysis products, or remote sensing datasets.</p>
+</div>
+<div id="tabset-3-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-7-tab">
+<p><strong><a href="https://schema.datacite.org/">DataCite Metadata Schema</a></strong></p>
+<p>The standard used by DataCite when registering DOIs for datasets. Defines citation-relevant fields (creator, title, publisher, publication year, resource type, related identifiers) and is implemented by most major data repositories. Ensures your dataset can be properly cited and its relationships to associated publications tracked.</p>
+</div>
+<div id="tabset-3-8" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-8-tab">
+<p><strong><a href="https://microbiomedata.github.io/nmdc-schema/Metadata_Documentation_Overview">NMDC Metadata Standards</a></strong></p>
+<p>Developed by the National Microbiome Data Collaborative. This includes MIxS (Minimum Information about any Sequence), a checklist standard for contextual metadata accompanying environmental genomic and metagenomic samples; it covers collection site, environmental medium, GPS coordinates, water depth, and other sample-level context.</p>
+</div>
+<div id="tabset-3-9" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-9-tab">
+<p><strong><a href="https://www.loc.gov/standards/premis/">PREservation Metadata: Implementation Strategies (PREMIS)</a></strong></p>
+<p>A Library of Congress standard for tracking the provenance, rights, and technical characteristics of digital objects over time. Oriented toward long-term archival preservation rather than active research data publishing — more relevant to institutional repositories and digital archives than to typical field research workflows.</p>
+</div>
+<div id="tabset-3-10" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-10-tab">
+<p><strong><a href="https://www.loc.gov/standards/mets/">Metadata Encoding Transmission Standard (METS)</a></strong></p>
+<p>A Library of Congress standard for bundling descriptive, administrative, and structural metadata about objects in digital library collections. Like PREMIS, it is more relevant to library and archive contexts than to scientific data publication.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="eml-a-closer-look" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="eml-a-closer-look">EML: A Closer Look</h3>
+<p>EML is broadly applicable to scientific datasets, and is the metadata standard you are most likely to encounter especially when working with ecological and environmental data collected in the field – especially if the data is in tabular format. EML is stored as an XML file, but in practice you’ll never need need to write XML directly, nor even think about the fact that the metadata is in an XML format under the hood. As described below, tools exist to generate it for you!</p>
+<p>Here is an excerpt of what EML looks like under the hood:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers=""><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">&lt;?xml</span> <span class="ot">version=</span><span class="st">"1.0"</span> <span class="ot">encoding=</span><span class="st">"UTF-8"</span><span class="fu">?&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">eml:eml</span> <span class="ot">packageId=</span><span class="st">"edi.458.1"</span> <span class="ot">system=</span><span class="st">"knb"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">xmlns:eml=</span><span class="st">"eml://ecoinformatics.org/eml-2.1.1"</span>&gt;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">dataset</span>&gt;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">title</span>&gt;Interagency Ecological Program: Discrete water quality monitoring</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            in the Sacramento-San Joaquin Bay-Delta, 1975-2022&lt;/<span class="kw">title</span>&gt;</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">creator</span>&gt;</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">individualName</span>&gt;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                &lt;<span class="kw">givenName</span>&gt;Rosemary&lt;/<span class="kw">givenName</span>&gt;</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                &lt;<span class="kw">surName</span>&gt;Hartman&lt;/<span class="kw">surName</span>&gt;</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>            &lt;/<span class="kw">individualName</span>&gt;</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">organizationName</span>&gt;CA Dept. of Water Resources&lt;/<span class="kw">organizationName</span>&gt;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">electronicMailAddress</span>&gt;rosemary.hartman@water.ca.gov&lt;/<span class="kw">electronicMailAddress</span>&gt;</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">userId</span> <span class="ot">directory=</span><span class="st">"https://orcid.org"</span>&gt;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                https://orcid.org/0000-0002-4452-0245</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>            &lt;/<span class="kw">userId</span>&gt;</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">creator</span>&gt;</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        ...</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">dataset</span>&gt;</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">eml:eml</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The XML format is machine-readable, which is what makes it possible for repository software to index and serve these metadata fields as structured search results.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>How do I create EML without writing XML?</strong></p>
+<p>Data repositories typically provide a user-friendly interface for creating metadata without needing to understand EML. For example, multiple DataONE member nodes like the KNB and Arctic Data Center have web portals powered by <a href="https://github.com/nceas/metacatui">MetacatUI</a>, a web application for searching, exploring, and creating data packages directly in the web browser. Similarly, EDI provides <a href="https://ezeml.edirepository.org/">ezEML</a>, a web-based form that walks you through building a complete EML record interactively. Independent of any particular repository, the <code>EML</code> R package provides programmatic methods for building EML in R.</p>
+<p>All of these approaches generate valid XML from your inputs, so you never need to write XML by hand.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="fair-and-care-principles" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="fair-and-care-principles"><span class="header-section-number">5</span> FAIR and CARE Principles</h2>
+<p>The FAIR and CARE principles provide a practical framework for evaluating and improving how data are published and shared. They are not simply compliance boxes to check. They are frameworks for asking better questions about who benefits from your data and whether the data ecosystem you are participating in is equitable.</p>
+<section id="what-is-fair" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="what-is-fair">What is FAIR?</h3>
+<p>FAIR stands for <strong>F</strong>indable, <strong>A</strong>ccessible, <strong>I</strong>nteroperable, and <strong>R</strong>eusable. These principles were published in 2016 as community-endorsed guidelines for data management and are now widely adopted by funders, journals, and repositories.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 37%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Principle</th>
+<th>Definition</th>
+<th>In practice</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Findable</strong></td>
+<td>Metadata and data are easy to find for humans and machines</td>
+<td>Assign a DOI; index in a searchable repository; use rich keywords</td>
+</tr>
+<tr class="even">
+<td><strong>Accessible</strong></td>
+<td>Data can be retrieved using a standard, open protocol</td>
+<td>Publish in a public repository with a stable URL; use open protocols (HTTP)</td>
+</tr>
+<tr class="odd">
+<td><strong>Interoperable</strong></td>
+<td>Data can be integrated with other data for analysis</td>
+<td>Use standard file formats (CSV over XLSX); use standard vocabularies for variables</td>
+</tr>
+<tr class="even">
+<td><strong>Reusable</strong></td>
+<td>Data are well-described so they can be used and replicated</td>
+<td>Provide rich metadata; assign a clear license; document provenance</td>
+</tr>
+</tbody>
+</table>
+<p>Each principle has specific sub-criteria. The full set of 15 FAIR principles is available at <a href="https://www.go-fair.org/fair-principles/">go-fair.org/fair-principles</a>.</p>
+</section>
+<section id="applying-fair-to-your-work" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="applying-fair-to-your-work">Applying FAIR to Your Work</h3>
+<p>Use FAIR as a <strong>checklist</strong> when preparing data for publication:</p>
+<ul>
+<li>Does this dataset have a persistent identifier (DOI)? <em>(Findable)</em></li>
+<li>Is the metadata indexed in a searchable repository? <em>(Findable)</em></li>
+<li>Can anyone retrieve this data without an account or special software? <em>(Accessible)</em></li>
+<li>Are the data in an open, non-proprietary format? <em>(Interoperable)</em></li>
+<li>Does every variable have a definition, unit, and description? <em>(Reusable)</em></li>
+<li>Is there a clear license specifying how others can use the data? <em>(Reusable)</em></li>
+<li>Is the provenance documented – where did the raw data come from? <em>(Reusable)</em></li>
+</ul>
+</section>
+<section id="care-principles-for-indigenous-data-governance" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="care-principles-for-indigenous-data-governance">CARE Principles for Indigenous Data Governance</h3>
+<p>The CARE principles were developed by the International Indigenous Data Sovereignty Interest Group to complement FAIR with a human and social dimension. CARE stands for <strong>C</strong>ollective benefit, <strong>A</strong>uthority to control, <strong>R</strong>esponsibility, and <strong>E</strong>thics.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Principle</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Collective Benefit</strong></td>
+<td>Data ecosystems should enable Indigenous Peoples to derive benefit from the data</td>
+</tr>
+<tr class="even">
+<td><strong>Authority to Control</strong></td>
+<td>Indigenous Peoples’ rights and interests in Indigenous data must be recognized and empowered</td>
+</tr>
+<tr class="odd">
+<td><strong>Responsibility</strong></td>
+<td>Those working with Indigenous data have a responsibility to share how data are used to support Indigenous self-determination</td>
+</tr>
+<tr class="even">
+<td><strong>Ethics</strong></td>
+<td>Indigenous Peoples’ rights and well-being should be the primary concern at all stages of the data lifecycle</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why CARE matters:</strong> Consider a synthesis project conducted in the Sacramento-San Joaquin Delta region, which includes the ancestral and present territories of numerous California tribal nations like the Plains Miwok, Bay Miwok, and others. If the contributing data includes traditional ecological knowledge, involves species with cultural significance, or was collected on tribal lands, the CARE principles apply directly to how you handle, share, and publish those data.</p>
+</section>
+</section>
+<section id="activity-evaluate-a-data-package" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="activity-evaluate-a-data-package"><span class="header-section-number">6</span> Activity: Evaluate a Data Package</h2>
+<p>The best way to internalize what makes a data package work is to evaluate one as a critical reader – or, as the past researchers who published it might wish they had been told: <em>as the stranger trying to reuse it five years later.</em></p>
+<p>You and your group will each evaluate a data package published on EDI, assessing its metadata quality, documentation for reproducibility, and FAIRness.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Setup
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Break into your three synthesis groups and navigate to your group’s assigned data package on the EDI Data Portal:</p>
+<ul>
+<li><p><strong>Group A:</strong> <a href="https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-sbc.77.13">SBC LTER: Reef: Abundance, size and fishing effort for California Spiny Lobster (Panulirus interruptus), ongoing since 2012</a> (<code>sbc.77.13</code>)</p></li>
+<li><p><strong>Group B:</strong> <a href="https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-nwt.268.1">Physiological stress of American pika (Ochotona princeps) and associated habitat characteristics for Niwot Ridge, 2018 - 2019</a> (<code>nwt.268.1</code>)</p></li>
+<li><p><strong>Group C:</strong> <a href="https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-cap.256.10">Ecological and social interactions in urban parks: bird surveys in local parks in the central Arizona-Phoenix metropolitan area</a> (<code>knb-lter-cap.256.10</code>)</p></li>
+<li><p><strong>Group D:</strong> <a href="https://portal.edirepository.org/nis/mapbrowse?packageid=edi.233.6">Interagency Ecological Program: Fish catch and water quality data from the Sacramento River floodplain and tidal slough, collected by the Yolo Bypass Fish Monitoring Program, 1998-2021.</a> (<code>edi.233.6</code>)</p></li>
+</ul>
+<!--
+Other data package:
+
+a. **(Yolo Bypass Fish Monitoring):** [Yolo Bypass Fish Monitoring Program data, collected by the
+   California Department of Fish and Wildlife as part of the Interagency Ecological
+   Program](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.233.2) (edi.233.2)
+
+b. **(Long-Term Water Quality):** [IEP Environmental Monitoring Program -- discrete water quality
+   monitoring in the Sacramento-San Joaquin Bay-Delta, 1975 to
+   present](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.458.8) (edi.458.8)
+
+c. **(Delta Smelt):** [Enhanced Delta Smelt Monitoring Program -- US Fish and Wildlife Service
+   survey data on Delta smelt distribution and abundance across the upper San Francisco
+   Estuary](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.415.8) (edi.415.8)
+-->
+<p>Spend a few minutes exploring your package before starting the exercise. Look at the metadata landing page, the list of files, and at least one data file.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exercise: Evaluate the data package (~20 minutes)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Work through the following with your group:</p>
+<ol type="1">
+<li><strong>Metadata quality</strong> – using the categories from this session as a guide:
+<ol type="a">
+<li>Which categories of metadata are well-covered? (bibliographic, discovery, methods, data structure, rights)</li>
+<li>What is missing or incomplete? What would a new user struggle to understand?</li>
+<li>Is attribute-level metadata provided for the data files? Are variable definitions, units, and coded values clear?</li>
+</ol></li>
+<li><strong>Reproducibility</strong> – thinking about someone wanting to build on this dataset:
+<ol type="a">
+<li>Is there enough information to understand what was measured, how, and under what conditions?</li>
+<li>Is the data processing documented? Could you reproduce the workflow from raw data to the published files?</li>
+<li>Is associated code included in the package?</li>
+</ol></li>
+<li><strong>FAIR assessment</strong> – work through the FAIR checklist from this session:
+<ol type="a">
+<li>Is the dataset findable? (DOI, keyword-rich metadata, indexed in a repository)</li>
+<li>Is it accessible? (open access, stable URL)</li>
+<li>Is it interoperable? (open file formats, standard vocabularies)</li>
+<li>Is it reusable? (license, provenance, rich documentation)</li>
+</ol></li>
+</ol>
+<p>Elect someone in your group to share the following with the full group:</p>
+<ul>
+<li>What stood out as particularly strong in this data package?</li>
+<li>What would you improve, and why?</li>
+<li>What was the most surprising gap or strength you found?</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="resources" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="resources"><span class="header-section-number">7</span> Resources</h2>
+<ul>
+<li><a href="https://microbiomedata.org/introduction-to-metadata-and-ontologies/">Everything You Always Wanted to Know About Metadata and Ontologies (But Were Afraid to Ask)</a></li>
+<li><strong>EDI Resources for Data Authors</strong>: <a href="https://edirepository.org/resources/resources-for-data-authors">edirepository.org/resources/resources-for-data-authors</a></li>
+<li><strong>ezEML</strong> (EDI’s web-based EML editor): <a href="https://ezeml.edirepository.org/">ezeml.edirepository.org</a></li>
+<li><strong>FAIR Principles</strong>: <a href="https://www.go-fair.org/fair-principles/">go-fair.org/fair-principles</a></li>
+<li><strong>CARE Principles</strong>: <a href="https://www.gida-global.org/care">gida-global.org/care</a></li>
+</ul>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-kaiser_2023" class="csl-entry" role="listitem">
+Kaiser, J., and J. Brainard. 2023. <span>“Ready, Set, Share!”</span> <em>Science</em> 379 (6630). <a href="https://doi.org/10.1126/science.adg8470">https://doi.org/10.1126/science.adg8470</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
