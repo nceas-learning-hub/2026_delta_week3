@@ -1,22 +1,613 @@
 ---
 title: Publishing Synthesis Data
+bibliography: resources/publishing_data/refs.bib
 ---
-
-<!--
-Prerequisite lessons or suggestions here
--->
 
 :::{.callout-learning}
 After completing this session, you will be able to:
 
-- Create learning objectives using verbs based on [Bloom's Taxonomy](https://en.wikipedia.org/wiki/Bloom%27s_taxonomy#/media/File:Bloom%E2%80%99s_Taxonomy_Verbs.png)
+- Describe where data preservation and discovery fit in the open science lifecycle
+- Identify appropriate repositories for publishing environmental and related data
+- Define metadata and explain what a complete metadata record for environmental data includes
+- Apply FAIR and CARE principles as a lens for evaluating and improving data publications
 :::
 
 ## Overview
 
-Brief overview of lesson
+Imagine you are conducting a synthesis project relating stream environmental conditions to
+ecological outcomes over a 50-year historical period. You'll likely need data collected by multiple
+federal agencies, various state and regional authorities, university researchers who manage relevant
+labs and programs, and other organizations such as local watershed coalitions and non-profit groups.
+Some of the data you can find immediately; some requires sending email requests for datasets that,
+if you're lucky, you eventually receive via email attachments with minimal documentation; some of it
+you're never able to access -- or perhaps it was never permanently saved in the first place.
 
-## Use level 2 headers for sections
+Despite tremendous improvements in recent decades, this is still the current reality of
+environmental data, and it is an obstacle to science. The practices in this session are how we
+change it.
 
-Visit https://nceas-learning-hub.github.io/lh_packages/ for information on contributing new lessons, content guidelines, and style guide.
+This module covers data documentation, publication, and sharing: why it matters, where data should
+live, what makes data truly reusable, and how to evaluate data publications using a principled
+framework. You can -- and should! -- view this from the perspective of both a consumer and producer.
+After all, as you work on your own data-oriented project, you will almost certainly generate new
+data products that you should make available for others in the spirit of open and collaborative
+science.
 
+## The Data Life Cycle
+
+The [DataONE](https://dataoneorg.github.io/Education) data life cycle provides a helpful map of the
+major stages that data moves through in a research project. You may be used to thinking of data work
+as mostly about collection and analysis, but the full cycle is much richer.
+
+![](images/publishing_data/data-life-cycle.png){fig-align="center" fig-alt="Data life cycle wheel
+showing the eight DataONE stages in a circle (Plan → Collect → Assure → Describe → Preserve →
+Discover → Integrate → Analyze)"}
+
+| Stage | What happens |
+|-------|-------------|
+| Plan | Map out the full lifecycle before you collect anything |
+| Collect | Gather observations, record values, structure raw data |
+| Assure | QA/QC -- check for errors, outliers, and inconsistencies |
+| **Describe** | **Document the data: metadata, variable definitions, methods** |
+| **Preserve** | **Archive data in a repository for long-term access** |
+| **Discover** | **Make data findable; find others' data to build on** |
+| Integrate | Combine datasets from multiple sources |
+| Analyze | Extract patterns, test hypotheses, create outputs |
+
+: {tbl-colwidths="[20,80]"}
+
+The stages in **bold** are the focus of this session. Most researchers invest heavily in Collect and
+Analyze but underinvest in Describe and Preserve; that is exactly where scientific value is lost.
+
+**Why this matters in synthesis research:** Even when focusing on existing data rather than
+collecting new data, synthesis projects usually add value to their input datasets and/or create new
+derived datasets combined over those inputs. By the end of the project, they almost always have
+novel data contributions worth preserving. Thus, just like with projects that involve primary data
+collection, the practices covered in this lesson are important for ensuring that synthetic data
+products are still accessible and usable in five, ten, or thirty years.
+
+::: {.callout-note}
+# A shifting culture
+
+Across studies of data sharing, a common pattern is that researchers report a strong _willingness_
+to share data, but fall short when it comes to following through -- especially in a way that
+conforms with best practices [@kaiser_2023]. Slowly but surely, sharing is becoming more widespread
+as funders and journals adopt stricter sharing requirements, technology adds more documentation and
+reuse capability, and the research community more broadly recognizes the benefits of open data.
+:::
+
+## Where Data Lives: Choosing a Repository
+
+### GitHub is Not an Archival Location {.unnumbered}
+
+GitHub is excellent for version-controlling code and and collaborating on analyses, with a variety
+of features that enable and support open science. However, it is _not_ designed to be a long-term
+data archive:
+
+- Repositories can be deleted or set to private at any time
+- There is no guarantee of persistent identifiers or permanent URLs
+- There is no built-in metadata system for scientific data
+- There is no curation, peer review, or data validation
+
+GitHub is where your *analysis code and scripted workflows* live. Dedicated data repositories are
+where your *data* should live.
+
+### Dedicated Data Repositories {.unnumbered}
+
+Dedicated data repositories are built specifically for the long-term preservation and discovery of
+scientific data. They provide:
+
+- **Persistent identifiers** -- a stable, citable address for your dataset, often using DOIs
+- **Rich metadata infrastructure** -- structured ways to document the data
+- **Long-term archival commitment** -- certified missions to preserve data for decades
+- **Search and discovery** -- useful pathways for people to find the data
+- **Version tracking** -- a persistent record of any updates over time
+
+::: {.callout-note appearance="minimal"}
+![](images/publishing_data/repo-logos.png){fig-alt="Logos for EDI, KNB, DataONE, and Zenodo"}
+:::
+
+### Explore Repositories for Environmental Science {.unnumbered}
+
+::: {.panel-tabset}
+
+#### KNB
+
+**Knowledge Network for Biocomplexity (KNB)**
+
+KNB was founded at NCEAS in 1998 as the first public data repository serving the needs of ecological
+synthesis research. Its development was interwined with the origins and maturation of Ecological
+Metadata Language (EML), now a widespread standard in this field. KNB continues to operate today as
+a repository for the broader ecology and environmental science community, with an emphasis on
+accommodating highly heterogeneous data while applying standardized metadata. It is a DataONE
+member, meaning data submitted there is searchable through the DataONE portal.
+
+If you have used NCEAS resources in the past, you may have published to or accessed data from KNB.
+
+**Website**: [knb.ecoinformatics.org](https://knb.ecoinformatics.org)
+
+#### EDI
+
+**Environmental Data Initiative (EDI)**
+
+EDI is the primary repository for LTER (Long-Term Ecological Research) and other NSF-funded
+ecological datasets. Like the KNB, it uses the Ecological Metadata Language (EML) standard, is part
+of the DataONE federation, and accepts data from the broader envrionmental research community. For
+example, the Interagency Ecological Program (IEP) -- a nine-agency consortium monitoring the
+Bay-Delta since 1959 -- publishes many of its monitoring datasets through EDI.
+
+**Website**: [edirepository.org](https://edirepository.org)
+
+#### DataONE
+
+**DataONE Federation**
+
+DataONE is not a repository itself, but rather a federation of 65+ member repositories that share a
+common search interface and benefit from other shared services.
+
+When you search DataONE, you are searching across all of its member nodes at once, including EDI,
+KNB, the Arctic Data Center, and others. This is particularly useful for discovery; instead of
+visiting each repository separately, you can surface data from across the entire network with one
+search. As of 2026, over 1 million data packages have been published across the DataONE federation!
+
+**Website**: [dataone.org](https://dataone.org)
+
+#### Zenodo
+
+**Zenodo**
+
+Zenodo is a general-purpose open repository operated by CERN (the European particle physics
+laboratory). In addition to archiving data, Zenodo stores many other kinds of research artifacts --
+code, reports, figures, and other scholarly outouts -- with assigned DOIs. It is especially popular
+for archiving GitHub repositories (you can link a GitHub release directly to a Zenodo deposit) and
+for data that does not fit neatly into a domain-specific repository.
+
+Zenodo has a generous 50GB per deposit limit and is free to use.
+
+**Website**: [zenodo.org](https://zenodo.org)
+
+#### re3data
+
+**re3data.org**
+
+Although it does not provide any data repository services itself, re3data is useful as a searchable
+**registry of data repositories**. If you're wondering whether there's a specialized repository for
+your type of data (wetlands, genomics, satellite imagery, social science), start here. You can
+filter by subject, content type, country, certification level, and more.
+
+**Website**: [re3data.org](https://re3data.org)
+
+:::
+
+### Data Packages: The Unit of Publication {.unnumbered}
+
+When you publish to a repository like KNB or EDI, you don't just submit a CSV file. Rather, you
+submit a **data package** in one form or another. This is a scientifically useful bundle that
+includes everything needed to find, understand, and reuse the data. The figure below depicts a data
+package that bundles multiple data files and an R script with a metadata document, and receives a
+citable DOI.
+
+```{mermaid}
+graph TD
+    DOI["📄 DOI: doi:10.6073/pasta/abc123<br>(citable identifier)"]
+    META["📋 Metadata file<br>(EML .xml)"]
+    DATA1["🗂 Raw data<br>(survey_data_2024.csv)"]
+    DATA2["🗂 Processed data<br>(cleaned_2024.csv)"]
+    CODE["💻 R script<br>(cleaning_script.R)"]
+    DOI --> META
+    META --> DATA1
+    META --> DATA2
+    META --> CODE
+```
+
+The metadata document is what ties the package together. It describes every file, every variable,
+the methods used, who collected it, where, and when. Without it, the data files are hard to
+interpret and nearly impossible to discover.
+
+::: {.callout-note}
+### DOIs and Data Citation
+
+A [DOI](https://www.doi.org/the-identifier/what-is-a-doi/) (Digital Object Identifier) is a unique
+string of characters that identifies some object and can be resolved to basic object metadata,
+importantly including the object's online location. Most user-facing systems that use DOIs
+automatically resolve them directly to that location. When obtained and applied to published data,
+think of a DOI like an uber-persistent URL for your data package. Unlike a web URL that can break
+when a website is reorganized, the DOI is designed to remain stable and resolvable for decades.
+
+Many journals now **require** a data DOI before they will accept a manuscript. You should **cite
+data** you use (even your own) in every publication, just as you cite papers.
+
+Most repositories also version datasets: if you update the data, the new version gets a new DOI.
+This means you can cite the exact version used in an analysis, which is critical for
+reproducibility.
+:::
+
+## Metadata: The Key Ingredient
+
+Metadata is documentation that describes the content, context, and structure of your data
+to enable future interpretation and reuse.
+
+The simplest way to think about what belongs in metadata is: **what would a researcher
+30 years from now need in order to understand and reuse this dataset?**
+
+### What a Complete Metadata Record Includes {.unnumbered}
+
+:::{.panel-tabset}
+#### Bibliographic Information {.unnumbered}
+
+The basics that enable discovery and citation:
+
+- **Global identifier** -- e.g., a DOI
+- **Title** -- descriptive, including topic, geographic area, and dates
+- **Abstract** -- brief overview of purpose and contents
+- **People & organizations** -- Creators, contacts, contributors, and more
+- **Funding** -- grant numbers and sponsoring organizations
+
+#### Rights and Attribution {.unnumbered}
+
+The details that govern reuse:
+
+- **License** -- how can others use this data? (CC-0 or CC-BY are common open choices)
+- **Attribution requirements** -- what citation should data users provide?
+- **Use constraints** -- any restrictions on use (rare, but sometimes necessary)
+- **Redistribution rights** -- who may copy and redistribute the data?
+
+#### Discovery Information {.unnumbered}
+
+The details that make your data findable:
+
+- **Geographic coverage** -- bounding coordinates, place names, sampling locations
+- **Temporal coverage** -- start/end dates, frequency, time zone
+- **Taxonomic coverage** -- what species, what taxonomy standard
+- **Keywords** -- especially from controlled vocabularies
+
+#### Methods Information {.unnumbered}
+
+The details that make your data interpretable:
+
+- **Collection methods** -- protocols, equipment, instrument specs, calibration
+- **Processing methods** -- QA/QC steps, transformations, filtering decisions
+- **Software and hardware** -- versions matter for reproducibility
+- **Provenance** -- where did the raw data come from?
+
+#### Data Structure {.unnumbered}
+
+The details that let software and people read your data correctly:
+
+- **Every variable defined** -- name, label, definition, units, measurement type
+- **Coded values explained** -- if "1" means "male" or "0" means "not detected," say so
+- **Missing value codes** -- what does `NA`, `999`, or `-9999` mean in this dataset?
+
+:::
+
+::: {.callout-important}
+## Variable-Level Metadata: The Most Overlooked Piece
+
+The most common metadata gap in published datasets is **attribute-level documentation**:
+descriptions of individual variables (columns) in tabular or similarly structured data.
+
+Consider a column named `wtemp` in a CSV. Without metadata, a future user has no way to
+know:
+
+- Is this water temperature at the surface or at depth?
+- Is it in Celsius or Fahrenheit?
+- Was it measured by a probe or a thermometer?
+- What does `-9999` mean in this column?
+
+A complete attribute metadata record answers all of these questions for every column in every file.
+It is tedious to write, but it is the difference between data that can be reused and data that will
+sit unused and uninterpretable in an archive.
+:::
+
+### ORCID: Your Research Identity {.unnumbered}
+
+[ORCID](https://orcid.org) (Open Researcher and Contributor ID) is a free, persistent identifier for
+researchers. It's a unique ID that follows you across name changes, institution changes, and career
+stages. Using ORCIDs to identify people in metadata ensures that their contributions are correctly
+attributed no matter what changes over time.
+
+If you don't have an ORCID, it takes about two minutes to create one at `orcid.org`. Most
+repositories and journals now support ORCID login.
+
+### Metadata Standards {.unnumbered}
+
+Writing good metadata is necessary but not sufficient on its own. The metadata also needs to be
+structured in a way that software can reliably read and interpret it. That is what a **metadata
+standard** provides: a formal, community-agreed specification that defines *which fields* to
+include, *what values are acceptable*, and *how to encode* the information (e.g., as XML, JSON, or a
+structured text file).
+
+Think of a metadata standard like a shared form template. If every dataset follows the same template,
+a repository can automatically extract the title, creator, date, and geographic extent from any
+submission, without manual interpretation. This is what makes cross-repository search, automated
+data pipelines, and large-scale data synthesis possible. Without shared standards, metadata is just
+free text that only humans can parse, one record at a time.
+
+Different scientific communities have developed standards tuned to their needs, so you will
+encounter several in the wild:
+
+::: {.panel-tabset}
+
+#### EML
+
+**[Ecological Metadata Language (EML)](https://eml.ecoinformatics.org/)**
+
+An XML-based standard developed specifically for ecological and environmental datasets. EML is the
+native metadata format for KNB, EDI, and numerous other members of the broader DataONE federation.
+It is the standard you are most likely to encounter when working with heterogeneous observational
+and experimental data recorded in the field -- increasingly including various types of sensor data
+products -- but has also been used to describe many other types of datasets including
+ethnographic studies, climate model outputs, and more.
+
+#### ISO 19115 / 19139
+
+**[Geospatial Metadata Standards (ISO 19115 / ISO 19139)](https://www.fgdc.gov/metadata/iso-standards)**
+
+The international standard for geographic information metadata. ISO 19115 defines the content model
+(which fields to include and what they mean); ISO 19139 defines the corresponding XML encoding.
+Required by FGDC and widely adopted by USGS, federal GIS programs, and national spatial data
+infrastructure initiatives.
+
+#### BDP
+
+**[Biological Data Profile (BDP)](https://www.fgdc.gov/standards/projects/FGDC-standards-projects/metadata/biometadata/biodatap.pdf)**
+
+An FGDC extension of the older Content Standard for Digital Geospatial Metadata (CSDGM), adding
+biological-specific fields for species, taxonomy, and natural resources data. Used by federal
+wildlife and natural resources agencies. Largely predates the ISO transition and is considered
+legacy, but still appears in older agency datasets and workflows.
+
+#### Dublin Core
+
+**[Dublin Core](https://www.dublincore.org/)**
+
+A minimal, domain-agnostic standard with just 15 basic fields (title, creator, date, description,
+and so on). Extremely widely supported across web platforms and libraries, but too general to
+capture the scientific detail needed for most research datasets. Often used as a lowest-common-
+denominator format for cross-domain discovery.
+
+#### Darwin Core
+
+**[Darwin Core](https://dwc.tdwg.org/)**
+
+A TDWG community standard for sharing biodiversity occurrence data — species observations, museum
+specimen records, and taxonomic information. The format underlying GBIF and iNaturalist data
+exports, and a common interchange format for organismal data of the kind used in species
+distribution modeling and biodiversity assessments.
+
+#### CF Conventions
+
+**[CF Conventions (Climate and Forecast)](https://cfconventions.org/)**
+
+The dominant metadata standard for gridded atmospheric, oceanographic, and climate data stored in
+NetCDF format. Defines how to encode coordinate systems, units, and variable semantics so that
+software can interpret the data without additional documentation. Essential for anyone working with
+climate model output, reanalysis products, or remote sensing datasets.
+
+#### DataCite
+
+**[DataCite Metadata Schema](https://schema.datacite.org/)**
+
+The standard used by DataCite when registering DOIs for datasets. Defines citation-relevant fields
+(creator, title, publisher, publication year, resource type, related identifiers) and is implemented
+by most major data repositories. Ensures your dataset can be properly cited and its relationships to
+associated publications tracked.
+
+#### NMDC / MIxS
+
+**[NMDC Metadata Standards](https://microbiomedata.github.io/nmdc-schema/Metadata_Documentation_Overview)**
+
+Developed by the National Microbiome Data Collaborative. This includes MIxS (Minimum Information
+about any Sequence), a checklist standard for contextual metadata accompanying environmental genomic
+and metagenomic samples; it covers collection site, environmental medium, GPS coordinates, water
+depth, and other sample-level context.
+
+#### PREMIS
+
+**[PREservation Metadata: Implementation Strategies (PREMIS)](https://www.loc.gov/standards/premis/)**
+
+A Library of Congress standard for tracking the provenance, rights, and technical characteristics of
+digital objects over time. Oriented toward long-term archival preservation rather than active
+research data publishing — more relevant to institutional repositories and digital archives than to
+typical field research workflows.
+
+#### METS
+
+**[Metadata Encoding Transmission Standard (METS)](https://www.loc.gov/standards/mets/)**
+
+A Library of Congress standard for bundling descriptive, administrative, and structural metadata
+about objects in digital library collections. Like PREMIS, it is more relevant to library and
+archive contexts than to scientific data publication.
+
+:::
+
+### EML: A Closer Look {.unnumbered}
+
+EML is broadly applicable to scientific datasets, and is the metadata standard you are most likely
+to encounter especially when working with ecological and environmental data collected in the field
+-- especially if the data is in tabular format. EML is stored as an XML file, but in practice you'll
+never need need to write XML directly, nor even think about the fact that the metadata is in an XML
+format under the hood. As described below, tools exist to generate it for you!
+
+Here is an excerpt of what EML looks like under the hood:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<eml:eml packageId="edi.458.1" system="knb"
+    xmlns:eml="eml://ecoinformatics.org/eml-2.1.1">
+    <dataset>
+        <title>Interagency Ecological Program: Discrete water quality monitoring
+            in the Sacramento-San Joaquin Bay-Delta, 1975-2022</title>
+        <creator>
+            <individualName>
+                <givenName>Rosemary</givenName>
+                <surName>Hartman</surName>
+            </individualName>
+            <organizationName>CA Dept. of Water Resources</organizationName>
+            <electronicMailAddress>rosemary.hartman@water.ca.gov</electronicMailAddress>
+            <userId directory="https://orcid.org">
+                https://orcid.org/0000-0002-4452-0245
+            </userId>
+        </creator>
+        ...
+    </dataset>
+</eml:eml>
+```
+
+The XML format is machine-readable, which is what makes it possible for repository software to
+index and serve these metadata fields as structured search results.
+
+::: {.callout-note}
+**How do I create EML without writing XML?**
+
+Data repositories typically provide a user-friendly interface for creating metadata without needing
+to understand EML. For example, multiple DataONE member nodes like the KNB and Arctic Data Center
+have web portals powered by [MetacatUI](https://github.com/nceas/metacatui), a web application for
+searching, exploring, and creating data packages directly in the web browser. Similarly, EDI
+provides [ezEML](https://ezeml.edirepository.org/), a web-based form that walks you through
+building a complete EML record interactively. Independent of any particular repository, the `EML`
+R package provides programmatic methods for building EML in R.
+
+All of these approaches generate valid XML from your inputs, so you never need to write XML by hand.
+:::
+
+## FAIR and CARE Principles
+
+The FAIR and CARE principles provide a practical framework for evaluating and improving how data are
+published and shared. They are not simply compliance boxes to check. They are frameworks for asking
+better questions about who benefits from your data and whether the data ecosystem you are
+participating in is equitable.
+
+### What is FAIR? {.unnumbered}
+
+FAIR stands for **F**indable, **A**ccessible, **I**nteroperable, and **R**eusable. These
+principles were published in 2016 as community-endorsed guidelines for data management
+and are now widely adopted by funders, journals, and repositories.
+
+| Principle | Definition | In practice |
+|-----------|------------|-------------|
+| **Findable** | Metadata and data are easy to find for humans and machines | Assign a DOI; index in a searchable repository; use rich keywords |
+| **Accessible** | Data can be retrieved using a standard, open protocol | Publish in a public repository with a stable URL; use open protocols (HTTP) |
+| **Interoperable** | Data can be integrated with other data for analysis | Use standard file formats (CSV over XLSX); use standard vocabularies for variables |
+| **Reusable** | Data are well-described so they can be used and replicated | Provide rich metadata; assign a clear license; document provenance |
+
+: {tbl-colwidths="[18,37,45]"}
+
+Each principle has specific sub-criteria. The full set of 15 FAIR principles is available
+at [go-fair.org/fair-principles](https://www.go-fair.org/fair-principles/).
+
+### Applying FAIR to Your Work {.unnumbered}
+
+Use FAIR as a **checklist** when preparing data for publication:
+
+- Does this dataset have a persistent identifier (DOI)? *(Findable)*
+- Is the metadata indexed in a searchable repository? *(Findable)*
+- Can anyone retrieve this data without an account or special software? *(Accessible)*
+- Are the data in an open, non-proprietary format? *(Interoperable)*
+- Does every variable have a definition, unit, and description? *(Reusable)*
+- Is there a clear license specifying how others can use the data? *(Reusable)*
+- Is the provenance documented -- where did the raw data come from? *(Reusable)*
+
+### CARE Principles for Indigenous Data Governance {.unnumbered}
+
+The CARE principles were developed by the International Indigenous Data Sovereignty
+Interest Group to complement FAIR with a human and social dimension. CARE stands for
+**C**ollective benefit, **A**uthority to control, **R**esponsibility, and **E**thics.
+
+| Principle | Definition |
+|-----------|------------|
+| **Collective Benefit** | Data ecosystems should enable Indigenous Peoples to derive benefit from the data |
+| **Authority to Control** | Indigenous Peoples' rights and interests in Indigenous data must be recognized and empowered |
+| **Responsibility** | Those working with Indigenous data have a responsibility to share how data are used to support Indigenous self-determination |
+| **Ethics** | Indigenous Peoples' rights and well-being should be the primary concern at all stages of the data lifecycle |
+
+: {tbl-colwidths="[25,75]"}
+
+**Why CARE matters:** Consider a synthesis project conducted in the Sacramento-San Joaquin Delta
+region, which includes the ancestral and present territories of numerous California tribal nations
+like the Plains Miwok, Bay Miwok, and others. If the contributing data includes traditional
+ecological knowledge, involves species with cultural significance, or was collected on tribal lands,
+the CARE principles apply directly to how you handle, share, and publish those data.
+
+## Activity: Evaluate a Data Package
+
+The best way to internalize what makes a data package work is to evaluate one as a
+critical reader -- or, as the past researchers who published it might wish they had been
+told: *as the stranger trying to reuse it five years later.*
+
+You and your group will each evaluate a data package published on EDI, assessing its metadata
+quality, documentation for reproducibility, and FAIRness.
+
+::: {.callout-tip}
+### Setup
+
+Break into your three synthesis groups and navigate to your group's assigned data package
+on the EDI Data Portal:
+
+- **Group A:** [SBC LTER: Reef: Abundance, size and fishing effort for California Spiny Lobster (Panulirus interruptus), ongoing since 2012](https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-sbc.77.13) (`sbc.77.13`)
+
+- **Group B:** [Physiological stress of American pika (Ochotona princeps) and associated habitat characteristics for Niwot Ridge, 2018 - 2019](https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-nwt.268.1) (`nwt.268.1`)
+
+- **Group C:** [Ecological and social interactions in urban parks: bird surveys in local parks in the central Arizona-Phoenix metropolitan area](https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-cap.256.10) (`knb-lter-cap.256.10`)
+
+- **Group D:** [Interagency Ecological Program: Fish catch and water quality data from the Sacramento River floodplain and tidal slough, collected by the Yolo Bypass Fish Monitoring Program, 1998-2021.](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.233.6) (`edi.233.6`)
+
+<!--
+Other data package:
+
+a. **(Yolo Bypass Fish Monitoring):** [Yolo Bypass Fish Monitoring Program data, collected by the
+   California Department of Fish and Wildlife as part of the Interagency Ecological
+   Program](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.233.2) (edi.233.2)
+
+b. **(Long-Term Water Quality):** [IEP Environmental Monitoring Program -- discrete water quality
+   monitoring in the Sacramento-San Joaquin Bay-Delta, 1975 to
+   present](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.458.8) (edi.458.8)
+
+c. **(Delta Smelt):** [Enhanced Delta Smelt Monitoring Program -- US Fish and Wildlife Service
+   survey data on Delta smelt distribution and abundance across the upper San Francisco
+   Estuary](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.415.8) (edi.415.8)
+-->
+
+Spend a few minutes exploring your package before starting the exercise. Look at the
+metadata landing page, the list of files, and at least one data file.
+:::
+
+::: {.callout-note}
+### Exercise: Evaluate the data package (~20 minutes)
+
+Work through the following with your group:
+
+1. **Metadata quality** -- using the categories from this session as a guide:
+    a. Which categories of metadata are well-covered? (bibliographic, discovery,
+       methods, data structure, rights)
+    b. What is missing or incomplete? What would a new user struggle to understand?
+    c. Is attribute-level metadata provided for the data files? Are variable
+       definitions, units, and coded values clear?
+
+2. **Reproducibility** -- thinking about someone wanting to build on this dataset:
+    a. Is there enough information to understand what was measured, how, and under
+       what conditions?
+    b. Is the data processing documented? Could you reproduce the workflow from raw
+       data to the published files?
+    c. Is associated code included in the package?
+
+3. **FAIR assessment** -- work through the FAIR checklist from this session:
+    a. Is the dataset findable? (DOI, keyword-rich metadata, indexed in a repository)
+    b. Is it accessible? (open access, stable URL)
+    c. Is it interoperable? (open file formats, standard vocabularies)
+    d. Is it reusable? (license, provenance, rich documentation)
+
+Elect someone in your group to share the following with the full group:
+
+- What stood out as particularly strong in this data package?
+- What would you improve, and why?
+- What was the most surprising gap or strength you found?
+:::
+
+## Resources
+
+- [Everything You Always Wanted to Know About Metadata and Ontologies (But Were Afraid to Ask)](https://microbiomedata.org/introduction-to-metadata-and-ontologies/)
+- **EDI Resources for Data Authors**: [edirepository.org/resources/resources-for-data-authors](https://edirepository.org/resources/resources-for-data-authors)
+- **ezEML** (EDI's web-based EML editor): [ezeml.edirepository.org](https://ezeml.edirepository.org/)
+- **FAIR Principles**: [go-fair.org/fair-principles](https://www.go-fair.org/fair-principles/)
+- **CARE Principles**: [gida-global.org/care](https://www.gida-global.org/care)
