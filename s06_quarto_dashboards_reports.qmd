@@ -98,8 +98,8 @@ for layout:
 
 ### Setting up the YAML {.unnumbered}
 
-Like any Quarto document, we need a YAML document header specifying metadata and options. For a
-dashboard, the only required option is `format: dashboard`.
+Like any Quarto document, we need a YAML header specifying metadata and options. For a dashboard,
+the only required option is `format: dashboard`.
 
 Here is an example of minimum YAML for a dashboard:
 
@@ -267,8 +267,8 @@ format:
 ```
 
 Then add a chunk right after the YAML to load packages. Here we use a hash-pipe `label` option to
-label this chunk. This will _not_ be used in the dashboard, but enables convenient automatic
-outline-based navigation of your document in IDEs like Positron:
+label this chunk. The label will _not_ be appear in the dashboard output, but it enables automatic
+outline-based navigation of your document in IDEs like Positron.
 
 ```{{r}}
 #| label: load packages
@@ -281,7 +281,7 @@ library(DT)
 ```
 
 Next add a chunk for loading data. Rather than simply loading from the URL, we apply an `if`/`else`
-caching pattern to download the data file only if hasn't already been locally cached.
+caching pattern to download the data file only if it hasn't already been locally cached.
 
 ```{{r}}
 #| label: load data
@@ -517,8 +517,8 @@ a browseable raw data table.
 
 ### Putting it all together {.unnumbered}
 
-If you've been following along this whole time, you should now have
-a dashboard that looks something like this:
+If you've been following along this whole time, you should now have a dashboard that looks something
+like this:
 
 ![](images/quarto_dashboards_reports/dashboard-full-page1.png){.lightbox fig-cap=""}
 
@@ -757,8 +757,9 @@ plain Quarto dashboards.
 
 ### Applying this to the Delta Dashboard {.unnumbered}
 
-Here is exactly what changes in `delta-dashboard.qmd` to add and use a species multiselect. Nothing
-else needs to move.
+Here is exactly what to change in `delta-dashboard.qmd` to add and use a species multiselect.
+Step 4 below makes only one of the charts reactive to the multiselect input, but you can follow a
+similar pattern to make other charts and tables reactive too.
 
 **1. YAML**: Add `server: shiny`.
 
@@ -773,7 +774,7 @@ server: shiny
 ```
 
 **2. Setup chunk**: Add `context: setup` to both the package and data loading chunks so that these
-happen only once at startup rather than once per user interaction. Here's an excerpted example for
+happen only once at startup rather than once per user interaction. Here is an excerpted example for
 the package loading chunk:
 
 ````{verbatim}
