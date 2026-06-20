@@ -1,0 +1,205 @@
+---
+format: 
+  revealjs:
+    slide-number: true
+    code-link: true
+    highlight-style: a11y
+    chalkboard: true
+    theme:
+      - lh_slides_style.scss ### this lives in folder with slide qmd file
+execute:
+  echo: false
+  code-line-numbers: false
+---
+
+##
+
+<br><br>
+
+[How Do Humans Learn?]{.custom-subtitle}
+
+<hr class="hr-red">
+
+[... and How Can Machines Learn?]{.custom-subtitle}
+
+## {background-color="black"}
+
+![](images/1a_orion.png){.absolute bottom=25 right=0 height="100%" width="100%"}
+
+<div style="position: absolute; top: 50%; left: 10%; transform: translate(0%, 0%); background-color: rgba(0, 0, 0, 0.2); padding: 5px; border-radius: 5px;">
+<h3>How do we learn?</h3>
+</div>
+
+## {background-color="black"}
+
+![](images/1a_orion.png){.absolute bottom=25 right=0 height="100%" width="100%"}
+
+<div style="position: absolute; top: 50%; left: 10%; transform: translate(0%, 0%); background-color: rgba(0, 0, 0, 0.2); padding: 5px; border-radius: 5px;">
+<h3>How do we learn?</h3>
+<p>We assemble disordered <br> information into patterns <br> that can be more easily recognized</p>
+</div>
+
+## {background-color="black"}
+
+![](images/1b_constellations.png){.absolute bottom=100 right=0 height="500" width="500"}
+
+<div style="position: absolute; top: 50%; left: 10%; transform: translate(0%, 0%); background-color: rgba(0, 0, 0, 0.2); padding: 5px; border-radius: 5px;">
+<h3>How do we learn?</h3>
+<p>We assemble disordered <br> information into patterns <br> that can be more easily recognized</p>
+</div>
+
+## How do we learn?
+
+![](images/1c_animals.png){.absolute bottom=100 right=0 height="480" width="670"}
+<br>We group things <br>into categories based<br> on observed <br>characteristics
+
+## How do we learn?
+
+:::{.columns}
+
+::::{.column width="50%"}
+We use **prior knowledge** to classify new observations into known categories
+
+<br>![](images/1d_ren_and_stimpy.png)
+::::
+
+::::{.column width="50%"}
+<br>![](images/1d_dog_v_cat.png)
+::::
+
+:::
+
+## How do we learn?
+
+:::{.columns}
+
+::::{.column width="50%"}
+
+<br>![](images/1e_girl_with_ball.png)
+::::
+
+::::{.column width="50%"}
+<br>We make predictions based on **prior knowledge**
+
+We **test** those predictions
+
+We **update our understanding** based on the outcome of the test
+::::
+
+:::
+
+## How do we learn?
+
+:::{.columns}
+
+::::{.column width="50%"}
+
+![](images/1f_sphere_tastiness.png){width=100%}
+::::
+
+::::{.column width="50%"}
+<br>We make predictions based on **prior knowledge**
+
+We **test** those predictions
+
+We **update our understanding** based on the outcome of the test
+::::
+
+:::
+
+## Machine Learning
+
+:::columns
+
+::::{.column width="40%"}
+We can use the same ideas to design methods and algorithms for machine learning
+
+* Unsupervised machine learning
+* Supervised machine learning
+::::
+
+::::{.column width="60%"}
+
+![[https://vas3k.com/blog/machine_learning/](https://vas3k.com/blog/machine_learning/){style="float:right; font-size: 0.75em;"}](images/classical_ml.jpg)
+::::
+
+:::
+
+## Unsupervised Machine Learning
+
+* Infer underlying structures within a set of data
+* No prior knowledge needed (“unlabeled”)
+* E.g., constellations, animal types
+* E.g., Principal Component Analysis (PCA), clustering algorithms
+
+## Unsupervised Machine Learning
+
+![](images/1g_penguins1.png){fig-align="center"}
+
+## Unsupervised Machine Learning
+
+![](images/1g_penguins2.png){fig-align="center"}
+
+## Unsupervised Machine Learning
+
+![](images/1g_penguins3.png){fig-align="center"}
+
+## Supervised Machine Learning
+
+Identify a function that, given input(s), best predicts an output
+
+Requires data linking inputs with **known** outputs (“labeled”), e.g.:
+
+* Predicting the tastiness of a sphere (regression)
+* Discerning dogs from cats (classification)
+* Catching a ball (classification: caught or not?)
+
+E.g., regression analysis, classification algorithms
+
+## Supervised Machine Learning
+
+:::columns
+::::{.column width="45%"}
+<br>Guess why Captcha is always asking you to select images of traffic lights and cars and motorcycles?
+::::
+
+::::{.column width="55%"}
+![](images/1i_captcha.png){width="70%"}
+::::
+
+:::
+
+## Supervised Machine Learning
+
+:::columns
+
+::::{.column width="45%"}
+<br>Guess why Captcha is always asking you to select images of traffic lights and cars?
+::::
+
+::::{.column width="55%"}
+![](images/1j_captcha2.png){width="70%"}
+::::
+:::
+
+
+
+<!-- ## -->
+
+<!-- Machine learning requires: -->
+
+<!-- * Data (lots of it!) -->
+<!-- * Features (aka variables or parameters or predictors) -->
+<!-- * Algorithms -->
+
+##
+
+![[https://vas3k.com/blog/machine_learning/](https://vas3k.com/blog/machine_learning/){style="float:right; font-size: 0.75em;"}](images/all_ml.jpg)
+
+##
+
+![[https://vas3k.com/blog/machine_learning/](https://vas3k.com/blog/machine_learning/){style="float:right; font-size: 0.75em;"}](images/classical_ml.jpg)
+
+
+
+

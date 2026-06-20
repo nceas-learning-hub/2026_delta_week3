@@ -81,7 +81,7 @@ website:
         - s07_quarto_websites.qmd
       - section: "Day 4"
         contents:
-        - s08_r_tidymodels.qmd
+        - s08_r_machine_learning_tidymodels.qmd
         - s09_r_geospatial_raster_analysis.qmd
       # END SESSIONS
 

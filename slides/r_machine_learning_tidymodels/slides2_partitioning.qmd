@@ -1,0 +1,204 @@
+---
+format: 
+  revealjs:
+    slide-number: true
+    code-link: true
+    highlight-style: a11y
+    chalkboard: true
+    theme:
+      - lh_slides_style_small_font.scss ### this lives in folder with slide qmd file
+execute:
+  echo: false
+  code-line-numbers: false
+---
+
+##
+
+[Data Partitioning]{.custom-title style="font-size:3rem;"}
+
+<hr class="hr-red">
+
+```{mermaid}
+flowchart LR
+  A[(All data)] --> B[/Training/]
+  A --> C[/Testing/]
+  B --> D[Resample]
+  D --> D1[/Analysis/]
+  D --> D2[/Assessment/]
+  D1 --> E{{Logistic Regr}}
+  D1 --> F{{Decision Tree}}
+  D1 --> G{{Random Forest}}
+  E --> H{Select a Model}
+  F --> H
+  G --> H
+  D2 ---> H
+  H --> I[Final Model Fit]
+  B --> I
+  I --> J([Verify Model Performance])
+  C ------> J
+  
+  classDef dataNode fill:#4a90d9,stroke:#2c5f8a,color:#fff
+  classDef modelNode fill:#e8f5e9,stroke:#2e7d32,color:#000
+  classDef decisionNode fill:#fff3e0,stroke:#e65100,color:#000
+  classDef box fill:#eeeeee,stroke:#eeeeee,color:#000
+  classDef hidden display:none
+
+  class A,B,C,D1,D2 dataNode
+  class E,F,G modelNode
+  class H decisionNode
+  class LoopBox box
+
+```
+
+
+## Training on Data
+
+A model is a mathematical function with adjustable "knobs" (parameters)
+
+Training the model involves showing it a lot of data, from which it optimizes settings of the "knobs" to best represent the underlying patterns, weights, and relationships
+
+```{mermaid}
+%%| fig-align: center
+
+flowchart LR
+  A(Input) --> B(Model)
+  B --> C(Prediction)
+  C --> D(Error)
+  D --> E{Adjust} --> B
+
+```
+
+## What If the Model Just... Memorizes?
+
+**Overfitting**: A model that aces every training example but fails on new data
+
+Analogy: That student who memorizes every past exam question but can't answer a novel problem
+
+![](images/lm1.png){width="32%"} ![](images/quad1.png){width="32%"} ![](images/poly1.png){width="32%"}
+
+## What If the Model Just... Memorizes?
+
+**Overfitting**: A model that aces every training example but fails on new data
+
+Analogy: That student who memorizes every past exam question but can't answer a novel problem
+
+![](images/lm2.png){width="32%"} ![](images/quad2.png){width="32%"} ![](images/poly2.png){width="32%"}
+
+
+## Partitioning Your Data
+
+* **Training**[\*]{style="color:darkred"} set - what we use to develop our model (~85%)
+    * **Analysis**[\*]{style="color:darkred"} set - what the model learns from (~70%)
+    * **Assessment**[\*]{style="color:darkred"} set - for model tuning, evaluation, selection (~15%)
+* **Test** set - a sealed envelope, opened only once to test performance of the final model (~15%)
+
+```{mermaid}
+%%| fig-align: center
+flowchart LR
+  A[(All data)] --> B[/Training/]
+  A --> C[/Testing/]
+  B --> D[Resample]
+  D --> D1[/Analysis/]
+  D --> D2[/Assessment/]
+  
+  classDef dataNode fill:#4a90d9,stroke:#2c5f8a,color:#fff
+  classDef modelNode fill:#e8f5e9,stroke:#2e7d32,color:#000
+  classDef decisionNode fill:#fff3e0,stroke:#e65100,color:#000
+  classDef hidden display:none
+
+  class A,B,C,D1,D2 dataNode
+  class E,F,G modelNode
+  class H decisionNode
+
+```
+
+Analogy: **Assessment** = practice exams; **Test** = the real exam, taken once
+
+:::{.body-text style="font-size:1.2rem; color:darkred"}
+\* NOTE: Different sources use different terms for these partitions; for example, some call them "development" (for "training"), "training" (for "analysis"), and "validation" (for "assessment") sets.  The `tidymodels` documentation uses "testing", "analysis", and "assessment" so that's what we're using here!
+:::
+
+##
+
+<br><br>
+[A model is only as good as its ability to predict data it hasn't yet seen.]{.custom-subtitle}
+
+
+
+## Time to Make Some Models!
+
+We may want to test different models: different sets of **predictors**, different **algorithms**
+
+We train each model using the **Analysis** data and then compare each model's predictive power using the **Assessment** set
+
+```{mermaid}
+%%| fig-align: center
+flowchart LR
+  A[(All data)] --> B[/Training/]
+  A --> C[/Testing/]
+  B --> D[Resample]
+  D --> D1[/Analysis/]
+  D --> D2[/Assessment/]
+  D1 --> E{{Logistic Regr}}
+  D1 --> F{{Decision Tree}}
+  D1 --> G{{Random Forest}}
+  E --> H{Select a Model}
+  F --> H
+  G --> H
+  D2 ---> H
+
+  classDef dataNode fill:#4a90d9,stroke:#2c5f8a,color:#fff
+  classDef modelNode fill:#e8f5e9,stroke:#2e7d32,color:#000
+  classDef decisionNode fill:#fff3e0,stroke:#e65100,color:#000
+  classDef box fill:#ffffff,stroke:#ffffff,color:#ffffff
+  classDef hidden display:none
+
+  class A,B,C,D1,D2 dataNode
+  class E,F,G modelNode
+  class H decisionNode
+  class LoopBox box
+
+```
+
+## Model Selection!
+
+After identifying the model structure with the best predictive performance, we use the entire **Training** set to fit the model one last time, to fine-tune model parameters...
+
+And at long last, we use the **Test** set to understand how well our final model performs.
+
+```{mermaid}
+%%| fig-align: center
+flowchart LR
+  A[(All data)] --> B[/Training/]
+  A --> C[/Testing/]
+  B --> D[Resample]
+  D --> D1[/Analysis/]
+  D --> D2[/Assessment/]
+  D1 --> E{{Logistic Regr}}
+  D1 --> F{{Decision Tree}}
+  D1 --> G{{Random Forest}}
+  E --> H{Select a Model}
+  F --> H
+  G --> H
+  D2 ---> H
+  H --> I[Final Model Fit]
+  B --> I
+  I --> J([Verify Model Performance])
+  C ------> J
+  
+  classDef dataNode fill:#4a90d9,stroke:#2c5f8a,color:#fff
+  classDef modelNode fill:#e8f5e9,stroke:#2e7d32,color:#000
+  classDef decisionNode fill:#fff3e0,stroke:#e65100,color:#000
+  classDef box fill:#eeeeee,stroke:#eeeeee,color:#000
+  classDef hidden display:none
+
+  class A,B,C,D1,D2 dataNode
+  class E,F,G modelNode
+  class H decisionNode
+  class LoopBox box
+
+```
+
+## ... The Result: Fame and Fortune!
+
+![](images/dive-into-gold.gif){fig-width="100%" fig-align="center"}
