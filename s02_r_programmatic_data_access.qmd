@@ -451,7 +451,7 @@ if (!file.exists(freeport_temp_file)) {
     monitoring_location_id = "USGS-11447650",  # note "USGS-" prefix  # <1>
     parameter_code = "00010",  # water temperature
     statistic_id = "00003",  # daily mean
-    time = c("2020-01-01", "2025-12-31")
+    time = c("2020-01-01", "2023-12-31")
   )
   dir.create("data", showWarnings = FALSE)
   saveRDS(freeport_temp, freeport_temp_file)
@@ -490,12 +490,12 @@ ggplot(freeport_temp, aes(x = time, y = value)) +
     x = NULL,
     y = "Temperature (°C)",
     title = "Daily Mean Water Temperature at the Sacramento River near Freeport",
-    subtitle = "USGS Station 11447650 (2000-2023)"
+    subtitle = "USGS Station 11447650 (2020-2023)"
   ) +
   theme_light()
 ```
 
-![](images/data-access/freeport-temperature-time-series.png){.lightbox fig-alt="Time series plot showing daily mean water temperature at Sacramento River at Freeport from 2000 to 2023. A clear seasonal oscillation is visible between cold winters and warm summers, with values ranging roughly 5 to 26°C." fig-cap="Daily mean water temperature at Freeport, 2000--2023. The seasonal signal is strong and consistent across years."}
+![](images/data-access/freeport-temperature-time-series.png){.lightbox fig-alt="Time series plot showing daily mean water temperature at Sacramento River at Freeport from 2020 to 2023. A clear seasonal oscillation is visible between cold winters and warm summers, with values ranging roughly 5 to 26°C." fig-cap="Daily mean water temperature at Freeport, 2020--2023. The seasonal signal is strong and consistent across years."}
 
 #### Seasonal patterns
 
@@ -513,7 +513,7 @@ freeport_temp |>
     x = "Month",
     y = "Temperature (°C)",
     title = "Seasonal Temperature Distribution",
-    subtitle = "Sacramento River near Freeport (2000-2023)"
+    subtitle = "Sacramento River near Freeport (2020-2023)"
   ) +
   theme_light()
 ```
@@ -533,7 +533,7 @@ freeport_ss <- read_waterdata_daily(
   monitoring_location_id = "USGS-11447650",
   parameter_code = "80154",  # suspnd sedmnt conc
   statistic_id = "00003",  # daily mean
-  time = c("2020-01-01", "2025-12-31")
+  time = c("2020-01-01", "2023-12-31")
 )
 # value column holds the daily mean specific conductance in μS/cm
 ```
@@ -553,7 +553,7 @@ multi <- read_waterdata_daily(
   monitoring_location_id = "USGS-11447650",
   parameter_code = c("00010", "00060", "80154"),  # temp, discharge, susp sedmnt conc
   statistic_id = "00003",  # daily mean for all three
-  time = c("2000-01-01", "2023-12-31")
+  time = c("2020-01-01", "2023-12-31")
 )
 
 # Plot time series faceted by parameter
@@ -674,7 +674,7 @@ req <- request("https://api.waterdata.usgs.gov/ogcapi/v0") |>
     monitoring_location_id = "USGS-11447650",
     parameter_code = "00010",
     statistic_id = "00003",
-    time = "2024-01-01/2020-01-05"  # ISO 8601 interval format
+    time = "2020-01-01/2020-01-05"  # ISO 8601 interval format
   )
 
 # Preview the request without actually sending it
