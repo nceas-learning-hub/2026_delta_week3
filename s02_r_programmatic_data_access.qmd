@@ -12,13 +12,13 @@ Prerequisite lessons:
 :::{.callout-learning}
 After completing this session, you will be able to:
 
-- <u>Explain</u> why reading data from URLs is more reproducible than using hardcoded local file paths
-- <u>Apply</u> a file-existence cache pattern to avoid redundant downloads in R scripts
-- <u>Use</u> `read_waterdata_monitoring_location()` and `read_waterdata_combined_meta()` to discover USGS monitoring stations and available data
-- <u>Retrieve</u> daily water data for monitoring stations using `read_waterdata_daily()`
-- <u>Visualize</u> water temperature time series and seasonal patterns with `ggplot2`
-- <u>Describe</u> the client-server model and explain how HTTP APIs work conceptually
-- <u>Construct</u> a basic API request using `httr2` *(optional)*
+- Explain why reading data from URLs is more reproducible than using hardcoded local file paths
+- Apply a file-existence cache pattern to avoid redundant downloads in R scripts
+- Use `read_waterdata_monitoring_location()` and `read_waterdata_combined_meta()` to discover USGS monitoring stations and available data
+- Retrieve daily water data for monitoring stations using `read_waterdata_daily()`
+- Visualize water temperature time series and seasonal patterns with `ggplot2`
+- Describe the client-server model and explain how HTTP APIs work conceptually
+- Construct a basic API request using `httr2` *(optional)*
 :::
 
 ## Overview
@@ -214,7 +214,7 @@ summarized in [the migration guide](https://doi-usgs.github.io/dataRetrieval/art
 
 Here is a screenshot of the USGS National Water Dashboard showing monitoring stations (circles)
 across the Sacramento-San Joaquin Delta in California. Within this region, USGS maintains dozens of
-monitoring stations that record various paremeters over time -- often every 15 minutes -- with
+monitoring stations that record various parameters over time -- often every 15 minutes -- with
 readings archived in many cases for decades.
 
 ![](images/data-access/usgs-national-water-dashboard-delta.png){.lightbox fig-alt="Screenshot of the USGS National Water Dashboard showing monitoring stations (circles) across the Sacramento-San Joaquin Delta." fig-cap="The USGS National Water Dashboard (dashboard.waterdata.usgs.gov) lets you explore monitoring stations interactively before querying with R."}
@@ -535,7 +535,7 @@ freeport_ss <- read_waterdata_daily(
   statistic_id = "00003",  # daily mean
   time = c("2020-01-01", "2023-12-31")
 )
-# value column holds the daily mean specific conductance in μS/cm
+# value column holds the daily mean suspended sediment concentration in mg/L
 ```
 
 ::: {.callout-tip}
@@ -757,7 +757,7 @@ with Freeport. Is the annual cycle the same shape? Earlier or later in the year?
 - Cache Slough near Ryer Island: `USGS-11455385`
 - Sacramento River at Rio Vista: `USGS-11455420`
 
-**Option B: Different statistic:** At Freeport (`USGS-11447650`), retrieve the **daily maximum** (`statistic_id = "00001"`) and **daily minimum** (`00002"`) temperature in addition to the mean. Plot all three on one time series. How wide is the daily range? Does it vary by season?
+**Option B: Different statistic:** At Freeport (`USGS-11447650`), retrieve the **daily maximum** (`statistic_id = "00001"`) and **daily minimum** (`"00002"`) temperature in addition to the mean. Plot all three on one time series. How wide is the daily range? Does it vary by season?
 
 **Option C: Temperature vs. discharge:** Retrieve both daily mean temperature (`00010`) and daily mean suspended sediment concentration (`80154`) at Freeport. Make a scatter plot. Is there a clear relationship? What might you look at next?
 
