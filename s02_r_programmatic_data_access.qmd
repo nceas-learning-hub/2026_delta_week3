@@ -217,7 +217,7 @@ across the Sacramento-San Joaquin Delta in California. Within this region, USGS 
 monitoring stations that record various parameters over time -- often every 15 minutes -- with
 readings archived in many cases for decades.
 
-![](images/data-access/usgs-national-water-dashboard-delta.png){.lightbox fig-alt="Screenshot of the USGS National Water Dashboard showing monitoring stations (circles) across the Sacramento-San Joaquin Delta." fig-cap="The USGS National Water Dashboard (dashboard.waterdata.usgs.gov) lets you explore monitoring stations interactively before querying with R."}
+![](images/r_programmatic_data_access/usgs-national-water-dashboard-delta.png){.lightbox fig-alt="Screenshot of the USGS National Water Dashboard showing monitoring stations (circles) across the Sacramento-San Joaquin Delta." fig-cap="The USGS National Water Dashboard (dashboard.waterdata.usgs.gov) lets you explore monitoring stations interactively before querying with R."}
 <!-- map URL:  https://dashboard.waterdata.usgs.gov/app/nwd/en/?aoi=bbox-%5B-122.6491%2C37.4988%2C-120.74873%2C38.63946%5D&view=%7B%22basemap%22%3A%22EsriTopo%22%2C%22bounds%22%3A%22-122.64910174474248%2C37.4987964305809%2C-120.74873295729783%2C38.639462893940745%22%2C%22insetMap%22%3Afalse%2C%22panel%22%3A%7B%22id%22%3A%22ViewerTools%22%2C%22open%22%3Afalse%2C%22checkbox%22%3A%220%2C10%2C21%2C22%2C23%22%2C%22hiddenSubgroup%22%3A%22%22%2C%22range%22%3A%220%3A1.0%2C1%3A1.0%2C2%3A1.0%2C3%3A1.0%2C4%3A1.0%2C5%3A1.0%2C6%3A1.0%2C7%3A1.0%2C8%3A0.8%2C9%3A0.3%2C10%3A0.5%2C11%3A0.5%2C12%3A0.5%2C13%3A0.5%2C14%3A0.5%2C15%3A0.5%2C16%3A0.5%2C17%3A1.0%2C18%3A1.0%2C19%3A1.0%2C20%3A1.0%22%2C%22select%22%3A%220%3A0%2C1%3A0%2C2%3A0%2C3%3A0%2C4%3A0%2C5%3A0%2C6%3A0%2C7%3A0%2C8%3A0%2C9%3A0%2C10%3A0%2C11%3A0%2C12%3A0%2C13%3A0%2C14%3A0%2C15%3A0%2C16%3A0%2C17%3A0%2C18%3A0%2C19%3A0%22%7D%7D -->
 
 Many different parameters are available depending on the station and time period. Here are a
@@ -371,7 +371,7 @@ local cache folder. Repeat calls load from disk instantly with no network reques
 
 :::
 
-![](images/data-access/freeport-location.png){.lightbox fig-alt="Map showing Sacramento River at Freeport (USGS 11447650) marked along the Sacramento River south of Sacramento city, with water channels shown in blue." fig-cap="Expected output: Sacramento River at Freeport (USGS 11447650), the upstream gateway to the Delta. Counties and water channels from Census TIGER/Line via `tigris`."}
+![](images/r_programmatic_data_access/freeport-location.png){.lightbox fig-alt="Map showing Sacramento River at Freeport (USGS 11447650) marked along the Sacramento River south of Sacramento city, with water channels shown in blue." fig-cap="Expected output: Sacramento River at Freeport (USGS 11447650), the upstream gateway to the Delta. Counties and water channels from Census TIGER/Line via `tigris`."}
 
 ### Explore data availability
 
@@ -495,7 +495,7 @@ ggplot(freeport_temp, aes(x = time, y = value)) +
   theme_light()
 ```
 
-![](images/data-access/freeport-temperature-time-series.png){.lightbox fig-alt="Time series plot showing daily mean water temperature at Sacramento River at Freeport from 2020 to 2023. A clear seasonal oscillation is visible between cold winters and warm summers, with values ranging roughly 5 to 26°C." fig-cap="Daily mean water temperature at Freeport, 2020--2023. The seasonal signal is strong and consistent across years."}
+![](images/r_programmatic_data_access/freeport-temperature-time-series.png){.lightbox fig-alt="Time series plot showing daily mean water temperature at Sacramento River at Freeport from 2020 to 2023. A clear seasonal oscillation is visible between cold winters and warm summers, with values ranging roughly 5 to 26°C." fig-cap="Daily mean water temperature at Freeport, 2020--2023. The seasonal signal is strong and consistent across years."}
 
 #### Seasonal patterns
 
@@ -518,7 +518,7 @@ freeport_temp |>
   theme_light()
 ```
 
-![](images/data-access/freeport-temperature-by-month.png){.lightbox fig-alt="Boxplot of daily mean temperature by month. Temperatures are lowest in January (around 8°C) and peak in July-August (around 22°C), with lower variability in summer than in winter." fig-cap="Monthly temperature distribution at Freeport shows a clear seasonal cycle, with cold winters and warm summers. Summer temperatures often exceed thresholds that stress salmon and other cold-water species."}
+![](images/r_programmatic_data_access/freeport-temperature-by-month.png){.lightbox fig-alt="Boxplot of daily mean temperature by month. Temperatures are lowest in January (around 8°C) and peak in July-August (around 22°C), with lower variability in summer than in winter." fig-cap="Monthly temperature distribution at Freeport shows a clear seasonal cycle, with cold winters and warm summers. Summer temperatures often exceed thresholds that stress salmon and other cold-water species."}
 
 ### Retrieving additional parameters
 
@@ -601,7 +601,7 @@ across the internet to the USGS water services **server**. The server uses infor
 request to perform some action(s) -- e.g., query its database for the requested data -- and then
 sends a response back.
 
-![](images/data-access/client-server-diagram.png){.lightbox fig-alt="Diagram showing two boxes: 'Your R Session (Client)' on the left sends a 'request' arrow to 'USGS Water Services (Server)' on the right. The server sends a 'response (data)' arrow back to the left. Small labels on each arrow show example content: 'sites=USGS-11447650, etc, ...' for the request, and 'JSON payload with station time series data' for the response." fig-cap="The client-server model: your R session asks for data, and a remote server retrieves and returns it."}
+![](images/r_programmatic_data_access/client-server-diagram.png){.lightbox fig-alt="Diagram showing two boxes: 'Your R Session (Client)' on the left sends a 'request' arrow to 'USGS Water Services (Server)' on the right. The server sends a 'response (data)' arrow back to the left. Small labels on each arrow show example content: 'sites=USGS-11447650, etc, ...' for the request, and 'JSON payload with station time series data' for the response." fig-cap="The client-server model: your R session asks for data, and a remote server retrieves and returns it."}
 
 ### Anatomy of an API request
 
@@ -613,7 +613,7 @@ https://api.waterdata.usgs.gov/ogcapi/v0/collections/daily/items?f=json&lang=en-
 ```
 
 
-![](images/data-access/url-anatomy.png){.lightbox fig-alt="The URL broken into labeled parts: 'https://api.waterdata.usgs.gov/ogcapi/v0' labeled as 'Base URL (server address)', '/collections/daily/items' labeled as 'Endpoint (which service)', and 'f=json&lang=en-US&monitoring_location_id=USGS-11447650' labeled as 'Query parameters (e.g., data criteria, formats, etc)'." fig-cap="An API URL has three parts: the server address, the endpoint (which service to use), and query parameters (what data you want)."}
+![](images/r_programmatic_data_access/url-anatomy.png){.lightbox fig-alt="The URL broken into labeled parts: 'https://api.waterdata.usgs.gov/ogcapi/v0' labeled as 'Base URL (server address)', '/collections/daily/items' labeled as 'Endpoint (which service)', and 'f=json&lang=en-US&monitoring_location_id=USGS-11447650' labeled as 'Query parameters (e.g., data criteria, formats, etc)'." fig-cap="An API URL has three parts: the server address, the endpoint (which service to use), and query parameters (what data you want)."}
 
 **Try it yourself:** paste that URL into a browser. The raw JSON data that `dataRetrieval`
 processes for you will appear as text in the browser window.
