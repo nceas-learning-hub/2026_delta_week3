@@ -1,6 +1,6 @@
 ---
 title: Publishing Synthesis Data
-bibliography: resources/publishing_data/refs.bib
+bibliography: resources/lecture_publishing_data/refs.bib
 ---
 
 :::{.callout-learning}
@@ -39,7 +39,7 @@ The [DataONE](https://dataoneorg.github.io/Education) data life cycle provides a
 major stages that data moves through in a research project. You may be used to thinking of data work
 as mostly about collection and analysis, but the full cycle is much richer.
 
-![](images/publishing_data/data-life-cycle.png){fig-align="center" fig-alt="Data life cycle wheel
+![](images/lecture_publishing_data/data-life-cycle.png){fig-align="center" fig-alt="Data life cycle wheel
 showing the eight DataONE stages in a circle (Plan → Collect → Assure → Describe → Preserve →
 Discover → Integrate → Analyze)"}
 
@@ -104,7 +104,7 @@ scientific data. They provide:
 - **Version tracking** -- a persistent record of any updates over time
 
 ::: {.callout-note appearance="minimal"}
-![](images/publishing_data/repo-logos.png){fig-alt="Logos for EDI, KNB, DataONE, and Zenodo"}
+![](images/lecture_publishing_data/repo-logos.png){fig-alt="Logos for EDI, KNB, DataONE, and Zenodo"}
 :::
 
 ### Explore Repositories for Environmental Science {.unnumbered}
