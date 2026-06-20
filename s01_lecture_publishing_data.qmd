@@ -80,7 +80,7 @@ reuse capability, and the research community more broadly recognizes the benefit
 
 ### GitHub is Not an Archival Location {.unnumbered}
 
-GitHub is excellent for version-controlling code and and collaborating on analyses, with a variety
+GitHub is excellent for version-controlling code and collaborating on analyses, with a variety
 of features that enable and support open science. However, it is _not_ designed to be a long-term
 data archive:
 
@@ -116,7 +116,7 @@ scientific data. They provide:
 **Knowledge Network for Biocomplexity (KNB)**
 
 KNB was founded at NCEAS in 1998 as the first public data repository serving the needs of ecological
-synthesis research. Its development was interwined with the origins and maturation of Ecological
+synthesis research. Its development was intertwined with the origins and maturation of Ecological
 Metadata Language (EML), now a widespread standard in this field. KNB continues to operate today as
 a repository for the broader ecology and environmental science community, with an emphasis on
 accommodating highly heterogeneous data while applying standardized metadata. It is a DataONE
@@ -132,7 +132,7 @@ If you have used NCEAS resources in the past, you may have published to or acces
 
 EDI is the primary repository for LTER (Long-Term Ecological Research) and other NSF-funded
 ecological datasets. Like the KNB, it uses the Ecological Metadata Language (EML) standard, is part
-of the DataONE federation, and accepts data from the broader envrionmental research community. For
+of the DataONE federation, and accepts data from the broader environmental research community. For
 example, the Interagency Ecological Program (IEP) -- a nine-agency consortium monitoring the
 Bay-Delta since 1959 -- publishes many of its monitoring datasets through EDI.
 
@@ -158,7 +158,7 @@ search. As of 2026, over 1 million data packages have been published across the 
 
 Zenodo is a general-purpose open repository operated by CERN (the European particle physics
 laboratory). In addition to archiving data, Zenodo stores many other kinds of research artifacts --
-code, reports, figures, and other scholarly outouts -- with assigned DOIs. It is especially popular
+code, reports, figures, and other scholarly outputs -- with assigned DOIs. It is especially popular
 for archiving GitHub repositories (you can link a GitHub release directly to a Zenodo deposit) and
 for data that does not fit neatly into a domain-specific repository.
 
@@ -421,12 +421,12 @@ archive contexts than to scientific data publication.
 
 :::
 
-### EML: A Closer Look {.unnumbered}
+#### EML: A Closer Look {.unnumbered}
 
 EML is broadly applicable to scientific datasets, and is the metadata standard you are most likely
-to encounter especially when working with ecological and environmental data collected in the field
--- especially if the data is in tabular format. EML is stored as an XML file, but in practice you'll
-never need need to write XML directly, nor even think about the fact that the metadata is in an XML
+to encounter when working with ecological and environmental data collected in the field,
+particularly for tabular datasets. EML is stored as an XML file, but in practice you'll
+never need to write XML directly, nor even think about the fact that the metadata is in an XML
 format under the hood. As described below, tools exist to generate it for you!
 
 Here is an excerpt of what EML looks like under the hood:
@@ -541,8 +541,7 @@ quality, documentation for reproducibility, and FAIRness.
 ::: {.callout-tip}
 ### Setup
 
-Break into your three synthesis groups and navigate to your group's assigned data package
-on the EDI Data Portal:
+Break into four groups and navigate to your group's assigned data package on the EDI Data Portal:
 
 - **Group A:** [SBC LTER: Reef: Abundance, size and fishing effort for California Spiny Lobster (Panulirus interruptus), ongoing since 2012](https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-sbc.77.13) (`sbc.77.13`)
 
