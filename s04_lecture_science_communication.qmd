@@ -26,7 +26,7 @@ The content in this page was adapted from the Long Term Ecological Research (LTE
 
 ## Overview
 
-So, you’ve done the research. Great! Now it’s time to get the word out. Science communication is the final step in the synthesis science process. It lets your work grow to be as impactful as it can be. But it’s hard, especially for those without training in it. In this module, we’ll talk through some broadly applicable SciComm strategies that will get you started.
+So, you've done the research. Great! Now it's time to get the word out. Science communication is the final step in the synthesis science process. It lets your work grow to be as impactful as it can be. But it's hard, especially for those without training in it. In this module, we'll talk through some broadly applicable SciComm strategies that will get you started.
 
 ## Why Communicate Your Findings?
 
@@ -60,6 +60,79 @@ All effective communication contains a story!
 </details>
 
 This first exercise is a starting point. First of all, it's really hard to distill your whole project down to a minute! Think about how much you left out, and how much it hurt to leave that out. From here, we'll continue to refine and rebuild this elevator pitch.
+
+::::
+
+## The Message Box
+
+![](images/lecture_science_communication/message_box.png){fig-alt="Blue square labeled 'issue' surrounded by four facets labeled 'problems?', 'so what?', 'solutions?', and 'benefits?' (clockwise from top)" fig-align="center" width="75%".lightbox}
+
+**The [Message Box](https://www.compassscicomm.org/leadership-development/the-message-box/) is a tool that helps researchers take the information they hold about their research and communicate it in a way that resonates with the chosen audience.** It can be used to help prepare for interviews with journalists or employers, plan for a presentation, outline a paper or lecture, prepare a grant proposal, or clearly, and with relevancy, communicate your work to others. While the message box can be used in all these ways, you must first identify the audience for your communication.
+
+The Message Box comprises five sections to help you sort and distill your knowledge in a way that will resonate with your (chosen) audience. Click through the tabs below for more details on each.
+
+:::{.panel-tabset}
+### The Issue
+
+The Issue section in the center of the box identifies and describes the overarching issue or topic that you're addressing in broad terms. **It's the big-picture context of your work.** This should be very concise and clear; no more than a short phrase. You might find you revisit the Issue after you've filled out your Message Box, to see if your thinking on the overarching topic has changed since you started.
+
+- Describes the overarching issue or topic: Big Picture
+- Broad enough to cover key points
+- Specific enough to set up what's to come
+- Concise and clear
+- 'Frames' the rest of the message box
+
+### The Problem
+
+The Problem is the chunk of the broader issue that you're addressing in your area of expertise. **It's your piece of the pie, reflecting your work and expert knowledge.** Think about your research questions and what aspect of the specific problem you're addressing would matter to your audience. The Problem is also where you set up the So What and describe the situation you see and want to address.
+
+- The part of the broader issue that your work is addressing
+- Builds upon your work and expert knowledge
+- Try to focus on one problem per audience
+- Often the Problem is your research question
+- This section sets you up for So What
+
+### The So What
+
+The crux of the Message Box, and the critical question the COMPASS team seeks to help scientists answer, is "So what?" **Why should your audience care?** What about your research or work is important for them to know? Why are you talking to them about it?
+
+The answer to this question may change from audience to audience, and you'll want to be able to adjust based on their interests and needs. We like to use the analogy of putting a message through a prism that clarifies the importance to different audiences. Each audience will be interested in different facets of your work, and you want your message to reflect their interests and accommodate their needs. The prism below includes a spectrum of audiences you might want to reach, and some of the questions they might have about your work.
+
+- This is the crux of the message box
+- Why should you audience care?
+- What about your research is important for them to know?
+- Why are you talking to them about it?
+
+![](images/lecture_science_communication/so_what_graphic.png){fig-alt="Graphic where an arrow labeled 'message' hits a box labeled 'so what' which radiates into a number of arrows with follow-up questions from various groups indicating how the answer to 'so what' will differ between groups" fig-align="center" width="85%".lightbox}
+
+### The Solution
+
+The Solution section **outlines the options for solving the problem you identified.** When presenting possible solutions, consider whether they are something your audience can influence or act upon. And remind yourself of your communication goals: Why are you communicating with this audience? What do you want to accomplish?
+
+- Outlines the options for solving the Problem
+- Can your audience influence or act upon this?
+- There may be multiple solutions
+- Make sure your Solution relates back to the Problem. Edit one or both as needed
+
+### The Benefit
+
+In the Benefit section, you **list the benefits of addressing the Problem**--all the good things that could happen if your Solution section is implemented. This ties into the So What of why your audience cares, but focuses on the positive results of taking action (the So What may be a negative thing--for example, inaction could lead to consequences that your audience cares about). If possible, it can be helpful to be specific here; concrete examples are more compelling than abstract. Who is likely to benefit, and where, and when?
+
+- What are the benefits of addressing the Problem?
+- What good things come from implementing your Solution?
+- Make sure it connects with your So What
+- Benefits and So What may be similar
+
+:::
+
+![](images/lecture_science_communication/message_box_qs.png){fig-alt="Blue square labeled 'issue' surrounded by four facets labeled 'problems?', 'so what?', 'solutions?', and 'benefits?' (clockwise from top). Orange questions pertinent to each facet are written next to each facet title (questions are recapitulated by the text in the tabs above)" fig-align="center" width="75%".lightbox}
+
+::::{.callout-warning icon="false"}
+### {{<fa rocket >}} Activity: Elevator Pitch & Message Box
+
+- As a group, revisit your elevator pitch and ask yourself whether each component of the message box is included
+    - If not, how could it be added?
+    - Keep in mind that an elevator pitch shouldn't be too long!
 
 ::::
 
@@ -347,7 +420,7 @@ Re-imagine your elevator pitch to the following different audiences:
 - Colleague in a different subfield of your field
 - Funder
 - Reporter asking for a short summary for a radio story
-- 8th grade students visiting your site
+- 8^th^ grade students visiting your site
 - Another audience (of your choosing!)
 
 ### Part 2 - Share
