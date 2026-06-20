@@ -94,7 +94,7 @@ for layout:
 | `##` Level 2 heading | A new **row** (within a page) |
 | Code chunk | A **card** (column within the current row) |
 
-![](images/dashboards/dashboard-structure.png){.lightbox fig-cap="Dashboard layout: each `##` heading is a row; each code chunk within a row is a column card."}
+![](images/quarto_dashboards_reports/dashboard-structure.png){.lightbox fig-cap="Dashboard layout: each `##` heading is a row; each code chunk within a row is a column card."}
 
 ### Setting up the YAML {.unnumbered}
 
@@ -371,7 +371,7 @@ row exists to share the space with.
 
 Render the file. You should see a single page with three value boxes filling the screen.
 
-![](images/dashboards/dashboard-valueboxes.png){.lightbox fig-alt="" fig-cap=""}
+![](images/quarto_dashboards_reports/dashboard-valueboxes.png){.lightbox fig-alt="" fig-cap=""}
 
 ### Step 2: Add an interactive chart {.unnumbered}
 
@@ -396,7 +396,7 @@ ggplotly(p)
 The card title comes from `#| title:` -- it appears as the card header in the dashboard.
 The two rows now sum to 100% of the page height (25% + 75%).
 
-![](images/dashboards/dashboard-plotly.png){.lightbox fig-alt="" fig-cap=""}
+![](images/quarto_dashboards_reports/dashboard-plotly.png){.lightbox fig-alt="" fig-cap=""}
 
 ::: {.callout-note}
 ## Exercise: Show a static plot instead
@@ -428,7 +428,7 @@ fish %>%
 Multiple chunks in the same row produce side-by-side columns. Quarto divides the row width
 equally by default.
 
-![](images/dashboards/dashboard-datatable.png){.lightbox fig-alt="" fig-cap=""}
+![](images/quarto_dashboards_reports/dashboard-datatable.png){.lightbox fig-alt="" fig-cap=""}
 
 ::: {.callout-note}
 ## Exercise: Show a static table instead
@@ -467,7 +467,7 @@ ggplotly(p2)
 
 The navigation bar now shows two pages: Summary and Catch Trends.
 
-![](images/dashboards/dashboard-page2.png){.lightbox fig-alt="" fig-cap=""}
+![](images/quarto_dashboards_reports/dashboard-page2.png){.lightbox fig-alt="" fig-cap=""}
 
 ### Step 5: Add tabsets {.unnumbered}
 
@@ -513,14 +513,14 @@ fish %>%
 Render again. The Catch Trends page should now show two tabs: the interactive line chart and
 a browseable raw data table.
 
-![](images/dashboards/dashboard-page2tab2.png){.lightbox fig-alt="" fig-cap=""}
+![](images/quarto_dashboards_reports/dashboard-page2tab2.png){.lightbox fig-alt="" fig-cap=""}
 
 ### Putting it all together {.unnumbered}
 
 If you've been following along this whole time, you should now have
 a dashboard that looks something like this:
 
-![](images/dashboards/dashboard-full-page1.png){.lightbox fig-cap=""}
+![](images/quarto_dashboards_reports/dashboard-full-page1.png){.lightbox fig-cap=""}
 
 ::: {.callout-tip collapse="true"}
 ## Complete delta-dashboard.qmd
