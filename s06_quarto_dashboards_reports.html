@@ -738,10 +738,10 @@ Ideal prerequisite lessons:
 </tr>
 </tbody>
 </table>
-<p><a href="images/dashboards/dashboard-structure.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/dashboards/dashboard-structure.png" class="img-fluid" data-fig-cap="Dashboard layout: each `##` heading is a row; each code chunk within a row is a column card."></a></p>
+<p><a href="images/quarto_dashboards_reports/dashboard-structure.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/quarto_dashboards_reports/dashboard-structure.png" class="img-fluid" data-fig-cap="Dashboard layout: each `##` heading is a row; each code chunk within a row is a column card."></a></p>
 <section id="setting-up-the-yaml" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="setting-up-the-yaml">Setting up the YAML</h3>
-<p>Like any Quarto document, we need a YAML document header specifying metadata and options. For a dashboard, the only required option is <code>format: dashboard</code>.</p>
+<p>Like any Quarto document, we need a YAML header specifying metadata and options. For a dashboard, the only required option is <code>format: dashboard</code>.</p>
 <p>Here is an example of minimum YAML for a dashboard:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers=""><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Dashboard"</span></span>
@@ -940,7 +940,7 @@ Ideal prerequisite lessons:
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">dashboard</span><span class="kw">:</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Then add a chunk right after the YAML to load packages. Here we use a hash-pipe <code>label</code> option to label this chunk. This will <em>not</em> be used in the dashboard, but enables convenient automatic outline-based navigation of your document in IDEs like Positron:</p>
+<p>Then add a chunk right after the YAML to load packages. Here we use a hash-pipe <code>label</code> option to label this chunk. The label will <em>not</em> be appear in the dashboard output, but it enables automatic outline-based navigation of your document in IDEs like Positron.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load packages</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -950,7 +950,7 @@ Ideal prerequisite lessons:
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Next add a chunk for loading data. Rather than simply loading from the URL, we apply an <code>if</code>/<code>else</code> caching pattern to download the data file only if hasn’t already been locally cached.</p>
+<p>Next add a chunk for loading data. Rather than simply loading from the URL, we apply an <code>if</code>/<code>else</code> caching pattern to download the data file only if it hasn’t already been locally cached.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load data</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1038,7 +1038,7 @@ yolo_catch_file <- contentid::resolve(sha1, registries = c("dataone"), store = T
 </div>
 </div>
 <p>Render the file. You should see a single page with three value boxes filling the screen.</p>
-<p><a href="images/dashboards/dashboard-valueboxes.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/dashboards/dashboard-valueboxes.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
+<p><a href="images/quarto_dashboards_reports/dashboard-valueboxes.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/quarto_dashboards_reports/dashboard-valueboxes.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
 </section>
 <section id="step-2-add-an-interactive-chart" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="step-2-add-an-interactive-chart">Step 2: Add an interactive chart</h3>
@@ -1056,7 +1056,7 @@ yolo_catch_file <- contentid::resolve(sha1, registries = c("dataone"), store = T
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(p)</span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The card title comes from <code>#| title:</code> – it appears as the card header in the dashboard. The two rows now sum to 100% of the page height (25% + 75%).</p>
-<p><a href="images/dashboards/dashboard-plotly.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/dashboards/dashboard-plotly.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
+<p><a href="images/quarto_dashboards_reports/dashboard-plotly.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/quarto_dashboards_reports/dashboard-plotly.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1086,7 +1086,7 @@ yolo_catch_file <- contentid::resolve(sha1, registries = c("dataone"), store = T
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>(<span class="at">rownames =</span> <span class="cn">FALSE</span>, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">5</span>))</span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Multiple chunks in the same row produce side-by-side columns. Quarto divides the row width equally by default.</p>
-<p><a href="images/dashboards/dashboard-datatable.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/dashboards/dashboard-datatable.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
+<p><a href="images/quarto_dashboards_reports/dashboard-datatable.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/quarto_dashboards_reports/dashboard-datatable.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1125,7 +1125,7 @@ yolo_catch_file <- contentid::resolve(sha1, registries = c("dataone"), store = T
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(p2)</span>
 <span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The navigation bar now shows two pages: Summary and Catch Trends.</p>
-<p><a href="images/dashboards/dashboard-page2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="images/dashboards/dashboard-page2.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
+<p><a href="images/quarto_dashboards_reports/dashboard-page2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="images/quarto_dashboards_reports/dashboard-page2.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
 </section>
 <section id="step-5-add-tabsets" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="step-5-add-tabsets">Step 5: Add tabsets</h3>
@@ -1159,12 +1159,12 @@ yolo_catch_file <- contentid::resolve(sha1, registries = c("dataone"), store = T
 <span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>(<span class="at">rownames =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Render again. The Catch Trends page should now show two tabs: the interactive line chart and a browseable raw data table.</p>
-<p><a href="images/dashboards/dashboard-page2tab2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="images/dashboards/dashboard-page2tab2.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
+<p><a href="images/quarto_dashboards_reports/dashboard-page2tab2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="images/quarto_dashboards_reports/dashboard-page2tab2.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
 </section>
 <section id="putting-it-all-together" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="putting-it-all-together">Putting it all together</h3>
 <p>If you’ve been following along this whole time, you should now have a dashboard that looks something like this:</p>
-<p><a href="images/dashboards/dashboard-full-page1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="images/dashboards/dashboard-full-page1.png" class="img-fluid" data-fig-cap=""></a></p>
+<p><a href="images/quarto_dashboards_reports/dashboard-full-page1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="images/quarto_dashboards_reports/dashboard-full-page1.png" class="img-fluid" data-fig-cap=""></a></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1411,7 +1411,7 @@ Note
 </div>
 <section id="applying-this-to-the-delta-dashboard" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="applying-this-to-the-delta-dashboard">Applying this to the Delta Dashboard</h3>
-<p>Here is exactly what changes in <code>delta-dashboard.qmd</code> to add and use a species multiselect. Nothing else needs to move.</p>
+<p>Here is exactly what to change in <code>delta-dashboard.qmd</code> to add and use a species multiselect. Step 4 below makes only one of the charts reactive to the multiselect input, but you can follow a similar pattern to make other charts and tables reactive too.</p>
 <p><strong>1. YAML</strong>: Add <code>server: shiny</code>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19" data-code-line-numbers=""><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Delta Fish Monitoring"</span></span>
@@ -1420,7 +1420,7 @@ Note
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">server</span><span class="kw">:</span><span class="at"> shiny</span></span>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>2. Setup chunk</strong>: Add <code>context: setup</code> to both the package and data loading chunks so that these happen only once at startup rather than once per user interaction. Here’s an excerpted example for the package loading chunk:</p>
+<p><strong>2. Setup chunk</strong>: Add <code>context: setup</code> to both the package and data loading chunks so that these happen only once at startup rather than once per user interaction. Here is an excerpted example for the package loading chunk:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load packages</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| context: setup</span></span>
