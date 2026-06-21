@@ -11,7 +11,12 @@ Prerequisite lessons:
 :::{.callout-learning}
 After completing this session, you will be able to:
 
-- Create learning objectives using verbs based on [Bloom's Taxonomy](https://en.wikipedia.org/wiki/Bloom%27s_taxonomy#/media/File:Bloom%E2%80%99s_Taxonomy_Verbs.png)
+* Explain the purpose of partitioning data into training, validation/assessment, and test sets, and describe why this practice helps prevent overfitting
+* Apply `rsample::initial_split()` and `rsample::`vfold_cv()` to partition and resample a dataset
+* Construct classification models using `parsnip`, applying a consistent syntax across multiple algorithms
+* Evaluate model performance using appropriate classification metrics
+* Compare multiple model specifications and algorithms using cross-validated performance metrics to select a best-performing model.
+* Distinguish between model parameters and hyperparameters, and describe at a conceptual level how tuning strategies search hyperparameter space
 :::
 
 ## Overview
@@ -19,6 +24,7 @@ After completing this session, you will be able to:
 - Overview
   - overview of objectives - classification and regression without using those terms
 
+BUILD THIS OUT
 
 <!-- ## Data for Exercises -->
 
@@ -53,6 +59,8 @@ https://vas3k.com/blog/machine_learning/ - This entertaining and informative hig
 ## Setup
 
 ### Intro to tidymodels and components
+
+BUILD THIS OUT
 
 - load packages
 - load data
@@ -122,21 +130,27 @@ Stratified partitioning would make our manual code more complicated, but it is v
 
 ### Partitioning With `rsample::initial_split`
 
-Partition the penguins data, with 85% going into our training set (which we will resample later as 70%-15%), and 15% set aside for final testing.  We will stratify on the `sex` column (`strata = sex`), so each sex will have the same proportional representation in our training and test sets!
+Partition the penguins data, with 85% going into our training set (which we will resample later as 70%-15%), and 15% set aside for final testing.  Our outcome variable, `sex`, is already pretty balanced, so instead we will stratify on the `species` column (`strata = species`), so each species will have the same proportional representation in our training and test sets!
     
 ```{r}
 set.seed(42)
-peng_split <- initial_split(penguins_clean, prop = 0.85, strata = sex)
+peng_split <- initial_split(penguins_clean, prop = 0.85, strata = species)
 peng_train_df <- training(peng_split)
 peng_test_df  <- testing(peng_split)
 # table(peng_test_df$species) / nrow(peng_test_df); table(peng_train_df$species) / nrow(peng_train_df)
-# #    Adelie Chinstrap    Gentoo;     Adelie Chinstrap    Gentoo
-# # 0.2352941 0.3137255 0.4509804;  0.4751773 0.1843972 0.3404255
-# 
+# #    Adelie Chinstrap    Gentoo;      Adelie Chinstrap    Gentoo
+# # 0.4313725 0.2156863 0.3529412;   0.4397163 0.2021277 0.3581560
+
 # table(peng_test_df$sex) / nrow(peng_test_df); table(peng_train_df$sex) / nrow(peng_train_df)
-# #    female      male;     female      male 
-# # 0.4901961 0.5098039;  0.4964539 0.5035461
+# #    female      male;      female      male
+# # 0.6078431 0.3921569;   0.4751773 0.5248227 
 ```
+
+:::callout-tip
+### When should we worry about imbalanced data?
+
+Generally we only really need to be concerned when one class (e.g., one species or sex) only makes up ~10% or less of a dataset.  For small datasets, imbalance can be very problematic - if one of our species had only 5% of observations, the model would only have 16-17 penguins to learn its patterns!
+:::
 
 Let's further partition our _training_ split into _analysis_ and _assessment_ sets.  To get the 85% separated into 70% and 15% accordingly, we can just use proportions.  Let's stratify on `sex` again!
 ```{r}
@@ -217,7 +231,7 @@ In our case, because we treat `sex` as a factor and `female` is alphabetically b
 :::panel-tabset
 #### Confusion Matrix
 
-For classification problems, a "confusion matrix" shows True Positives and Negatives vs. False Positives and Negatives. Female (`sex) vs. female (`.pred_class`) = True Negative; male/female = False Negative; male/male = True Positive; female/male = False Positive.
+For classification problems, a "confusion matrix" shows True Positives and Negatives vs. False Positives and Negatives. True female (`sex`) vs. predicted female (`.pred_class`) = True Negative; true male/predicted female = False Negative; male/male = True Positive; female/male = False Positive.
 
 ```{r}
 peng_pred1 %>% select(sex, .pred_class) %>% table()
@@ -240,7 +254,7 @@ A Receiver Operating Characteristic (ROC) curve plots the tradeoff between the T
 
 ![](images/r_machine_learning_tidymodels/roc_auc.webp){fig-width="70%" fig-align="center" .lightbox}
 
-A low threshold means that, even at very low predicted probabilities, we assign "Male" - which means we get most of the males (high True Positive Rate), but mis-classify a lot of females as males (high False Positive Rate).  A high threshold means we need a high predicted probability to classify a penguin as male - meaning we err on the side of classifying as female, i.e., a high True Negative Rate - and misclassify many males as females (high False Negative Rate).
+A low threshold means that, even at very low predicted probabilities, we assign "Male" - which means we get most of the males (high True Positive Rate), but we also assign many (true) females to be (false) males (high False Positive Rate).  A high threshold means we need a high predicted probability to classify a penguin as male - meaning we err on the side of classifying as female, i.e., a high True Negative Rate - and misclassify many males as females (high False Negative Rate).
 
 Often we don't even look at the curve, but instead just the area under the curve (AUC) - the ROC curve of a great model will approach the top left of the plot, while a bad model will be close to the diagonal.
 
@@ -338,10 +352,10 @@ mean(blm1_results_vec) ### mean accuracy of our given model
 
 Functions from the `tidymodels` packages automate a lot of that for us.  Additionally, we can create a "workflow" that is easy to read and easy to modify/update with new models or even new algorithms.
 
-Resample the data into five folds (`v = 5`) in a single line - and optionally lets us also do *repeated* rounds of cross validation (`repeats` argument) at the same time!
+Resample the data into five folds (`v = 5`) in a single line - and optionally lets us also do *repeated* rounds of cross validation (`repeats` argument) at the same time!  Here we only do 3 repeats to keep our examples from being too slow, but 10 would be a better choice.
 
 ```{r}
-peng_train_folds <- vfold_cv(peng_train_df, v = 5, repeats = 10) # <1>
+peng_train_folds <- vfold_cv(peng_train_df, v = 5, repeats = 3) # <1>
 ```
 1. Usually "k-fold cross validation" but `tidymodels` calls it "v-fold"...?
 
@@ -401,7 +415,7 @@ rf_mdl <- parsnip::rand_forest(trees = 1000) %>%
   parsnip::set_mode('classification')   # <3> 
   
 svm_mdl <- parsnip::svm_linear() %>%
-  parsnip::set_engine("kernlab") %>%    # <4> 
+  parsnip::set_engine('kernlab') %>%    # <4> 
   parsnip::set_mode('classification')   # <5> 
 ```
 1. We already defined `blr_mdl` above, repeating here for clarity
@@ -413,7 +427,7 @@ svm_mdl <- parsnip::svm_linear() %>%
 :::callout-tip
 ### Computational Engines
 
-Most model algorithms are available from different computational engines, e.g., for logistic regression we could use the `glm()` implementation, or `glmnet`, `LiblineaR`, `stan`, etc.  To see the available engines for an algorithm, use `show_engines()` with the name of the algorithm function in `parsnip`, e.g., `show_engines('logistic_regr')` or `show_engines('rand_forest')`.
+Most model algorithms are available from different computational engines, e.g., for logistic regression we could use the `glm()` implementation, or `glmnet`, `LiblineaR`, `stan`, etc.  To see the available engines for an algorithm, use `show_engines()` with the name of the algorithm function in `parsnip`, e.g., `show_engines('logistic_reg')` or `show_engines('rand_forest')`.
 :::
 
 ### Compare Models
@@ -496,31 +510,97 @@ Across all algorithms, specification 2 (using all available biometric predictors
 
 Across the algorithms, SVM > Logistic Regression > Random Forest.
 
-Based on these performance evaluation metrics, our final model would use specification 1 with a support vector machine algorithm.
+Based on these performance evaluation metrics, our final model would use specification 2 with a support vector machine algorithm.
 
-## Model Tuning
+## Finalizing the Model
 
-Having chosen a model from a suite of candidate models, we now want to make sure our model is performing at peak effectiveness.  Each model algorithm and engine relies on a set of _hyperparameters_, essentially configuration settings that can affect its computational and predictive performance - especially to avoid **overfitting** and **underfitting**.  Model parameters (such as model coefficients and weights) are learned from the data, but _hyperparameters_ control the learning process itself.
+At this point, we have partitioned our data using cross validation to identify the best model.  Now, we can put in *all* the training data into our selected model to finalize our model parameters, weights, and coefficients, then compare to the test data we set aside at the very beginning.  The function `parsnip::last_fit()` does all this for us, when we pass it our `peng_split` object that contains both the `peng_train_df` and `peng_test_df`.
+
+```{r}
+### set up our final model as a workflow
+final_workflow <- workflow() %>%
+  add_model(svm_mdl) %>%
+  add_formula(spec2)    ### specification with all biometric variables
+
+final_fit <- last_fit(final_workflow, peng_split)
+
+collect_metrics(final_fit)
+```
+
+
+## Optional: Model Tuning
+
+So far we have split our data, used cross validation to identify the best model algorithm and specification, then applied that to our full training data.  The `tidymodels` model functions (`logistic_reg`, `random_forest`, `svm_linear`, etc.) each have several _hyperparameters_, configuration settings that affect how the model learns from the data.  Out of the box, `tidymodels` assigns sensible values for those hyperparameters, but in some cases, those default values can be tweaked to improve the machine learning performance - particularly to avoid overfitting and underfitting.  Model parameters (such as model coefficients and weights) are learned from the data, but _hyperparameters_ control the learning process itself.
 
 Random Forest, for example, has parameters that control the number of decision trees, the number of random features (variables) considered at each node split, tree depth, etc.  Support Vector Machines are configured with parameters for kernel (the mathematical function to transform data into higher-dimensional space - linear, polynomial, distance-based methods), and  regularization parameter C and gamma parameter $\gamma$ to trade off between smoother vs. more tightly curving decision boundaries.  Other algorithms, including logistic regression, might have hyperparameters to apply penalties or costs to large coefficients or large feature sets.
 
-Typically, a generic model will start from a pretty good default set of hyperparameters.  But with a little work we can test different values of hyperparameters to see how model performance changes, searching for an optimal set (usually across multiple hyperparameters simultaneously).  Three common options for tuning:
+### Common Model Tuning Algorithms
 
-* Grid Search: 
+::: panel-tabset
+
+#### Grid Search
+
+A grid search tuning algorithm assigns a vector of values to test for each hyperparameter.  Across multiple hyperparameters, this creates a multi-dimensional grid or array of possible combinations.  Grid search checks every single combination to look for the optimal set.  As such, it is intuitive and thorough, but computationally expensive - a brute force approach.
+
+![](images/r_machine_learning_tidymodels/grid_search.png){fig-align="center"}
 
 
+#### Randomized Search
 
-## Model Interpretation
+A randomized search tuning algorithm randomly samples many potential combinations of hyperparameters.  The values to test for each hyperparameter are drawn from some distribution provided by the user.  Unlike grid search, this tuning algorithm concentrates its efforts on regions of each hyperparameter that are most likely according to the given probability distributions, and is generally able to find a good combination faster than a complete grid search.  In the example image, test values for hyperparameter 1 are chosen assuming a normal distribution, while values for hyperparameter 2 are chosen from a skewed distribution.
+
+![](images/r_machine_learning_tidymodels/randomized_search.png){fig-align="center"}
+
+
+#### Bayesian Optimization
+
+Bayesian optimization tuning algorithm iteratively builds a probabilistic map across hyperparameter space, using a Gaussian process (GP) to approximate the true objective function we want to maximize.  To identify likely values to sample, the algorithm focuses on areas of the parameter space with high information value.  This balances "exploration" (areas of high uncertainty) against "exploitation" (areas of high expected value).  As each point is tested, that information is fed back to the probabilistic model of parameter space, and the next point is chosen to once again maximize the expected information value.  
+
+In the example shown (for a single hyperparameter, for simplicity), the black points have already been tested - so uncertainty collapses to zero.  A value of ~0.18 falls in a region of high uncertainty (wide confidence interval) and likely high value (GP mean is high).  After sampling this point, the confidence intervals and GP mean function will shift accordingly, and the iteration will continue until some stop rule is reached.
+
+![](images/r_machine_learning_tidymodels/bayesian_optimization.png){fig-align="center"}
+
+::: 
+
+### Tuning Model Hyperparameters
+
+Each model type has a different set of hyperparameters with different default values and ranges, which can be found by querying the model function help page (for our purposes, `?svm_linear` reveals two parameters, `cost` and `margin`).  
+
+To prepare for tuning, we redefine our model and set the model's parameters to a placeholder function `tune()` to flag it for optimization.  Then let's rebuild our model specification using `spec1` from above (the one with all the biometric variables) using the same workflow from before.  We will also reuse our folds defined above - `peng_train_folds` defined with `vfold_cv()` - for cross validation during the tuning process.
+
+```r
+mdl_tune <- svm_linear(cost = tune(), margin = tune()) %>%
+  set_engine('kernlab') %>%
+  set_mode('classification')
+
+wf_tune <- workflow() %>%
+  add_model(mdl_tune) %>%
+  add_formula(spec1)
+```
+
+Let's try Bayesian optimization!  (A grid search is already outlined in the [`tidymodels` documentation](https://www.tidymodels.org/start/tuning/#tuning)).  
+
+We provide our model specification and our resamples to the `tune_bayes()` function to identify the best values for our parameters.  From these results, we select the best parameter set using the cleverly named function `select_best()`.
+
+```r
+bayes_results <- tune_bayes(
+  object = wf_tune,
+  resamples = peng_train_folds
+)
+
+best_params <- select_best(bayes_results, metric = 'roc_auc')
+```
+
+We can insert these best hyperparameter values back into our workflow, and then perform our final fit just as we did above.
+
+```r
+final_tuned_wf <- finalize_workflow(wf_tune, best_params)
+
+final_tuned_fit <- last_fit(final_tuned_wf, peng_split)
+```
+
+
+## Optional: Model Interpretation
    
-
-<!-- For this workshop/tutorial, we will use the `tidymodels` package to quickly generate and test predictive models, both regression models (predicting a continuous output based on various inputs) and classification models (predicting a categorical output based on various inputs). -->
-
-<!-- This borrows heavily from the Posit `tidymodels` tutorial that can be found here - visit these pages for more in-depth exploration of the `tidymodels` package: -->
-
-<!-- * https://www.tidymodels.org/start/models/ -->
-<!-- * https://www.tidymodels.org/start/recipes/ -->
-<!-- * https://www.tidymodels.org/start/resampling/ -->
-<!-- * https://www.tidymodels.org/start/tuning/ -->
-<!-- * https://www.tidymodels.org/start/case-study/ -->
 
 
