@@ -11,12 +11,12 @@ Ideal prerequisite lessons:
 :::{.callout-learning}
 After completing this session, you will be able to:
 
-- <u>Describe</u> what a Quarto Dashboard is and where it fits in the data product landscape
-- <u>Configure</u> the YAML header to render a `.qmd` file as a Quarto Dashboard
-- <u>Organize</u> dashboard layout using markdown heading levels and attributes
-- <u>Add</u> value boxes, interactive charts, and interactive tables to a dashboard
-- <u>Customize</u> a dashboard's appearance using built-in themes
-- <u>Publish</u> a static Quarto Dashboard
+- Describe what a Quarto Dashboard is and where it fits in the data product landscape
+- Configure the YAML header to render a `.qmd` file as a Quarto Dashboard
+- Organize dashboard layout using markdown heading levels and attributes
+- Add value boxes, interactive charts, and interactive tables to a dashboard
+- Customize a dashboard's appearance using built-in themes
+- Publish a static Quarto Dashboard
 :::
 
 ::: {.callout-note}
