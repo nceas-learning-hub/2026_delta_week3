@@ -580,8 +580,13 @@ window.Quarto = {
   <li><a href="#compare-models" id="toc-compare-models" class="nav-link" data-scroll-target="#compare-models"><span class="header-section-number">7.3</span> Compare Models</a></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">7.4</span> Results</a></li>
   </ul></li>
-  <li><a href="#model-tuning" id="toc-model-tuning" class="nav-link" data-scroll-target="#model-tuning"><span class="header-section-number">8</span> Model Tuning</a></li>
-  <li><a href="#model-interpretation" id="toc-model-interpretation" class="nav-link" data-scroll-target="#model-interpretation"><span class="header-section-number">9</span> Model Interpretation</a></li>
+  <li><a href="#finalizing-the-model" id="toc-finalizing-the-model" class="nav-link" data-scroll-target="#finalizing-the-model"><span class="header-section-number">8</span> Finalizing the Model</a></li>
+  <li><a href="#optional-model-tuning" id="toc-optional-model-tuning" class="nav-link" data-scroll-target="#optional-model-tuning"><span class="header-section-number">9</span> Optional: Model Tuning</a>
+  <ul class="collapse">
+  <li><a href="#common-model-tuning-algorithms" id="toc-common-model-tuning-algorithms" class="nav-link" data-scroll-target="#common-model-tuning-algorithms"><span class="header-section-number">9.1</span> Common Model Tuning Algorithms</a></li>
+  <li><a href="#tuning-model-hyperparameters" id="toc-tuning-model-hyperparameters" class="nav-link" data-scroll-target="#tuning-model-hyperparameters"><span class="header-section-number">9.2</span> Tuning Model Hyperparameters</a></li>
+  </ul></li>
+  <li><a href="#optional-model-interpretation" id="toc-optional-model-interpretation" class="nav-link" data-scroll-target="#optional-model-interpretation"><span class="header-section-number">10</span> Optional: Model Interpretation</a></li>
   </ul>
 </nav>
     </div>
@@ -613,7 +618,12 @@ Prerequisite lessons:
 <div class="callout-learning">
 <p>After completing this session, you will be able to:</p>
 <ul>
-<li>Create learning objectives using verbs based on <a href="https://en.wikipedia.org/wiki/Bloom%27s_taxonomy#/media/File:Bloom%E2%80%99s_Taxonomy_Verbs.png">Bloom’s Taxonomy</a></li>
+<li>Explain the purpose of partitioning data into training, validation/assessment, and test sets, and describe why this practice helps prevent overfitting</li>
+<li>Apply <code>rsample::initial_split()</code> and <code>rsample::</code>vfold_cv()` to partition and resample a dataset</li>
+<li>Construct classification models using <code>parsnip</code>, applying a consistent syntax across multiple algorithms</li>
+<li>Evaluate model performance using appropriate classification metrics</li>
+<li>Compare multiple model specifications and algorithms using cross-validated performance metrics to select a best-performing model.</li>
+<li>Distinguish between model parameters and hyperparameters, and describe at a conceptual level how tuning strategies search hyperparameter space</li>
 </ul>
 </div>
 </div>
@@ -627,6 +637,7 @@ Prerequisite lessons:
 <li>overview of objectives - classification and regression without using those terms</li>
 </ul></li>
 </ul>
+<p>BUILD THIS OUT</p>
 <!-- ## Data for Exercises -->
 <!-- LAND COVER DATA FOR CLASSIFICATION https://archive.ics.uci.edu/static/public/31/covertype.zip citation: Blackard, J. (1998). Covertype [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C50K5N. -->
 <!-- :::{.callout-note collapse=true} -->
@@ -658,6 +669,7 @@ Prerequisite lessons:
 <h2 data-number="3" class="anchored" data-anchor-id="setup"><span class="header-section-number">3</span> Setup</h2>
 <section id="intro-to-tidymodels-and-components" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="intro-to-tidymodels-and-components"><span class="header-section-number">3.1</span> Intro to tidymodels and components</h3>
+<p>BUILD THIS OUT</p>
 <ul>
 <li>load packages</li>
 <li>load data</li>
@@ -736,19 +748,32 @@ female   male
 </section>
 <section id="partitioning-with-rsampleinitial_split" class="level3" data-number="4.2">
 <h3 data-number="4.2" class="anchored" data-anchor-id="partitioning-with-rsampleinitial_split"><span class="header-section-number">4.2</span> Partitioning With <code>rsample::initial_split</code></h3>
-<p>Partition the penguins data, with 85% going into our training set (which we will resample later as 70%-15%), and 15% set aside for final testing. We will stratify on the <code>sex</code> column (<code>strata = sex</code>), so each sex will have the same proportional representation in our training and test sets!</p>
+<p>Partition the penguins data, with 85% going into our training set (which we will resample later as 70%-15%), and 15% set aside for final testing. Our outcome variable, <code>sex</code>, is already pretty balanced, so instead we will stratify on the <code>species</code> column (<code>strata = species</code>), so each species will have the same proportional representation in our training and test sets!</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>peng_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(penguins_clean, <span class="at">prop =</span> <span class="fl">0.85</span>, <span class="at">strata =</span> sex)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>peng_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(penguins_clean, <span class="at">prop =</span> <span class="fl">0.85</span>, <span class="at">strata =</span> species)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>peng_train_df <span class="ot">&lt;-</span> <span class="fu">training</span>(peng_split)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>peng_test_df  <span class="ot">&lt;-</span> <span class="fu">testing</span>(peng_split)</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># table(peng_test_df$species) / nrow(peng_test_df); table(peng_train_df$species) / nrow(peng_train_df)</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># #    Adelie Chinstrap    Gentoo;     Adelie Chinstrap    Gentoo</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># # 0.2352941 0.3137255 0.4509804;  0.4751773 0.1843972 0.3404255</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># #    Adelie Chinstrap    Gentoo;      Adelie Chinstrap    Gentoo</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># # 0.4313725 0.2156863 0.3529412;   0.4397163 0.2021277 0.3581560</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># table(peng_test_df$sex) / nrow(peng_test_df); table(peng_train_df$sex) / nrow(peng_train_df)</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># #    female      male;     female      male </span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># # 0.4901961 0.5098039;  0.4964539 0.5035461</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># #    female      male;      female      male</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># # 0.6078431 0.3921569;   0.4751773 0.5248227 </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>When should we worry about imbalanced data?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Generally we only really need to be concerned when one class (e.g., one species or sex) only makes up ~10% or less of a dataset. For small datasets, imbalance can be very problematic - if one of our species had only 5% of observations, the model would only have 16-17 penguins to learn its patterns!</p>
+</div>
 </div>
 <p>Let’s further partition our <em>training</em> split into <em>analysis</em> and <em>assessment</em> sets. To get the 85% separated into 70% and 15% accordingly, we can just use proportions. Let’s stratify on <code>sex</code> again!</p>
 <div class="cell">
@@ -839,21 +864,21 @@ female   male
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Confusion Matrix</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Accuracy</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">ROC Curve and AUC</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>For classification problems, a “confusion matrix” shows True Positives and Negatives vs.&nbsp;False Positives and Negatives. Female (<code>sex) vs. female (</code>.pred_class`) = True Negative; male/female = False Negative; male/male = True Positive; female/male = False Positive.</p>
+<p>For classification problems, a “confusion matrix” shows True Positives and Negatives vs.&nbsp;False Positives and Negatives. True female (<code>sex</code>) vs.&nbsp;predicted female (<code>.pred_class</code>) = True Negative; true male/predicted female = False Negative; male/male = True Positive; female/male = False Positive.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>peng_pred1 <span class="sc">%&gt;%</span> <span class="fu">select</span>(sex, .pred_class) <span class="sc">%&gt;%</span> <span class="fu">table</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>        .pred_class
 sex      female male
-  female     24    1
-  male        3   23</code></pre>
+  female     23    1
+  male        3   24</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>peng_pred3 <span class="sc">%&gt;%</span> <span class="fu">select</span>(sex, .pred_class) <span class="sc">%&gt;%</span> <span class="fu">table</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>        .pred_class
 sex      female male
-  female      7   18
-  male       11   15</code></pre>
+  female      3   21
+  male        9   18</code></pre>
 </div>
 </div>
 <p><code>peng_pred1</code> has a good True Positive Rate and True Negative Rate; <code>peng_pred3</code> has very high False Positive and False Negative Rates.</p>
@@ -873,7 +898,7 @@ sex      female male
 <pre data-code-line-numbers=""><code># A tibble: 1 × 3
   .metric  .estimator .estimate
   &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
-1 accuracy binary         0.431</code></pre>
+1 accuracy binary         0.412</code></pre>
 </div>
 </div>
 </div>
@@ -884,27 +909,27 @@ sex      female male
 <p><a href="images/r_machine_learning_tidymodels/roc_auc.webp" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/r_machine_learning_tidymodels/roc_auc.webp" class="img-fluid quarto-figure quarto-figure-center figure-img" data-fig-width="70%"></a></p>
 </figure>
 </div>
-<p>A low threshold means that, even at very low predicted probabilities, we assign “Male” - which means we get most of the males (high True Positive Rate), but mis-classify a lot of females as males (high False Positive Rate). A high threshold means we need a high predicted probability to classify a penguin as male - meaning we err on the side of classifying as female, i.e., a high True Negative Rate - and misclassify many males as females (high False Negative Rate).</p>
+<p>A low threshold means that, even at very low predicted probabilities, we assign “Male” - which means we get most of the males (high True Positive Rate), but we also assign many (true) females to be (false) males (high False Positive Rate). A high threshold means we need a high predicted probability to classify a penguin as male - meaning we err on the side of classifying as female, i.e., a high True Negative Rate - and misclassify many males as females (high False Negative Rate).</p>
 <p>Often we don’t even look at the curve, but instead just the area under the curve (AUC) - the ROC curve of a great model will approach the top left of the plot, while a bad model will be close to the diagonal.</p>
 <p>To calculate ROC AUC (and the ROC curve) we need not just the predicted classes, but the <em>probabilities</em> associated with the predictions.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-24" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-24-1"><a href="#annotated-cell-24-1" aria-hidden="true" tabindex="-1"></a>peng_prob1 <span class="ot">&lt;-</span> peng_assess <span class="sc">%&gt;%</span></span>
-<span id="annotated-cell-24-2"><a href="#annotated-cell-24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">predict</span>(peng_fit1, <span class="at">new_data =</span> ., <span class="at">type =</span> <span class="st">'prob'</span>))</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="1">1</button><span id="annotated-cell-24-3" class="code-annotation-target"><a href="#annotated-cell-24-3" aria-hidden="true" tabindex="-1"></a>yardstick<span class="sc">::</span><span class="fu">roc_auc</span>(peng_prob1, <span class="at">truth =</span> sex, .pred_female, <span class="at">event_level =</span> <span class="st">'first'</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="2">2</button><span id="annotated-cell-24-4" class="code-annotation-target"><a href="#annotated-cell-24-4" aria-hidden="true" tabindex="-1"></a>yardstick<span class="sc">::</span><span class="fu">roc_auc</span>(peng_prob1, <span class="at">truth =</span> sex, .pred_male, <span class="at">event_level =</span> <span class="st">'second'</span>)</span>
-<span id="annotated-cell-24-5"><a href="#annotated-cell-24-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-24-6"><a href="#annotated-cell-24-6" aria-hidden="true" tabindex="-1"></a>peng_prob3 <span class="ot">&lt;-</span> peng_assess <span class="sc">%&gt;%</span></span>
-<span id="annotated-cell-24-7"><a href="#annotated-cell-24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">predict</span>(peng_fit3, <span class="at">new_data =</span> ., <span class="at">type =</span> <span class="st">'prob'</span>))</span>
-<span id="annotated-cell-24-8"><a href="#annotated-cell-24-8" aria-hidden="true" tabindex="-1"></a>yardstick<span class="sc">::</span><span class="fu">roc_auc</span>(peng_prob3, <span class="at">truth =</span> sex, .pred_female, <span class="at">event_level =</span> <span class="st">'first'</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-28" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-28-1"><a href="#annotated-cell-28-1" aria-hidden="true" tabindex="-1"></a>peng_prob1 <span class="ot">&lt;-</span> peng_assess <span class="sc">%&gt;%</span></span>
+<span id="annotated-cell-28-2"><a href="#annotated-cell-28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">predict</span>(peng_fit1, <span class="at">new_data =</span> ., <span class="at">type =</span> <span class="st">'prob'</span>))</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-28" data-target-annotation="1">1</button><span id="annotated-cell-28-3" class="code-annotation-target"><a href="#annotated-cell-28-3" aria-hidden="true" tabindex="-1"></a>yardstick<span class="sc">::</span><span class="fu">roc_auc</span>(peng_prob1, <span class="at">truth =</span> sex, .pred_female, <span class="at">event_level =</span> <span class="st">'first'</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-28" data-target-annotation="2">2</button><span id="annotated-cell-28-4" class="code-annotation-target"><a href="#annotated-cell-28-4" aria-hidden="true" tabindex="-1"></a>yardstick<span class="sc">::</span><span class="fu">roc_auc</span>(peng_prob1, <span class="at">truth =</span> sex, .pred_male, <span class="at">event_level =</span> <span class="st">'second'</span>)</span>
+<span id="annotated-cell-28-5"><a href="#annotated-cell-28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-28-6"><a href="#annotated-cell-28-6" aria-hidden="true" tabindex="-1"></a>peng_prob3 <span class="ot">&lt;-</span> peng_assess <span class="sc">%&gt;%</span></span>
+<span id="annotated-cell-28-7"><a href="#annotated-cell-28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">predict</span>(peng_fit3, <span class="at">new_data =</span> ., <span class="at">type =</span> <span class="st">'prob'</span>))</span>
+<span id="annotated-cell-28-8"><a href="#annotated-cell-28-8" aria-hidden="true" tabindex="-1"></a>yardstick<span class="sc">::</span><span class="fu">roc_auc</span>(peng_prob3, <span class="at">truth =</span> sex, .pred_female, <span class="at">event_level =</span> <span class="st">'first'</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-24" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-28" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-24" data-code-lines="3" data-code-annotation="1">Here, <code>event_level</code> defines whether we’re looking for the first or second class (female/male in our case), and the <code>.pred_XXX</code> should match the event level.</span>
+<span data-code-cell="annotated-cell-28" data-code-lines="3" data-code-annotation="1">Here, <code>event_level</code> defines whether we’re looking for the first or second class (female/male in our case), and the <code>.pred_XXX</code> should match the event level.</span>
 </dd>
-<dt data-target-cell="annotated-cell-24" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-28" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-24" data-code-lines="4" data-code-annotation="2">Here we swap for <code>event_level = 'second'</code> and look to <code>.pred_male</code> for our probabilities.</span>
+<span data-code-cell="annotated-cell-28" data-code-lines="4" data-code-annotation="2">Here we swap for <code>event_level = 'second'</code> and look to <code>.pred_male</code> for our probabilities.</span>
 </dd>
 </dl>
 </div>
@@ -920,7 +945,7 @@ sex      female male
 # A tibble: 1 × 3
   .metric .estimator .estimate
   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
-1 roc_auc binary         0.405</code></pre>
+1 roc_auc binary         0.512</code></pre>
 </div>
 </div>
 <p>We can also plot the ROC Curve!</p>
@@ -1030,16 +1055,16 @@ sex      female male
 </dl>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>[1] 0.8721805</code></pre>
+<pre data-code-line-numbers=""><code>[1] 0.8866541</code></pre>
 </div>
 </div>
 </section>
 <section id="cross-validation-with-tidymodels" class="level3" data-number="6.3">
 <h3 data-number="6.3" class="anchored" data-anchor-id="cross-validation-with-tidymodels"><span class="header-section-number">6.3</span> Cross Validation with <code>tidymodels</code></h3>
 <p>Functions from the <code>tidymodels</code> packages automate a lot of that for us. Additionally, we can create a “workflow” that is easy to read and easy to modify/update with new models or even new algorithms.</p>
-<p>Resample the data into five folds (<code>v = 5</code>) in a single line - and optionally lets us also do <em>repeated</em> rounds of cross validation (<code>repeats</code> argument) at the same time!</p>
+<p>Resample the data into five folds (<code>v = 5</code>) in a single line - and optionally lets us also do <em>repeated</em> rounds of cross validation (<code>repeats</code> argument) at the same time! Here we only do 3 repeats to keep our examples from being too slow, but 10 would be a better choice.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1">1</button><span id="annotated-cell-9-1" class="code-annotation-target"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a>peng_train_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(peng_train_df, <span class="at">v =</span> <span class="dv">5</span>, <span class="at">repeats =</span> <span class="dv">10</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1">1</button><span id="annotated-cell-9-1" class="code-annotation-target"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a>peng_train_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(peng_train_df, <span class="at">v =</span> <span class="dv">5</span>, <span class="at">repeats =</span> <span class="dv">3</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
@@ -1069,9 +1094,9 @@ sex      female male
 <pre data-code-line-numbers=""><code># A tibble: 3 × 6
   .metric     .estimator   mean     n std_err .config        
   &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;          
-1 accuracy    binary     0.878     50 0.00459 pre0_mod0_post0
-2 brier_class binary     0.0876    50 0.00225 pre0_mod0_post0
-3 roc_auc     binary     0.949     50 0.00293 pre0_mod0_post0</code></pre>
+1 accuracy    binary     0.873     15 0.0124  pre0_mod0_post0
+2 brier_class binary     0.0875    15 0.00623 pre0_mod0_post0
+3 roc_auc     binary     0.954     15 0.00691 pre0_mod0_post0</code></pre>
 </div>
 </div>
 </section>
@@ -1114,7 +1139,7 @@ sex      female male
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="3">3</button><span id="annotated-cell-13-6" class="code-annotation-target"><a href="#annotated-cell-13-6" aria-hidden="true" tabindex="-1"></a>  parsnip<span class="sc">::</span><span class="fu">set_mode</span>(<span class="st">'classification'</span>)</span>
 <span id="annotated-cell-13-7"><a href="#annotated-cell-13-7" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="annotated-cell-13-8"><a href="#annotated-cell-13-8" aria-hidden="true" tabindex="-1"></a>svm_mdl <span class="ot">&lt;-</span> parsnip<span class="sc">::</span><span class="fu">svm_linear</span>() <span class="sc">%&gt;%</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="4">4</button><span id="annotated-cell-13-9" class="code-annotation-target"><a href="#annotated-cell-13-9" aria-hidden="true" tabindex="-1"></a>  parsnip<span class="sc">::</span><span class="fu">set_engine</span>(<span class="st">"kernlab"</span>) <span class="sc">%&gt;%</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="4">4</button><span id="annotated-cell-13-9" class="code-annotation-target"><a href="#annotated-cell-13-9" aria-hidden="true" tabindex="-1"></a>  parsnip<span class="sc">::</span><span class="fu">set_engine</span>(<span class="st">'kernlab'</span>) <span class="sc">%&gt;%</span></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="5">5</button><span id="annotated-cell-13-10" class="code-annotation-target"><a href="#annotated-cell-13-10" aria-hidden="true" tabindex="-1"></a>  parsnip<span class="sc">::</span><span class="fu">set_mode</span>(<span class="st">'classification'</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
@@ -1151,7 +1176,7 @@ sex      female male
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Most model algorithms are available from different computational engines, e.g., for logistic regression we could use the <code>glm()</code> implementation, or <code>glmnet</code>, <code>LiblineaR</code>, <code>stan</code>, etc. To see the available engines for an algorithm, use <code>show_engines()</code> with the name of the algorithm function in <code>parsnip</code>, e.g., <code>show_engines('logistic_regr')</code> or <code>show_engines('rand_forest')</code>.</p>
+<p>Most model algorithms are available from different computational engines, e.g., for logistic regression we could use the <code>glm()</code> implementation, or <code>glmnet</code>, <code>LiblineaR</code>, <code>stan</code>, etc. To see the available engines for an algorithm, use <code>show_engines()</code> with the name of the algorithm function in <code>parsnip</code>, e.g., <code>show_engines('logistic_reg')</code> or <code>show_engines('rand_forest')</code>.</p>
 </div>
 </div>
 </section>
@@ -1184,21 +1209,21 @@ sex      female male
 <pre data-code-line-numbers=""><code># A tibble: 1 × 4
   .config         accuracy brier_class roc_auc
   &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
-1 pre0_mod0_post0    0.878      0.0876   0.949</code></pre>
+1 pre0_mod0_post0    0.873      0.0875   0.954</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(blr_spec2, <span class="at">type =</span> <span class="st">'wide'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 1 × 4
   .config         accuracy brier_class roc_auc
   &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
-1 pre0_mod0_post0    0.912      0.0636   0.970</code></pre>
+1 pre0_mod0_post0    0.915      0.0615   0.976</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(blr_spec3, <span class="at">type =</span> <span class="st">'wide'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 1 × 4
   .config         accuracy brier_class roc_auc
   &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
-1 pre0_mod0_post0    0.434       0.261   0.422</code></pre>
+1 pre0_mod0_post0    0.453       0.261   0.468</code></pre>
 </div>
 </div>
 </div>
@@ -1220,15 +1245,15 @@ sex      female male
 <pre data-code-line-numbers=""><code># A tibble: 1 × 4
   .config         accuracy brier_class roc_auc
   &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
-1 pre0_mod0_post0    0.868       0.104   0.938
+1 pre0_mod0_post0    0.845       0.107   0.939
 # A tibble: 1 × 4
   .config         accuracy brier_class roc_auc
   &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
-1 pre0_mod0_post0    0.909      0.0759   0.963
+1 pre0_mod0_post0    0.904      0.0748   0.965
 # A tibble: 1 × 4
   .config         accuracy brier_class roc_auc
   &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
-1 pre0_mod0_post0    0.393       0.264   0.364</code></pre>
+1 pre0_mod0_post0    0.414       0.265   0.393</code></pre>
 </div>
 </div>
 </div>
@@ -1257,9 +1282,9 @@ sex      female male
 <pre data-code-line-numbers=""><code># A tibble: 3 × 5
   model_spec                                .config accuracy brier_class roc_auc
   &lt;chr&gt;                                     &lt;chr&gt;      &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
-1 sex ~ species + bill_length_mm + bill_de… pre0_m…    0.873      0.0909   0.948
-2 sex ~ species + bill_length_mm + bill_de… pre0_m…    0.912      0.0641   0.970
-3 sex ~ species + island + year             pre0_m…    0.437      0.252    0.512</code></pre>
+1 sex ~ species + bill_length_mm + bill_de… pre0_m…    0.873      0.0887   0.954
+2 sex ~ species + bill_length_mm + bill_de… pre0_m…    0.920      0.0607   0.975
+3 sex ~ species + island + year             pre0_m…    0.472      0.253    0.483</code></pre>
 </div>
 </div>
 </div>
@@ -1270,27 +1295,95 @@ sex      female male
 <h3 data-number="7.4" class="anchored" data-anchor-id="results"><span class="header-section-number">7.4</span> Results</h3>
 <p>Across all algorithms, specification 2 (using all available biometric predictors) moderately outperformed specification 1 (with fewer biometric predictors), and specification 3 (with no biometrics) was generally as bad as just random guessing.</p>
 <p>Across the algorithms, SVM &gt; Logistic Regression &gt; Random Forest.</p>
-<p>Based on these performance evaluation metrics, our final model would use specification 1 with a support vector machine algorithm.</p>
+<p>Based on these performance evaluation metrics, our final model would use specification 2 with a support vector machine algorithm.</p>
 </section>
 </section>
-<section id="model-tuning" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="model-tuning"><span class="header-section-number">8</span> Model Tuning</h2>
-<p>Having chosen a model from a suite of candidate models, we now want to make sure our model is performing at peak effectiveness. Each model algorithm and engine relies on a set of <em>hyperparameters</em>, essentially configuration settings that can affect its computational and predictive performance - especially to avoid <strong>overfitting</strong> and <strong>underfitting</strong>. Model parameters (such as model coefficients and weights) are learned from the data, but <em>hyperparameters</em> control the learning process itself.</p>
+<section id="finalizing-the-model" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="finalizing-the-model"><span class="header-section-number">8</span> Finalizing the Model</h2>
+<p>At this point, we have partitioned our data using cross validation to identify the best model. Now, we can put in <em>all</em> the training data into our selected model to finalize our model parameters, weights, and coefficients, then compare to the test data we set aside at the very beginning. The function <code>parsnip::last_fit()</code> does all this for us, when we pass it our <code>peng_split</code> object that contains both the <code>peng_train_df</code> and <code>peng_test_df</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="do">### set up our final model as a workflow</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>final_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(svm_mdl) <span class="sc">%&gt;%</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_formula</span>(spec2)    <span class="do">### specification with all biometric variables</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>final_fit <span class="ot">&lt;-</span> <span class="fu">last_fit</span>(final_workflow, peng_split)</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(final_fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code># A tibble: 3 × 4
+  .metric     .estimator .estimate .config        
+  &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;          
+1 accuracy    binary        0.902  pre0_mod0_post0
+2 roc_auc     binary        0.966  pre0_mod0_post0
+3 brier_class binary        0.0763 pre0_mod0_post0</code></pre>
+</div>
+</div>
+</section>
+<section id="optional-model-tuning" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="optional-model-tuning"><span class="header-section-number">9</span> Optional: Model Tuning</h2>
+<p>So far we have split our data, used cross validation to identify the best model algorithm and specification, then applied that to our full training data. The <code>tidymodels</code> model functions (<code>logistic_reg</code>, <code>random_forest</code>, <code>svm_linear</code>, etc.) each have several <em>hyperparameters</em>, configuration settings that affect how the model learns from the data. Out of the box, <code>tidymodels</code> assigns sensible values for those hyperparameters, but in some cases, those default values can be tweaked to improve the machine learning performance - particularly to avoid overfitting and underfitting. Model parameters (such as model coefficients and weights) are learned from the data, but <em>hyperparameters</em> control the learning process itself.</p>
 <p>Random Forest, for example, has parameters that control the number of decision trees, the number of random features (variables) considered at each node split, tree depth, etc. Support Vector Machines are configured with parameters for kernel (the mathematical function to transform data into higher-dimensional space - linear, polynomial, distance-based methods), and regularization parameter C and gamma parameter <span class="math inline">\(\gamma\)</span> to trade off between smoother vs.&nbsp;more tightly curving decision boundaries. Other algorithms, including logistic regression, might have hyperparameters to apply penalties or costs to large coefficients or large feature sets.</p>
-<p>Typically, a generic model will start from a pretty good default set of hyperparameters. But with a little work we can test different values of hyperparameters to see how model performance changes, searching for an optimal set (usually across multiple hyperparameters simultaneously). Three common options for tuning:</p>
-<ul>
-<li>Grid Search:</li>
-</ul>
+<section id="common-model-tuning-algorithms" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="common-model-tuning-algorithms"><span class="header-section-number">9.1</span> Common Model Tuning Algorithms</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Grid Search</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Randomized Search</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Bayesian Optimization</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<p>A grid search tuning algorithm assigns a vector of values to test for each hyperparameter. Across multiple hyperparameters, this creates a multi-dimensional grid or array of possible combinations. Grid search checks every single combination to look for the optimal set. As such, it is intuitive and thorough, but computationally expensive - a brute force approach.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/r_machine_learning_tidymodels/grid_search.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<p>A randomized search tuning algorithm randomly samples many potential combinations of hyperparameters. The values to test for each hyperparameter are drawn from some distribution provided by the user. Unlike grid search, this tuning algorithm concentrates its efforts on regions of each hyperparameter that are most likely according to the given probability distributions, and is generally able to find a good combination faster than a complete grid search. In the example image, test values for hyperparameter 1 are chosen assuming a normal distribution, while values for hyperparameter 2 are chosen from a skewed distribution.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/r_machine_learning_tidymodels/randomized_search.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<p>Bayesian optimization tuning algorithm iteratively builds a probabilistic map across hyperparameter space, using a Gaussian process (GP) to approximate the true objective function we want to maximize. To identify likely values to sample, the algorithm focuses on areas of the parameter space with high information value. This balances “exploration” (areas of high uncertainty) against “exploitation” (areas of high expected value). As each point is tested, that information is fed back to the probabilistic model of parameter space, and the next point is chosen to once again maximize the expected information value.</p>
+<p>In the example shown (for a single hyperparameter, for simplicity), the black points have already been tested - so uncertainty collapses to zero. A value of ~0.18 falls in a region of high uncertainty (wide confidence interval) and likely high value (GP mean is high). After sampling this point, the confidence intervals and GP mean function will shift accordingly, and the iteration will continue until some stop rule is reached.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/r_machine_learning_tidymodels/bayesian_optimization.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
 </section>
-<section id="model-interpretation" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="model-interpretation"><span class="header-section-number">9</span> Model Interpretation</h2>
-<!-- For this workshop/tutorial, we will use the `tidymodels` package to quickly generate and test predictive models, both regression models (predicting a continuous output based on various inputs) and classification models (predicting a categorical output based on various inputs). -->
-<!-- This borrows heavily from the Posit `tidymodels` tutorial that can be found here - visit these pages for more in-depth exploration of the `tidymodels` package: -->
-<!-- * https://www.tidymodels.org/start/models/ -->
-<!-- * https://www.tidymodels.org/start/recipes/ -->
-<!-- * https://www.tidymodels.org/start/resampling/ -->
-<!-- * https://www.tidymodels.org/start/tuning/ -->
-<!-- * https://www.tidymodels.org/start/case-study/ -->
+<section id="tuning-model-hyperparameters" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="tuning-model-hyperparameters"><span class="header-section-number">9.2</span> Tuning Model Hyperparameters</h3>
+<p>Each model type has a different set of hyperparameters with different default values and ranges, which can be found by querying the model function help page (for our purposes, <code>?svm_linear</code> reveals two parameters, <code>cost</code> and <code>margin</code>).</p>
+<p>To prepare for tuning, we redefine our model and set the model’s parameters to a placeholder function <code>tune()</code> to flag it for optimization. Then let’s rebuild our model specification using <code>spec1</code> from above (the one with all the biometric variables) using the same workflow from before. We will also reuse our folds defined above - <code>peng_train_folds</code> defined with <code>vfold_cv()</code> - for cross validation during the tuning process.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>mdl_tune <span class="ot">&lt;-</span> <span class="fu">svm_linear</span>(<span class="at">cost =</span> <span class="fu">tune</span>(), <span class="at">margin =</span> <span class="fu">tune</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">'kernlab'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">'classification'</span>)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>wf_tune <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(mdl_tune) <span class="sc">%&gt;%</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_formula</span>(spec1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Let’s try Bayesian optimization! (A grid search is already outlined in the <a href="https://www.tidymodels.org/start/tuning/#tuning"><code>tidymodels</code> documentation</a>).</p>
+<p>We provide our model specification and our resamples to the <code>tune_bayes()</code> function to identify the best values for our parameters. From these results, we select the best parameter set using the cleverly named function <code>select_best()</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>bayes_results <span class="ot">&lt;-</span> <span class="fu">tune_bayes</span>(</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">object =</span> wf_tune,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">resamples =</span> peng_train_folds</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>best_params <span class="ot">&lt;-</span> <span class="fu">select_best</span>(bayes_results, <span class="at">metric =</span> <span class="st">'roc_auc'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We can insert these best hyperparameter values back into our workflow, and then perform our final fit just as we did above.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>final_tuned_wf <span class="ot">&lt;-</span> <span class="fu">finalize_workflow</span>(wf_tune, best_params)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>final_tuned_fit <span class="ot">&lt;-</span> <span class="fu">last_fit</span>(final_tuned_wf, peng_split)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="optional-model-interpretation" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="optional-model-interpretation"><span class="header-section-number">10</span> Optional: Model Interpretation</h2>
 
 
 </section>
