@@ -506,8 +506,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#git-resets" id="toc-git-resets" class="nav-link" data-scroll-target="#git-resets"><span class="header-section-number">6</span> Git Resets</a>
   <ul class="collapse">
   <li><a href="#finding-a-particular-commit" id="toc-finding-a-particular-commit" class="nav-link" data-scroll-target="#finding-a-particular-commit"><span class="header-section-number">6.1</span> Finding a Particular Commit</a></li>
-  <li><a href="#reset-vs.-revert" id="toc-reset-vs.-revert" class="nav-link" data-scroll-target="#reset-vs.-revert"><span class="header-section-number">6.2</span> Re<u>set</u> vs.&nbsp;Re<u>vert</u></a></li>
-  <li><a href="#local-vs.-remote-commits" id="toc-local-vs.-remote-commits" class="nav-link" data-scroll-target="#local-vs.-remote-commits"><span class="header-section-number">6.3</span> Local vs.&nbsp;Remote Commits</a></li>
+  <li><a href="#local-vs.-remote-commits" id="toc-local-vs.-remote-commits" class="nav-link" data-scroll-target="#local-vs.-remote-commits"><span class="header-section-number">6.2</span> Local vs.&nbsp;Remote Commits</a></li>
+  <li><a href="#reset-vs.-revert" id="toc-reset-vs.-revert" class="nav-link" data-scroll-target="#reset-vs.-revert"><span class="header-section-number">6.3</span> Re<u>set</u> vs.&nbsp;Re<u>vert</u></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -591,9 +591,9 @@ Prerequisite lessons or suggestions here
 </thead>
 <tbody>
 <tr class="odd">
-<td>• Enables parallel development and experimentation<br>• Facilitates isolation of features or bug fixes<br> • Provides flexibility and control over project workflows</td>
-<td>• When working on larger projects with multiple features or bug fixes simultaneously<br> • When you want to maintain a stable main branch while developing new features or resolving issues on separate branches<br> • When collaborating with teammates on different aspects of a project and later integrating their changes</td>
-<td>• When working on small projects with a single developer or limited codebase<br> • When the project scope is simple and doesn’t require extensive branch management<br> • When there is no need to isolate features or bug fixes</td>
+<td>- Enables parallel development and experimentation<br>- Facilitates isolation of features or bug fixes<br> - Provides flexibility and control over project workflows</td>
+<td>- When working on larger projects with multiple features or bug fixes simultaneously<br> - When you want to maintain a stable main branch while developing new features or resolving issues on separate branches<br> - When collaborating with teammates on different aspects of a project and later integrating their changes</td>
+<td>- When working on small projects with a single developer or limited codebase<br> - When the project scope is simple and doesn’t require extensive branch management<br> - When there is no need to isolate features or bug fixes</td>
 </tr>
 </tbody>
 </table>
@@ -617,9 +617,9 @@ Prerequisite lessons or suggestions here
 </thead>
 <tbody>
 <tr class="odd">
-<td>• Enables independent experimentation and development<br>• Provides a way to contribute to a project without direct access<br>• Allows for creating separate, standalone copies of a repository</td>
-<td>• When you want to contribute to a project without having direct write access to the original repository<br> • When you want to work on an independent variation or extension of an existing project<br> • When experimenting with changes or modifications to a project while keeping the original repository intact</td>
-<td>• When collaborating on a project with direct write access to the original repository<br> • When the project does not allow external contributions or forking<br> • When the project size or complexity doesn’t justify the need for independent variations</td>
+<td>- Enables independent experimentation and development<br>- Provides a way to contribute to a project without direct access<br>- Allows for creating separate, standalone copies of a repository</td>
+<td>- When you want to contribute to a project without having direct write access to the original repository<br> - When you want to work on an independent variation or extension of an existing project<br> - When experimenting with changes or modifications to a project while keeping the original repository intact</td>
+<td>- When collaborating on a project with direct write access to the original repository<br> - When the project does not allow external contributions or forking<br> - When the project size or complexity doesn’t justify the need for independent variations</td>
 </tr>
 </tbody>
 </table>
@@ -682,9 +682,9 @@ Prerequisite lessons or suggestions here
 </thead>
 <tbody>
 <tr class="odd">
-<td>• Facilitates code review and discussion<br>• Allows for collaboration and feedback from team members<br>• Enables better organization and tracking of proposed changes</td>
-<td>• When working on a shared repository with a team and wanting to contribute changes in a controlled and collaborative manner<br>• When you want to propose changes to a project managed by others and seek review and approval before merging them into the main codebase</td>
-<td>• When working on personal projects or individual coding tasks without the need for collaboration<br>• When immediate changes or fixes are required without review processes<br>• When working on projects with a small team or single developer with direct write access to the repository</td>
+<td>- Facilitates code review and discussion<br>- Allows for collaboration and feedback from team members<br>- Enables better organization and tracking of proposed changes</td>
+<td>- When working on a shared repository with a team and wanting to contribute changes in a controlled and collaborative manner<br>- When you want to propose changes to a project managed by others and seek review and approval before merging them into the main codebase</td>
+<td>- When working on personal projects or individual coding tasks without the need for collaboration<br>- When immediate changes or fixes are required without review processes<br>- When working on projects with a small team or single developer with direct write access to the repository</td>
 </tr>
 </tbody>
 </table>
@@ -1007,17 +1007,17 @@ Prerequisite lessons or suggestions here
 <p><strong>The commit hashes are the 7-character letter/number strings</strong> (e.g., <code>f3b8b9a</code>) on the left of the output from the command above.</p>
 <p>A similar view can be found in GitHub by checking out the commit history of your remote repository but if you’re trying to un-do a commit that you <em>haven’t</em> pushed, GitHub can’t show you that commit.</p>
 </section>
-<section id="reset-vs.-revert" class="level3" data-number="6.2">
-<h3 data-number="6.2" class="anchored" data-anchor-id="reset-vs.-revert"><span class="header-section-number">6.2</span> Re<u>set</u> vs.&nbsp;Re<u>vert</u></h3>
-<p>If resetting feels too extreme, you could also revert a commit. <strong>Reverting moves the status of all files back to what they were under a particular commit but <u>retains the full commit history</u>–including commits made after that focal commit.</strong> You can then make a new commit where you officially change files back to that old status but you don’t lose the history of the changes you now skip over as you would with a reset.</p>
-<p>To revert a repository:</p>
-<pre data-code-line-numbers=""><code>git revert &lt;commit-hash&gt;</code></pre>
-</section>
-<section id="local-vs.-remote-commits" class="level3" data-number="6.3">
-<h3 data-number="6.3" class="anchored" data-anchor-id="local-vs.-remote-commits"><span class="header-section-number">6.3</span> Local vs.&nbsp;Remote Commits</h3>
+<section id="local-vs.-remote-commits" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="local-vs.-remote-commits"><span class="header-section-number">6.2</span> Local vs.&nbsp;Remote Commits</h3>
 <p>All of the above only affects <em>local</em> commits (i.e., commits that have not been synced/pushed). If you realize that you want to undo a commit that you’ve already pushed to GitHub, you’ll need to both reset the commit and “force” push back to GitHub to get the remote repository to reset in the same way.</p>
 <pre data-code-line-numbers=""><code>git reset --hard HEAD~1
 git push --force</code></pre>
+</section>
+<section id="reset-vs.-revert" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="reset-vs.-revert"><span class="header-section-number">6.3</span> Re<u>set</u> vs.&nbsp;Re<u>vert</u></h3>
+<p>If resetting feels too extreme, you could also revert a commit. <strong>Reverting moves the status of all files back to what they were under a particular commit but <u>retains the full commit history</u>–including commits made after that focal commit.</strong> You can then make a new commit where you officially change files back to that old status but you don’t lose the history of the changes you now skip over as you would with a reset.</p>
+<p>To revert a repository:</p>
+<pre data-code-line-numbers=""><code>git revert &lt;commit-hash&gt;</code></pre>
 
 
 </section>
