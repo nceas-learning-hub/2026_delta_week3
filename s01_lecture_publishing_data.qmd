@@ -510,9 +510,10 @@ Use FAIR as a **checklist** when preparing data for publication:
 
 ### CARE Principles for Indigenous Data Governance {.unnumbered}
 
-The CARE principles were developed by the International Indigenous Data Sovereignty
-Interest Group to complement FAIR with a human and social dimension. CARE stands for
-**C**ollective benefit, **A**uthority to control, **R**esponsibility, and **E**thics.
+The [CARE principles](https://www.gida-global.org/careprinciples) were developed by the
+International Indigenous Data Sovereignty Interest Group to complement FAIR with a human and social
+dimension. CARE stands for **C**ollective benefit, **A**uthority to control,
+**R**esponsibility, and **E**thics.
 
 | Principle | Definition |
 |-----------|------------|
@@ -609,4 +610,4 @@ Elect someone in your group to share the following with the full group:
 - **EDI Resources for Data Authors**: [edirepository.org/resources/resources-for-data-authors](https://edirepository.org/resources/resources-for-data-authors)
 - **ezEML** (EDI's web-based EML editor): [ezeml.edirepository.org](https://ezeml.edirepository.org/)
 - **FAIR Principles**: [go-fair.org/fair-principles](https://www.go-fair.org/fair-principles/)
-- **CARE Principles**: [gida-global.org/care](https://www.gida-global.org/care)
+- **CARE Principles**: [gida-global.org/careprinciples](https://www.gida-global.org/careprinciples)
