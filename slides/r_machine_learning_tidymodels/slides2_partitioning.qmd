@@ -14,6 +14,22 @@ execute:
 
 ##
 
+[Data Partitioning]{.custom-title}
+
+<hr class="hr-red">
+
+:::columns
+::::{.column width="35%"}
+![](images/swedish_chef.webp){width=100%}
+::::
+::::{.column width="65%"}
+<br>
+[... or, Chopping our Data Into Pieces]{.custom-subtitle}
+::::
+:::
+
+##
+
 [Data Partitioning]{.custom-title style="font-size:3rem;"}
 
 <hr class="hr-red">

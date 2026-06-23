@@ -16,11 +16,11 @@ execute:
 
 <br><br>
 
-[How Do Humans Learn?]{.custom-subtitle}
+[How Do Machines Learn?]{.custom-title}
 
 <hr class="hr-red">
 
-[... and How Can Machines Learn?]{.custom-subtitle}
+[... and How Do We Humans Learn?]{.custom-subtitle}
 
 ## {background-color="black"}
 
@@ -134,15 +134,15 @@ We can use the same ideas to design methods and algorithms for machine learning
 
 ## Unsupervised Machine Learning
 
-![](images/1g_penguins1.png){fig-align="center"}
+![](images/1g_penguins1.jpg){fig-align="center"}
 
 ## Unsupervised Machine Learning
 
-![](images/1g_penguins2.png){fig-align="center"}
+![](images/1g_penguins2.jpg){fig-align="center"}
 
 ## Unsupervised Machine Learning
 
-![](images/1g_penguins3.png){fig-align="center"}
+![](images/1g_penguins3.jpg){fig-align="center"}
 
 ## Supervised Machine Learning
 

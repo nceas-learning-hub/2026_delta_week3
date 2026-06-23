@@ -1,5 +1,5 @@
 ---
-title: Synthesis Stats with `tidymodels`
+title: Machine Learning with `tidymodels`
 ---
 
 <!--
@@ -12,7 +12,7 @@ Prerequisite lessons:
 After completing this session, you will be able to:
 
 * Explain the purpose of partitioning data into training, validation/assessment, and test sets, and describe why this practice helps prevent overfitting
-* Apply `rsample::initial_split()` and `rsample::`vfold_cv()` to partition and resample a dataset
+* Apply `rsample::initial_split()` and `rsample::vfold_cv()` to partition and resample a dataset
 * Construct classification models using `parsnip`, applying a consistent syntax across multiple algorithms
 * Evaluate model performance using appropriate classification metrics
 * Compare multiple model specifications and algorithms using cross-validated performance metrics to select a best-performing model.
@@ -21,10 +21,30 @@ After completing this session, you will be able to:
 
 ## Overview
 
-- Overview
-  - overview of objectives - classification and regression without using those terms
+Machine Learning (ML) is an intersection between statistics and computer science in which we train computers to learn directly from data without relying on hard-coded rules - identifying patterns, using those patterns to make predictions, then testing those predictions to refine future predictions.   ML enables scientists to process, integrate, and analyze datasets across biological, environmental, and socioeconomic domains, helping identify ecological patterns and trends to inform conservation decisions.
 
-BUILD THIS OUT
+Machine learning can range from "stats 101" concepts like linear regression and principal component analysis, to cutting-edge neural networks and transformer models that underpin social media recommendations, large language models, and generative AI.
+
+In this lesson we will explore machine learning in R by applying the `tidymodels` framework to some relatively simple, intuitive datasets and algorithms.
+
+:::callout-tip
+### Scope: Machine Learning Process, not Algorithms
+
+:::columns
+
+::::{.column width="30%"}
+![](images/r_machine_learning_tidymodels/all_ml.jpg){.lightbox width=95%}
+::::
+::::{.column width="70%"}
+<br><br>
+There are far too many possible machine learning algorithms spread across too many R packages to discuss in depth here.  Instead, we will focus on a general framework for machine learning that is broadly applicable across model types and algorithms.
+::::
+:::
+<!-- end columns -->
+
+:::
+<!-- end callout-tip -->
+
 
 <!-- ## Data for Exercises -->
 
@@ -44,7 +64,7 @@ BUILD THIS OUT
 
 ## Machine Learning Overview
 
-[Full Screen](slides/r_machine_learning_tidymodels/slides1_machine_learning.html)
+[Full Screen](slides/r_machine_learning_tidymodels/slides1_machine_learning.html){target='_blank'}
 
 ```{=html}
 <iframe class="slide-deck" src="slides/r_machine_learning_tidymodels/slides1_machine_learning.html" style="border: 1px solid #2e3846;"></iframe>
@@ -58,39 +78,48 @@ https://vas3k.com/blog/machine_learning/ - This entertaining and informative hig
 
 ## Setup
 
-### Intro to tidymodels and components
+### Intro to `tidymodels` and Component Packages
 
-BUILD THIS OUT
+Dozens, maybe hundreds of R packages exist that implement various machine learning techniques, but most of these packages rely on idiosyncratic data input requirements, custom model formats, and different default parameters, making it difficult to use models interchangeably.  The `tidymodels` metapackage and framework do the hard work of consolidating the most popular and frequently used machine learning packages with consistent syntax, inputs, and outputs.
 
-- load packages
-- load data
-- data overview
+Like the `tidyverse`, the `tidymodels` package is actually a collection of many sub-packages each with its own area of expertise.  Some of the core packages:
 
-```{r}
+* `rsample`: Handles data splitting and resampling - divide data into training and testing sets, select cross-validation folds, and perform bootstrap sampling for validating model performance
+* `parsnip`: Provides a unified, consistent interface for model training - use `parsnip` functions to specify the model type (e.g., "random forest") and computational engine (e.g., choose random forest implementation in `ranger` vs `randomForest` packages), while maintaining consistent input formats and output formats
+* `workflows`: Bundles your data preprocessing steps (`recipes`) and your model specifications (`parsnip`) into a single, cohesive object - streamlining the process of fitting and predicting across multiple model algorithms and specifications
+* `yardstick`: Evaluates model performance - metrics like accuracy, RMSE (Root Mean Square Error), and ROC AUC to test the predictive power of ML models
+
+### Data Overview
+
+Many machine learning algorithms feel pretty much like a "black box":  **data** {{< fa arrow-right >}} [**secret magic**]{style="color:black; background: black;"} {{< fa arrow-right >}} **wisdom**.  To help develop an intuition of the machine learning process (if not quite the algorithms), we will use a simple and familiar dataset, the `palmerpenguins` dataset.  We will focus on a **classification** task: identifying the sex of a penguin (harder than it sounds!) from readily observed biometric characteristics.
+
+### Attach Packages and Load Data
+
+```{r load the data}
 #| warning: false
 #| message: false
 library(dplyr)
-
-### a metapackage like tidyverse, tidymodels contains many model-relevant 
-### packages incl rsample, parsnip, recipes, yardstick, broom - we don't 
-### need to worry about the differences here...
 library(tidymodels) 
 library(palmerpenguins)
 
 penguins_clean <- penguins %>%
   drop_na() %>%
-  ### convert characters to factors - easier for modeling engines!
+  ### convert characters to factors - generally easier for modeling engines!
   mutate(species = factor(species), sex = factor(sex), island = factor(island))
 
-penguins_clean$species %>% table()
-penguins_clean$sex %>% table()
+# table(penguins_clean$sex)
+# # female   male 
+# #    165    168 
+# table(penguins_clean$species)
+# # Adelie Chinstrap    Gentoo 
+# #    146        68       119 
 ```
 
 ## Data Partitioning
 
-One characteristic of machine learning is dividing data into several discrete, non-overlapping bundles, so we can train our algorithms on one set and then test it against another set.  These slides give an overview of why this is important and what the overall machine learning process looks like.
+One fundamental task of machine learning is dividing data into several discrete, non-overlapping bundles, so we can train our algorithms on one set and then test it against another set.  These slides give an overview of why this is important and what the overall machine learning process looks like.
 
-[Full Screen](slides/r_machine_learning_tidymodels/slides2_partitioning.html)
+[Full Screen](slides/r_machine_learning_tidymodels/slides2_partitioning.html){target='_blank'}
 
 ```{=html}
 <iframe class="slide-deck" src="slides/r_machine_learning_tidymodels/slides2_partitioning.html" style="border: 1px solid #2e3846;"></iframe>
@@ -105,32 +134,49 @@ For conceptual understanding, let's see one way of manually partitioning our dat
 * Create separate data frames by filtering on those bins.
 
 ```{r}
-bins <- c(rep('training', 70), rep('validation', 15), rep('testing', 15))
+bins <- c(rep('analysis', 70), rep('assessment', 15), rep('test', 15))
 
 set.seed(123) ### so we all get the same results each time
 part_df <- penguins_clean %>%
   mutate(partition = sample(bins, replace = TRUE, size = n()))
 # table(part_df$partition) / nrow(part_df)
-#    testing   training validation 
-#  0.1681682  0.6786787  0.1531532
-train_df <- part_df %>% filter(partition == 'training')
-valid_df <- part_df %>% filter(partition == 'validation')
-test_df  <- part_df %>% filter(partition == 'testing')
+#  analysis assessment       test 
+# 0.6786787  0.1531532  0.1681682 
+
+analysis_df <- part_df %>% filter(partition == 'analysis')
+assess_df <- part_df %>% filter(partition == 'assessment')
+test_df  <- part_df %>% filter(partition == 'test')
+```
+
+We elided the resample step, jumping straight to analysis and assessment sets - so now our data look like:
+
+```{mermaid}
+%%| fig-align: center
+flowchart LR
+  A[(penguins_clean)] --> B[/training/]
+  A --> C[/test_df/]
+  B --> D[resample]
+  D --> D1[/analysis_df/]
+  D --> D2[/assess_df/]
+  
+  classDef resampleNode fill:#eeeeee,stroke:#dddddd,color:#aaaaaa
+
+  class B,D resampleNode
 ```
 
 :::callout-note
 #### Stratified Partitioning
 
-Often our data is unbalanced, meaning certain values of our outcome variable show up far more frequently than others - for example, rare species will show up far less frequently in a field study than common species.  In such cases, it is a good practice to do "stratified partitioning" to ensure that the proportions of outcome categories within each partition are similar to the proportions in the overall dataset.  
+Often our data is imbalanced, meaning certain values of our outcome variable show up far more frequently than others - for example, rare species will show up far less frequently in a field study than common species.  In such cases, it is a good practice to do "stratified partitioning" to ensure that the proportions of outcome categories within each partition are similar to the proportions in the overall dataset.  
 
 It is also sometimes useful to stratify on predictors, to maintain class balance for critical subgroups.  In our `penguins` dataset, there are more than twice as many Adelies as Chinstraps, while male and female are approximately equally represented.
 
-Stratified partitioning would make our manual code more complicated, but it is very easy to do in `tidymodels`.
+Stratified partitioning would make our manual code far more complicated, but it is very easy to do in `tidymodels`.
 :::
 
 ### Partitioning With `rsample::initial_split`
 
-Partition the penguins data, with 85% going into our training set (which we will resample later as 70%-15%), and 15% set aside for final testing.  Our outcome variable, `sex`, is already pretty balanced, so instead we will stratify on the `species` column (`strata = species`), so each species will have the same proportional representation in our training and test sets!
+Partition the penguins data, with 85% going into our training set (which we will resample later as 70%-15%), and 15% set aside for final testing.  Our outcome variable, `sex`, is already pretty balanced, so instead we will stratify on the `species` column (`strata = species`), so each species will have the same proportional representation in our training and test sets.
     
 ```{r}
 set.seed(42)
@@ -146,13 +192,23 @@ peng_test_df  <- testing(peng_split)
 # # 0.6078431 0.3921569;   0.4751773 0.5248227 
 ```
 
+At this point our data look like:
+```{mermaid}
+%%| fig-align: center
+flowchart LR
+  A[(penguins_clean)] --> B[/peng_train_df/]
+  A --> C[/peng_test_df/]
+```
+
 :::callout-tip
 ### When should we worry about imbalanced data?
 
-Generally we only really need to be concerned when one class (e.g., one species or sex) only makes up ~10% or less of a dataset.  For small datasets, imbalance can be very problematic - if one of our species had only 5% of observations, the model would only have 16-17 penguins to learn its patterns!
+Generally we only really need to be concerned when one class (e.g., one species or sex) only makes up ~10% or less of a dataset.  For small datasets like `palmerpenguins` (n = ~330), imbalance is especially problematic - for example, if one species made up only 5% of observations, we would have only 16-17 observations (further divided among the training and testing splits) for our model to "learn" the patterns.
+
+**BUT:** stratifying your samples never *hurts* so when in doubt, stratify!
 :::
 
-Let's further partition our _training_ split into _analysis_ and _assessment_ sets.  To get the 85% separated into 70% and 15% accordingly, we can just use proportions.  Let's stratify on `sex` again!
+Let's further partition our _training_ split into _analysis_ and _assessment_ sets.  To get the 85% _training_ set separated into 70% and 15% accordingly, we can use proportions.  Let's stratify on `sex` again!
 ```{r}
 peng_train_split <- initial_split(peng_train_df, prop = 70/85, strata = sex)
 peng_analysis <- training(peng_train_split)
@@ -171,11 +227,34 @@ flowchart LR
   D --> D2[/peng_assess/]
 ```
 
+## Pre-Processing Data with `recipes`
+
+Our data are already pretty clean and well formed - no obvious outliers in our continuous data, few `NA` values (which have been dropped), and consistent levels in our categorical variables.
+
+**This is not always the case!**  More often than not, data requires a bit of pre-processing.  The [`tidymodels` "Get Started" resource](https://www.tidymodels.org/start/recipes/) gives some common examples:
+
+> * converting qualitative predictors to indicator variables (also known as dummy variables),
+> * transforming data to be on a different scale (e.g., taking the logarithm of a variable),
+> * transforming whole groups of predictors together,
+> * extracting key features from raw variables (e.g., getting the day of the week out of a date variable)
+
+The `recipes` package within `tidymodels` provides an extensive set of functions for detailed pre-processing, using the familiar piped workflow a la `tidyverse` (`%>%` or `|>`).
+
+:::callout-important
+### Preprocess with `recipes` AFTER partitioning!
+
+The point of data partitioning is to prevent "data leakage", i.e., letting any information about the final _testing_ data sneak into the _training_ data.  However, some pre-processing steps involve summary statistics (e.g., mean and standard deviation) that, if used *before* partitioning, would also influence the testing partition, not just the training partition.
+
+Instead, partition into training (analysis/assessment) and test sets, then apply the preprocessing recipe to just the training data to build the model.
+:::
+
+As noted, our data are already pretty clean, so we will skip this step for brevity - see this [handy reference article](https://recipes.tidymodels.org/articles/recipes.html) and [extensive documentation](https://recipes.tidymodels.org/reference/index.html) elsewhere to see the many many options!
+
 ## Setting Up A Model
 
 Hundreds of modeling algorithms are available across many different R packages; while they share similarities, they also include idiosyncratic object formats and methods.  The `parsnip` package within `tidymodels` provides access to modeling algorithms while enforcing a consistent syntax.
 
-For our classification task, let's start with a logistic regression model; various packages and functions provide logistic regression, but we'll stick with the basic one from the `stats::glm` function.
+For our classification task, let's start with a logistic regression model; various packages and functions provide logistic regression, but we'll stick with the basic engine from the `stats::glm` function.
 
 * Define the model type (and "engine" i.e., the source of the algorithm, if desired)
 * Specify a model with dependent and independent variables, and use `parsnip::fit()` to train the data
@@ -206,7 +285,9 @@ peng_fit3 <- blr_mdl %>%
 
 ### Assessing Model Performance
 
-Now we can use our models to predict classifications in our `peng_assess_df` and judge the prediction quality in several ways. For a classification task, we look at how well it discriminates between our two classes.  Let's check our first model and our garbage model.
+Now we can use our models to predict classifications in our `peng_assess_df` and judge the prediction quality in several ways. For a classification task, we look at how well it discriminates between our two classes (e.g., accuracy, false positives vs. false negatives).  For a regression task, we look at minimizing the error between our predictions and the observed values (e.g., sum of squared error (SSE), root-mean-squared error (RMSE)).  
+
+Let's compare our first model and our garbage model with several classification metrics.
 
 ```{r}
 peng_pred1 <- peng_assess %>%
@@ -306,10 +387,6 @@ Often, after completing one set of cross-validation, we shuffle the observations
 How many repeats?  Like folds, choosing a number is more art than science - but ten is a good starting point, and if the model is pretty unstable (high variance from repeat to repeat) 50-100 repeats is not uncommon.
 :::
 
-### Metrics for Assessment
-
-<details on metrics - e.g., RMSE for regression, accuracy for classification>
-
 ### Cross Validation: Manual Version
 
 For conceptual understanding, five-fold cross validation on our training set `peng_train_df` might look like this:
@@ -397,8 +474,8 @@ Our goal with machine learning is to find a model that best predicts our outcome
 We can create formula objects easily, and give them a short name for easy reference.  This is handy to apply a model specification across multiple algorithms.  The formula we would normally insert into the model function, we can just assign to a named object.  R will not attempt to apply the formula until we call it within the model function.
 
 ```{r}
-spec1 <- sex ~ species + bill_length_mm + bill_depth_mm
-spec2 <- sex ~ species + bill_length_mm + bill_depth_mm + flipper_length_mm + body_mass_g
+spec1 <- sex ~ species + bill_length_mm + bill_depth_mm + flipper_length_mm + body_mass_g
+spec2 <- sex ~ species + bill_length_mm + bill_depth_mm
 spec3 <- sex ~ species + island + year
 ```
 
@@ -506,11 +583,11 @@ svm_specs_df
 
 ### Results
 
-Across all algorithms, specification 2 (using all available biometric predictors) moderately outperformed specification 1 (with fewer biometric predictors), and specification 3 (with no biometrics) was generally as bad as just random guessing.
+Across all algorithms, specification 1 (using all available biometric predictors) moderately outperformed specification 2 (with fewer biometric predictors), and specification 3 (with no biometrics) was generally worse than just random guessing.
 
-Across the algorithms, SVM > Logistic Regression > Random Forest.
+Across the algorithms, SVM $\succsim$ Logistic Regression $\succ$ Random Forest.
 
-Based on these performance evaluation metrics, our final model would use specification 2 with a support vector machine algorithm.
+Based on these performance evaluation metrics, for our final model let's use specification 1 with a support vector machine algorithm.
 
 ## Finalizing the Model
 
@@ -520,15 +597,19 @@ At this point, we have partitioned our data using cross validation to identify t
 ### set up our final model as a workflow
 final_workflow <- workflow() %>%
   add_model(svm_mdl) %>%
-  add_formula(spec2)    ### specification with all biometric variables
+  add_formula(spec1)    ### specification with all biometric variables
 
 final_fit <- last_fit(final_workflow, peng_split)
 
 collect_metrics(final_fit)
 ```
 
+## Optional: Recipes for Pre-Processing
 
-## Optional: Model Tuning
+For our example, our dataset was already pretty clean and well formed.  
+recipes: Manages data preprocessing and feature engineering. Use it to define the steps required to clean your data, handle missing values, normalize numeric variables, and encode categorical features.
+
+## Optional: Model Tuning for Improved Performance
 
 So far we have split our data, used cross validation to identify the best model algorithm and specification, then applied that to our full training data.  The `tidymodels` model functions (`logistic_reg`, `random_forest`, `svm_linear`, etc.) each have several _hyperparameters_, configuration settings that affect how the model learns from the data.  Out of the box, `tidymodels` assigns sensible values for those hyperparameters, but in some cases, those default values can be tweaked to improve the machine learning performance - particularly to avoid overfitting and underfitting.  Model parameters (such as model coefficients and weights) are learned from the data, but _hyperparameters_ control the learning process itself.
 
@@ -542,14 +623,14 @@ Random Forest, for example, has parameters that control the number of decision t
 
 A grid search tuning algorithm assigns a vector of values to test for each hyperparameter.  Across multiple hyperparameters, this creates a multi-dimensional grid or array of possible combinations.  Grid search checks every single combination to look for the optimal set.  As such, it is intuitive and thorough, but computationally expensive - a brute force approach.
 
-![](images/r_machine_learning_tidymodels/grid_search.png){fig-align="center"}
+![](images/r_machine_learning_tidymodels/grid_search.png){fig-width="70%" fig-align="center" .lightbox}
 
 
 #### Randomized Search
 
 A randomized search tuning algorithm randomly samples many potential combinations of hyperparameters.  The values to test for each hyperparameter are drawn from some distribution provided by the user.  Unlike grid search, this tuning algorithm concentrates its efforts on regions of each hyperparameter that are most likely according to the given probability distributions, and is generally able to find a good combination faster than a complete grid search.  In the example image, test values for hyperparameter 1 are chosen assuming a normal distribution, while values for hyperparameter 2 are chosen from a skewed distribution.
 
-![](images/r_machine_learning_tidymodels/randomized_search.png){fig-align="center"}
+![](images/r_machine_learning_tidymodels/randomized_search.png){fig-width="70%" fig-align="center" .lightbox}
 
 
 #### Bayesian Optimization
@@ -558,7 +639,7 @@ Bayesian optimization tuning algorithm iteratively builds a probabilistic map ac
 
 In the example shown (for a single hyperparameter, for simplicity), the black points have already been tested - so uncertainty collapses to zero.  A value of ~0.18 falls in a region of high uncertainty (wide confidence interval) and likely high value (GP mean is high).  After sampling this point, the confidence intervals and GP mean function will shift accordingly, and the iteration will continue until some stop rule is reached.
 
-![](images/r_machine_learning_tidymodels/bayesian_optimization.png){fig-align="center"}
+![](images/r_machine_learning_tidymodels/bayesian_optimization.png){fig-width="70%" fig-align="center" .lightbox}
 
 ::: 
 
@@ -599,8 +680,220 @@ final_tuned_wf <- finalize_workflow(wf_tune, best_params)
 final_tuned_fit <- last_fit(final_tuned_wf, peng_split)
 ```
 
-
 ## Optional: Model Interpretation
-   
 
+Often we want to know which variables were most influential or important to the predictive power of our Machine Learning model.  For a simple linear regression, the magnitude, sign, and p value (or t score) of the coefficients gives us a lot of information about the influence of the variables.  For more complex ML models, this can be trickier.
 
+Fortunately, the `vip` package ("Variable Importance") combines (nearly) seamlessly with `tidymodels`.  All we need to do is extract our fit information, using `tune::extract_fit_parsnip` (since our fit is performed using `parsnip` functions), and then hand this off to the `vip::vip()` function.
+
+**UN**fortunately, this doesn't work well on `svm_linear` models - not well supported (yet?).  And for certain models, you may need to set parameters in the definition of the model.  (It can be a bit finicky and model dependent!  be patient and Google well!)
+
+To demonstrate, let's recreate a final fit using our Binomial Logistic Regression model instead:
+
+```{r}
+final_workflow_blr <- workflow() %>%
+  add_model(blr_mdl) %>%
+  add_formula(spec1)    ### specification with all biometric variables
+
+final_fit_blr <- last_fit(final_workflow_blr, peng_split)
+
+final_fit_blr %>%
+  collect_predictions() %>%
+  roc_curve(truth = sex, .pred_male, event_level = 'second') %>%
+  autoplot()
+
+final_fit_blr %>%
+  workflows:: extract_fit_parsnip() %>%
+  vip::vip()
+```
+
+## Exercise: Create a Regression Model
+
+From the `ltersampler` R package, load the `knz_bison` dataset of bison metrics:
+
+* Historical records of end-of-season weights for individual bison at Konza Prairie Biological Station LTER.
+
+[More information on the dataset here](https://lter.github.io/lterdatasampler/articles/knz_bison_vignette.html).  
+
+For this exercise, we will use the methods above to create and assess several candidate models to predict bison weight based on some combination of variables within the dataset, then select one of the candidate models and determine the performance of the final fit.
+
+* `data_code`: a character denoting the dataset code
+* `rec_year`/`rec_month`/`rec_day`: a number denoting the year/month/day of observation
+* `animal_code`: a character denoting the unique individual bison identification code based on ear tag number
+* `animal_sex`: a character denoting the sex of bison: M = male, F = female, U = unknown
+* `animal_weight`: a number denoting bison weight in pounds
+* `animal_yob`: a number denoting the year animal was born
+
+### Load bison data
+
+```r
+library(lterdatasampler)
+data(knz_bison) 
+
+# head(knz_bison)
+# # A tibble: 6 × 8
+# #   data_code rec_year rec_month rec_day animal_code animal_sex animal_weight animal_yob
+# #   <chr>        <dbl>     <dbl>   <dbl> <chr>       <chr>              <dbl>      <dbl>
+# # 1 CBH01         1994        11       8 813         F                    890       1981
+# # 2 CBH01         1994        11       8 834         F                   1074       1983
+# # 3 CBH01         1994        11       8 B-301       F                   1060       1983
+
+bison_clean <- knz_bison %>% drop_na()
+```
+
+:::callout-hint
+These data are NOT linear:
+
+![](images/r_machine_learning_tidymodels/knz_bison.png){fig-width='70%' fig-align='center' .lightbox}
+
+This non-linear data is well suited to non-linear least squares estimation, particularly for an age-growth relationship.  But not knowing that relationship, how well can different ML algorithms create predictive models?
+
+We should expect that a linear model will perform poorly, and a linear SVM may similarly struggle.  But a good ML algorithm may be able to track non-linearities by learning on the data itself.
+
+Also notable, the Gompertz model is a function of _age_ - and _age_ is not a variable in the dataset!  A good ML algorithm may be able to infer age by noting the relationships between `animal_weight`, `animal_yob`, and `rec_year`.
+:::
+
+:::callout-exercise
+#### Define model specifications
+
+Identify two potentially good model specifications, and one likely very poor specification.  Store these specifications as formula objects with names of your choice.
+
+::::callout-answer
+Your models may vary!  Some options:
+```r
+### Drop animal_code and data_code; all date info
+bison_spec1 <- animal_weight ~ rec_year + rec_month + rec_day + animal_sex + animal_yob
+
+### Predict using animal_yob and rec_year (can it identify the age?) and sex
+bison_spec2 <- animal_weight ~ rec_year + animal_sex + animal_yob
+
+### Just try sex and the year of birth?
+bison_spec3 <- animal_weight ~ animal_sex + animal_yob
+
+```
+::::
+:::
+
+:::callout-exercise
+#### Define several model architectures
+
+Choose several potential model architectures and define them, including setting an engine.  Random Forest and Support Vector machines both can be used for classification (as in the demonstration) and regression (as you might choose to do here!).
+
+::::callout-answer
+
+Again, your models may differ - here are some potential options:
+
+```r
+bison_lm_mdl <- parsnip::linear_reg() %>% # <1>
+  parsnip::set_engine('lm')
+
+bison_rf_mdl <- parsnip::rand_forest(trees = 1000) %>%
+  parsnip::set_engine('ranger') %>%
+  parsnip::set_mode('regression')       # <2> 
+  
+bison_svm_mdl <- parsnip::svm_linear() %>%
+  parsnip::set_engine('kernlab') %>%     # <3> 
+  parsnip::set_mode('regression')       # <4> 
+```
+1. Classic linear regression instead of binomial logistic - using the base `lm` engine
+2. Set the mode for Random Forest to be regression instead of classification
+3. Still using the `kernlab` engine, but the `LiblineaR` default may also work - though you may need to install the package!
+4. Set the mode to regression, instead of classification
+::::
+:::
+
+:::callout-exercise
+#### Partition data
+
+Partition data into a training and testing set (stratifying if necessary), then set up the training set for cross validation.  Choose a number of folds, and a number of repeats if desired.
+
+::::callout-answer
+
+You may choose to stratify on site/site name, or date, but the samples are reasonably distributed across those variables.  Here's code that does not stratify the resampling.  We choose 10 folds and 5 repeats, though you may choose other options.
+```r
+bison_split <- initial_split(bison_clean, prop = .85)
+bison_train <- training(bison_split)
+bison_test   <- testing(bison_split)
+
+bison_folds <- vfold_cv(bison_train, v = 10, repeats = 5)
+```
+::::
+:::
+
+:::callout-exercise
+#### Fit data to models and assess performance
+
+Iterate (manually or programmatically) over the specs and models, fitting the CV folds, then gather the performance metrics to compare results.  For iteration, consider a for loop or `purrr::map` (potentially nesting to iterate over multiple variables).
+
+::::callout-answer
+
+Here is an example using `purrr::map_df` to fit model architectures to each of our model specs, and gather the results as rows in a data frame.  First we define a function that takes a model and a spec, and performs the fit then reports metrics.
+```r
+fit_mdl_spec = function(mdl, spec, folds) {
+  fit_result <- workflow() %>%
+    add_model(mdl) %>%
+    add_formula(spec) %>%
+    fit_resamples(folds)
+  
+  collect_metrics(fit_result, type = 'wide')
+}
+
+spec1_results <- purrr::map_df(
+  .x = list(bison_lm_mdl, bison_rf_mdl, bison_svm_mdl),
+  .f = fit_mdl_spec,
+  spec = bison_spec1, folds = bison_folds
+)
+
+spec2_results <- purrr::map_df(
+  .x = list(bison_lm_mdl, bison_rf_mdl, bison_svm_mdl),
+  .f = fit_mdl_spec,
+  spec = bison_spec2, folds = bison_folds
+)
+
+spec3_results <- purrr::map_df(
+  .x = list(bison_lm_mdl, bison_rf_mdl, bison_svm_mdl),
+  .f = fit_mdl_spec,
+  spec = bison_spec3, folds = bison_folds
+)
+```
+
+Spec 1 with a Random Forest does an excellent job of predicting!  How well does your model perform?
+
+|  algorithm         |  rmse |   rsq |
+| -----              | -----:| -----:|
+| Linear regression  |  243. | 0.491 |
+| Random forest      |  122. | 0.924 | 
+| SVM linear         |  247. | 0.478 |
+
+The RF model on the year/sex/DOB only performed well, R^2^ ~ .76 of the variance, while the model on site and DOB only explained R^2^ ~ 0.12 of the variance.
+::::
+:::
+
+:::callout-exercise
+#### Select a model and perform final fit
+
+From the cross validation results, choose an appropriate model, do a final fit on the full training data, then compare performance against the test set.
+
+::::callout-answer
+
+```r
+bison_final_wf <- workflow() %>%
+  add_model(bison_rf_mdl) %>%
+  add_formula(bison_spec1) ### specification with full date, yob, sex
+
+bison_final_fit <- last_fit(bison_final_wf, bison_split)
+
+bison_final_metrics <- collect_metrics(bison_final_fit)
+bison_final_preds <- collect_predictions(bison_final_fit)
+
+print(bison_final_metrics)
+ggplot(bison_final_preds, aes(x = animal_weight, y = .pred)) +
+  geom_point() +
+  geom_abline(yintercept = 0, slope = 1, color = 'red') +
+  theme_minimal()
+```
+
+![](images/r_machine_learning_tidymodels/bison_plot.png){fig-width='70%' fig-align='center' .lightbox}
+Considering that the weight of the bison is driven primarily by the bison's age, and age is NOT in the dataset as its own variable, Random Forest does a remarkable job of picking out the patterns based on DOB and year of observation.
+::::
+:::
