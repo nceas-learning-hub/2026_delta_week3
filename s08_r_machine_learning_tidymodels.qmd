@@ -100,6 +100,12 @@ Many machine learning algorithms feel pretty much like a "black box":  **data** 
 #| message: false
 library(dplyr)
 library(tidymodels) 
+
+### install packages for ML algorithm engines
+# install.packages('ranger')
+# install.packages('kernlab')
+
+### Load package for penguins data
 library(palmerpenguins)
 
 penguins_clean <- penguins %>%
@@ -333,7 +339,7 @@ yardstick::accuracy(peng_pred3, truth = sex, estimate = .pred_class)
 
 A Receiver Operating Characteristic (ROC) curve plots the tradeoff between the True Positive Rate and False Positive Rate as we change the probability threshold for classifying something as class 1 (vs. class 0) - in our case, classifying a penguin as male.
 
-![](images/r_machine_learning_tidymodels/roc_auc.webp){fig-width="70%" fig-align="center" .lightbox}
+![](images/r_machine_learning_tidymodels/roc_auc.webp){width="70%" fig-align="center" .lightbox}
 
 A low threshold means that, even at very low predicted probabilities, we assign "Male" - which means we get most of the males (high True Positive Rate), but we also assign many (true) females to be (false) males (high False Positive Rate).  A high threshold means we need a high predicted probability to classify a penguin as male - meaning we err on the side of classifying as female, i.e., a high True Negative Rate - and misclassify many males as females (high False Negative Rate).
 
@@ -371,7 +377,7 @@ ggplot(data = roc1_df, aes(x = 1 - specificity, y = sensitivity)) +
 
 With resampling, we do multiple rounds of partitioning with our training data - iteratively resampling _analysis_ and _assessment_ partitions.  Cross validation (CV) is a specific type of resampling - we create multiple equal-sized partitions, called _folds_, and then set aside one fold as _assessment_ and the remaining folds as _analysis_ to train our data, then use the second fold as _assessment_ etc.  If we split our data into five _folds_ we get "five-fold cross validation" - the generic term is K-fold cross validation.  
 
-![](images/r_machine_learning_tidymodels/fivefold_cv.png){fig-width="70%" fig-align="center" .lightbox}
+![](images/r_machine_learning_tidymodels/fivefold_cv.png){width="70%" fig-align="center" .lightbox}
 
 :::callout-tip
 ### How Many Folds?
@@ -623,14 +629,14 @@ Random Forest, for example, has parameters that control the number of decision t
 
 A grid search tuning algorithm assigns a vector of values to test for each hyperparameter.  Across multiple hyperparameters, this creates a multi-dimensional grid or array of possible combinations.  Grid search checks every single combination to look for the optimal set.  As such, it is intuitive and thorough, but computationally expensive - a brute force approach.
 
-![](images/r_machine_learning_tidymodels/grid_search.png){fig-width="70%" fig-align="center" .lightbox}
+![](images/r_machine_learning_tidymodels/grid_search.png){width="70%" fig-align="center" .lightbox}
 
 
 #### Randomized Search
 
 A randomized search tuning algorithm randomly samples many potential combinations of hyperparameters.  The values to test for each hyperparameter are drawn from some distribution provided by the user.  Unlike grid search, this tuning algorithm concentrates its efforts on regions of each hyperparameter that are most likely according to the given probability distributions, and is generally able to find a good combination faster than a complete grid search.  In the example image, test values for hyperparameter 1 are chosen assuming a normal distribution, while values for hyperparameter 2 are chosen from a skewed distribution.
 
-![](images/r_machine_learning_tidymodels/randomized_search.png){fig-width="70%" fig-align="center" .lightbox}
+![](images/r_machine_learning_tidymodels/randomized_search.png){width="70%" fig-align="center" .lightbox}
 
 
 #### Bayesian Optimization
@@ -639,7 +645,7 @@ Bayesian optimization tuning algorithm iteratively builds a probabilistic map ac
 
 In the example shown (for a single hyperparameter, for simplicity), the black points have already been tested - so uncertainty collapses to zero.  A value of ~0.18 falls in a region of high uncertainty (wide confidence interval) and likely high value (GP mean is high).  After sampling this point, the confidence intervals and GP mean function will shift accordingly, and the iteration will continue until some stop rule is reached.
 
-![](images/r_machine_learning_tidymodels/bayesian_optimization.png){fig-width="70%" fig-align="center" .lightbox}
+![](images/r_machine_learning_tidymodels/bayesian_optimization.png){width="70%" fig-align="center" .lightbox}
 
 ::: 
 
@@ -682,13 +688,23 @@ final_tuned_fit <- last_fit(final_tuned_wf, peng_split)
 
 ## Optional: Model Interpretation
 
-Often we want to know which variables were most influential or important to the predictive power of our Machine Learning model.  For a simple linear regression, the magnitude, sign, and p value (or t score) of the coefficients gives us a lot of information about the influence of the variables.  For more complex ML models, this can be trickier.
+Often we want to know which variables were most influential or important to the predictive power of our Machine Learning model.  For a simple linear regression, the magnitude, sign, and p value (or t score) of the coefficients gives us a lot of information about the influence of the variables.  For more complex ML models, we generally trade off predictive ability against mechanistic understanding.
 
-Fortunately, the `vip` package ("Variable Importance") combines (nearly) seamlessly with `tidymodels`.  All we need to do is extract our fit information, using `tune::extract_fit_parsnip` (since our fit is performed using `parsnip` functions), and then hand this off to the `vip::vip()` function.
+:::callout-important
+### To ML or not to ML?  Predictive ability vs. scientific insight
 
-**UN**fortunately, this doesn't work well on `svm_linear` models - not well supported (yet?).  And for certain models, you may need to set parameters in the definition of the model.  (It can be a bit finicky and model dependent!  be patient and Google well!)
+Machine learning is often quite amazing at creating predictive models from data, without even needing to know much _a priori_ about the data or ecological system described by the data.  If *predictions* are the important output of an analysis, ML is a great tool
 
-To demonstrate, let's recreate a final fit using our Binomial Logistic Regression model instead:
+However, we are often more interested in developing _insights_ about the ecological system described by the data.  In this case, a _structural model_ that incorporates theoretical underpinnings of the system may be more informative, even if its predictive ability is lower.
+
+**Machine learning** creates predictive models directly from the data - **what will happen**.  **Structural models** are informed by expert domain knowledge and theory - **why will that happen**.  Which question are you asking will help determine which approach you should take.
+:::
+
+The `vip` package ("Variable Importance") combines reasonably well with `tidymodels`.  We can extract our fit information, using `tune::extract_fit_parsnip` (since our fit is performed using `parsnip` functions), and then hand this off to the `vip::vip()` function.
+
+**UN**fortunately, this doesn't work well for all model types - e.g., `svm_linear` models are not well supported (yet?).  And for certain models (e.g., random forest with `ranger` engine), you may need to set parameters in the definition of the model ahead of time.  (It can be a bit finicky and model dependent!  be patient and Google well!)
+
+To demonstrate, let's recreate a final fit using our Binomial Logistic Regression model:
 
 ```{r}
 final_workflow_blr <- workflow() %>%
@@ -744,7 +760,7 @@ bison_clean <- knz_bison %>% drop_na()
 :::callout-hint
 These data are NOT linear:
 
-![](images/r_machine_learning_tidymodels/knz_bison.png){fig-width='70%' fig-align='center' .lightbox}
+![](images/r_machine_learning_tidymodels/knz_bison.png){width='70%' fig-align='center' .lightbox}
 
 This non-linear data is well suited to non-linear least squares estimation, particularly for an age-growth relationship.  But not knowing that relationship, how well can different ML algorithms create predictive models?
 
@@ -893,7 +909,7 @@ ggplot(bison_final_preds, aes(x = animal_weight, y = .pred)) +
   theme_minimal()
 ```
 
-![](images/r_machine_learning_tidymodels/bison_plot.png){fig-width='70%' fig-align='center' .lightbox}
+![](images/r_machine_learning_tidymodels/bison_plot.png){width='70%' fig-align='center' .lightbox}
 Considering that the weight of the bison is driven primarily by the bison's age, and age is NOT in the dataset as its own variable, Random Forest does a remarkable job of picking out the patterns based on DOB and year of observation.
 ::::
 :::
