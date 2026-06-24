@@ -778,7 +778,7 @@ max values  :         255,         255,         255,         255,         255</c
 </div>
 <div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
 <p>We can create a raster from a dataframe (or other formats using) X-Y coordinates (e.g., lat/long or meters E/meters N) - <strong>as long as they’re on a regular grid.</strong></p>
-<p>Download this .csv of modified <a href="data/r_geospatial_raster_analysis/Landsat71_band2.csv">LandSat sample data</a> - note the file format is <code>.csv</code> - and save it to your <code>data</code> folder in your current repository as <code>landsat71_band2.csv</code>.</p>
+<p>Download this .csv of modified <a href="data/r_geospatial_raster_analysis/landsat71_band2.csv">LandSat sample data</a> - note the file format is <code>.csv</code> - and save it to your <code>data</code> folder in your current repository as <code>landsat71_band2.csv</code>.</p>
 <p>Now let’s load it and examine it!</p>
 <!-- what the participants will type to load the data-->
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ls_green_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">'data/landsat71_band2.csv'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
