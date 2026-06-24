@@ -713,19 +713,25 @@ Prerequisite lessons:
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels) </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>penguins_clean <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="do">### convert characters to factors - generally easier for modeling engines!</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">factor</span>(species), <span class="at">sex =</span> <span class="fu">factor</span>(sex), <span class="at">island =</span> <span class="fu">factor</span>(island))</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># table(penguins_clean$sex)</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># # female   male </span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># #    165    168 </span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># table(penguins_clean$species)</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># # Adelie Chinstrap    Gentoo </span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># #    146        68       119 </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">### install packages for ML algorithm engines</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages('ranger')</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages('kernlab')</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">### Load package for penguins data</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>penguins_clean <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="do">### convert characters to factors - generally easier for modeling engines!</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">factor</span>(species), <span class="at">sex =</span> <span class="fu">factor</span>(sex), <span class="at">island =</span> <span class="fu">factor</span>(island))</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># table(penguins_clean$sex)</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># # female   male </span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># #    165    168 </span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># table(penguins_clean$species)</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># # Adelie Chinstrap    Gentoo </span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># #    146        68       119 </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
@@ -1000,7 +1006,7 @@ sex      female male
 <p>A Receiver Operating Characteristic (ROC) curve plots the tradeoff between the True Positive Rate and False Positive Rate as we change the probability threshold for classifying something as class 1 (vs.&nbsp;class 0) - in our case, classifying a penguin as male.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/r_machine_learning_tidymodels/roc_auc.webp" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/r_machine_learning_tidymodels/roc_auc.webp" class="img-fluid quarto-figure quarto-figure-center figure-img" data-fig-width="70%"></a></p>
+<p><a href="images/r_machine_learning_tidymodels/roc_auc.webp" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/r_machine_learning_tidymodels/roc_auc.webp" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></a></p>
 </figure>
 </div>
 <p>A low threshold means that, even at very low predicted probabilities, we assign “Male” - which means we get most of the males (high True Positive Rate), but we also assign many (true) females to be (false) males (high False Positive Rate). A high threshold means we need a high predicted probability to classify a penguin as male - meaning we err on the side of classifying as female, i.e., a high True Negative Rate - and misclassify many males as females (high False Negative Rate).</p>
@@ -1069,7 +1075,7 @@ sex      female male
 <p>With resampling, we do multiple rounds of partitioning with our training data - iteratively resampling <em>analysis</em> and <em>assessment</em> partitions. Cross validation (CV) is a specific type of resampling - we create multiple equal-sized partitions, called <em>folds</em>, and then set aside one fold as <em>assessment</em> and the remaining folds as <em>analysis</em> to train our data, then use the second fold as <em>assessment</em> etc. If we split our data into five <em>folds</em> we get “five-fold cross validation” - the generic term is K-fold cross validation.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/r_machine_learning_tidymodels/fivefold_cv.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/r_machine_learning_tidymodels/fivefold_cv.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-fig-width="70%"></a></p>
+<p><a href="images/r_machine_learning_tidymodels/fivefold_cv.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/r_machine_learning_tidymodels/fivefold_cv.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></a></p>
 </figure>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1428,7 +1434,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 <p>A grid search tuning algorithm assigns a vector of values to test for each hyperparameter. Across multiple hyperparameters, this creates a multi-dimensional grid or array of possible combinations. Grid search checks every single combination to look for the optimal set. As such, it is intuitive and thorough, but computationally expensive - a brute force approach.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/r_machine_learning_tidymodels/grid_search.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/r_machine_learning_tidymodels/grid_search.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-fig-width="70%"></a></p>
+<p><a href="images/r_machine_learning_tidymodels/grid_search.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/r_machine_learning_tidymodels/grid_search.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></a></p>
 </figure>
 </div>
 </div>
@@ -1436,7 +1442,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 <p>A randomized search tuning algorithm randomly samples many potential combinations of hyperparameters. The values to test for each hyperparameter are drawn from some distribution provided by the user. Unlike grid search, this tuning algorithm concentrates its efforts on regions of each hyperparameter that are most likely according to the given probability distributions, and is generally able to find a good combination faster than a complete grid search. In the example image, test values for hyperparameter 1 are chosen assuming a normal distribution, while values for hyperparameter 2 are chosen from a skewed distribution.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/r_machine_learning_tidymodels/randomized_search.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="images/r_machine_learning_tidymodels/randomized_search.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-fig-width="70%"></a></p>
+<p><a href="images/r_machine_learning_tidymodels/randomized_search.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="images/r_machine_learning_tidymodels/randomized_search.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></a></p>
 </figure>
 </div>
 </div>
@@ -1445,7 +1451,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 <p>In the example shown (for a single hyperparameter, for simplicity), the black points have already been tested - so uncertainty collapses to zero. A value of ~0.18 falls in a region of high uncertainty (wide confidence interval) and likely high value (GP mean is high). After sampling this point, the confidence intervals and GP mean function will shift accordingly, and the iteration will continue until some stop rule is reached.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/r_machine_learning_tidymodels/bayesian_optimization.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="images/r_machine_learning_tidymodels/bayesian_optimization.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-fig-width="70%"></a></p>
+<p><a href="images/r_machine_learning_tidymodels/bayesian_optimization.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="images/r_machine_learning_tidymodels/bayesian_optimization.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></a></p>
 </figure>
 </div>
 </div>
@@ -1479,10 +1485,25 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 </section>
 <section id="optional-model-interpretation" class="level2" data-number="12">
 <h2 data-number="12" class="anchored" data-anchor-id="optional-model-interpretation"><span class="header-section-number">12</span> Optional: Model Interpretation</h2>
-<p>Often we want to know which variables were most influential or important to the predictive power of our Machine Learning model. For a simple linear regression, the magnitude, sign, and p value (or t score) of the coefficients gives us a lot of information about the influence of the variables. For more complex ML models, this can be trickier.</p>
-<p>Fortunately, the <code>vip</code> package (“Variable Importance”) combines (nearly) seamlessly with <code>tidymodels</code>. All we need to do is extract our fit information, using <code>tune::extract_fit_parsnip</code> (since our fit is performed using <code>parsnip</code> functions), and then hand this off to the <code>vip::vip()</code> function.</p>
-<p><strong>UN</strong>fortunately, this doesn’t work well on <code>svm_linear</code> models - not well supported (yet?). And for certain models, you may need to set parameters in the definition of the model. (It can be a bit finicky and model dependent! be patient and Google well!)</p>
-<p>To demonstrate, let’s recreate a final fit using our Binomial Logistic Regression model instead:</p>
+<p>Often we want to know which variables were most influential or important to the predictive power of our Machine Learning model. For a simple linear regression, the magnitude, sign, and p value (or t score) of the coefficients gives us a lot of information about the influence of the variables. For more complex ML models, we generally trade off predictive ability against mechanistic understanding.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>To ML or not to ML? Predictive ability vs.&nbsp;scientific insight
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Machine learning is often quite amazing at creating predictive models from data, without even needing to know much <em>a priori</em> about the data or ecological system described by the data. If <em>predictions</em> are the important output of an analysis, ML is a great tool</p>
+<p>However, we are often more interested in developing <em>insights</em> about the ecological system described by the data. In this case, a <em>structural model</em> that incorporates theoretical underpinnings of the system may be more informative, even if its predictive ability is lower.</p>
+<p><strong>Machine learning</strong> creates predictive models directly from the data - <strong>what will happen</strong>. <strong>Structural models</strong> are informed by expert domain knowledge and theory - <strong>why will that happen</strong>. Which question are you asking will help determine which approach you should take.</p>
+</div>
+</div>
+<p>The <code>vip</code> package (“Variable Importance”) combines reasonably well with <code>tidymodels</code>. We can extract our fit information, using <code>tune::extract_fit_parsnip</code> (since our fit is performed using <code>parsnip</code> functions), and then hand this off to the <code>vip::vip()</code> function.</p>
+<p><strong>UN</strong>fortunately, this doesn’t work well for all model types - e.g., <code>svm_linear</code> models are not well supported (yet?). And for certain models (e.g., random forest with <code>ranger</code> engine), you may need to set parameters in the definition of the model ahead of time. (It can be a bit finicky and model dependent! be patient and Google well!)</p>
+<p>To demonstrate, let’s recreate a final fit using our Binomial Logistic Regression model:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>final_workflow_blr <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(blr_mdl) <span class="sc">%&gt;%</span></span>
@@ -1544,7 +1565,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 <span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>bison_clean <span class="ot">&lt;-</span> knz_bison <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-hint no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1553,13 +1574,13 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="callout-hint">
 <p>These data are NOT linear:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/r_machine_learning_tidymodels/knz_bison.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="images/r_machine_learning_tidymodels/knz_bison.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-fig-width="70%"></a></p>
+<p><a href="images/r_machine_learning_tidymodels/knz_bison.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="images/r_machine_learning_tidymodels/knz_bison.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></a></p>
 </figure>
 </div>
 <p>This non-linear data is well suited to non-linear least squares estimation, particularly for an age-growth relationship. But not knowing that relationship, how well can different ML algorithms create predictive models?</p>
@@ -1570,7 +1591,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 </div>
 </div>
 <div class="callout callout-style-default callout-exercise no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1579,12 +1600,12 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse show">
+<div id="callout-14" class="callout-14-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <div class="callout-exercise">
 <p>Identify two potentially good model specifications, and one likely very poor specification. Store these specifications as formula objects with names of your choice.</p>
 <div class="callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1593,7 +1614,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="callout-answer">
 <p>Your models may vary! Some options:</p>
@@ -1614,7 +1635,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 </div>
 </div>
 <div class="callout callout-style-default callout-exercise no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1623,12 +1644,12 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-15" class="callout-15-contents callout-collapse collapse show">
+<div id="callout-16" class="callout-16-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <div class="callout-exercise">
 <p>Choose several potential model architectures and define them, including setting an engine. Random Forest and Support Vector machines both can be used for classification (as in the demonstration) and regression (as you might choose to do here!).</p>
 <div class="callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1637,7 +1658,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="callout-answer">
 <p>Again, your models may differ - here are some potential options:</p>
@@ -1678,7 +1699,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 </div>
 </div>
 <div class="callout callout-style-default callout-exercise no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1687,12 +1708,12 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-17" class="callout-17-contents callout-collapse collapse show">
+<div id="callout-18" class="callout-18-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <div class="callout-exercise">
 <p>Partition data into a training and testing set (stratifying if necessary), then set up the training set for cross validation. Choose a number of folds, and a number of repeats if desired.</p>
 <div class="callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1701,7 +1722,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="callout-answer">
 <p>You may choose to stratify on site/site name, or date, but the samples are reasonably distributed across those variables. Here’s code that does not stratify the resampling. We choose 10 folds and 5 repeats, though you may choose other options.</p>
@@ -1719,7 +1740,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 </div>
 </div>
 <div class="callout callout-style-default callout-exercise no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1728,12 +1749,12 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-19" class="callout-19-contents callout-collapse collapse show">
+<div id="callout-20" class="callout-20-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <div class="callout-exercise">
 <p>Iterate (manually or programmatically) over the specs and models, fitting the CV folds, then gather the performance metrics to compare results. For iteration, consider a for loop or <code>purrr::map</code> (potentially nesting to iterate over multiple variables).</p>
 <div class="callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1742,7 +1763,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="callout-answer">
 <p>Here is an example using <code>purrr::map_df</code> to fit model architectures to each of our model specs, and gather the results as rows in a data frame. First we define a function that takes a model and a spec, and performs the fit then reports metrics.</p>
@@ -1809,7 +1830,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 </div>
 </div>
 <div class="callout callout-style-default callout-exercise no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1818,12 +1839,12 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-21" class="callout-21-contents callout-collapse collapse show">
+<div id="callout-22" class="callout-22-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <div class="callout-exercise">
 <p>From the cross validation results, choose an appropriate model, do a final fit on the full training data, then compare performance against the test set.</p>
 <div class="callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1832,7 +1853,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="callout-answer">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>bison_final_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
@@ -1849,7 +1870,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 <span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">'red'</span>) <span class="sc">+</span></span>
 <span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><a href="images/r_machine_learning_tidymodels/bison_plot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="images/r_machine_learning_tidymodels/bison_plot.png" class="img-fluid quarto-figure quarto-figure-center" data-fig-width="70%"></a> Considering that the weight of the bison is driven primarily by the bison’s age, and age is NOT in the dataset as its own variable, Random Forest does a remarkable job of picking out the patterns based on DOB and year of observation.</p>
+<p><a href="images/r_machine_learning_tidymodels/bison_plot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="images/r_machine_learning_tidymodels/bison_plot.png" class="img-fluid quarto-figure quarto-figure-center" style="width:70.0%"></a> Considering that the weight of the bison is driven primarily by the bison’s age, and age is NOT in the dataset as its own variable, Random Forest does a remarkable job of picking out the patterns based on DOB and year of observation.</p>
 </div>
 </div>
 </div>
