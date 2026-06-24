@@ -153,7 +153,7 @@ It may be hard to tell the differences in this view, but we can see five distinc
 
 We can create a raster from a dataframe (or other formats using) X-Y coordinates (e.g., lat/long or meters E/meters N) - **as long as they're on a regular grid.**  
 
-Download this .csv of modified [LandSat sample data](data/r_geospatial_raster_analysis/Landsat71_band2.csv) - note the file format is `.csv` - and save it to your `data` folder in your current repository as `landsat71_band2.csv`.
+Download this .csv of modified [LandSat sample data](data/r_geospatial_raster_analysis/landsat71_band2.csv) - note the file format is `.csv` - and save it to your `data` folder in your current repository as `landsat71_band2.csv`.
 
 Now let's load it and examine it!
 
