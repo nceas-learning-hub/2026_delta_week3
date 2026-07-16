@@ -700,7 +700,7 @@ However, we are often more interested in developing _insights_ about the ecologi
 **Machine learning** creates predictive models directly from the data - **what will happen**.  **Structural models** are informed by expert domain knowledge and theory - **why will that happen**.  Which question are you asking will help determine which approach you should take.
 :::
 
-The `vip` package ("Variable Importance") combines reasonably well with `tidymodels`.  We can extract our fit information, using `tune::extract_fit_parsnip` (since our fit is performed using `parsnip` functions), and then hand this off to the `vip::vip()` function.
+The `vip` package ("Variable Importance") combines reasonably well with `tidymodels` (note, as of this publishing, `vip` is not available on CRAN - install with `remotes::install_github("koalaverse/vip")`).  We can extract our fit information, using `tune::extract_fit_parsnip` (since our fit is performed using `parsnip` functions), and then hand this off to the `vip::vip()` function.
 
 **UN**fortunately, this doesn't work well for all model types - e.g., `svm_linear` models are not well supported (yet?).  And for certain models (e.g., random forest with `ranger` engine), you may need to set parameters in the definition of the model ahead of time.  (It can be a bit finicky and model dependent!  be patient and Google well!)
 
