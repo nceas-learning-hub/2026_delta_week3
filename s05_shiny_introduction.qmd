@@ -40,7 +40,7 @@ In this session, we'll build interactive data apps from scratch using water qual
 ## What is Shiny?
 
 ::: column-margin
-![](images/shiny_introduction/shiny-hex.png){width="70%" fig-align="center"}
+![](images/shiny_introduction/shiny-hex.png){width="70%" fig-align="center" fig-alt="Hex sticker logo for the Shiny R package: a blue hexagon with 'Shiny' in white script lettering and 'www.rstudio.com' in small text at the bottom"}
 :::
 
 Shiny is an R package for creating interactive web applications entirely from R code, without needing to learn HTML, JavaScript, or CSS.
@@ -77,7 +77,7 @@ Every Shiny app has two fundamental components:
 1. A **user interface (UI)**: the web page your users see and interact with (the "frontend")
 2. A **server function**: the R code that powers the app's computations (the "backend")
 
-![Source: Intro to Shiny - EDS 430, Bren School UCSB](images/shiny_introduction/basic_shiny_app.png){width="70%" .lightbox fig-align="center"}
+![Source: Intro to Shiny - EDS 430, Bren School UCSB](images/shiny_introduction/basic_shiny_app.png){width="70%" .lightbox fig-align="center" fig-alt="Diagram showing that a Shiny app equals a UI component (create what the user will see and interact with) plus a Server component (build outputs that react and update based on user inputs)"}
 
 The **UI** controls layout and appearance. It is written using functions from the `{shiny}` and `{bslib}` packages that generate HTML behind the scenes. The **server** contains the backend logic in the form of instructions for how to respond when a user makes a change.
 
@@ -126,7 +126,7 @@ You may encounter older examples that use `fluidPage()` + `sidebarLayout()` for 
 
 **Inputs** (also called **widgets**) collect values from the user. [Shiny provides a set of standard widgets](https://shiny.posit.co/r/gallery/widgets/widget-gallery/):
 
-![](images/shiny_introduction/basic-widgets.png){width="70%" .lightbox fig-align="center"}
+![](images/shiny_introduction/basic-widgets.png){width="70%" .lightbox fig-align="center" fig-alt="Gallery of basic Shiny input widgets including buttons, single checkbox, checkbox group, date input, date range, file input, help text, numeric input, radio buttons, select box, sliders, and text input"}
 
 **Outputs** are R objects displayed in the app. Each type has a matching pair of functions: a **placeholder** in the UI and a **renderer** in the server:
 
@@ -142,7 +142,7 @@ You may encounter older examples that use `fluidPage()` + `sidebarLayout()` for 
 
 Reactivity is **what makes Shiny apps responsive**. When a user changes an input value, the server automatically re-runs the relevant code and updates the output. At the most basic level:
 
-![Source: Intro to Shiny - EDS 430, Bren School UCSB](images/shiny_introduction/reactivity-intro.png){width="70%" .lightbox fig-align="center"}
+![Source: Intro to Shiny - EDS 430, Bren School UCSB](images/shiny_introduction/reactivity-intro.png){width="70%" .lightbox fig-align="center" fig-alt="Diagram of Shiny reactivity showing a four-step numbered flow: (1) a widget in the UI collects user input, (2) that input is sent to the server, (3) the server creates updated outputs from the new data, and (4) the updated output is rendered back in the UI"}
 
 ::: {.callout-tip}
 ## Want to go deeper on reactivity?
@@ -513,7 +513,7 @@ server <- function(input, output) {
 shinyApp(ui = ui, server = server)
 ```
 
-![](images/shiny_introduction/shiny-yolo-app-part-1.png){width="70%" .lightbox fig-align="center"}
+![](images/shiny_introduction/shiny-yolo-app-part-1.png){width="70%" .lightbox fig-align="center" fig-alt="Screenshot of the Yolo Bypass Fish Monitoring Shiny app showing a collapsible sidebar with a date range slider (1998-01-01 to 2018-12-31) and a scatter plot of Secchi depth (m) over time from 1998 to 2018"}
 
 ::: {.callout-important}
 ## Common mistakes
@@ -648,7 +648,7 @@ server <- function(input, output) {
 shinyApp(ui = ui, server = server)
 ```
 
-![](images/shiny_introduction/shiny-yolo-app-part-2.png){width="70%" .lightbox fig-align="center"}
+![](images/shiny_introduction/shiny-yolo-app-part-2.png){width="70%" .lightbox fig-align="center" fig-alt="Screenshot of the Yolo Bypass Fish Monitoring app with a sidebar containing a date range slider and a species checkbox group. Two plots are shown: a Secchi depth scatter plot over time (top) and a bar chart of total catch by species (bottom)"}
 
 ## Organizing Your App
 
@@ -656,7 +656,7 @@ shinyApp(ui = ui, server = server)
 
 So far we've put everything in one `app.R`. For simple apps, this works well. As apps grow, splitting the code into separate files makes it easier to navigate, maintain, and collaborate on.
 
-![Source: Intro to Shiny - EDS 430, Bren School UCSB](images/shiny_introduction/one-vs-two.png){width="70%" .lightbox fig-align="center"}
+![Source: Intro to Shiny - EDS 430, Bren School UCSB](images/shiny_introduction/one-vs-two.png){width="70%" .lightbox fig-align="center" fig-alt="Diagram comparing two Shiny app file structures: a single-file app (app.R) on the left versus a multi-file app (ui.R + server.R + optional global.R) on the right"}
 
 | Format | When to use |
 |--------|-------------|
@@ -701,11 +701,11 @@ Let's rebuild the Yolo Bypass app in two-file format with a polished multi-page 
 
 #### About page
 
-![](images/shiny_introduction/shiny-yolo-app-tabbed-about.png){width="70%" .lightbox fig-align="center"}
+![](images/shiny_introduction/shiny-yolo-app-tabbed-about.png){width="70%" .lightbox fig-align="center" fig-alt="Screenshot of the Yolo Bypass Fish Monitoring app showing the 'About' navigation tab, which includes a welcome message, a description of the Interagency Ecological Program data, and an interactive leaflet map of monitoring stations along the Sacramento River"}
 
 #### Explore page
 
-![](images/shiny_introduction/shiny-yolo-app-tabbed-data.png){width="70%" .lightbox fig-align="center"}
+![](images/shiny_introduction/shiny-yolo-app-tabbed-data.png){width="70%" .lightbox fig-align="center" fig-alt="Screenshot of the Yolo Bypass Fish Monitoring app showing the 'Explore the Data' navigation tab with a sidebar containing date range and species filter controls, a 'Water Clarity Over Time' scatter plot (top), and a 'Fish Catch by Species' bar chart (bottom)"}
 
 :::
 

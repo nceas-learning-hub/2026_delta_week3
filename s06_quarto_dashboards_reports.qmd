@@ -94,7 +94,7 @@ for layout:
 | `##` Level 2 heading | A new **row** (within a page) |
 | Code chunk | A **card** (column within the current row) |
 
-![](images/quarto_dashboards_reports/dashboard-structure.png){.lightbox fig-cap="Dashboard layout: each `##` heading is a row; each code chunk within a row is a column card."}
+![](images/quarto_dashboards_reports/dashboard-structure.png){.lightbox fig-alt="Annotated side-by-side view of a Quarto dashboard: the QMD source (left) and rendered output (right) are color-coded to show that the YAML format is 'dashboard', H1 (#) headings define pages, H2 (##) headings define rows, and each code chunk within a row creates a column card" fig-cap="Dashboard layout: each `##` heading is a row; each code chunk within a row is a column card."}
 
 ### Setting up the YAML {.unnumbered}
 
@@ -371,7 +371,7 @@ row exists to share the space with.
 
 Render the file. You should see a single page with three value boxes filling the screen.
 
-![](images/quarto_dashboards_reports/dashboard-valueboxes.png){.lightbox fig-alt="" fig-cap=""}
+![](images/quarto_dashboards_reports/dashboard-valueboxes.png){.lightbox fig-alt="Three colored value boxes showing dataset summary statistics: 'Species Monitored: 7' (blue), 'Years of Data: 21' (green), and 'Total Observations: 21406' (purple)" fig-cap="Rendered value boxes summarizing the Yolo Bypass dataset."}
 
 ### Step 2: Add an interactive chart {.unnumbered}
 
@@ -396,7 +396,7 @@ ggplotly(p)
 The card title comes from `#| title:` -- it appears as the card header in the dashboard.
 The two rows now sum to 100% of the page height (25% + 75%).
 
-![](images/quarto_dashboards_reports/dashboard-plotly.png){.lightbox fig-alt="" fig-cap=""}
+![](images/quarto_dashboards_reports/dashboard-plotly.png){.lightbox fig-alt="Interactive Plotly scatter plot titled 'Water Clarity Over Time' showing Secchi depth in meters on the y-axis and date on the x-axis, with data points from approximately 1998 to 2019 clustered mostly below 0.4 m" fig-cap="Plotly scatter plot of water clarity rendered in a dashboard card."}
 
 ::: {.callout-note}
 ## Exercise: Show a static plot instead
@@ -428,7 +428,7 @@ fish %>%
 Multiple chunks in the same row produce side-by-side columns. Quarto divides the row width
 equally by default.
 
-![](images/quarto_dashboards_reports/dashboard-datatable.png){.lightbox fig-alt="" fig-cap=""}
+![](images/quarto_dashboards_reports/dashboard-datatable.png){.lightbox fig-alt="Interactive DT table titled 'Catch by Species' showing 7 fish species with columns for Observations, Total Catch, and Avg Secchi (m); Chinook Salmon has 10,238 observations and Striped Bass has the highest total catch at 46,371" fig-cap="DT data table of catch totals by species rendered in a dashboard card."}
 
 ::: {.callout-note}
 ## Exercise: Show a static table instead
@@ -467,7 +467,7 @@ ggplotly(p2)
 
 The navigation bar now shows two pages: Summary and Catch Trends.
 
-![](images/quarto_dashboards_reports/dashboard-page2.png){.lightbox fig-alt="" fig-cap=""}
+![](images/quarto_dashboards_reports/dashboard-page2.png){.lightbox fig-alt="Screenshot of a Quarto dashboard's 'Catch Trends' page showing a line chart of annual total catch by species from 1997 to 2019. Chinook Salmon and Striped Bass have the highest and most variable catch totals; the remaining species (Delta Smelt, Longfin Smelt, White Sturgeon, etc.) remain near zero throughout" fig-cap="The 'Catch Trends' page with an annual catch line chart by species."}
 
 ### Step 5: Add tabsets {.unnumbered}
 
@@ -513,14 +513,14 @@ fish %>%
 Render again. The Catch Trends page should now show two tabs: the interactive line chart and
 a browseable raw data table.
 
-![](images/quarto_dashboards_reports/dashboard-page2tab2.png){.lightbox fig-alt="" fig-cap=""}
+![](images/quarto_dashboards_reports/dashboard-page2tab2.png){.lightbox fig-alt="Screenshot of the 'Catch Trends' page with the 'Raw Data' tab active, showing a searchable DT table of 21,406 entries with columns SampleDate, CommonName, Count, and Secchi" fig-cap="The 'Raw Data' tab on the Catch Trends page showing the full browseable dataset."}
 
 ### Putting it all together {.unnumbered}
 
 If you've been following along this whole time, you should now have a dashboard that looks something
 like this:
 
-![](images/quarto_dashboards_reports/dashboard-full-page1.png){.lightbox fig-cap=""}
+![](images/quarto_dashboards_reports/dashboard-full-page1.png){.lightbox fig-alt="Screenshot of the completed 'Summary' page of the Delta Fish Monitoring dashboard, with three value boxes at the top (Species Monitored: 7, Years of Data: 21, Total Observations: 21,406) and two cards below: a water clarity scatter plot on the left and a catch-by-species data table on the right" fig-cap="The completed Summary page of the Delta Fish Monitoring dashboard."}
 
 ::: {.callout-tip collapse="true"}
 ## Complete delta-dashboard.qmd

@@ -33,7 +33,7 @@ In this lesson we will explore machine learning in R by applying the `tidymodels
 :::columns
 
 ::::{.column width="30%"}
-![](images/r_machine_learning_tidymodels/all_ml.jpg){.lightbox width=95%}
+![](images/r_machine_learning_tidymodels/all_ml.jpg){.lightbox width=95% fig-alt="Mind map diagram with 'Machine Learning' at the center branching into four categories: Classical Learning (unsupervised: clustering, pattern search, dimension reduction; supervised: classification, regression), Ensemble Methods (bagging, stacking, boosting), Neural Nets and Deep Learning (CNN, RNN, GAN, autoencoders, perceptrons), and Reinforcement Learning"}
 ::::
 ::::{.column width="70%"}
 <br><br>
@@ -339,7 +339,7 @@ yardstick::accuracy(peng_pred3, truth = sex, estimate = .pred_class)
 
 A Receiver Operating Characteristic (ROC) curve plots the tradeoff between the True Positive Rate and False Positive Rate as we change the probability threshold for classifying something as class 1 (vs. class 0) - in our case, classifying a penguin as male.
 
-![](images/r_machine_learning_tidymodels/roc_auc.webp){width="70%" fig-align="center" .lightbox}
+![](images/r_machine_learning_tidymodels/roc_auc.webp){width="70%" fig-align="center" .lightbox fig-alt="ROC curve diagram plotting True Positive Rate vs. False Positive Rate for three classifiers (blue best, orange middle, green worst) against a red dashed diagonal baseline representing a random classifier. Labels indicate curves closer to the upper-left are better; the perfect classifier point is marked at (0, 1.0)"}
 
 A low threshold means that, even at very low predicted probabilities, we assign "Male" - which means we get most of the males (high True Positive Rate), but we also assign many (true) females to be (false) males (high False Positive Rate).  A high threshold means we need a high predicted probability to classify a penguin as male - meaning we err on the side of classifying as female, i.e., a high True Negative Rate - and misclassify many males as females (high False Negative Rate).
 
@@ -377,7 +377,7 @@ ggplot(data = roc1_df, aes(x = 1 - specificity, y = sensitivity)) +
 
 With resampling, we do multiple rounds of partitioning with our training data - iteratively resampling _analysis_ and _assessment_ partitions.  Cross validation (CV) is a specific type of resampling - we create multiple equal-sized partitions, called _folds_, and then set aside one fold as _assessment_ and the remaining folds as _analysis_ to train our data, then use the second fold as _assessment_ etc.  If we split our data into five _folds_ we get "five-fold cross validation" - the generic term is K-fold cross validation.  
 
-![](images/r_machine_learning_tidymodels/fivefold_cv.png){width="70%" fig-align="center" .lightbox}
+![](images/r_machine_learning_tidymodels/fivefold_cv.png){width="70%" fig-align="center" .lightbox fig-alt="Diagram titled 'One iteration of a 5-fold cross-validation' showing five rows (folds 1–5). In each row, one contiguous segment of the data is held out as the test set while the remaining four segments form the training set, cycling through all five possible positions"}
 
 :::callout-tip
 ### How Many Folds?
@@ -629,14 +629,14 @@ Random Forest, for example, has parameters that control the number of decision t
 
 A grid search tuning algorithm assigns a vector of values to test for each hyperparameter.  Across multiple hyperparameters, this creates a multi-dimensional grid or array of possible combinations.  Grid search checks every single combination to look for the optimal set.  As such, it is intuitive and thorough, but computationally expensive - a brute force approach.
 
-![](images/r_machine_learning_tidymodels/grid_search.png){width="70%" fig-align="center" .lightbox}
+![](images/r_machine_learning_tidymodels/grid_search.png){width="70%" fig-align="center" .lightbox fig-alt="Scatter plot showing a uniform 5-by-9 grid of red dots evenly spaced across the hyperparameter 1 (x-axis, 0 to 1) and hyperparameter 2 (y-axis, -1 to 1) space, illustrating how grid search evaluates every combination of a predefined set of values"}
 
 
 #### Randomized Search
 
 A randomized search tuning algorithm randomly samples many potential combinations of hyperparameters.  The values to test for each hyperparameter are drawn from some distribution provided by the user.  Unlike grid search, this tuning algorithm concentrates its efforts on regions of each hyperparameter that are most likely according to the given probability distributions, and is generally able to find a good combination faster than a complete grid search.  In the example image, test values for hyperparameter 1 are chosen assuming a normal distribution, while values for hyperparameter 2 are chosen from a skewed distribution.
 
-![](images/r_machine_learning_tidymodels/randomized_search.png){width="70%" fig-align="center" .lightbox}
+![](images/r_machine_learning_tidymodels/randomized_search.png){width="70%" fig-align="center" .lightbox fig-alt="Scatter plot with marginal density curves showing approximately 20 red dots randomly distributed across the hyperparameter 1 (x-axis, roughly normal distribution) and hyperparameter 2 (y-axis, right-skewed distribution) space, illustrating how randomized search samples from probability distributions rather than a fixed grid"}
 
 
 #### Bayesian Optimization
@@ -645,7 +645,7 @@ Bayesian optimization tuning algorithm iteratively builds a probabilistic map ac
 
 In the example shown (for a single hyperparameter, for simplicity), the black points have already been tested - so uncertainty collapses to zero.  A value of ~0.18 falls in a region of high uncertainty (wide confidence interval) and likely high value (GP mean is high).  After sampling this point, the confidence intervals and GP mean function will shift accordingly, and the iteration will continue until some stop rule is reached.
 
-![](images/r_machine_learning_tidymodels/bayesian_optimization.png){width="70%" fig-align="center" .lightbox}
+![](images/r_machine_learning_tidymodels/bayesian_optimization.png){width="70%" fig-align="center" .lightbox fig-alt="Line chart of Bayesian hyperparameter optimization for a single hyperparameter: dark blue dots mark observed values, the blue line and shaded band show the GP mean and uncertainty, and the orange dashed line shows the true objective function. A red dashed vertical line marks the next candidate point at approximately 0.18, chosen because it has high uncertainty and a high GP mean. An arrow labels the best observed value so far"}
 
 ::: 
 
@@ -760,7 +760,7 @@ bison_clean <- knz_bison %>% drop_na()
 :::callout-hint
 These data are NOT linear:
 
-![](images/r_machine_learning_tidymodels/knz_bison.png){width='70%' fig-align='center' .lightbox}
+![](images/r_machine_learning_tidymodels/knz_bison.png){width='70%' fig-align='center' .lightbox fig-alt="Scatter plot of Konza Prairie bison data: recorded weight in pounds (y-axis) versus bison age in years (x-axis), with points colored by sex (purple = female, yellow = male). Both sexes show rapid weight gain from birth to about age 5, after which females plateau around 1,000 lbs while males continue gaining to roughly 1,500 lbs before leveling off"}
 
 This non-linear data is well suited to non-linear least squares estimation, particularly for an age-growth relationship.  But not knowing that relationship, how well can different ML algorithms create predictive models?
 
@@ -909,7 +909,7 @@ ggplot(bison_final_preds, aes(x = animal_weight, y = .pred)) +
   theme_minimal()
 ```
 
-![](images/r_machine_learning_tidymodels/bison_plot.png){width='70%' fig-align='center' .lightbox}
+![](images/r_machine_learning_tidymodels/bison_plot.png){width='70%' fig-align='center' .lightbox fig-alt="Scatter plot of model-predicted bison weight (.pred, y-axis) versus actual bison weight (animal_weight, x-axis) with a red diagonal reference line. Points cluster tightly around the line from roughly 400 to 1,200 lbs, indicating good model fit, with some spread at higher weights above 1,200 lbs"}
 Considering that the weight of the bison is driven primarily by the bison's age, and age is NOT in the dataset as its own variable, Random Forest does a remarkable job of picking out the patterns based on DOB and year of observation.
 ::::
 :::

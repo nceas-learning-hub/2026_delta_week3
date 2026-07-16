@@ -106,7 +106,7 @@ Now we've gone over this big picture overview, let's walk step-by-step through c
 
 To begin, **go to the "source control" section of Positron.**
 
-![](images/git_advanced_git_github/positron-01_start.png){fig-alt="Screen capture of Positron" .lightbox}
+![](images/git_advanced_git_github/positron-01_start.png){fig-alt="Screenshot of Positron open on a git-practice repository, showing the Source Control pane on the left with a commit message field and a list of recent commits on the main branch, and an R script open in the editor" .lightbox}
 
 To create a branch, **hover over the "Changes" dropdown menu and click `...`** to expand the set of Git operations that are visible. From there, **scroll down to "Branch" and click it.** Finally, **click "Create Branch...".**
 
@@ -215,7 +215,7 @@ First, in the "source control" part of Positron, **hover over the "Changes" menu
 
 This should open up a list of the available branches in the top middle of Positron. **Find the "main" branch in the list of available branches and click it.**
 
-![](images/git_advanced_git_github/post-branch_positron-02_switch-dest.png){fig-alt="Screenshot of the Git operations dropdown menu in Positron" fig-align="center" width="80%" .lightbox}
+![](images/git_advanced_git_github/post-branch_positron-02_switch-dest.png){fig-alt="Screenshot of Positron's branch checkout picker listing local branches (main, dev_streamline) and remote branches (origin/main, origin/dev_streamline), with the 'main' branch highlighted for selection" fig-align="center" width="80%" .lightbox}
 
 Now that you're back in the "main" branch, **pull the latest changes from GitHub.** You should receive all of the commits that you just merged via pull request earlier.
 
@@ -237,7 +237,7 @@ This should create a message that looks like the following image. You should **i
 
 Now that you're back in the "main" branch, **pull the latest changes from GitHub.** You should receive all of the commits that you just merged via pull request earlier. This will create a message that is something like the following image--though of course it will list all changed files so it may be a longer message than what is pictured below if you edited more files.
 
-![](images/git_advanced_git_github/post-branch_rstudio-03_pull-main.png){fig-alt="Screenshot of the Git message in RStudio when switching branches" fig-align="center" width="80%" .lightbox}
+![](images/git_advanced_git_github/post-branch_rstudio-03_pull-main.png){fig-alt="Screenshot of the Git Pull dialog in RStudio showing successful output: git pull ran, main was updated from cba032e to b39dc9e via fast-forward, with 1 file changed, 2 insertions, and 3 deletions" fig-align="center" width="80%" .lightbox}
 
 ::::
 
@@ -263,13 +263,13 @@ Once you've run those two lines of code, confirm that it worked by following the
 
 Click the "Checkout to..." button in the dropdown menu of Git operations. The resulting list of branches should only list the "main" branch under each sub-heading.
 
-![](images/git_advanced_git_github/post-branch_positron-05_confirm-prune.png){fig-alt="Screenshot of the Git branch dropdown menu in Positron" fig-align="center" width="80%" .lightbox}
+![](images/git_advanced_git_github/post-branch_positron-05_confirm-prune.png){fig-alt="Screenshot of Positron's branch checkout picker after the feature branch has been pruned, showing only 'main' listed under both local branches and remote branches, confirming the deleted branch no longer appears" fig-align="center" width="80%" .lightbox}
 
 ### RStudio
 
 Click the "main" branch name in RStudio's Git pane. The resulting dropdown of local and remote branches should only list the "main" branch under each sub-heading.
 
-![](images/git_advanced_git_github/post-branch_rstudio-04_confirm-prune.png){fig-alt="Screenshot of the Git branch dropdown menu in RStudio" fig-align="center" width="50%" .lightbox}
+![](images/git_advanced_git_github/post-branch_rstudio-04_confirm-prune.png){fig-alt="Screenshot of the RStudio Git branch dropdown showing only 'main' under Local Branches and only 'main' under Remote: ORIGIN, confirming the feature branch has been deleted and pruned locally" fig-align="center" width="50%" .lightbox}
 
 :::
 
