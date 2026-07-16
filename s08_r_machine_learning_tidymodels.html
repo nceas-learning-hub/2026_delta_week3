@@ -655,7 +655,7 @@ Prerequisite lessons:
 <div class="callout-body-container callout-body">
 <div class="columns">
 <div class="column" style="width:30%;">
-<p><a href="images/r_machine_learning_tidymodels/all_ml.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/r_machine_learning_tidymodels/all_ml.jpg" class="img-fluid" style="width:95.0%"></a></p>
+<p><a href="images/r_machine_learning_tidymodels/all_ml.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/r_machine_learning_tidymodels/all_ml.jpg" class="img-fluid" style="width:95.0%" alt="Mind map diagram with 'Machine Learning' at the center branching into four categories: Classical Learning (unsupervised: clustering, pattern search, dimension reduction; supervised: classification, regression), Ensemble Methods (bagging, stacking, boosting), Neural Nets and Deep Learning (CNN, RNN, GAN, autoencoders, perceptrons), and Reinforcement Learning"></a></p>
 </div><div class="column" style="width:70%;">
 <p><br><br> There are far too many possible machine learning algorithms spread across too many R packages to discuss in depth here. Instead, we will focus on a general framework for machine learning that is broadly applicable across model types and algorithms.</p>
 </div>
@@ -1006,7 +1006,7 @@ sex      female male
 <p>A Receiver Operating Characteristic (ROC) curve plots the tradeoff between the True Positive Rate and False Positive Rate as we change the probability threshold for classifying something as class 1 (vs.&nbsp;class 0) - in our case, classifying a penguin as male.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/r_machine_learning_tidymodels/roc_auc.webp" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/r_machine_learning_tidymodels/roc_auc.webp" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></a></p>
+<p><a href="images/r_machine_learning_tidymodels/roc_auc.webp" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/r_machine_learning_tidymodels/roc_auc.webp" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="ROC curve diagram plotting True Positive Rate vs. False Positive Rate for three classifiers (blue best, orange middle, green worst) against a red dashed diagonal baseline representing a random classifier. Labels indicate curves closer to the upper-left are better; the perfect classifier point is marked at (0, 1.0)"></a></p>
 </figure>
 </div>
 <p>A low threshold means that, even at very low predicted probabilities, we assign “Male” - which means we get most of the males (high True Positive Rate), but we also assign many (true) females to be (false) males (high False Positive Rate). A high threshold means we need a high predicted probability to classify a penguin as male - meaning we err on the side of classifying as female, i.e., a high True Negative Rate - and misclassify many males as females (high False Negative Rate).</p>
@@ -1075,7 +1075,7 @@ sex      female male
 <p>With resampling, we do multiple rounds of partitioning with our training data - iteratively resampling <em>analysis</em> and <em>assessment</em> partitions. Cross validation (CV) is a specific type of resampling - we create multiple equal-sized partitions, called <em>folds</em>, and then set aside one fold as <em>assessment</em> and the remaining folds as <em>analysis</em> to train our data, then use the second fold as <em>assessment</em> etc. If we split our data into five <em>folds</em> we get “five-fold cross validation” - the generic term is K-fold cross validation.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/r_machine_learning_tidymodels/fivefold_cv.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/r_machine_learning_tidymodels/fivefold_cv.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></a></p>
+<p><a href="images/r_machine_learning_tidymodels/fivefold_cv.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/r_machine_learning_tidymodels/fivefold_cv.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="Diagram titled 'One iteration of a 5-fold cross-validation' showing five rows (folds 1–5). In each row, one contiguous segment of the data is held out as the test set while the remaining four segments form the training set, cycling through all five possible positions"></a></p>
 </figure>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1341,15 +1341,15 @@ sex      female male
 <pre data-code-line-numbers=""><code># A tibble: 1 × 4
   .config         accuracy brier_class roc_auc
   &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
-1 pre0_mod0_post0    0.901      0.0752   0.965
+1 pre0_mod0_post0    0.904      0.0748   0.965
 # A tibble: 1 × 4
   .config         accuracy brier_class roc_auc
   &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
-1 pre0_mod0_post0    0.844       0.107   0.939
+1 pre0_mod0_post0    0.845       0.107   0.939
 # A tibble: 1 × 4
   .config         accuracy brier_class roc_auc
   &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
-1 pre0_mod0_post0    0.415       0.265   0.392</code></pre>
+1 pre0_mod0_post0    0.414       0.265   0.393</code></pre>
 </div>
 </div>
 </div>
@@ -1434,7 +1434,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 <p>A grid search tuning algorithm assigns a vector of values to test for each hyperparameter. Across multiple hyperparameters, this creates a multi-dimensional grid or array of possible combinations. Grid search checks every single combination to look for the optimal set. As such, it is intuitive and thorough, but computationally expensive - a brute force approach.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/r_machine_learning_tidymodels/grid_search.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/r_machine_learning_tidymodels/grid_search.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></a></p>
+<p><a href="images/r_machine_learning_tidymodels/grid_search.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/r_machine_learning_tidymodels/grid_search.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="Scatter plot showing a uniform 5-by-9 grid of red dots evenly spaced across the hyperparameter 1 (x-axis, 0 to 1) and hyperparameter 2 (y-axis, -1 to 1) space, illustrating how grid search evaluates every combination of a predefined set of values"></a></p>
 </figure>
 </div>
 </div>
@@ -1442,7 +1442,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 <p>A randomized search tuning algorithm randomly samples many potential combinations of hyperparameters. The values to test for each hyperparameter are drawn from some distribution provided by the user. Unlike grid search, this tuning algorithm concentrates its efforts on regions of each hyperparameter that are most likely according to the given probability distributions, and is generally able to find a good combination faster than a complete grid search. In the example image, test values for hyperparameter 1 are chosen assuming a normal distribution, while values for hyperparameter 2 are chosen from a skewed distribution.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/r_machine_learning_tidymodels/randomized_search.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="images/r_machine_learning_tidymodels/randomized_search.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></a></p>
+<p><a href="images/r_machine_learning_tidymodels/randomized_search.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="images/r_machine_learning_tidymodels/randomized_search.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="Scatter plot with marginal density curves showing approximately 20 red dots randomly distributed across the hyperparameter 1 (x-axis, roughly normal distribution) and hyperparameter 2 (y-axis, right-skewed distribution) space, illustrating how randomized search samples from probability distributions rather than a fixed grid"></a></p>
 </figure>
 </div>
 </div>
@@ -1451,7 +1451,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 <p>In the example shown (for a single hyperparameter, for simplicity), the black points have already been tested - so uncertainty collapses to zero. A value of ~0.18 falls in a region of high uncertainty (wide confidence interval) and likely high value (GP mean is high). After sampling this point, the confidence intervals and GP mean function will shift accordingly, and the iteration will continue until some stop rule is reached.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/r_machine_learning_tidymodels/bayesian_optimization.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="images/r_machine_learning_tidymodels/bayesian_optimization.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></a></p>
+<p><a href="images/r_machine_learning_tidymodels/bayesian_optimization.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="images/r_machine_learning_tidymodels/bayesian_optimization.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="Line chart of Bayesian hyperparameter optimization for a single hyperparameter: dark blue dots mark observed values, the blue line and shaded band show the GP mean and uncertainty, and the orange dashed line shows the true objective function. A red dashed vertical line marks the next candidate point at approximately 0.18, chosen because it has high uncertainty and a high GP mean. An arrow labels the best observed value so far"></a></p>
 </figure>
 </div>
 </div>
@@ -1580,7 +1580,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 <p>These data are NOT linear:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/r_machine_learning_tidymodels/knz_bison.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="images/r_machine_learning_tidymodels/knz_bison.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></a></p>
+<p><a href="images/r_machine_learning_tidymodels/knz_bison.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="images/r_machine_learning_tidymodels/knz_bison.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="Scatter plot of Konza Prairie bison data: recorded weight in pounds (y-axis) versus bison age in years (x-axis), with points colored by sex (purple = female, yellow = male). Both sexes show rapid weight gain from birth to about age 5, after which females plateau around 1,000 lbs while males continue gaining to roughly 1,500 lbs before leveling off"></a></p>
 </figure>
 </div>
 <p>This non-linear data is well suited to non-linear least squares estimation, particularly for an age-growth relationship. But not knowing that relationship, how well can different ML algorithms create predictive models?</p>
@@ -1870,7 +1870,7 @@ recipes: Manages data preprocessing and feature engineering. Use it to define th
 <span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">'red'</span>) <span class="sc">+</span></span>
 <span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><a href="images/r_machine_learning_tidymodels/bison_plot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="images/r_machine_learning_tidymodels/bison_plot.png" class="img-fluid quarto-figure quarto-figure-center" style="width:70.0%"></a> Considering that the weight of the bison is driven primarily by the bison’s age, and age is NOT in the dataset as its own variable, Random Forest does a remarkable job of picking out the patterns based on DOB and year of observation.</p>
+<p><a href="images/r_machine_learning_tidymodels/bison_plot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="images/r_machine_learning_tidymodels/bison_plot.png" class="img-fluid quarto-figure quarto-figure-center" style="width:70.0%" alt="Scatter plot of model-predicted bison weight (.pred, y-axis) versus actual bison weight (animal_weight, x-axis) with a red diagonal reference line. Points cluster tightly around the line from roughly 400 to 1,200 lbs, indicating good model fit, with some spread at higher weights above 1,200 lbs"></a> Considering that the weight of the bison is driven primarily by the bison’s age, and age is NOT in the dataset as its own variable, Random Forest does a remarkable job of picking out the patterns based on DOB and year of observation.</p>
 </div>
 </div>
 </div>

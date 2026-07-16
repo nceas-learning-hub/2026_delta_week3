@@ -738,7 +738,7 @@ Ideal prerequisite lessons:
 </tr>
 </tbody>
 </table>
-<p><a href="images/quarto_dashboards_reports/dashboard-structure.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/quarto_dashboards_reports/dashboard-structure.png" class="img-fluid" data-fig-cap="Dashboard layout: each `##` heading is a row; each code chunk within a row is a column card."></a></p>
+<p><a href="images/quarto_dashboards_reports/dashboard-structure.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/quarto_dashboards_reports/dashboard-structure.png" class="img-fluid" data-fig-cap="Dashboard layout: each `##` heading is a row; each code chunk within a row is a column card." alt="Annotated side-by-side view of a Quarto dashboard: the QMD source (left) and rendered output (right) are color-coded to show that the YAML format is 'dashboard', H1 (#) headings define pages, H2 (##) headings define rows, and each code chunk within a row creates a column card"></a></p>
 <section id="setting-up-the-yaml" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="setting-up-the-yaml">Setting up the YAML</h3>
 <p>Like any Quarto document, we need a YAML header specifying metadata and options. For a dashboard, the only required option is <code>format: dashboard</code>.</p>
@@ -1038,7 +1038,7 @@ yolo_catch_file <- contentid::resolve(sha1, registries = c("dataone"), store = T
 </div>
 </div>
 <p>Render the file. You should see a single page with three value boxes filling the screen.</p>
-<p><a href="images/quarto_dashboards_reports/dashboard-valueboxes.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/quarto_dashboards_reports/dashboard-valueboxes.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
+<p><a href="images/quarto_dashboards_reports/dashboard-valueboxes.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/quarto_dashboards_reports/dashboard-valueboxes.png" class="img-fluid" data-fig-cap="Rendered value boxes summarizing the Yolo Bypass dataset." alt="Three colored value boxes showing dataset summary statistics: 'Species Monitored: 7' (blue), 'Years of Data: 21' (green), and 'Total Observations: 21406' (purple)"></a></p>
 </section>
 <section id="step-2-add-an-interactive-chart" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="step-2-add-an-interactive-chart">Step 2: Add an interactive chart</h3>
@@ -1056,7 +1056,7 @@ yolo_catch_file <- contentid::resolve(sha1, registries = c("dataone"), store = T
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(p)</span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The card title comes from <code>#| title:</code> – it appears as the card header in the dashboard. The two rows now sum to 100% of the page height (25% + 75%).</p>
-<p><a href="images/quarto_dashboards_reports/dashboard-plotly.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/quarto_dashboards_reports/dashboard-plotly.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
+<p><a href="images/quarto_dashboards_reports/dashboard-plotly.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/quarto_dashboards_reports/dashboard-plotly.png" class="img-fluid" data-fig-cap="Plotly scatter plot of water clarity rendered in a dashboard card." alt="Interactive Plotly scatter plot titled 'Water Clarity Over Time' showing Secchi depth in meters on the y-axis and date on the x-axis, with data points from approximately 1998 to 2019 clustered mostly below 0.4 m"></a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1086,7 +1086,7 @@ yolo_catch_file <- contentid::resolve(sha1, registries = c("dataone"), store = T
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>(<span class="at">rownames =</span> <span class="cn">FALSE</span>, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">5</span>))</span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Multiple chunks in the same row produce side-by-side columns. Quarto divides the row width equally by default.</p>
-<p><a href="images/quarto_dashboards_reports/dashboard-datatable.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/quarto_dashboards_reports/dashboard-datatable.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
+<p><a href="images/quarto_dashboards_reports/dashboard-datatable.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/quarto_dashboards_reports/dashboard-datatable.png" class="img-fluid" data-fig-cap="DT data table of catch totals by species rendered in a dashboard card." alt="Interactive DT table titled 'Catch by Species' showing 7 fish species with columns for Observations, Total Catch, and Avg Secchi (m); Chinook Salmon has 10,238 observations and Striped Bass has the highest total catch at 46,371"></a></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1125,7 +1125,7 @@ yolo_catch_file <- contentid::resolve(sha1, registries = c("dataone"), store = T
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(p2)</span>
 <span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The navigation bar now shows two pages: Summary and Catch Trends.</p>
-<p><a href="images/quarto_dashboards_reports/dashboard-page2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="images/quarto_dashboards_reports/dashboard-page2.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
+<p><a href="images/quarto_dashboards_reports/dashboard-page2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="images/quarto_dashboards_reports/dashboard-page2.png" class="img-fluid" data-fig-cap="The 'Catch Trends' page with an annual catch line chart by species." alt="Screenshot of a Quarto dashboard's 'Catch Trends' page showing a line chart of annual total catch by species from 1997 to 2019. Chinook Salmon and Striped Bass have the highest and most variable catch totals; the remaining species (Delta Smelt, Longfin Smelt, White Sturgeon, etc.) remain near zero throughout"></a></p>
 </section>
 <section id="step-5-add-tabsets" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="step-5-add-tabsets">Step 5: Add tabsets</h3>
@@ -1159,12 +1159,12 @@ yolo_catch_file <- contentid::resolve(sha1, registries = c("dataone"), store = T
 <span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>(<span class="at">rownames =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Render again. The Catch Trends page should now show two tabs: the interactive line chart and a browseable raw data table.</p>
-<p><a href="images/quarto_dashboards_reports/dashboard-page2tab2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="images/quarto_dashboards_reports/dashboard-page2tab2.png" class="img-fluid" data-fig-cap="" alt=""></a></p>
+<p><a href="images/quarto_dashboards_reports/dashboard-page2tab2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="images/quarto_dashboards_reports/dashboard-page2tab2.png" class="img-fluid" data-fig-cap="The 'Raw Data' tab on the Catch Trends page showing the full browseable dataset." alt="Screenshot of the 'Catch Trends' page with the 'Raw Data' tab active, showing a searchable DT table of 21,406 entries with columns SampleDate, CommonName, Count, and Secchi"></a></p>
 </section>
 <section id="putting-it-all-together" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="putting-it-all-together">Putting it all together</h3>
 <p>If you’ve been following along this whole time, you should now have a dashboard that looks something like this:</p>
-<p><a href="images/quarto_dashboards_reports/dashboard-full-page1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="images/quarto_dashboards_reports/dashboard-full-page1.png" class="img-fluid" data-fig-cap=""></a></p>
+<p><a href="images/quarto_dashboards_reports/dashboard-full-page1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="images/quarto_dashboards_reports/dashboard-full-page1.png" class="img-fluid" data-fig-cap="The completed Summary page of the Delta Fish Monitoring dashboard." alt="Screenshot of the completed 'Summary' page of the Delta Fish Monitoring dashboard, with three value boxes at the top (Species Monitored: 7, Years of Data: 21, Total Observations: 21,406) and two cards below: a water clarity scatter plot on the left and a catch-by-species data table on the right"></a></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
